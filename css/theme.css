@@ -63,13 +63,24 @@ strong { color: var(--ink); font-weight: 500; }
 .slide-tag {
   font-family: var(--mono); font-size: 9px; color: var(--ink-mute);
   letter-spacing: .12em; text-transform: uppercase;
-  position: absolute; bottom: 24px; right: 72px;
+  position: absolute; top: 24px; right: 72px;
 }
 .chapter-tag {
   font-family: var(--mono); font-size: 9px; color: var(--ink-mute);
   letter-spacing: .12em; text-transform: uppercase;
-  position: absolute; bottom: 24px; left: 72px;
+  position: absolute; top: 24px; left: 72px;
 }
+/* tag-bar: chapter + slide tags side-by-side */
+.tag-bar {
+  position: absolute; top: 24px; left: 72px;
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 9px; color: var(--ink-mute);
+  letter-spacing: .12em; text-transform: uppercase;
+  z-index: 5;
+}
+.tag-bar .chapter-tag,
+.tag-bar .slide-tag { position: static; }
+.tag-bar .slide-tag::before { content: '·'; margin-right: 6px; }
 
 
 /* ── DIVIDER ─────────────────────────────────────────────── */
@@ -80,6 +91,7 @@ strong { color: var(--ink); font-weight: 500; }
 .cover-slide h1, .cover-slide .eyebrow, .cover-slide p { color: var(--ink); }
 .cover-slide .rule { background: var(--accent); }
 .cover-slide .slide-tag, .cover-slide .chapter-tag { color: rgba(255,255,255,.35); }
+.cover-slide .tag-bar { color: rgba(255,255,255,.35); }
 .cover-dot {
   position: absolute; right: -60px; bottom: -120px;
   width: 420px; height: 420px; border-radius: 50%;
@@ -92,6 +104,7 @@ strong { color: var(--ink); font-weight: 500; }
 .chapter-divider h1, .chapter-divider h2, .chapter-divider .eyebrow, .chapter-divider p { color: var(--ink); }
 .chapter-divider .rule { background: var(--accent); }
 .chapter-divider .slide-tag, .chapter-divider .chapter-tag { color: rgba(255,255,255,.35); }
+.chapter-divider .tag-bar { color: rgba(255,255,255,.35); }
 
 /* ── TWO/THREE COL LAYOUT ────────────────────────────────── */
 .two-col { display: grid; gap: 28px; width: 100%; grid-template-columns: 1fr 1fr; align-items: start; }
@@ -341,6 +354,21 @@ strong { color: var(--ink); font-weight: 500; }
 
 /* Dark theme: make lang bar visible on dark bg */
 .lang-bar { background: rgba(28,28,30,.75); backdrop-filter: blur(8px); padding: 4px 10px; border-radius: 6px; }
+.lang-divider { width: 1px; height: 14px; background: rgba(255,255,255,.15); align-self: center; }
+
+/* ── LASER POINTER ───────────────────────────────────────── */
+#laser-btn { font-size: 13px; line-height: 1; }
+#laser-btn.active { color: #ff4040; text-shadow: 0 0 6px rgba(255,40,40,.6); border-bottom-color: #ff4040; }
+.laser-active .reveal .slides { cursor: none !important; }
+.laser-active .reveal .slides * { cursor: none !important; }
+.laser-dot {
+  position: fixed; z-index: 99999; pointer-events: none;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,40,40,.95) 0%, rgba(255,40,40,.6) 50%, transparent 70%);
+  box-shadow: 0 0 8px 3px rgba(255,40,40,.45), 0 0 20px 6px rgba(255,0,0,.15);
+  transform: translate(-50%, -50%);
+  display: none;
+}
 
 /* ── NAVIGATION BAR ──────────────────────────────────────── */
 .nav-bar {

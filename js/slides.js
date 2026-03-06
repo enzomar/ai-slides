@@ -36,39 +36,82 @@ function setLang(lang) {
   }
 
   try { localStorage.setItem('ai-slides-lang', lang); } catch(e) {}
+
+  // Update speaker notes from external NOTES_XX files
+  updateNotes(lang);
+
+  // Sync tag-bar slide-tags with eyebrow text
+  syncTagBars();
+}
+
+/* ── SPEAKER NOTES LOADER ────────────────────────────────── */
+/**
+ * Populates every <aside class="notes"> from the external
+ * window.NOTES_XX object (loaded via js/notes/*.js).
+ * Key lookup: slide.id  →  fallback "slide-{index}".
+ * Called on init and every language switch.
+ */
+function updateNotes(lang) {
+  const notesObj = window['NOTES_' + lang.toUpperCase()];
+  if (!notesObj) return;
+  if (typeof Reveal === 'undefined' || !Reveal.isReady || !Reveal.isReady()) return;
+
+  const slides = Reveal.getSlides();
+  slides.forEach((section, idx) => {
+    const key = section.id || ('slide-' + idx);
+    const text = notesObj[key];
+    if (text === undefined) return;
+
+    let aside = section.querySelector('aside.notes');
+    if (!aside) {
+      aside = document.createElement('aside');
+      aside.className = 'notes';
+      section.appendChild(aside);
+    }
+    aside.textContent = text;
+  });
+}
+
+/* ── TAG-BAR SYNC ────────────────────────────────────────── */
+/**
+ * Copies each slide's .eyebrow text into the .slide-tag inside
+ * the .tag-bar, so the bar reads e.g.
+ *   "Chapter 1 · Introduction · Slide 07 · Comparison"
+ * Called on init and every language switch.
+ */
+function syncTagBars() {
+  document.querySelectorAll('.tag-bar').forEach(bar => {
+    const section = bar.closest('section');
+    if (!section) return;
+    const eyebrow = section.querySelector('.eyebrow');
+    const slideTag = bar.querySelector('.slide-tag');
+    if (eyebrow && slideTag) {
+      slideTag.textContent = eyebrow.textContent;
+      eyebrow.style.display = 'none';  // avoid duplicate text
+    }
+  });
 }
 
 /* ── REVEAL.JS INIT ──────────────────────────────────────── */
 function initSlides(opts) {
   const plugins = [];
   if (typeof RevealNotes !== 'undefined') plugins.push(RevealNotes);
-  if (typeof RevealMenu  !== 'undefined') plugins.push(RevealMenu);
 
   const defaults = {
     hash: true, progress: true, controls: true,
     transition: 'fade', transitionSpeed: 'slow',
     width: 1280, height: 720,
     margin: 0, center: false,
-    plugins,
-    menu: {
-      side: 'left',
-      width: 'normal',
-      numbers: true,
-      titleSelector: 'h1, h2',
-      useTextContentForMissingTitles: true,
-      hideMissingTitles: false,
-      markers: true,
-      keyboard: true,
-      sticky: false,
-      autoOpen: false,
-      openButton: true,
-      openSlideNumber: true,
-      themes: false,
-      transitions: false,
-    }
+    plugins
   };
 
   Reveal.initialize(Object.assign(defaults, opts || {})).then(() => {
+    // Populate notes from external file for the current language
+    updateNotes(currentLang);
+
+    // Sync tag-bar slide-tags with eyebrow content
+    syncTagBars();
+
     // Restore saved language after Reveal is ready
     try {
       const saved = localStorage.getItem('ai-slides-lang');

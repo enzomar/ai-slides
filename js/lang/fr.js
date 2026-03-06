@@ -31,7 +31,7 @@ window.LANG_FR = {
   "agenda.c4.desc":   "Retrieval-Augmented Generation — donner aux LLM accès à vos connaissances.",
 
   "agenda.c5.num":    "05",
-  "agenda.c5.title":  "Agents IA + MCP",
+  "agenda.c5.title":  "Agents IA & MCP",
   "agenda.c5.desc":   "Agents autonomes, la boucle ReAct, utilisation d'outils et le Model Context Protocol.",
 
   "agenda.c6.num":    "06",
@@ -204,7 +204,7 @@ window.LANG_FR = {
   "c4.refs.h2":       "Sources &amp; Lectures",
 
   "c5.cover.eyebrow": "Chapitre 05",
-  "c5.cover.h1":      "Agents IA<br>+ MCP",
+  "c5.cover.h1":      "Agents IA<br>& MCP",
   "c5.cover.p":       "Du question-answering à l'action autonome — une IA qui planifie, utilise des outils et agit.",
   "c5.s1.eyebrow":    "Diapo 01 · Concept",
   "c5.s1.h2":         "Qu'est-ce qu'un Agent IA ?",

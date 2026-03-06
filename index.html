@@ -10,8 +10,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reset.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css"/>
 <link rel="stylesheet" href="css/theme.css"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-menu/menu.css"/>
 <link rel="stylesheet" href="css/animations.css"/>
+<link rel="stylesheet" href="css/narration.css"/>
+<link rel="stylesheet" href="css/slide-menu.css"/>
 </head>
 <body>
 
@@ -21,7 +22,8 @@
   <span class="lang-btn" onclick="setLang('it')">IT</span>
   <span class="lang-btn" onclick="setLang('fr')">FR</span>
   <span class="lang-btn" onclick="setLang('es')">ES</span>
-
+  <span class="lang-divider"></span>
+  <span class="lang-btn" id="laser-btn" onclick="toggleLaser()" title="Toggle laser pointer (L)">⊹</span>
 </div>
 
 <div class="reveal">
@@ -62,10 +64,16 @@
     </a>
   </div>
 
+  <p style="margin-top:28px;text-align:center;color:rgba(255,255,255,.25);font-size:.55rem;font-family:var(--sans);line-height:1.6;max-width:520px;margin-left:auto;margin-right:auto;"
+    data-en="© 2026 Vincenzo Marafioti — All rights reserved.<br>This material may be shared for educational purposes with proper attribution to the author."
+    data-it="© 2026 Vincenzo Marafioti — Tutti i diritti riservati.<br>Questo materiale può essere condiviso a scopo didattico citando l'autore."
+    data-fr="© 2026 Vincenzo Marafioti — Tous droits réservés.<br>Ce matériel peut être partagé à des fins éducatives en citant l'auteur."
+    data-es="© 2026 Vincenzo Marafioti — Todos los derechos reservados.<br>Este material puede compartirse con fines educativos citando al autor.">
+    © 2026 Vincenzo Marafioti — All rights reserved.<br>This material may be shared for educational purposes with proper attribution to the author.
+  </p>
+
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">2026</span>
-  <aside class="notes">
-    Welcome slide. This course covers AI from foundations to frontier — 6 chapters, ~40 slides, designed for a mixed audience of developers, architects, product managers, and curious professionals. Estimated time: 2.5–3 hours with breaks. Use the ☰ menu to navigate chapters. Press S to open speaker notes view. Use the A−/A/A+ controls for font sizing. Available in EN, IT, FR, ES.
-  </aside>
+  <aside class="notes"></aside>
 </section>
 
 <!-- ══════════════════════ AGENDA ══════════════════════ -->
@@ -142,10 +150,10 @@
     <a href="#/chapter-5" class="agenda-item">
       <div class="agenda-num">05</div>
       <div class="agenda-title"
-        data-en="AI Agents + MCP"
-        data-it="Agenti AI + MCP"
-        data-fr="Agents IA + MCP"
-        data-es="Agentes IA + MCP">AI Agents + MCP</div>
+        data-en="AI Agents & MCP"
+        data-it="Agenti AI & MCP"
+        data-fr="Agents IA & MCP"
+        data-es="Agentes IA & MCP">AI Agents & MCP</div>
       <div class="agenda-desc"
         data-en="Autonomous AI agents, tool use, function calling, MCP (Model Context Protocol), multi-agent orchestration & examples."
         data-it="Agenti AI autonomi, uso di strumenti, function calling, MCP (Model Context Protocol), orchestrazione multi-agente ed esempi."
@@ -183,6 +191,7 @@
 
   </div>
 
+  <aside class="notes"></aside>
   <span class="chapter-tag">Understanding AI</span>
 </section>
 
@@ -209,11 +218,8 @@
     data-it="Dalla logica binaria al ragionamento probabilistico — come le macchine hanno imparato a pensare in sfumature."
     data-fr="De la logique binaire au raisonnement probabiliste — comment les machines ont appris à penser en nuances."
     data-es="De la lógica binaria al razonamiento probabilístico — cómo las máquinas aprendieron a pensar en matices.">From binary logic to probabilistic reasoning — how machines learned to think in shades of grey.</p>
-  <span class="chapter-tag" style="color:rgba(255,255,255,.25);">AI Fundamentals</span>
-  <span class="slide-tag" style="color:rgba(255,255,255,.25);">01 / 06</span>
-  <aside class="notes">
-    Chapter 1 sets the foundation. Key message: AI is not magic — it is mathematics + massive data. We'll go from deterministic (if/then) to probabilistic (neural nets), cover the Transformer architecture that powers GPT/Claude/Gemini, and explain how tokens, attention, and parameters work together. Audience check: who has used ChatGPT? Who has built something with an LLM API? Adjust depth accordingly.
-  </aside>
+  <div class="tag-bar"><span class="chapter-tag" style="color:rgba(255,255,255,.25);">AI Fundamentals</span> <span class="slide-tag" style="color:rgba(255,255,255,.25);">01 / 06</span></div>
+  <aside class="notes"></aside>
 </section>
 
 <!-- ══════════════════════ SLIDE 1: DETERMINISTIC vs PROBABILISTIC ══════════════════════ -->
@@ -274,29 +280,57 @@
         data-it="Stesso input → Diversi output possibili."
         data-fr="Même entrée → Résultats possibles différents."
         data-es="Mismo input → Diferentes resultados posibles.">Same input → Different possible outputs.</div>
-      <div class="prob-display">
-        <span class="prob-token" style="--op:.95">Paris 92%</span>
-        <span class="prob-token" style="--op:.55">Lyon 5%</span>
-        <span class="prob-token" style="--op:.30">Rome 2%</span>
-        <span class="prob-token" style="--op:.15">… 1%</span>
+      <!-- SVG probability distribution curve -->
+      <div style="position:relative;width:100%;height:110px;margin:6px 0 4px;">
+        <svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg"
+             style="width:100%;height:100%;overflow:visible;">
+          <!-- Bell curve fill -->
+          <defs>
+            <linearGradient id="bellGrad" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.04"/>
+            </linearGradient>
+          </defs>
+          <path d="M 0 90 C 20 90 40 88 60 80 C 80 72 95 40 100 20 C 105 8 115 2 130 2 C 145 2 155 8 160 20 C 165 32 175 72 195 80 C 215 88 240 90 260 90 C 280 90 300 90 320 90" fill="url(#bellGrad)" stroke="none"/>
+          <path d="M 0 90 C 20 90 40 88 60 80 C 80 72 95 40 100 20 C 105 8 115 2 130 2 C 145 2 155 8 160 20 C 165 32 175 72 195 80 C 215 88 240 90 260 90 C 280 90 300 90 320 90" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <!-- baseline -->
+          <line x1="0" y1="90" x2="320" y2="90" stroke="rgba(27,94,255,.15)" stroke-width="1"/>
+          <!-- peak label -->
+          <line x1="130" y1="2" x2="130" y2="90" stroke="rgba(27,94,255,.3)" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="130" y="98" text-anchor="middle" font-family="var(--mono)" font-size="8" fill="var(--accent)"
+            data-en="most likely" data-it="più probabile" data-fr="plus probable" data-es="más probable">most likely</text>
+          <!-- sample points -->
+          <circle cx="100" cy="20" r="3" fill="var(--accent)"/>
+          <text x="74" y="18" font-family="var(--mono)" font-size="9" fill="var(--ink)">Heads</text>
+          <text x="74" y="28" font-family="var(--mono)" font-size="9" fill="var(--accent)">50%</text>
+          <circle cx="160" cy="20" r="3" fill="var(--accent2)"/>
+          <text x="162" y="18" font-family="var(--mono)" font-size="9" fill="var(--ink)">Tails</text>
+          <text x="162" y="28" font-family="var(--mono)" font-size="9" fill="var(--accent2)">50%</text>
+          <circle cx="58" cy="80" r="3" fill="var(--green)"/>
+          <text x="28" y="72" font-family="var(--mono)" font-size="9" fill="var(--ink)">Rain</text>
+          <text x="28" y="82" font-family="var(--mono)" font-size="9" fill="var(--green)">30%</text>
+          <circle cx="220" cy="82" r="3" fill="var(--amber)"/>
+          <text x="206" y="72" font-family="var(--mono)" font-size="9" fill="var(--ink)">Sun</text>
+          <text x="206" y="82" font-family="var(--mono)" font-size="9" fill="var(--amber)">60%</text>
+        </svg>
       </div>
       <ul class="example-list">
-        <li data-en="ChatGPT answering a question"
-            data-it="ChatGPT risponde a una domanda"
-            data-fr="ChatGPT répondant à une question"
-            data-es="ChatGPT respondiendo una pregunta">ChatGPT answering a question</li>
-        <li data-en="Weather forecast (70% rain)"
-            data-it="Previsioni meteo (70% pioggia)"
-            data-fr="Prévision météo (70% de pluie)"
-            data-es="Pronóstico del tiempo (70% lluvia)">Weather forecast (70% rain)</li>
-        <li data-en="Image generation (DALL·E)"
-            data-it="Generazione immagini (DALL·E)"
-            data-fr="Génération d'images (DALL·E)"
-            data-es="Generación de imágenes (DALL·E)">Image generation (DALL·E)</li>
-        <li data-en="Recommendation engine"
-            data-it="Motore di raccomandazione"
-            data-fr="Moteur de recommandation"
-            data-es="Motor de recomendación">Recommendation engine</li>
+        <li data-en="Coin flip — Heads 50% · Tails 50%"
+            data-it="Lancio moneta — Testa 50% · Croce 50%"
+            data-fr="Pile ou face — Pile 50% · Face 50%"
+            data-es="Lanzamiento moneda — Cara 50% · Cruz 50%">Coin flip — Heads 50% · Tails 50%</li>
+        <li data-en="Dice roll — each face ~16.7% probability"
+            data-it="Dado — ogni faccia ~16,7% di probabilità"
+            data-fr="Lancer de dé — chaque face ~16,7% de probabilité"
+            data-es="Dado — cada cara ~16,7% de probabilidad">Dice roll — each face ~16.7% probability</li>
+        <li data-en="Weather forecast — 70% chance of rain"
+            data-it="Previsioni meteo — 70% di probabilità di pioggia"
+            data-fr="Météo — 70% de probabilité de pluie"
+            data-es="Pronóstico del tiempo — 70% de probabilidad de lluvia">Weather forecast — 70% chance of rain</li>
+        <li data-en="Stock price tomorrow — distribution of possible moves"
+            data-it="Prezzo azioni domani — distribuzione di possibili movimenti"
+            data-fr="Cours d'action demain — distribution des mouvements possibles"
+            data-es="Precio acción mañana — distribución de movimientos posibles">Stock price tomorrow — distribution of possible moves</li>
       </ul>
     </div>
   </div>
@@ -312,11 +346,8 @@
           data-es=" Los LLM son probabilísticos — la misma pregunta puede producir diferentes respuestas válidas. Es una característica, no un defecto."> LLMs are probabilistic — the same question can produce different, valid answers. This is a feature, not a bug.</span>
   </div>
 
-  <aside class="notes">
-    Ask the audience: "Who was surprised when the same question to ChatGPT gave a different answer each time?" This is the key mental model shift. Engineers from SQL/API backgrounds struggle most with this — 'non-determinism is a feature, not a bug.' Temperature controls randomness — preview that for Slide 4. Deterministic = guaranteed; probabilistic = optimized for the likely best answer.
-  </aside>
-  <span class="chapter-tag">Chapter 1 · Introduction</span>
-  <span class="slide-tag">01 / 08</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">01 / 08</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 2: TIMELINE ══════════════════════ -->
@@ -410,11 +441,8 @@
           data-es=" Cada era resolvió una limitación de la anterior. Los Transformers desbloquearon la comprensión del contexto a largo plazo."> Each era solved a limitation of the previous one. Transformers unlocked long-range context understanding — the key to human-like language.</span>
   </div>
 
-  <aside class="notes">
-    The 2017 Transformer paper ('Attention Is All You Need') is the inflection point. Before: RNNs forgot distant context. After: every token sees every other token simultaneously. GPT-3 (2020) proved that scale alone unlocks in-context learning — no fine-tuning needed. Ask: 'What changed most between 2017 and today?' Answer: scale and data volume, not the core architecture.
-  </aside>
-  <span class="chapter-tag">Chapter 1 · Introduction</span>
-  <span class="slide-tag">02 / 08</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">02 / 08</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 3: TRANSFORMER ARCHITECTURE ══════════════════════ -->
@@ -495,11 +523,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    Walk left to right: text → tokens → embeddings → self-attention (the core magic) → feedforward → output probabilities. Key insight: 'attention' lets every token directly reference every other token — unlike RNNs that lost distant context. 'Multi-head' = multiple parallel attention perspectives (syntax, semantics, coreference). The architecture hasn't changed much since 2017 — scale and data have.
-  </aside>
-  <span class="chapter-tag">Chapter 1 · Introduction</span>
-  <span class="slide-tag">03 / 08</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">03 / 08</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 3b: ANIMATED TOKEN PREDICTION ══════════════════════ -->
@@ -542,11 +567,8 @@
       </div>
     </div>
   </div>
-  <aside class="notes">
-    Press → to advance step by step. Each press = one token generated. Watch the probability bars — the model is uncertain, sampling from a distribution. Temperature > 0 means it doesn't always pick the top token (good for creativity). The cursor blink = model 'thinking'. This one slide explains why ChatGPT streams token-by-token rather than returning the full answer at once.
-  </aside>
-  <span class="chapter-tag">Chapter 1 · Introduction</span>
-  <span class="slide-tag">03b / 08</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">03b / 08</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 3c: ANIMATED ATTENTION HEATMAP ══════════════════════ -->
@@ -578,11 +600,8 @@
           data-fr=" Chaque ligne montre les mots auxquels un token fait attention. Plus lumineux = plus fort. C'est ainsi que le modèle comprend les références."
           data-es=" Cada fila muestra a qué palabras un token presta atención. Más brillante = más fuerte. Así el modelo entiende las referencias."> Each row shows which words a token "pays attention to." Brighter = stronger connection. This is how "it" resolves to "cat", not "mat".</span>
   </div>
-  <aside class="notes">
-    Each row = one token querying all others. Brighter = stronger attention. Notice: 'it' attends strongly to 'cat' — the model resolves pronoun references without explicit programming. This is emergent from training on billions of sentences. Multiple heads run in parallel — each learns different linguistic patterns (subject-verb, adjective-noun, long-range coreference). This is why Transformers beat RNNs on understanding.
-  </aside>
-  <span class="chapter-tag">Chapter 1 · Introduction</span>
-  <span class="slide-tag">03c / 08</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">03c / 08</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 4: KEY PARAMETERS ══════════════════════ -->
@@ -690,11 +709,8 @@
           data-es=" Para código/extracción → Temperature 0.2. Para brainstorming → Temperature 0.8–1.0. Evita cambiar Top-K y Top-P al mismo tiempo."> For code/extraction → Temperature 0.2. For brainstorming → Temperature 0.8–1.0. Avoid changing Top-K and Top-P at the same time.</span>
   </div>
 
-  <aside class="notes">
-    Temperature is the most important parameter to understand. 0 = deterministic (always picks the highest-probability token), 1 = creative/varied. For production use cases: code/extraction → 0.1–0.3; brainstorming → 0.8–1.0. Tokens ≠ words: ~1.3 tokens per word in English. Max Tokens = your cost + response-length budget. Avoid changing Top-K and Top-P simultaneously — they interact.
-  </aside>
-  <span class="chapter-tag">Chapter 1 · Introduction</span>
-  <span class="slide-tag">04 / 08</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">04 / 08</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 5: HARDWARE ══════════════════════ -->
@@ -777,11 +793,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    GPUs are essential because neural net layers are giant matrix multiplications — GPUs run thousands of these in parallel. H100 = 80GB VRAM, enough for 70B parameter models at fp16. Cloud (Azure OpenAI, AWS Bedrock, Google Vertex) removes CapEx — pay per token. Edge/MacBook inference is now viable for 7B–13B models via quantization (llama.cpp, Ollama). The cost curve is dropping ~10× per year.
-  </aside>
-  <span class="chapter-tag">Chapter 1 · Introduction</span>
-  <span class="slide-tag">05 / 08</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">05 / 08</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 6: TASKS WORD CLOUD ══════════════════════ -->
@@ -811,11 +824,8 @@
           data-es=" Un modelo, muchas capacidades. Estos son los bloques que alimentan cada aplicación de IA."> One model, many capabilities. These are the building blocks that power every AI application.</span>
   </div>
 
-  <aside class="notes">
-    Hover over any word — the cloud is interactive. Key point: one LLM model handles all ~30 task categories shown here. This disrupted specialized NLP pipelines (sentiment model, NER model, translation model) — now one foundation model does all. Ask: 'Which of these tasks are you already using AI for? Which haven't you tried yet?'
-  </aside>
-  <span class="chapter-tag">Chapter 1 · Introduction</span>
-  <span class="slide-tag">06 / 08</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">06 / 08</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 7: MODEL COMPARISON TABLE ══════════════════════ -->
@@ -913,11 +923,8 @@
           data-es=" No hay un único modelo 'mejor'. Elige según tu caso de uso: coste, latencia, longitud del contexto, requisitos de privacidad y complejidad."> There is no single "best" model. Choose based on your use case: cost, latency, context length, privacy requirements, and task complexity.</span>
   </div>
 
-  <aside class="notes">
-    This landscape changes every 3-6 months. Key decision factors: (1) closed vs open — closed models are more capable but data leaves your infra; (2) context window — Gemini 1M is great for ingesting entire codebases; (3) cost — GPT-4o mini is 20x cheaper than GPT-4o for 80% of tasks; (4) EU sovereignty — Mistral for GDPR-sensitive deployments. Recommend: start with GPT-4o or Claude for quality, then optimize down to smaller/cheaper models.
-  </aside>
-  <span class="chapter-tag">Chapter 1 · Introduction</span>
-  <span class="slide-tag">07 / 08</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">07 / 08</span></div>
 </section>
 
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
@@ -941,6 +948,7 @@
     <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Anthropic — Prompt Engineering</a></li>
     <li>Krizhevsky et al., <a href="https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html" target="_blank">"ImageNet Classification with Deep CNNs"</a> (AlexNet), 2012</li>
   </ul>
+  <aside class="notes"></aside>
   <span class="chapter-tag">Chapter 1 · Introduction</span>
 </section>
 <!-- chapter2.html -->
@@ -960,9 +968,7 @@
     data-fr="L'art et la science de communiquer efficacement avec les modèles de langage."
     data-es="El arte y la ciencia de comunicarse eficazmente con los modelos de lenguaje.">The art and science of communicating effectively with language models.</p>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">Prompt Engineering</span>
-  <aside class="notes">
-    Chapter 2 is the most hands-on chapter. The goal is to move the audience from "typing a question" to engineering precise, reproducible prompts. We'll dissect prompt anatomy, cover six proven patterns (Zero-Shot, Few-Shot, Chain-of-Thought, Role, System, Retrieval-Augmented), and end with an interactive playground. Encourage the audience to open ChatGPT alongside the slides and try the examples in real time.
-  </aside>
+  <aside class="notes"></aside>
 </section>
 
 <!-- ══════════════════════ SLIDE 1: ANATOMY OF A PROMPT ══════════════════════ -->
@@ -1066,11 +1072,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    Walk through each layer top-to-bottom. The system prompt is the trust anchor — everything about the model's role, constraints, and persona. Role assignment ('You are a senior product manager...') measurably improves output quality. Output format instructions (JSON, bullet points, markdown) must be explicit — the model doesn't know your downstream requirements. Context window = everything the model can 'see' at once.
-  </aside>
-  <span class="chapter-tag">Chapter 2 · Prompt Engineering</span>
-  <span class="slide-tag">01 / 07</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">01 / 07</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 2: PROMPTING PATTERNS ══════════════════════ -->
@@ -1171,11 +1174,8 @@
           data-es=" Empieza con zero-shot. Si el resultado no es correcto, añade ejemplos. Para razonamiento, siempre usa chain-of-thought."> Start with zero-shot. If the output isn't right, add examples (few-shot). For reasoning tasks, always use chain-of-thought.</span>
   </div>
 
-  <aside class="notes">
-    Rule of thumb: start with zero-shot (GPT-4/Claude handle most tasks well). If the format is wrong, switch to few-shot (2–5 examples). For math/logic/multi-step reasoning, always use chain-of-thought — either explicitly ('Let’s think step by step') or via a worked example in the prompt. These patterns stack: zero-shot + system prompt + CoT is a common combination.
-  </aside>
-  <span class="chapter-tag">Chapter 2 · Prompt Engineering</span>
-  <span class="slide-tag">02 / 07</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">02 / 07</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 3: ADVANCED TECHNIQUES ══════════════════════ -->
@@ -1249,11 +1249,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    RAG (Chapter 4) and Tool Use (Chapter 5) are the real power multipliers. ReAct loops the model through Reason → Act → Observe cycles, enabling step-by-step API calls. Least-to-most prompting works well for curriculum-style decomposition. Tree of Thought is expensive but valuable for complex decision-making tasks. These techniques are for architects and senior devs — flag as 'advanced' for the audience.
-  </aside>
-  <span class="chapter-tag">Chapter 2 · Prompt Engineering</span>
-  <span class="slide-tag">03 / 07</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">03 / 07</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 4: BEST PRACTICES ══════════════════════ -->
@@ -1331,11 +1328,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    The #1 mistake: vague prompts. 'Summarize this' → 'Summarize this in 3 bullet points for a non-technical VP. Use plain English, no jargon.' Negative instructions ('don’t do X') are weak — replace with positive constraints ('always do Y'). Test on 10–20 diverse examples before shipping. Live demo: take a bad prompt from the audience and improve it together.
-  </aside>
-  <span class="chapter-tag">Chapter 2 · Prompt Engineering</span>
-  <span class="slide-tag">04 / 07</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">04 / 07</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 5: PRACTICAL EXAMPLES ══════════════════════ -->
@@ -1408,11 +1402,8 @@
           data-es=" La ingeniería de prompts es iterativa. Tu primer prompt nunca es el mejor. Refina, prueba y mejora progresivamente."> Prompt engineering is iterative. Your first prompt is never your best. Refine, test, and improve.</span>
   </div>
 
-  <aside class="notes">
-    Walk through 1–2 examples live — invite the audience to critique the 'before' prompt. The rewrite pattern is consistent: add role, add format specification, add context/constraints. Offer the prompt template library as a follow-up resource. Q&A opportunity: 'What use case are you trying to tackle? Let’s prompt-engineer it together.'
-  </aside>
-  <span class="chapter-tag">Chapter 2 · Prompt Engineering</span>
-  <span class="slide-tag">05 / 07</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">05 / 07</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 6: INTERACTIVE PARAMETER PLAYGROUND ══════════════════════ -->
@@ -1505,11 +1496,8 @@
           data-es=" Mueve el slider Temperature de 0 a 2 y observa cómo la salida cambia de precisa y repetitiva a salvajemente creativa."> Move the Temperature slider from 0 to 2 and watch how the output changes from precise and repetitive to wildly creative.</span>
   </div>
 
-  <aside class="notes">
-    This is a live interactive demo. Let the audience play with the sliders. Key teaching moment: Temperature 0 always picks the highest-probability token (deterministic). As temperature increases, lower-probability tokens get a chance. Top-P narrows or widens the pool of candidates. Show: temp=0 gives the same answer every time; temp=1.5+ gives surprising, sometimes nonsensical results.
-  </aside>
-  <span class="chapter-tag">Chapter 2 · Prompt Engineering</span>
-  <span class="slide-tag">06 / 07</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">06 / 07</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 7: PRACTICAL EXERCISE ══════════════════════ -->
@@ -1585,11 +1573,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    Give the audience 5-7 minutes to work on this individually or in pairs. They should use ChatGPT, Claude, or any available LLM. After the exercise, ask 2-3 volunteers to share their prompts and compare results. Key teaching moment: show how each refinement step dramatically improves quality. The naive prompt generates generic, unusable text. The engineered prompt produces something a PM could actually hit "send" on. This exercise reinforces all five patterns from the chapter.
-  </aside>
-  <span class="chapter-tag">Chapter 2 · Prompt Engineering</span>
-  <span class="slide-tag">07 / 07</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">07 / 07</span></div>
 </section>
 
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
@@ -1605,6 +1590,7 @@
     <li>Brown et al., <a href="https://arxiv.org/abs/2005.14165" target="_blank">"Language Models are Few-Shot Learners"</a>, 2020</li>
     <li><a href="https://learnprompting.org/" target="_blank">Learn Prompting — Free Course</a></li>
   </ul>
+  <aside class="notes"></aside>
   <span class="chapter-tag">Chapter 2 · Prompt Engineering</span>
 </section>
 <!-- chapter3.html -->
@@ -1624,9 +1610,7 @@
     data-fr="Quand coder ressemble à une conversation — le développement assisté par l'IA change tout."
     data-es="Cuando programar se siente como una conversación — el desarrollo asistido por IA lo cambia todo.">When coding feels like a conversation — AI-assisted development changes everything.</p>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">AI-Assisted Coding</span>
-  <aside class="notes">
-    Chapter 3 spans the full spectrum of AI-assisted development: from simple autocomplete (Copilot tab-completion) through chat-assisted coding (Copilot Chat, Cursor) to full "vibe-coding" where you describe what you want and the AI writes everything. Key tension to explore: productivity vs. understanding. Developers who use AI without understanding the output become fragile. We'll look at real metrics and a reality check.
-  </aside>
+  <aside class="notes"></aside>
 </section>
 
 <!-- ══════════════════════ SLIDE 1: WHAT IS VIBE-CODING ══════════════════════ -->
@@ -1705,11 +1689,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    Karpathy coined 'vibe-coding' in February 2025. The philosophical shift: accept that you won’t fully understand every line — instead, you validate and steer. Developers who resist the correction loop waste time; those who embrace 'say stuff, run stuff, fix stuff' iterate 3–5× faster. Important caveat: you still need to understand what the code does conceptually — vibe-coding amplifies skill, it doesn’t mask incompetence.
-  </aside>
-  <span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span>
-  <span class="slide-tag">01 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">01 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 2: THE WORKFLOW ══════════════════════ -->
@@ -1780,11 +1761,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    The loop: Describe → Generate → Run → Review → Refine. Fast feedback cycles are everything. The AI handles boilerplate and structure; you handle integration, architecture constraints, and correctness checking. Tools like Cursor have diff-apply buttons — no copy-paste. Windsurf’s Cascade handles multi-file edits. The best developers have reduced this loop to under 2 minutes per iteration.
-  </aside>
-  <span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span>
-  <span class="slide-tag">02 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">02 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 3: TOOLS LANDSCAPE ══════════════════════ -->
@@ -1910,11 +1888,8 @@
           data-es=" La frontera entre 'IDE' y 'asistente IA' está desapareciendo. En 2025+, cada editor es un editor IA."> The boundary between "IDE" and "AI assistant" is disappearing. In 2025+, every editor is an AI editor.</span>
   </div>
 
-  <aside class="notes">
-    GitHub Copilot: widest enterprise deployment, VS Code native, GitHub integration. Cursor: preferred by startups, composer mode for multi-file edits. Windsurf: strong large-codebase context. Devin: fully autonomous — browses, runs tests, commits. The market is consolidating fast — expect major M&A in 2025–2026. For architects: the key differentiator is codebase awareness (how much context the tool can hold).
-  </aside>
-  <span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span>
-  <span class="slide-tag">03 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">03 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 4: WHEN IT WORKS / WHEN IT DOESN'T ══════════════════════ -->
@@ -1990,11 +1965,8 @@
           data-es=" Nunca envíes código IA que no entiendas. El vibe-coding amplifica tus habilidades — no las reemplaza."> Never ship AI-generated code you don't understand. Vibe-coding amplifies your skills — it doesn't replace them.</span>
   </div>
 
-  <aside class="notes">
-    Works great: CRUD APIs, test generation, data transformation scripts, CSS/UI layouts, regex, config files, documentation. Struggles with: complex business logic with unstated constraints, security-critical code, legacy spaghetti codebases. Golden rule: the better your specification, the better the output. AI amplifies clarity — garbage in, garbage out still applies.
-  </aside>
-  <span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span>
-  <span class="slide-tag">04 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">04 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 5: IMPACT & METRICS ══════════════════════ -->
@@ -2055,11 +2027,8 @@
           data-es=" El vibe-coding no es una moda — es la nueva línea base del desarrollo. Los equipos que no lo adoptan corren el riesgo de quedarse atrás."> Vibe-coding is not a fad — it's the new baseline. Teams not adopting it risk falling behind.</span>
   </div>
 
-  <aside class="notes">
-    Key sources: (1) Kalliamvakou et al. (GitHub/Microsoft, Sep 2022) — randomised controlled trial found Copilot users completed an HTTP server task 55% faster. (2) GitHub Octoverse 2024 — Copilot generates an average of 46% of developers' code in files where it is enabled (not all GitHub code). (3) Stack Overflow 2024 Developer Survey — 76% of developers are using or planning to use AI coding tools. Senior dev role is shifting toward architecture decisions, prompt engineering, code review, and integration testing.
-  </aside>
-  <span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span>
-  <span class="slide-tag">05 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">05 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 6: PRACTICAL EXERCISE ══════════════════════ -->
@@ -2128,11 +2097,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    This exercise takes 10-15 minutes. Provide a sample CSV file or let users use any CSV they have. The goal is NOT to produce perfect code — it's to practice the human-AI collaboration loop: generate → review → refine → test. Common AI mistakes to look for: missing error handling for file-not-found, incorrect column type assumptions, no input validation. This directly reinforces the "reality check" from slide 4 — AI is a powerful first-draft generator, not a replacement for engineering judgment.
-  </aside>
-  <span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span>
-  <span class="slide-tag">06 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">06 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
@@ -2148,6 +2114,7 @@
     <li><a href="https://cursor.sh" target="_blank">Cursor — AI-Native IDE</a></li>
     <li><a href="https://github.com/features/copilot" target="_blank">GitHub Copilot</a></li>
   </ul>
+  <aside class="notes"></aside>
   <span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span>
 </section>
 <!-- chapter4.html -->
@@ -2167,9 +2134,7 @@
     data-fr="Génération augmentée par la recherche — ancrer les modèles de langage dans votre knowledge base."
     data-es="Generación aumentada por recuperación — fundamentando los modelos en tu conocimiento privado.">Retrieval-Augmented Generation — grounding language models in your private knowledge.</p>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">RAG Architecture</span>
-  <aside class="notes">
-    Chapter 4 is critical for anyone building AI products. RAG solves the #1 limitation of LLMs: they don't know your private data and their training has a cutoff. We'll cover the full pipeline — chunking, embedding, vector search, re-ranking, and generation — plus production patterns like hybrid search and evaluation. This is the chapter that turns the audience from AI users into AI builders.
-  </aside>
+  <aside class="notes"></aside>
 </section>
 
 <!-- ══════════════════════ SLIDE 1: THE PROBLEM ══════════════════════ -->
@@ -2237,11 +2202,8 @@
           data-es=" En lugar de reentrenar el modelo, inyectar documentos relevantes en el prompt en tiempo de ejecución."> Instead of retraining the model, inject relevant documents into the prompt at runtime.</span>
   </div>
 
-  <aside class="notes">
-    The key insight: fine-tuning teaches the model skills and style; RAG teaches it facts. You don't want to fine-tune for facts because they change. Analogy: RAG is like giving the model a search engine + copy-paste rights before it answers. It reads, then responds. This is why RAG is the most common production AI pattern in 2024–2025 — it's cheaper, faster, and more controllable than fine-tuning.
-  </aside>
-  <span class="chapter-tag">Chapter 4 · RAG Architecture</span>
-  <span class="slide-tag">01 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 4 · RAG Architecture</span> <span class="slide-tag">01 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 2: RAG FLOW ══════════════════════ -->
@@ -2321,11 +2283,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    Two phases, two very different timescales. Indexing happens once (or periodically); querying happens every request and must be fast (sub-100ms retrieval). Embedding model choice matters: it must be the same at index time and query time. Cosine similarity is the standard metric — two vectors are similar if they point in the same direction in high-dimensional space.
-  </aside>
-  <span class="chapter-tag">Chapter 4 · RAG Architecture</span>
-  <span class="slide-tag">02 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 4 · RAG Architecture</span> <span class="slide-tag">02 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 3: EMBEDDINGS & VECTOR DBs ══════════════════════ -->
@@ -2392,11 +2351,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    Analogy: embeddings are like GPS coordinates for meaning. 'Dog' and 'puppy' have similar coordinates; 'finance' and 'dog' are far apart. The vector DB stores these coordinates and finds nearest neighbours at query time using ANN algorithms (HNSW, IVF). pgvector is the pragmatic enterprise choice — if you already run Postgres, just enable the extension. Pinecone for large-scale managed deployment.
-  </aside>
-  <span class="chapter-tag">Chapter 4 · RAG Architecture</span>
-  <span class="slide-tag">03 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 4 · RAG Architecture</span> <span class="slide-tag">03 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 4: CHUNKING STRATEGIES ══════════════════════ -->
@@ -2408,77 +2364,143 @@
       data-fr="Stratégies de Découpage"
       data-es="Estrategias de Fragmentación">Chunking Strategies</h2>
 
-  <div class="three-col">
-    <div class="model-card" style="padding:18px 16px;">
-      <div class="badge badge-det"
+  <div class="three-col" style="gap:10px;">
+
+    <!-- FIXED SIZE -->
+    <div class="model-card" style="padding:14px 14px;gap:0;">
+      <div class="badge badge-det" style="margin-bottom:6px;"
         data-en="Fixed Size" data-it="Dimensione Fissa" data-fr="Taille Fixe" data-es="Tamaño Fijo">Fixed Size</div>
-      <p style="font-size:.72rem;margin:8px 0;"
-        data-en="Split every N tokens (e.g. 512) with overlap."
-        data-it="Dividi ogni N token (es. 512) con sovrapposizione."
-        data-fr="Découper tous les N tokens (ex. 512) avec chevauchement."
-        data-es="Dividir cada N tokens (ej. 512) con superposición.">Split every N tokens (e.g.&nbsp;512) with overlap.</p>
-      <p style="font-size:.65rem;color:var(--green);">✓ Simple, predictable</p>
-      <p style="font-size:.65rem;color:var(--accent2);"
-        data-en="✗ May break sentences mid-thought"
-        data-it="✗ Può interrompere le frasi"
+      <p style="font-size:.68rem;margin:4px 0 6px;"
+        data-en="Split every N tokens with a sliding overlap window."
+        data-it="Dividi ogni N token con finestra di overlap."
+        data-fr="Découper tous les N tokens avec chevauchement."
+        data-es="Dividir cada N tokens con ventana de superposición.">Split every N tokens with a sliding overlap window.</p>
+      <!-- example -->
+      <div style="background:rgba(27,94,255,.06);border-radius:6px;padding:7px 9px;margin-bottom:7px;font-family:var(--mono);font-size:.56rem;line-height:1.55;color:var(--ink-mid);">
+        <span style="color:var(--ink-mute);"># 512 tok, 10% overlap</span><br>
+        <span style="color:var(--accent);">"The transformer architecture…"</span><br>
+        <span style="color:var(--ink-mute);">chunk 1 [0–512]</span><br>
+        <span style="color:var(--ink-mute);">chunk 2 [460–972] ← overlap</span>
+      </div>
+      <p style="font-size:.63rem;color:var(--green);margin:2px 0;">✓ Simple, fast, predictable</p>
+      <p style="font-size:.63rem;color:var(--accent2);margin:2px 0;"
+        data-en="✗ May cut sentences mid-thought"
+        data-it="✗ Può tagliare le frasi"
         data-fr="✗ Peut couper des phrases"
-        data-es="✗ Puede cortar frases">✗ May break sentences mid-thought</p>
+        data-es="✗ Puede cortar frases">✗ May cut sentences mid-thought</p>
+      <!-- tools -->
+      <div style="margin-top:8px;border-top:1px solid rgba(27,94,255,.1);padding-top:7px;">
+        <div style="font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Tools</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(27,94,255,.1);color:var(--accent);padding:2px 7px;border-radius:4px;">LangChain RecursiveCharacterTextSplitter</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(27,94,255,.1);color:var(--accent);padding:2px 7px;border-radius:4px;">LlamaIndex TokenTextSplitter</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(27,94,255,.1);color:var(--accent);padding:2px 7px;border-radius:4px;">tiktoken</span>
+        </div>
+      </div>
+      <div style="margin-top:6px;font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);"
+        data-en="Best for: plain text, logs, homogeneous corpora"
+        data-it="Ideale per: testo semplice, log, corpus omogenei"
+        data-fr="Idéal pour : texte brut, logs, corpus homogènes"
+        data-es="Ideal para: texto simple, logs, corpus homogéneos">Best for: plain text, logs, homogeneous corpora</div>
     </div>
 
-    <div class="model-card" style="padding:18px 16px;">
-      <div class="badge badge-green"
+    <!-- SEMANTIC -->
+    <div class="model-card" style="padding:14px 14px;gap:0;">
+      <div class="badge badge-green" style="margin-bottom:6px;"
         data-en="Semantic" data-it="Semantico" data-fr="Sémantique" data-es="Semántico">Semantic</div>
-      <p style="font-size:.72rem;margin:8px 0;"
-        data-en="Split by sentences, paragraphs, or headings."
+      <p style="font-size:.68rem;margin:4px 0 6px;"
+        data-en="Split on sentence / paragraph / heading boundaries."
         data-it="Dividi per frasi, paragrafi o titoli."
-        data-fr="Découper par phrases, paragraphes ou titres."
-        data-es="Dividir por oraciones, párrafos o encabezados.">Split by sentences, paragraphs, or headings.</p>
-      <p style="font-size:.65rem;color:var(--green);"
-        data-en="✓ Preserves meaning"
-        data-it="✓ Preserva il significato"
-        data-fr="✓ Préserve le sens"
-        data-es="✓ Preserva el significado">✓ Preserves meaning</p>
-      <p style="font-size:.65rem;color:var(--accent2);"
-        data-en="✗ Variable chunk sizes"
-        data-it="✗ Dimensioni variabili dei chunk"
-        data-fr="✗ Tailles variables"
-        data-es="✗ Tamaños de fragmento variables">✗ Variable chunk sizes</p>
+        data-fr="Découper sur les limites de phrases ou paragraphes."
+        data-es="Dividir por oraciones, párrafos o encabezados.">Split on sentence / paragraph / heading boundaries.</p>
+      <!-- example -->
+      <div style="background:rgba(52,211,153,.06);border-radius:6px;padding:7px 9px;margin-bottom:7px;font-family:var(--mono);font-size:.56rem;line-height:1.55;color:var(--ink-mid);">
+        <span style="color:var(--ink-mute);"># Markdown-aware split</span><br>
+        <span style="color:var(--green);">## Section: Pricing</span><br>
+        <span style="color:var(--ink-mute);">→ chunk boundary ↑</span><br>
+        <span style="color:var(--green);">## Section: Returns</span><br>
+        <span style="color:var(--ink-mute);">→ chunk boundary ↑</span>
+      </div>
+      <p style="font-size:.63rem;color:var(--green);margin:2px 0;"
+        data-en="✓ Preserves meaning, respects structure"
+        data-it="✓ Preserva il significato e la struttura"
+        data-fr="✓ Préserve le sens, respecte la structure"
+        data-es="✓ Preserva el significado y la estructura">✓ Preserves meaning, respects structure</p>
+      <p style="font-size:.63rem;color:var(--accent2);margin:2px 0;"
+        data-en="✗ Variable sizes, needs structure in source"
+        data-it="✗ Dimensioni variabili, richiede struttura"
+        data-fr="✗ Tailles variables, nécessite une structure"
+        data-es="✗ Tamaños variables, requiere estructura">✗ Variable sizes, needs structure in source</p>
+      <!-- tools -->
+      <div style="margin-top:8px;border-top:1px solid rgba(52,211,153,.15);padding-top:7px;">
+        <div style="font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Tools</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(52,211,153,.1);color:var(--green);padding:2px 7px;border-radius:4px;">LangChain SemanticChunker</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(52,211,153,.1);color:var(--green);padding:2px 7px;border-radius:4px;">LlamaIndex SemanticSplitterNodeParser</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(52,211,153,.1);color:var(--green);padding:2px 7px;border-radius:4px;">spaCy sentencizer</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(52,211,153,.1);color:var(--green);padding:2px 7px;border-radius:4px;">Unstructured.io</span>
+        </div>
+      </div>
+      <div style="margin-top:6px;font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);"
+        data-en="Best for: docs, manuals, markdown, HTML"
+        data-it="Ideale per: documenti, manuali, markdown, HTML"
+        data-fr="Idéal pour : docs, manuels, markdown, HTML"
+        data-es="Ideal para: documentos, manuales, markdown, HTML">Best for: docs, manuals, markdown, HTML</div>
     </div>
 
-    <div class="model-card" style="padding:18px 16px;">
-      <div class="badge badge-purple"
+    <!-- HIERARCHICAL -->
+    <div class="model-card" style="padding:14px 14px;gap:0;">
+      <div class="badge badge-purple" style="margin-bottom:6px;"
         data-en="Hierarchical" data-it="Gerarchico" data-fr="Hiérarchique" data-es="Jerárquico">Hierarchical</div>
-      <p style="font-size:.72rem;margin:8px 0;"
-        data-en="Parent chunks for retrieval, child chunks for precision."
-        data-it="Chunk padre per retrieval, chunk figlio per precisione."
-        data-fr="Chunks parents pour la recherche, enfants pour la précision."
-        data-es="Chunks padre para recuperación, hijos para precisión.">Parent chunks for retrieval, child chunks for precision.</p>
-      <p style="font-size:.65rem;color:var(--green);"
-        data-en="✓ Best precision + context"
-        data-it="✓ Miglior precisione + contesto"
-        data-fr="✓ Meilleure précision + contexte"
-        data-es="✓ Mejor precisión + contexto">✓ Best precision + context</p>
-      <p style="font-size:.65rem;color:var(--accent2);"
-        data-en="✗ More complex to implement"
-        data-it="✗ Più complesso da implementare"
-        data-fr="✗ Plus complexe à mettre en œuvre"
-        data-es="✗ Más complejo de implementar">✗ More complex to implement</p>
+      <p style="font-size:.68rem;margin:4px 0 6px;"
+        data-en="Large parent chunks for context + small child chunks for precision."
+        data-it="Chunk padre grandi per contesto + chunk figlio piccoli per precisione."
+        data-fr="Grands chunks parents pour le contexte + petits enfants pour la précision."
+        data-es="Chunks padre grandes para contexto + hijos pequeños para precisión.">Large parent chunks for context + small child chunks for precision.</p>
+      <!-- example -->
+      <div style="background:rgba(167,139,250,.07);border-radius:6px;padding:7px 9px;margin-bottom:7px;font-family:var(--mono);font-size:.56rem;line-height:1.55;color:var(--ink-mid);">
+        <span style="color:var(--purple);">Parent [2048 tok]</span> ← sent to LLM<br>
+        <span style="color:var(--ink-mute);">  ├─ Child [128 tok] ← retrieved</span><br>
+        <span style="color:var(--ink-mute);">  ├─ Child [128 tok]</span><br>
+        <span style="color:var(--ink-mute);">  └─ Child [128 tok]</span>
+      </div>
+      <p style="font-size:.63rem;color:var(--green);margin:2px 0;"
+        data-en="✓ High precision retrieval + rich context"
+        data-it="✓ Retrieval ad alta precisione + contesto ricco"
+        data-fr="✓ Récupération précise + contexte riche"
+        data-es="✓ Recuperación precisa + contexto rico">✓ High precision retrieval + rich context</p>
+      <p style="font-size:.63rem;color:var(--accent2);margin:2px 0;"
+        data-en="✗ More storage, complex pipeline"
+        data-it="✗ Più storage, pipeline complessa"
+        data-fr="✗ Plus de stockage, pipeline complexe"
+        data-es="✗ Más almacenamiento, pipeline complejo">✗ More storage, complex pipeline</p>
+      <!-- tools -->
+      <div style="margin-top:8px;border-top:1px solid rgba(167,139,250,.2);padding-top:7px;">
+        <div style="font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Tools</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(167,139,250,.1);color:var(--purple);padding:2px 7px;border-radius:4px;">LlamaIndex HierarchicalNodeParser</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(167,139,250,.1);color:var(--purple);padding:2px 7px;border-radius:4px;">LangChain ParentDocumentRetriever</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(167,139,250,.1);color:var(--purple);padding:2px 7px;border-radius:4px;">LlamaIndex AutoMergingRetriever</span>
+        </div>
+      </div>
+      <div style="margin-top:6px;font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);"
+        data-en="Best for: long reports, legal docs, books"
+        data-it="Ideale per: report lunghi, documenti legali, libri"
+        data-fr="Idéal pour : longs rapports, docs juridiques, livres"
+        data-es="Ideal para: informes largos, documentos legales, libros">Best for: long reports, legal docs, books</div>
     </div>
   </div>
 
-  <div class="key-insight fragment" style="margin-top:14px;">
+  <div class="key-insight fragment" style="margin-top:10px;">
     <strong data-en="Rule of thumb:" data-it="Regola pratica:" data-fr="Règle empirique :" data-es="Regla práctica:">Rule of thumb:</strong>
-    <span data-en=" Chunk size ~512 tokens, overlap ~10–15%. Test with your data — no universal best."
-          data-it=" Dimensione chunk ~512 token, overlap ~10-15%. Testa con i tuoi dati — non esiste il migliore universale."
-          data-fr=" Taille de chunk ~512 tokens, chevauchement ~10-15%. Tester avec vos données — pas de meilleure solution universelle."
-          data-es=" Tamaño de chunk ~512 tokens, superposición ~10-15%. Prueba con tus datos — no hay una solución universal."> Chunk size ~512 tokens, overlap ~10–15%. Test with your data — no universal best.</span>
+    <span data-en=" Start with <code style='font-family:var(--mono);font-size:.8em;'>RecursiveCharacterTextSplitter</code> (chunk 512, overlap 64). Switch to Semantic or Hierarchical when retrieval recall drops below 80%."
+          data-it=" Inizia con <code style='font-family:var(--mono);font-size:.8em;'>RecursiveCharacterTextSplitter</code> (chunk 512, overlap 64). Passa a Semantic o Hierarchical se il recall scende sotto l'80%."
+          data-fr=" Commencez avec <code style='font-family:var(--mono);font-size:.8em;'>RecursiveCharacterTextSplitter</code> (chunk 512, overlap 64). Passez à Semantic ou Hierarchical si le recall passe sous 80%."
+          data-es=" Empieza con <code style='font-family:var(--mono);font-size:.8em;'>RecursiveCharacterTextSplitter</code> (chunk 512, overlap 64). Cambia a Semantic o Hierarchical si el recall baja del 80%."> Start with <code style="font-family:var(--mono);font-size:.8em;">RecursiveCharacterTextSplitter</code> (chunk 512, overlap 64). Switch to Semantic or Hierarchical when retrieval recall drops below 80%.</span>
   </div>
 
-  <aside class="notes">
-    The chunking strategy has the largest single impact on RAG quality — even more than the LLM itself. Too small: retrieved chunks lack context. Too large: noisy retrieval, wasted tokens. The overlap prevents straddling important information at chunk boundaries. Advanced: re-ranking with a cross-encoder model after initial retrieval significantly improves relevance (ColBERT, Cohere Rerank).
-  </aside>
-  <span class="chapter-tag">Chapter 4 · RAG Architecture</span>
-  <span class="slide-tag">04 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 4 · RAG Architecture</span> <span class="slide-tag">04 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 5: USE CASES ══════════════════════ -->
@@ -2533,11 +2555,8 @@
           data-es=" Cada respuesta puede citar su fuente. Usuarios y auditores pueden verificar. Esta es la capa de confianza que la IA necesita en industrias reguladas."> Every answer can cite its source. Users and auditors can verify. This is the trust layer AI needs in regulated industries.</span>
   </div>
 
-  <aside class="notes">
-    RAG is the #1 production AI pattern in 2025. It's cheaper than fine-tuning, safer than raw completions, and auditable. The source citation feature is critical for regulated industries — it transforms a 'black box' into a transparent assistant. Advanced RAG: hybrid search (vector + keyword BM25), re-ranking, query rewriting, HyDE (Hypothetical Document Embeddings).
-  </aside>
-  <span class="chapter-tag">Chapter 4 · RAG Architecture</span>
-  <span class="slide-tag">05 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 4 · RAG Architecture</span> <span class="slide-tag">05 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 6: PRACTICAL EXERCISE ══════════════════════ -->
@@ -2615,11 +2634,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    This is a group exercise (3-4 people, 15-20 minutes). Each group designs the architecture and presents to the class. Common discussion points: chunk size matters — too small loses context, too big dilutes relevance (sweet spot: 500-1000 tokens with 10-20% overlap). Access control: metadata filtering at retrieval time, not post-generation. Document updates: incremental re-indexing pipeline with version tracking. The system prompt should instruct the LLM to say "I don't know" when retrieved context doesn't answer the question — this prevents hallucination in production.
-  </aside>
-  <span class="chapter-tag">Chapter 4 · RAG Architecture</span>
-  <span class="slide-tag">06 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 4 · RAG Architecture</span> <span class="slide-tag">06 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
@@ -2635,6 +2651,7 @@
     <li><a href="https://github.com/pgvector/pgvector" target="_blank">pgvector — Postgres vector extension</a></li>
     <li>Gao et al., <a href="https://arxiv.org/abs/2312.10997" target="_blank">"Retrieval-Augmented Generation for Large Language Models: A Survey"</a>, 2023</li>
   </ul>
+  <aside class="notes"></aside>
   <span class="chapter-tag">Chapter 4 · RAG Architecture</span>
 </section>
 <!-- chapter5.html -->
@@ -2647,16 +2664,14 @@
     data-en="Chapter 05" data-it="Capitolo 05" data-fr="Chapitre 05" data-es="Capítulo 05">Chapter 05</div>
   <div class="rule" style="margin:0 auto 28px;"></div>
   <h1 style="text-align:center;"
-    data-en="AI Agents<br>+ MCP" data-it="Agenti AI<br>+ MCP" data-fr="Agents IA<br>+ MCP" data-es="Agentes IA<br>+ MCP">AI Agents<br>+ MCP</h1>
+    data-en="AI Agents<br>& MCP" data-it="Agenti AI<br>& MCP" data-fr="Agents IA<br>& MCP" data-es="Agentes IA<br>& MCP">AI Agents<br>& MCP</h1>
   <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
     data-en="From question-answering to autonomous action — AI that plans, uses tools, and gets things done."
     data-it="Dal question-answering all'azione autonoma — AI che pianifica, usa strumenti e fa le cose."
     data-fr="Du question-answering à l'action autonome — une IA qui planifie, utilise des outils et agit."
     data-es="Del question-answering a la acción autónoma — IA que planifica, usa herramientas y actúa.">From question-answering to autonomous action — AI that plans, uses tools, and gets things done.</p>
-  <span class="chapter-tag" style="color:rgba(255,255,255,.25);">AI Agents + MCP</span>
-  <aside class="notes">
-    Chapter 5 is about the frontier — moving from chat to action. AI agents can plan multi-step tasks, call APIs, read databases, and execute code autonomously. We cover the ReAct loop (Reason + Act), tool use, the new MCP protocol from Anthropic, and Andrew Ng's four agentic design patterns. Key warning: agents are powerful but require robust guardrails — every tool call is a potential security surface.
-  </aside>
+  <span class="chapter-tag" style="color:rgba(255,255,255,.25);">AI Agents & MCP</span>
+  <aside class="notes"></aside>
 </section>
 
 <!-- ══════════════════════ SLIDE 1: WHAT IS AN AI AGENT ══════════════════════ -->
@@ -2744,11 +2759,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    The key difference: a chatbot responds; an agent acts. Agents can take minutes or hours to complete a task, making multiple decisions along the way. The loop is often called Observe-Orient-Decide-Act (OODA) or in LLM terms, ReAct (Reason + Act). Risk: agents can get stuck in loops or take unintended actions — human oversight is critical. Current state (2025): most production agents are semi-autonomous with human-in-the-loop checkpoints. Andrew Ng (DeepLearning.AI) identifies 4 core agentic patterns: Reflection, Tool Use, Planning, and Multi-Agent Collaboration.
-  </aside>
-  <span class="chapter-tag">Chapter 5 · AI Agents + MCP</span>
-  <span class="slide-tag">01 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 5 · AI Agents & MCP</span> <span class="slide-tag">01 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 1b: AGENTIC DESIGN PATTERNS (deeplearning.ai) ══════════════════════ -->
@@ -2829,11 +2841,8 @@
           data-es=" Andrew Ng, DeepLearning.AI — serie <em>'Agentic Design Patterns'</em>, 2024. Estos patrones se pueden combinar: un agente puede planificar, usar herramientas, reflexionar y colaborar."> Andrew Ng, DeepLearning.AI — <em>"Agentic Design Patterns"</em> series, 2024. These patterns can be combined: an agent can plan, use tools, reflect on results, and collaborate with other agents.</span>
   </div>
 
-  <aside class="notes">
-    Andrew Ng popularized these four patterns in his DeepLearning.AI newsletter and courses in 2024. The key insight: agentic workflows where the LLM iterates on its own output dramatically outperform zero-shot approaches. Reflection alone can boost code generation from ~50% to ~95% correctness. GPT-3.5 with agentic workflows often outperforms GPT-4 with simple prompting. Ask the audience: which pattern resonates most with your use case?
-  </aside>
-  <span class="chapter-tag">Chapter 5 · AI Agents + MCP</span>
-  <span class="slide-tag">01b / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 5 · AI Agents & MCP</span> <span class="slide-tag">01b / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 2: THE REACT LOOP ══════════════════════ -->
@@ -2895,11 +2904,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    ReAct (Reason + Act) is the foundational pattern described by Yao et al. (2022). The model's internal thought process is laid out explicitly in the prompt — this 'chain-of-thought scratchpad' significantly improves task completion. Key risk: the loop can fail if a tool call fails or returns unexpected data — good agents have error handling and retry logic at each step.
-  </aside>
-  <span class="chapter-tag">Chapter 5 · AI Agents + MCP</span>
-  <span class="slide-tag">02 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 5 · AI Agents & MCP</span> <span class="slide-tag">02 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 3: TOOL USE & FUNCTION CALLING ══════════════════════ -->
@@ -2965,11 +2971,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    Function calling (OpenAI) / tool use (Anthropic) is now native in all major models. The model emits a structured JSON payload instead of plain text. Your code executes the function and returns the result back to the model. This prevents arbitrary code injection. Safety principle: the agent requests; your code decides whether to execute (human-in-the-loop gate).
-  </aside>
-  <span class="chapter-tag">Chapter 5 · AI Agents + MCP</span>
-  <span class="slide-tag">03 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 5 · AI Agents & MCP</span> <span class="slide-tag">03 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 4: MCP ══════════════════════ -->
@@ -3032,11 +3035,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    MCP launched November 2024 and was quickly adopted by Cursor, VS Code Copilot, Windsurf, and most major AI development tools. Before MCP, every AI product had to build custom integrations for every tool. MCP creates a universal adapter layer — write the server once, works with any MCP-compatible AI. Analogy: like the Language Server Protocol (LSP) standardised IDE features across editors, MCP standardises AI tool integrations.
-  </aside>
-  <span class="chapter-tag">Chapter 5 · AI Agents + MCP</span>
-  <span class="slide-tag">04 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 5 · AI Agents & MCP</span> <span class="slide-tag">04 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 5: MULTI-AGENT ══════════════════════ -->
@@ -3049,60 +3049,76 @@
       data-es="Sistemas<br>Multi-Agente">Multi-Agent<br>Systems</h2>
 
   <div class="two-col">
-    <div>
-      <p style="font-size:.8rem;margin:0 0 14px;"
-        data-en="Complex tasks can be split across multiple specialised agents that collaborate, verify each other, and hand off work."
-        data-it="I task complessi possono essere suddivisi tra più agenti specializzati che collaborano, si verificano a vicenda e passano il lavoro."
-        data-fr="Les tâches complexes peuvent être réparties entre plusieurs agents spécialisés qui collaborent, se vérifient et se transmettent le travail."
-        data-es="Las tareas complejas pueden dividirse entre múltiples agentes especializados que colaboran, se verifican mutuamente y transfieren el trabajo.">Complex tasks can be split across multiple specialised agents that collaborate, verify each other, and hand off work.</p>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <p style="font-size:.76rem;margin:0;"
+        data-en="Complex tasks split across specialised agents that collaborate, verify each other, and hand off work. A <em>supervisor</em> agent orchestrates the flow."
+        data-it="I task complessi vengono suddivisi tra agenti specializzati che collaborano. Un agente <em>supervisore</em> orchestra il flusso."
+        data-fr="Les tâches complexes sont réparties entre agents spécialisés. Un agent <em>superviseur</em> orchestre le flux."
+        data-es="Las tareas complejas se dividen entre agentes especializados. Un agente <em>supervisor</em> orquesta el flujo.">Complex tasks split across specialised agents that collaborate, verify each other, and hand off work. A <em>supervisor</em> agent orchestrates the flow.</p>
 
-      <div class="model-card" style="padding:14px 16px;margin-bottom:10px;">
-        <div class="badge badge-det" style="margin-bottom:8px;"
-          data-en="Orchestrator ↔ Worker pattern" data-it="Pattern Orchestratore ↔ Worker" data-fr="Modèle Orchestrateur ↔ Worker" data-es="Patrón Orquestador ↔ Worker">Orchestrator ↔ Worker pattern</div>
-        <p style="font-size:.72rem;margin:0;"
-          data-en="A 'manager' agent breaks down the goal, delegates to specialised 'worker' agents, collects results, and synthesises the final answer."
-          data-it="Un agente 'manager' suddivide l'obiettivo, delega ad agenti 'worker' specializzati, raccoglie i risultati e sintetizza la risposta finale."
-          data-fr="Un agent 'manager' décompose l'objectif, délègue à des agents 'worker' spécialisés, recueille les résultats et synthétise la réponse."
-          data-es="Un agente 'manager' descompone el objetivo, delega a agentes 'worker' especializados, recopila resultados y sintetiza la respuesta final.">A "manager" agent breaks down the goal, delegates to specialised "worker" agents, collects results, and synthesises the final answer.</p>
+      <!-- LangGraph highlight -->
+      <div style="background:rgba(27,94,255,.06);border:1px solid rgba(27,94,255,.18);border-radius:10px;padding:11px 14px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+          <span style="font-family:var(--mono);font-size:.65rem;color:var(--accent);font-weight:600;">LangGraph</span>
+          <span style="font-family:var(--mono);font-size:.53rem;background:rgba(27,94,255,.12);color:var(--accent);padding:1px 6px;border-radius:4px;">LangChain ecosystem</span>
+          <span style="font-family:var(--mono);font-size:.53rem;background:rgba(52,211,153,.1);color:var(--green);padding:1px 6px;border-radius:4px;">production-ready</span>
+        </div>
+        <p style="font-size:.67rem;margin:0 0 7px;"
+          data-en="Models agent workflows as a <strong>state machine graph</strong>: nodes are LLM calls or tool invocations; edges are conditional transitions. A <code style='font-family:var(--mono);font-size:.85em;'>supervisor</code> node routes tasks to specialist worker nodes."
+          data-it="Modella i flussi agente come un <strong>grafo di macchine a stati</strong>: i nodi sono chiamate LLM o tool; gli archi sono transizioni condizionali. Un nodo <code style='font-family:var(--mono);font-size:.85em;'>supervisor</code> instrada i task ai worker specializzati."
+          data-fr="Modélise les flux d'agents comme un <strong>graphe d'état</strong> : les nœuds sont des appels LLM ou d'outils ; les arêtes sont des transitions conditionnelles. Un nœud <code style='font-family:var(--mono);font-size:.85em;'>supervisor</code> route les tâches."
+          data-es="Modela los flujos de agentes como un <strong>grafo de máquina de estados</strong>: los nodos son llamadas LLM o herramientas; las aristas son transiciones condicionales. Un nodo <code style='font-family:var(--mono);font-size:.85em;'>supervisor</code> enruta las tareas.">Models agent workflows as a <strong>state machine graph</strong>: nodes are LLM calls or tool invocations; edges are conditional transitions. A <code style="font-family:var(--mono);font-size:.85em;">supervisor</code> node routes tasks to specialist worker nodes.</p>
+        <div style="font-family:var(--mono);font-size:.57rem;line-height:1.6;color:var(--ink-mid);background:rgba(0,0,0,.12);border-radius:6px;padding:7px 10px;">
+          <span style="color:var(--ink-mute);"># Supervisor → Workers pattern</span><br>
+          Supervisor&nbsp;──▶&nbsp;ResearchAgent<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;──▶&nbsp;CodeAgent<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;──▶&nbsp;CriticAgent&nbsp;──▶&nbsp;END
+        </div>
+        <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;font-size:.6rem;color:var(--ink-mute);">
+          <span>✓ Checkpointing &amp; resumability</span>
+          <span>✓ Human-in-the-loop nodes</span>
+          <span>✓ Streaming</span>
+        </div>
       </div>
     </div>
 
-    <div>
-      <div class="badge badge-green" style="margin-bottom:10px;"
-        data-en="Real-World Agents (2025)" data-it="Agenti Reali (2025)" data-fr="Agents Réels (2025)" data-es="Agentes Reales (2025)">Real-World Agents (2025)</div>
-      <ul class="example-list">
-        <li data-en="<strong>Devin</strong> — autonomous software engineer (Cognition)"
-            data-it="<strong>Devin</strong> — ingegnere software autonomo (Cognition)"
-            data-fr="<strong>Devin</strong> — ingénieur logiciel autonome (Cognition)"
-            data-es="<strong>Devin</strong> — ingeniero de software autónomo (Cognition)"><strong>Devin</strong> — autonomous software engineer (Cognition)</li>
-        <li data-en="<strong>SWE-agent</strong> — GitHub issue resolver (Princeton)"
-            data-it="<strong>SWE-agent</strong> — risolutore GitHub issue (Princeton)"
-            data-fr="<strong>SWE-agent</strong> — résolveur d'issues GitHub (Princeton)"
-            data-es="<strong>SWE-agent</strong> — resolvedor de issues GitHub (Princeton)"><strong>SWE-agent</strong> — GitHub issue resolver (Princeton)</li>
-        <li data-en="<strong>Claude Computer Use</strong> — controls desktop GUI"
-            data-it="<strong>Claude Computer Use</strong> — controlla GUI desktop"
-            data-fr="<strong>Claude Computer Use</strong> — contrôle GUI bureau"
-            data-es="<strong>Claude Computer Use</strong> — controla GUI de escritorio"><strong>Claude Computer Use</strong> — controls desktop GUI</li>
-        <li data-en="<strong>AutoGen / LangGraph</strong> — multi-agent frameworks"
-            data-it="<strong>AutoGen / LangGraph</strong> — framework multi-agente"
-            data-fr="<strong>AutoGen / LangGraph</strong> — frameworks multi-agents"
-            data-es="<strong>AutoGen / LangGraph</strong> — frameworks multi-agente"><strong>AutoGen / LangGraph</strong> — multi-agent frameworks</li>
-      </ul>
-      <div class="key-insight" style="margin-top:10px;padding:10px 14px;">
-        <strong data-en="2025 trend:" data-it="Tendenza 2025:" data-fr="Tendance 2025 :" data-es="Tendencia 2025:">2025 trend:</strong>
-        <span data-en=" Agents are moving from demos to production — with careful guardrails."
-              data-it=" Gli agenti stanno passando dai demo alla produzione — con attenti guardrail."
-              data-fr=" Les agents passent des démos à la production — avec des garde-fous soigneux."
-              data-es=" Los agentes están pasando de demos a producción — con guardarraíles cuidadosos."> Agents are moving from demos to production — with careful guardrails.</span>
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <!-- Framework comparison -->
+      <div style="font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;">Orchestration frameworks</div>
+      <div class="model-card" style="padding:9px 12px;flex-direction:row;align-items:flex-start;gap:10px;">
+        <div style="flex:0 0 76px;font-family:var(--mono);font-size:.68rem;color:var(--accent);font-weight:600;">LangGraph</div>
+        <div style="font-size:.63rem;color:var(--ink-mid);" data-en="State-machine graphs. Best for deterministic, inspectable pipelines. Production standard."
+            data-it="Grafi a macchina di stati. Ideale per pipeline deterministiche e ispezionabili. Standard di produzione."
+            data-fr="Graphes d'état. Idéal pour pipelines déterministes et inspectables. Standard de production."
+            data-es="Grafos de máquina de estados. Ideal para pipelines deterministas e inspeccionables. Estándar de producción.">State-machine graphs. Best for deterministic, inspectable pipelines. Production standard.</div>
+      </div>
+      <div class="model-card" style="padding:9px 12px;flex-direction:row;align-items:flex-start;gap:10px;">
+        <div style="flex:0 0 76px;font-family:var(--mono);font-size:.68rem;color:var(--purple);font-weight:600;">AutoGen</div>
+        <div style="font-size:.63rem;color:var(--ink-mid);" data-en="Conversation-based multi-agent chat (Microsoft). Great for debate / review loops."
+            data-it="Multi-agente basato su conversazione (Microsoft). Ottimo per loop di dibattito/revisione."
+            data-fr="Multi-agents par conversation (Microsoft). Idéal pour boucles débat / révision."
+            data-es="Multi-agente basado en conversación (Microsoft). Ideal para bucles de debate/revisión.">Conversation-based multi-agent chat (Microsoft). Great for debate / review loops.</div>
+      </div>
+      <div class="model-card" style="padding:9px 12px;flex-direction:row;align-items:flex-start;gap:10px;">
+        <div style="flex:0 0 76px;font-family:var(--mono);font-size:.68rem;color:var(--green);font-weight:600;">CrewAI</div>
+        <div style="font-size:.63rem;color:var(--ink-mid);" data-en="Role-based crews with YAML config. Fast prototyping but less control at scale."
+            data-it="Crew basate su ruoli con config YAML. Prototipazione veloce ma meno controllo in scala."
+            data-fr="Équipes basées sur des rôles avec config YAML. Prototypage rapide mais moins de contrôle à l'échelle."
+            data-es="Equipos basados en roles con config YAML. Prototipado rápido pero menos control a escala.">Role-based crews with YAML config. Fast prototyping but less control at scale.</div>
+      </div>
+
+      <div class="key-insight" style="padding:9px 13px;margin-top:2px;">
+        <strong data-en="Recommendation:" data-it="Raccomandazione:" data-fr="Recommandation :" data-es="Recomendación:">Recommendation:</strong>
+        <span data-en=" Start with LangGraph for anything going to production. Use CrewAI for fast demos. AutoGen for peer-review agent patterns."
+              data-it=" Usa LangGraph per tutto ciò che va in produzione. CrewAI per demo veloci. AutoGen per pattern di peer-review."
+              data-fr=" LangGraph pour la production. CrewAI pour les démos rapides. AutoGen pour les patterns de peer-review."
+              data-es=" LangGraph para producción. CrewAI para demos rápidas. AutoGen para patrones de peer-review."> Start with LangGraph for anything going to production. Use CrewAI for fast demos. AutoGen for peer-review agent patterns.</span>
       </div>
     </div>
   </div>
 
-  <aside class="notes">
-    Multi-agent systems shine for tasks too large for one context window, tasks requiring diverse skills, or tasks needing checks and balances (one agent writes, another reviews). Challenges: higher latency, cost, error propagation, and debugging difficulty. Best practice (2025): build the simplest agent that works. Add complexity only when single-agent fails. Always include a human-checkpoint for irreversible actions (send email, delete file, deploy to prod).
-  </aside>
-  <span class="chapter-tag">Chapter 5 · AI Agents + MCP</span>
-  <span class="slide-tag">05 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 5 · AI Agents & MCP</span> <span class="slide-tag">05 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
@@ -3122,7 +3138,8 @@
     <li><a href="https://www.deeplearning.ai/short-courses/ai-agentic-design-patterns-with-autogen/" target="_blank">DeepLearning.AI — Agentic Design Patterns with AutoGen (course)</a></li>
     <li><a href="https://www.deeplearning.ai/short-courses/mcp-build-rich-context-ai-apps-with-anthropic/" target="_blank">DeepLearning.AI — MCP: Build Rich-Context AI Apps (course)</a></li>
   </ul>
-  <span class="chapter-tag">Chapter 5 · AI Agents + MCP</span>
+  <aside class="notes"></aside>
+  <span class="chapter-tag">Chapter 5 · AI Agents & MCP</span>
 </section>
 <!-- chapter6.html -->
 
@@ -3141,9 +3158,7 @@
     data-fr="La puissance sans garde-fous est un risque. Comprendre les limites et responsabilités de l'IA est l'affaire de tous."
     data-es="El poder sin guardarraíles es un riesgo. Comprender los límites y responsabilidades de la IA es tarea de todos.">Power without guardrails is a risk. Understanding AI's limits and responsibilities is everyone's job.</p>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">Ethics & Future</span>
-  <aside class="notes">
-    Chapter 6 is the conscience of the course. After five chapters showing what AI can do, this chapter asks what AI should do. We'll cover real-world failures (Amazon hiring bias, COMPAS, deepfakes), the EU AI Act's risk framework, governance standards (NIST AI RMF, ISO 42001), and practical deployment checklists. End with the Road Ahead — not to predict, but to prepare. The message: responsible AI is not a brake on innovation, it is a steering wheel.
-  </aside>
+  <aside class="notes"></aside>
 </section>
 
 <!-- ══════════════════════ SLIDE 1: BIAS & HALLUCINATION ══════════════════════ -->
@@ -3221,11 +3236,8 @@
           data-es=" Nunca usar output de IA sin revisión humana en decisiones de alto riesgo (contratación, medicina, ley, finanzas)."> Never use AI output without human review in high-stakes decisions (hiring, medicine, law, finance).</span>
   </div>
 
-  <aside class="notes">
-    Hallucination rate: GPT-4 hallucinates ~3-5% on factual queries (lower with RAG); older models up to 20%. The dangerous case: confident, fluent, plausible-sounding errors on specialised topics the model rarely saw in training. Solution stack: RAG for facts, chain-of-thought for reasoning, constitutional AI for behaviour constraints, human review for high-stakes decisions. Bias: test your AI outputs with diverse user personas before deployment.
-  </aside>
-  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
-  <span class="slide-tag">01 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span> <span class="slide-tag">01 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 2: EU AI ACT ══════════════════════ -->
@@ -3301,11 +3313,8 @@
     </div>
   </div>
 
-  <aside class="notes">
-    EU AI Act timeline: General-purpose AI rules apply Feb 2025. High-risk AI requirements by Aug 2026. Companies deploying AI in the EU must comply or face fines up to €35M or 7% of global turnover. Key for architects: any AI touching HR, credit scoring, access to essential services, or law enforcement triggers High Risk classification. Documentation, human oversight, and transparency are not optional — they are legal requirements.
-  </aside>
-  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
-  <span class="slide-tag">02 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span> <span class="slide-tag">02 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 3: REAL-WORLD AI FAILURES ══════════════════════ -->
@@ -3322,21 +3331,23 @@
       <div class="model-card" style="border-left:3px solid var(--accent2);padding:14px 16px;">
         <div class="badge badge-prob" style="margin-bottom:6px;"
           data-en="Amazon Hiring Tool (2018)" data-it="Tool Assunzioni Amazon (2018)" data-fr="Outil de Recrutement Amazon (2018)" data-es="Herramienta de Contratación Amazon (2018)">Amazon Hiring Tool (2018)</div>
-        <p style="font-size:.7rem;margin:0;"
+        <p style="font-size:.7rem;margin:0 0 5px;"
           data-en="CV screening model penalised female candidates. Trained on 10 years of male-dominated hiring data — learned gender was a negative signal."
           data-it="Il modello di screening CV penalizzava le candidate donne. Addestrato su 10 anni di dati di assunzione a dominanza maschile."
           data-fr="Le modèle de tri de CV pénalisait les candidates. Entraîné sur 10 ans de données d'embauche à dominance masculine."
           data-es="El modelo de selección de CV penalizaba a las candidatas. Entrenado con 10 años de datos de contratación dominados por hombres.">CV screening model penalised female candidates. Trained on 10 years of male-dominated hiring data — learned gender was a negative signal.</p>
+        <a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--accent2);text-decoration:none;">→ Reuters (Oct 2018)</a>
       </div>
 
       <div class="model-card" style="border-left:3px solid var(--accent);padding:14px 16px;">
         <div class="badge badge-det" style="margin-bottom:6px;"
           data-en="COMPAS Recidivism (2016)" data-it="Recidiva COMPAS (2016)" data-fr="Récidive COMPAS (2016)" data-es="Reincidencia COMPAS (2016)">COMPAS Recidivism (2016)</div>
-        <p style="font-size:.7rem;margin:0;"
+        <p style="font-size:.7rem;margin:0 0 5px;"
           data-en="Criminal risk scoring system was twice as likely to falsely flag Black defendants as high-risk compared to white defendants."
           data-it="Il sistema di punteggio del rischio criminale aveva il doppio di probabilità di segnalare falsamente i defendant neri come ad alto rischio."
           data-fr="Le système de score de risque criminel avait deux fois plus de chances de signaler faussement les accusés noirs comme à haut risque."
           data-es="El sistema de puntuación de riesgo criminal tenía el doble de probabilidades de señalar falsamente a los acusados negros como de alto riesgo.">Criminal risk scoring system was twice as likely to falsely flag Black defendants as high-risk compared to white defendants.</p>
+        <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--accent);text-decoration:none;">→ ProPublica — Machine Bias (2016)</a>
       </div>
     </div>
 
@@ -3344,21 +3355,23 @@
       <div class="model-card" style="border-left:3px solid var(--amber);padding:14px 16px;">
         <div class="badge badge-green" style="background:rgba(251,191,36,.1);color:var(--amber);margin-bottom:6px;"
           data-en="Lawyer Cites Fake Cases (2023)" data-it="Avvocato Cita Casi Falsi (2023)" data-fr="Avocat Cite des Cas Fictifs (2023)" data-es="Abogado Cita Casos Falsos (2023)">Lawyer Cites Fake Cases (2023)</div>
-        <p style="font-size:.7rem;margin:0;"
+        <p style="font-size:.7rem;margin:0 0 5px;"
           data-en="A New York attorney used ChatGPT for legal research. The AI invented six fake case citations — complete with made-up judges and rulings. Sanctions followed."
           data-it="Un avvocato di New York ha usato ChatGPT per la ricerca giuridica. L'AI ha inventato sei citazioni di casi falsi — con giudici e sentenze inventati."
           data-fr="Un avocat new-yorkais a utilisé ChatGPT pour ses recherches juridiques. L'IA a inventé six fausses citations de jurisprudence."
           data-es="Un abogado de Nueva York usó ChatGPT para investigación legal. La IA inventó seis citas de casos falsos — con jueces y sentencias inventados.">A New York attorney used ChatGPT for legal research. The AI invented six fake case citations — complete with made-up judges and rulings. Sanctions followed.</p>
+        <a href="https://www.nytimes.com/2023/05/27/nyregion/avianca-airline-lawsuit-chatgpt.html" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--amber);text-decoration:none;">→ NYT — Mata v. Avianca (May 2023)</a>
       </div>
 
       <div class="model-card" style="border-left:3px solid var(--purple);padding:14px 16px;">
         <div class="badge badge-purple" style="margin-bottom:6px;"
           data-en="Deepfake Fraud ($25M, 2024)" data-it="Frode Deepfake ($25M, 2024)" data-fr="Fraude Deepfake (25M$, 2024)" data-es="Fraude Deepfake ($25M, 2024)">Deepfake Fraud ($25M, 2024)</div>
-        <p style="font-size:.7rem;margin:0;"
+        <p style="font-size:.7rem;margin:0 0 5px;"
           data-en="Hong Kong firm employee tricked by AI-generated video call impersonating the CFO. Result: $25 million wire transfer to scammers."
           data-it="Dipendente di un'azienda di Hong Kong ingannato da una videochiamata AI che impersonava il CFO. Risultato: bonifico di $25M ai truffatori."
           data-fr="Un employé d'une entreprise de Hong Kong trompé par un appel vidéo IA usurpant l'identité du directeur financier. Résultat : virement de 25M$."
           data-es="Empleado de una empresa de Hong Kong engañado por videollamada IA que suplantaba al CFO. Resultado: transferencia de $25M a estafadores.">Hong Kong firm employee tricked by AI-generated video call impersonating the CFO. Result: $25 million wire transfer to scammers.</p>
+        <a href="https://www.cnn.com/2024/02/04/asia/hong-kong-deepfake-scam-intl-hnk/index.html" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--purple);text-decoration:none;">→ CNN — HK Deepfake Fraud (Feb 2024)</a>
       </div>
     </div>
   </div>
@@ -3371,11 +3384,8 @@
           data-es=" Cada fallo anterior era prevenible con una gobernanza adecuada: auditorías de sesgo, supervisión humana, verificación de salidas y protocolos de autenticación."> Every failure above was preventable with proper governance: bias audits, human oversight, output verification, and authentication protocols.</span>
   </div>
 
-  <aside class="notes">
-    Amazon scrapped the tool after discovering gender bias. COMPAS study by ProPublica sparked national debate on algorithmic fairness. The lawyer case (Mata v. Avianca) became a landmark warning — always verify AI-generated citations. The Hong Kong deepfake: attackers cloned voices and faces from public videos. Takeaway: AI failures are rarely technical surprises — they're governance failures. The technology worked exactly as trained; the problem was what it was trained on and how it was deployed without safeguards.
-  </aside>
-  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
-  <span class="slide-tag">03 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span> <span class="slide-tag">03 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 4: AI GOVERNANCE FRAMEWORKS ══════════════════════ -->
@@ -3393,22 +3403,14 @@
         <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;"
           data-en="NIST AI RMF 1.0 (2023)" data-it="NIST AI RMF 1.0 (2023)" data-fr="NIST AI RMF 1.0 (2023)" data-es="NIST AI RMF 1.0 (2023)">NIST AI RMF 1.0 (2023)</div>
         <ul class="example-list" style="font-size:.7rem;">
-          <li data-en="<strong>Govern</strong> — Policies, roles, culture of risk awareness"
-              data-it="<strong>Govern</strong> — Politiche, ruoli, cultura della gestione del rischio"
-              data-fr="<strong>Govern</strong> — Politiques, rôles, culture du risque"
-              data-es="<strong>Govern</strong> — Políticas, roles, cultura de gestión de riesgos"><strong>Govern</strong> — Policies, roles, culture of risk awareness</li>
-          <li data-en="<strong>Map</strong> — Identify context, stakeholders, potential harms"
-              data-it="<strong>Map</strong> — Identificare contesto, stakeholder, danni potenziali"
-              data-fr="<strong>Map</strong> — Identifier le contexte, les parties prenantes, les préjudices"
-              data-es="<strong>Map</strong> — Identificar contexto, partes interesadas, daños potenciales"><strong>Map</strong> — Identify context, stakeholders, potential harms</li>
-          <li data-en="<strong>Measure</strong> — Quantify risks with metrics and benchmarks"
-              data-it="<strong>Measure</strong> — Quantificare i rischi con metriche e benchmark"
-              data-fr="<strong>Measure</strong> — Quantifier les risques avec métriques et benchmarks"
-              data-es="<strong>Measure</strong> — Cuantificar riesgos con métricas y benchmarks"><strong>Measure</strong> — Quantify risks with metrics and benchmarks</li>
-          <li data-en="<strong>Manage</strong> — Prioritise, respond, monitor, improve"
-              data-it="<strong>Manage</strong> — Prioritizzare, rispondere, monitorare, migliorare"
-              data-fr="<strong>Manage</strong> — Prioriser, répondre, surveiller, améliorer"
-              data-es="<strong>Manage</strong> — Priorizar, responder, monitorear, mejorar"><strong>Manage</strong> — Prioritise, respond, monitor, improve</li>
+          <li data-en="Four functions: <strong>Govern · Map · Measure · Manage</strong>"
+              data-it="Quattro funzioni: <strong>Govern · Map · Measure · Manage</strong>"
+              data-fr="Quatre fonctions : <strong>Govern · Map · Measure · Manage</strong>"
+              data-es="Cuatro funciones: <strong>Govern · Map · Measure · Manage</strong>">Four functions: <strong>Govern · Map · Measure · Manage</strong></li>
+          <li data-en="De facto US standard — mirrors NIST Cybersecurity Framework"
+              data-it="Standard de facto USA — rispecchia il NIST Cybersecurity Framework"
+              data-fr="Standard de facto US — calqué sur le NIST Cybersecurity Framework"
+              data-es="Estándar de facto en EE.UU. — refleja el NIST Cybersecurity Framework">De facto US standard — mirrors NIST Cybersecurity Framework</li>
         </ul>
       </div>
 
@@ -3416,19 +3418,39 @@
         <div style="font-family:var(--mono);font-size:.6rem;color:var(--purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;"
           data-en="ISO/IEC 42001 (2023)" data-it="ISO/IEC 42001 (2023)" data-fr="ISO/IEC 42001 (2023)" data-es="ISO/IEC 42001 (2023)">ISO/IEC 42001 (2023)</div>
         <ul class="example-list" style="font-size:.7rem;">
-          <li data-en="First international standard for AI Management Systems"
-              data-it="Primo standard internazionale per Sistemi di Gestione AI"
-              data-fr="Premier standard international pour les systèmes de gestion IA"
-              data-es="Primer estándar internacional para Sistemas de Gestión de IA">First international standard for AI Management Systems</li>
-          <li data-en="Certifiable — aligns with ISO 27001 (InfoSec)"
-              data-it="Certificabile — allineato con ISO 27001 (InfoSec)"
-              data-fr="Certifiable — aligné avec ISO 27001 (InfoSec)"
-              data-es="Certificable — alineado con ISO 27001 (InfoSec)">Certifiable — aligns with ISO 27001 (InfoSec)</li>
+          <li data-en="First certifiable AI management standard — aligns with ISO 27001"
+              data-it="Primo standard certificabile per la gestione AI — allineato con ISO 27001"
+              data-fr="Premier standard IA certifiable — aligné avec ISO 27001"
+              data-es="Primer estándar certificable de gestión IA — alineado con ISO 27001">First certifiable AI management standard — aligns with ISO 27001</li>
           <li data-en="Covers full AI lifecycle: design → deploy → retire"
               data-it="Copre l'intero ciclo di vita AI: design → deploy → ritiro"
               data-fr="Couvre tout le cycle de vie IA : design → déploiement → retrait"
               data-es="Cubre todo el ciclo de vida IA: diseño → despliegue → retiro">Covers full AI lifecycle: design → deploy → retire</li>
         </ul>
+      </div>
+
+      <div style="background:rgba(255,107,61,.06);border:1px solid rgba(255,107,61,.2);border-radius:12px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;"
+          data-en="EU AI Act (in force Aug 2024)"
+          data-it="EU AI Act (in vigore ago 2024)"
+          data-fr="Loi IA européenne (en vigueur août 2024)"
+          data-es="Ley de IA de la UE (en vigor ago 2024)">EU AI Act (in force Aug 2024)</div>
+        <ul class="example-list" style="font-size:.7rem;">
+          <li data-en="<strong>Risk tiers:</strong> Unacceptable · High · Limited · Minimal"
+              data-it="<strong>Livelli di rischio:</strong> Inaccettabile · Alto · Limitato · Minimo"
+              data-fr="<strong>Niveaux de risque :</strong> Inacceptable · Élevé · Limité · Minimal"
+              data-es="<strong>Niveles de riesgo:</strong> Inaceptable · Alto · Limitado · Mínimo"><strong>Risk tiers:</strong> Unacceptable · High · Limited · Minimal</li>
+          <li data-en="<strong>Banned:</strong> social scoring, real-time biometric surveillance"
+              data-it="<strong>Vietato:</strong> social scoring, sorveglianza biometrica in tempo reale"
+              data-fr="<strong>Interdit :</strong> scoring social, surveillance biométrique en temps réel"
+              data-es="<strong>Prohibido:</strong> puntuación social, vigilancia biométrica en tiempo real"><strong>Banned:</strong> social scoring, real-time biometric surveillance</li>
+          <li data-en="<strong>Fines:</strong> up to €35M or 7% global annual turnover"
+              data-it="<strong>Sanzioni:</strong> fino a €35M o 7% del fatturato globale annuo"
+              data-fr="<strong>Amendes :</strong> jusqu'à 35M€ ou 7% du chiffre d'affaires mondial"
+              data-es="<strong>Multas:</strong> hasta €35M o 7% del volumen de negocio global anual"><strong>Fines:</strong> up to €35M or 7% global annual turnover</li>
+        </ul>
+        <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" target="_blank"
+           style="font-family:var(--mono);font-size:.55rem;color:var(--accent2);opacity:.8;text-decoration:none;">→ Official Text (EUR-Lex)</a>
       </div>
     </div>
 
@@ -3437,44 +3459,31 @@
         data-en="🛡️ Pre-Deployment Checklist" data-it="🛡️ Checklist Pre-Deployment" data-fr="🛡️ Checklist Pré-Déploiement" data-es="🛡️ Checklist Pre-Despliegue">🛡️ Pre-Deployment Checklist</div>
       <div style="display:flex;flex-direction:column;gap:6px;">
         <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
-          data-en="☑ <strong>Data audit</strong> — Training data reviewed for bias, IP, privacy"
-          data-it="☑ <strong>Audit dati</strong> — Dati di training revisionati per bias, IP, privacy"
-          data-fr="☑ <strong>Audit données</strong> — Données d'entraînement vérifiées pour biais, PI, vie privée"
-          data-es="☑ <strong>Auditoría datos</strong> — Datos de entrenamiento revisados para sesgo, PI, privacidad">☑ <strong>Data audit</strong> — Training data reviewed for bias, IP, privacy</div>
+          data-en="☑ <strong>Data audit</strong> — Reviewed for bias, IP, privacy"
+          data-it="☑ <strong>Audit dati</strong> — Revisionati per bias, IP, privacy"
+          data-fr="☑ <strong>Audit données</strong> — Vérifiées pour biais, PI, vie privée"
+          data-es="☑ <strong>Auditoría datos</strong> — Revisados para sesgo, PI, privacidad">☑ <strong>Data audit</strong> — Reviewed for bias, IP, privacy</div>
         <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
-          data-en="☑ <strong>Eval suite</strong> — Accuracy, fairness metrics, adversarial tests"
-          data-it="☑ <strong>Suite eval</strong> — Metriche di accuratezza, equità, test adversariali"
-          data-fr="☑ <strong>Suite d'éval</strong> — Métriques de précision, d'équité, tests adversariaux"
-          data-es="☑ <strong>Suite eval</strong> — Métricas de precisión, equidad, pruebas adversariales">☑ <strong>Eval suite</strong> — Accuracy, fairness metrics, adversarial tests</div>
+          data-en="☑ <strong>Eval suite</strong> — Accuracy, fairness, adversarial tests"
+          data-it="☑ <strong>Suite eval</strong> — Accuratezza, equità, test adversariali"
+          data-fr="☑ <strong>Suite d'éval</strong> — Précision, équité, tests adversariaux"
+          data-es="☑ <strong>Suite eval</strong> — Precisión, equidad, pruebas adversariales">☑ <strong>Eval suite</strong> — Accuracy, fairness, adversarial tests</div>
         <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
           data-en="☑ <strong>Human oversight</strong> — Escalation paths, override controls"
           data-it="☑ <strong>Supervisione umana</strong> — Percorsi di escalation, controlli override"
           data-fr="☑ <strong>Supervision humaine</strong> — Parcours d'escalade, contrôles de remplacement"
           data-es="☑ <strong>Supervisión humana</strong> — Rutas de escalación, controles de anulación">☑ <strong>Human oversight</strong> — Escalation paths, override controls</div>
         <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
-          data-en="☑ <strong>Incident plan</strong> — Response playbook for AI failures"
-          data-it="☑ <strong>Piano incidenti</strong> — Playbook di risposta per fallimenti AI"
-          data-fr="☑ <strong>Plan d'incident</strong> — Playbook de réponse aux défaillances IA"
-          data-es="☑ <strong>Plan de incidentes</strong> — Playbook de respuesta para fallos de IA">☑ <strong>Incident plan</strong> — Response playbook for AI failures</div>
-        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
           data-en="☑ <strong>Documentation</strong> — Model card, data sheet, risk assessment"
           data-it="☑ <strong>Documentazione</strong> — Model card, data sheet, valutazione del rischio"
           data-fr="☑ <strong>Documentation</strong> — Fiche modèle, fiche données, évaluation des risques"
           data-es="☑ <strong>Documentación</strong> — Model card, data sheet, evaluación de riesgos">☑ <strong>Documentation</strong> — Model card, data sheet, risk assessment</div>
-        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
-          data-en="☑ <strong>Monitoring</strong> — Drift detection, feedback loops, re-training triggers"
-          data-it="☑ <strong>Monitoraggio</strong> — Rilevamento drift, cicli di feedback, trigger di re-training"
-          data-fr="☑ <strong>Surveillance</strong> — Détection de dérive, boucles de feedback, déclencheurs de ré-entraînement"
-          data-es="☑ <strong>Monitoreo</strong> — Detección de deriva, ciclos de feedback, disparadores de re-entrenamiento">☑ <strong>Monitoring</strong> — Drift detection, feedback loops, re-training triggers</div>
       </div>
     </div>
   </div>
 
-  <aside class="notes">
-    NIST AI RMF: voluntary but often used as the baseline for US federal agencies and becoming the de facto standard for enterprise AI governance. The four functions (Govern, Map, Measure, Manage) mirror the NIST Cybersecurity Framework structure — familiar territory for InfoSec teams. ISO 42001: published Dec 2023, first certifiable AI standard. Companies pursuing this demonstrate to regulators and customers that they have systematic AI governance. The pre-deployment checklist is a simplified version of what large tech companies already do internally — the key is making it standard practice for every organization deploying AI, not just Big Tech.
-  </aside>
-  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
-  <span class="slide-tag">04 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span> <span class="slide-tag">04 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 5: RESPONSIBLE AI ══════════════════════ -->
@@ -3553,11 +3562,8 @@
           data-es=" La IA responsable no es una casilla de verificación — es un estándar de calidad del producto. Los usuarios merecen saber cuándo y cómo les afecta la IA."> Responsible AI is not a compliance checkbox — it is a product quality standard.</span>
   </div>
 
-  <aside class="notes">
-    Responsible AI frameworks: Google's PAIR, Microsoft's Responsible AI Standard, IBM's AI Fairness 360. Red-teaming: deliberately trying to break your AI system before attackers do. Prompt injection, jailbreaks, data poisoning. For product managers: every AI feature needs a 'what if this goes wrong' decision tree. For architects: design for explainability from day one — retrofitting XAI is expensive.
-  </aside>
-  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
-  <span class="slide-tag">05 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span> <span class="slide-tag">05 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 6: THE ROAD AHEAD ══════════════════════ -->
@@ -3625,11 +3631,8 @@
           data-es=" La tecnología seguirá acelerando. La habilidad que perdura es saber trabajar con IA — de forma crítica, creativa y responsable."> Technology will keep accelerating. The skill that endures is knowing how to work with AI — critically, creatively, and responsibly.</span>
   </div>
 
-  <aside class="notes">
-    Key message to close on: don't be afraid of AI, but don't be naive. The jobs that will be displaced are the ones that can be fully described as a repeatable pattern. The jobs that grow are those requiring judgment, empathy, creativity, and ethical reasoning — things that are hard to automate. The best preparation: stay curious, experiment, build things, and develop a critical relationship with AI tools.
-  </aside>
-  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
-  <span class="slide-tag">06 / 06</span>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span> <span class="slide-tag">06 / 06</span></div>
 </section>
 
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
@@ -3650,6 +3653,7 @@
     <li>OpenAI, <a href="https://openai.com/safety" target="_blank">"Safety & Alignment Research"</a></li>
     <li>Anthropic, <a href="https://www.anthropic.com/research/core-views-on-ai-safety" target="_blank">"Core Views on AI Safety"</a></li>
   </ul>
+  <aside class="notes"></aside>
   <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
 </section>
 <!-- annex.html -->
@@ -3668,6 +3672,7 @@
     data-it="Termini chiave, confronto tra modelli e risorse di apprendimento selezionate."
     data-fr="Termes clés, comparaison de modèles et ressources d'apprentissage sélectionnées."
     data-es="Términos clave, comparación de modelos y recursos de aprendizaje seleccionados.">Key terms, model comparison, and curated learning resources.</p>
+  <aside class="notes"></aside>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">Annex</span>
 </section>
 
@@ -3736,6 +3741,7 @@
         data-es="Low-Rank Adaptation. Técnica de fine-tuning eficiente que entrena menos parámetros añadiendo matrices adaptadoras.">Low-Rank Adaptation. Efficient fine-tuning that trains fewer parameters via small adapter matrices.</dd>
     </dl>
   </div>
+  <aside class="notes"></aside>
   <span class="chapter-tag">Annex · Glossary A–L</span>
 </section>
 
@@ -3804,6 +3810,7 @@
         data-es="Base de datos optimizada para almacenar y buscar vectores de alta dimensión. Usada para búsqueda semántica en sistemas RAG.">Database optimised for high-dimensional vector search. Used for semantic search in RAG systems.</dd>
     </dl>
   </div>
+  <aside class="notes"></aside>
   <span class="chapter-tag">Annex · Glossary M–Z</span>
 </section>
 
@@ -3878,7 +3885,190 @@
       </tbody>
     </table>
   </div>
+  <aside class="notes"></aside>
   <span class="chapter-tag">Annex · Model Landscape</span>
+</section>
+
+<!-- ══════════════════════ HUGGINGFACE + GGUF ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Annex · Model Hub &amp; Formats" data-it="Annex · Hub e Formati" data-fr="Annex · Hub et Formats" data-es="Annex · Hub y Formatos">Annex · Model Hub &amp; Formats</div>
+  <h2 data-en="HuggingFace &amp;<br>GGUF Format"
+      data-it="HuggingFace &amp;<br>Formato GGUF"
+      data-fr="HuggingFace &amp;<br>Format GGUF"
+      data-es="HuggingFace &amp;<br>Formato GGUF">HuggingFace &amp;<br>GGUF Format</h2>
+
+  <div class="two-col">
+    <!-- HuggingFace -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:rgba(255,166,0,.06);border:1px solid rgba(255,166,0,.2);border-radius:12px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--amber);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;"
+          data-en="🤗 HuggingFace Hub" data-it="🤗 HuggingFace Hub" data-fr="🤗 HuggingFace Hub" data-es="🤗 HuggingFace Hub">🤗 HuggingFace Hub</div>
+        <ul class="example-list" style="font-size:.7rem;">
+          <li data-en="<strong>Models</strong> — 900k+ pretrained model checkpoints"
+              data-it="<strong>Modelli</strong> — 900k+ checkpoint di modelli preaddestrati"
+              data-fr="<strong>Modèles</strong> — 900k+ points de contrôle de modèles"
+              data-es="<strong>Modelos</strong> — 900k+ checkpoints de modelos preentrenados"><strong>Models</strong> — 900k+ pretrained model checkpoints</li>
+          <li data-en="<strong>Datasets</strong> — curated training &amp; benchmark data"
+              data-it="<strong>Dataset</strong> — dati di training e benchmark curati"
+              data-fr="<strong>Datasets</strong> — données d'entraînement et benchmarks"
+              data-es="<strong>Datasets</strong> — datos de entrenamiento y benchmark"><strong>Datasets</strong> — curated training &amp; benchmark data</li>
+          <li data-en="<strong>Spaces</strong> — hosted Gradio / Streamlit demos"
+              data-it="<strong>Spaces</strong> — demo Gradio / Streamlit hosted"
+              data-fr="<strong>Spaces</strong> — démos Gradio / Streamlit hébergées"
+              data-es="<strong>Spaces</strong> — demos Gradio / Streamlit alojadas"><strong>Spaces</strong> — hosted Gradio / Streamlit demos</li>
+          <li data-en="<strong>Transformers library</strong> — unified API for 100+ architectures"
+              data-it="<strong>Libreria Transformers</strong> — API unificata per 100+ architetture"
+              data-fr="<strong>Librairie Transformers</strong> — API unifiée pour 100+ architectures"
+              data-es="<strong>Librería Transformers</strong> — API unificada para 100+ arquitecturas"><strong>Transformers library</strong> — unified API for 100+ architectures</li>
+          <li data-en="<strong>Inference API</strong> — run models via HTTP without GPU"
+              data-it="<strong>Inference API</strong> — esegui modelli via HTTP senza GPU"
+              data-fr="<strong>Inference API</strong> — exécuter des modèles via HTTP sans GPU"
+              data-es="<strong>Inference API</strong> — ejecutar modelos vía HTTP sin GPU"><strong>Inference API</strong> — run models via HTTP without GPU</li>
+        </ul>
+        <a href="https://huggingface.co" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--amber);text-decoration:none;opacity:.8;">→ huggingface.co</a>
+      </div>
+    </div>
+
+    <!-- GGUF -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:12px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">GGUF Format Anatomy</div>
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);margin-bottom:8px;"
+          data-en="Filename: Llama-3.2-3B-Instruct-Q4_K_M.gguf"
+          data-it="Nome file: Llama-3.2-3B-Instruct-Q4_K_M.gguf"
+          data-fr="Nom de fichier : Llama-3.2-3B-Instruct-Q4_K_M.gguf"
+          data-es="Nombre de archivo: Llama-3.2-3B-Instruct-Q4_K_M.gguf">Filename: Llama-3.2-3B-Instruct-Q4_K_M.gguf</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(59,130,246,.15);color:var(--accent);padding:3px 8px;border-radius:5px;">Llama-3.2</span>
+          <span style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);padding:3px 2px;">·</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(52,211,153,.12);color:var(--green);padding:3px 8px;border-radius:5px;">3B</span>
+          <span style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);padding:3px 2px;">·</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(167,139,250,.12);color:var(--purple);padding:3px 8px;border-radius:5px;">Instruct</span>
+          <span style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);padding:3px 2px;">·</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(255,107,61,.12);color:var(--accent2);padding:3px 8px;border-radius:5px;">Q4_K_M</span>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:.65rem;">
+          <thead>
+            <tr style="border-bottom:1px solid rgba(27,94,255,.15);">
+              <th style="text-align:left;padding:4px 6px;font-family:var(--mono);color:var(--accent);font-weight:500;" data-en="Quant" data-it="Quant" data-fr="Quant" data-es="Quant">Quant</th>
+              <th style="text-align:left;padding:4px 6px;font-family:var(--mono);color:var(--accent);font-weight:500;" data-en="Size (7B)" data-it="Dim. (7B)" data-fr="Taille (7B)" data-es="Tamaño (7B)">Size (7B)</th>
+              <th style="text-align:left;padding:4px 6px;font-family:var(--mono);color:var(--accent);font-weight:500;" data-en="Quality" data-it="Qualità" data-fr="Qualité" data-es="Calidad">Quality</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:3px 6px;font-family:var(--mono);">Q2_K</td><td style="padding:3px 6px;">~2.8 GB</td><td style="padding:3px 6px;color:var(--accent2);">★★☆☆☆</td></tr>
+            <tr><td style="padding:3px 6px;font-family:var(--mono);">Q4_K_M</td><td style="padding:3px 6px;">~4.1 GB</td><td style="padding:3px 6px;color:var(--amber);">★★★★☆ recommended</td></tr>
+            <tr><td style="padding:3px 6px;font-family:var(--mono);">Q5_K_M</td><td style="padding:3px 6px;">~5.0 GB</td><td style="padding:3px 6px;color:var(--green);">★★★★★</td></tr>
+            <tr><td style="padding:3px 6px;font-family:var(--mono);">Q8_0</td><td style="padding:3px 6px;">~7.7 GB</td><td style="padding:3px 6px;color:var(--green);">≈ full precision</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <span class="chapter-tag">Annex · Model Hub &amp; Formats</span>
+</section>
+
+<!-- ══════════════════════ LOCAL LLMS ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Annex · Local AI" data-it="Annex · AI Locale" data-fr="Annex · IA Locale" data-es="Annex · IA Local">Annex · Local AI</div>
+  <h2 data-en="Running LLMs<br>Locally"
+      data-it="Eseguire LLM<br>in Locale"
+      data-fr="Faire Tourner des LLM<br>en Local"
+      data-es="Ejecutar LLMs<br>en Local">Running LLMs<br>Locally</h2>
+
+  <div class="two-col">
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="key-insight" style="margin-bottom:4px;">
+        <strong data-en="Why run locally?" data-it="Perché in locale?" data-fr="Pourquoi en local ?" data-es="¿Por qué en local?">Why run locally?</strong>
+        <ul class="example-list" style="margin-top:6px;font-size:.7rem;">
+          <li data-en="🔒 Privacy — data never leaves your machine"
+              data-it="🔒 Privacy — i dati non escono dal tuo computer"
+              data-fr="🔒 Confidentialité — les données ne quittent jamais votre machine"
+              data-es="🔒 Privacidad — los datos nunca salen de tu máquina">🔒 Privacy — data never leaves your machine</li>
+          <li data-en="📶 Offline — no internet connection required"
+              data-it="📶 Offline — nessuna connessione internet necessaria"
+              data-fr="📶 Hors ligne — aucune connexion internet requise"
+              data-es="📶 Sin conexión — no se requiere internet">📶 Offline — no internet connection required</li>
+          <li data-en="💰 Free — no API costs after setup"
+              data-it="💰 Gratuito — nessun costo API dopo la configurazione"
+              data-fr="💰 Gratuit — aucun coût d'API après la configuration"
+              data-es="💰 Gratis — sin costes de API después de la configuración">💰 Free — no API costs after setup</li>
+          <li data-en="🔧 Dev-friendly — custom fine-tunes, no rate limits"
+              data-it="🔧 Dev-friendly — fine-tune personalizzati, nessun rate limit"
+              data-fr="🔧 Développeur — fine-tunes personnalisés, sans limites de débit"
+              data-es="🔧 Dev-friendly — fine-tunes personalizados, sin límites de velocidad">🔧 Dev-friendly — custom fine-tunes, no rate limits</li>
+        </ul>
+      </div>
+      <div style="background:rgba(27,94,255,.04);border:1px solid rgba(27,94,255,.12);border-radius:10px;padding:10px 14px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);margin-bottom:6px;"
+          data-en="Quick start — Ollama" data-it="Avvio rapido — Ollama" data-fr="Démarrage rapide — Ollama" data-es="Inicio rápido — Ollama">Quick start — Ollama</div>
+        <code style="font-family:var(--mono);font-size:.65rem;color:var(--ink);line-height:1.7;display:block;">
+          <span style="color:var(--ink-mute)"># install (macOS / Linux)</span><br>
+          brew install ollama<br>
+          <span style="color:var(--ink-mute)"># pull &amp; run a model</span><br>
+          ollama run llama3.2<br>
+          ollama run mistral<br>
+          <span style="color:var(--ink-mute)"># OpenAI-compatible API</span><br>
+          ollama serve  <span style="color:var(--ink-mute)"># → localhost:11434</span>
+        </code>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;"
+        data-en="Tools" data-it="Strumenti" data-fr="Outils" data-es="Herramientas">Tools</div>
+      <div class="model-card" style="padding:10px 14px;flex-direction:row;align-items:center;gap:10px;">
+        <div style="flex:0 0 70px;font-family:var(--mono);font-size:.7rem;color:var(--accent);">Ollama</div>
+        <div style="font-size:.65rem;color:var(--ink-mid);" data-en="CLI + REST API. Runs GGUF models. Best for devs."
+            data-it="CLI + REST API. Esegue modelli GGUF. Ottimo per dev."
+            data-fr="CLI + API REST. Lance des modèles GGUF. Pour les développeurs."
+            data-es="CLI + API REST. Ejecuta modelos GGUF. Ideal para devs.">CLI + REST API. Runs GGUF models. Best for devs.</div>
+        <a href="https://ollama.com" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--accent);text-decoration:none;white-space:nowrap;">→ ollama.com</a>
+      </div>
+      <div class="model-card" style="padding:10px 14px;flex-direction:row;align-items:center;gap:10px;">
+        <div style="flex:0 0 70px;font-family:var(--mono);font-size:.7rem;color:var(--green);">GPT4All</div>
+        <div style="font-size:.65rem;color:var(--ink-mid);" data-en="Desktop GUI. No terminal needed. Great for non-devs."
+            data-it="GUI desktop. Nessun terminale. Ottimo per non-dev."
+            data-fr="Interface graphique. Sans terminal. Idéal pour non-développeurs."
+            data-es="GUI de escritorio. Sin terminal. Ideal para no-devs.">Desktop GUI. No terminal needed. Great for non-devs.</div>
+        <a href="https://gpt4all.io" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--green);text-decoration:none;white-space:nowrap;">→ gpt4all.io</a>
+      </div>
+      <div class="model-card" style="padding:10px 14px;flex-direction:row;align-items:center;gap:10px;">
+        <div style="flex:0 0 70px;font-family:var(--mono);font-size:.7rem;color:var(--purple);">LM Studio</div>
+        <div style="font-size:.65rem;color:var(--ink-mid);" data-en="GUI + local server. HuggingFace browser built-in."
+            data-it="GUI + server locale. Browser HuggingFace integrato."
+            data-fr="Interface + serveur local. Navigateur HuggingFace intégré."
+            data-es="GUI + servidor local. Navegador HuggingFace integrado.">GUI + local server. HuggingFace browser built-in.</div>
+        <a href="https://lmstudio.ai" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--purple);text-decoration:none;white-space:nowrap;">→ lmstudio.ai</a>
+      </div>
+      <div class="model-card" style="padding:10px 14px;flex-direction:row;align-items:center;gap:10px;">
+        <div style="flex:0 0 70px;font-family:var(--mono);font-size:.7rem;color:var(--accent2);">llama.cpp</div>
+        <div style="font-size:.65rem;color:var(--ink-mid);" data-en="C++ engine powering Ollama/LM Studio. Max control."
+            data-it="Engine C++ che alimenta Ollama/LM Studio. Massimo controllo."
+            data-fr="Moteur C++ qui alimente Ollama/LM Studio. Contrôle total."
+            data-es="Motor C++ que impulsa Ollama/LM Studio. Máximo control.">C++ engine powering Ollama/LM Studio. Max control.</div>
+        <a href="https://github.com/ggerganov/llama.cpp" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--accent2);text-decoration:none;white-space:nowrap;">→ GitHub</a>
+      </div>
+      <!-- Hardware guide -->
+      <div style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:8px 12px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--green);margin-bottom:5px;"
+          data-en="RAM needed (Q4 quant)" data-it="RAM necessaria (Q4)" data-fr="RAM nécessaire (Q4)" data-es="RAM necesaria (Q4)">RAM needed (Q4 quant)</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(52,211,153,.12);color:var(--green);padding:2px 8px;border-radius:5px;">3B → 2 GB</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(59,130,246,.12);color:var(--accent);padding:2px 8px;border-radius:5px;">7B → 4 GB</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(255,107,61,.12);color:var(--accent2);padding:2px 8px;border-radius:5px;">13B → 8 GB</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(167,139,250,.12);color:var(--purple);padding:2px 8px;border-radius:5px;">70B → 40 GB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <span class="chapter-tag">Annex · Local AI</span>
 </section>
 
 <!-- ══════════════════════ LEARNING RESOURCES ══════════════════════ -->
@@ -3965,6 +4155,7 @@
       </ul>
     </div>
   </div>
+  <aside class="notes"></aside>
   <span class="chapter-tag">Annex · Resources</span>
 </section>
 
@@ -4000,16 +4191,53 @@
     <a href="#/agenda" style="font-family:var(--mono);font-size:.7rem;color:var(--ink-mute);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:8px 16px;"
       data-en="← Back to Agenda" data-it="← Torna all'Agenda" data-fr="← Retour au Sommaire" data-es="← Volver al Índice">← Back to Agenda</a>
   </div>
+  <aside class="notes"></aside>
 </section>
 </div><!-- /slides -->
 </div><!-- /reveal -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js-menu/menu.js"></script>
+<script src="js/lang/en.js"></script>
+<script src="js/lang/it.js"></script>
+<script src="js/lang/fr.js"></script>
+<script src="js/lang/es.js"></script>
+<script src="js/notes/en.js"></script>
+<script src="js/notes/it.js"></script>
+<script src="js/notes/fr.js"></script>
+<script src="js/notes/es.js"></script>
 <script src="js/animations.js"></script>
 <script src="js/slides.js"></script>
 <script>initSlides();</script>
+
+<!-- Laser pointer -->
+<script>
+(function(){
+  const dot = document.createElement('div');
+  dot.className = 'laser-dot';
+  document.body.appendChild(dot);
+  let active = false;
+  const btn = document.getElementById('laser-btn');
+
+  window.toggleLaser = function() {
+    active = !active;
+    btn.classList.toggle('active', active);
+    document.body.classList.toggle('laser-active', active);
+    dot.style.display = active ? 'block' : 'none';
+  };
+
+  document.addEventListener('mousemove', function(e) {
+    if (!active) return;
+    dot.style.left = e.clientX + 'px';
+    dot.style.top  = e.clientY + 'px';
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.code === 'KeyL' && !e.ctrlKey && !e.metaKey) { toggleLaser(); e.preventDefault(); }
+  });
+})();
+</script>
 
 <!-- inline scripts: chapter1.html -->
 <script>
@@ -4113,6 +4341,64 @@ function updateParamDemo() {
 // Initialize on load
 document.addEventListener('DOMContentLoaded', () => setTimeout(updateParamDemo, 300));
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NARRATION ENGINE v3 — TTS + unified text panel + volume
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Unified text panel (notes teleprompter OR CC subtitles) -->
+<div id="narr-text-panel" data-mode="notes"></div>
+
+<!-- Voice selector -->
+<div id="narr-voice-menu"></div>
+
+<!-- Progress bar -->
+<div id="narr-progress-wrap"><div id="narr-progress-bar"></div></div>
+
+<!-- Player bar -->
+<div id="narr-player" style="opacity:.45;">
+  <button class="narr-btn" id="narr-play"  title="Play / Resume narration (N)">▶ Play</button>
+  <button class="narr-btn" id="narr-pause" title="Pause (N)" disabled>⏸</button>
+  <button class="narr-btn" id="narr-stop"  title="Stop narration (Esc)" disabled>■</button>
+  <div class="narr-divider"></div>
+  <button class="narr-btn" id="narr-slower" title="Slower (−)">‹</button>
+  <span id="narr-speed-lbl">1×</span>
+  <button class="narr-btn" id="narr-faster" title="Faster (+)">›</button>
+  <div class="narr-divider"></div>
+  <div class="narr-vol-wrap">
+    <span id="narr-vol-icon" title="Mute / unmute (M)">🔊</span>
+    <input type="range" id="narr-vol" min="0" max="100" value="100" title="Volume">
+  </div>
+  <div class="narr-divider"></div>
+  <button class="narr-btn" id="narr-notes-btn" title="Toggle notes (T)">CC</button>
+  <button class="narr-btn" id="narr-voice-btn" title="Choose voice">🎙</button>
+</div>
+
+<script src="js/narration.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CUSTOM SLIDE MENU — chapters (collapsible) + search
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Toggle button -->
+<button id="sm-toggle" title="Slide navigator (/)">☰ Slides</button>
+
+<!-- Overlay -->
+<div id="slide-menu-overlay"></div>
+
+<!-- Menu panel -->
+<div id="slide-menu">
+  <div id="sm-header">
+    <div id="sm-header-row">
+      <span id="sm-title">SLIDE NAVIGATOR</span>
+      <button id="sm-close" title="Close">✕</button>
+    </div>
+    <input id="sm-search" type="text" placeholder="Search slides…" autocomplete="off" />
+  </div>
+  <div id="sm-list"></div>
+</div>
+
+<script src="js/slide-menu.js"></script>
 
 </body>
 </html>

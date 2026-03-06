@@ -32,7 +32,7 @@ window.LANG_EN = {
   "agenda.c4.desc":   "Retrieval-Augmented Generation — giving LLMs access to your knowledge.",
 
   "agenda.c5.num":    "05",
-  "agenda.c5.title":  "AI Agents + MCP",
+  "agenda.c5.title":  "AI Agents & MCP",
   "agenda.c5.desc":   "Autonomous agents, the ReAct loop, tool use, and the Model Context Protocol.",
 
   "agenda.c6.num":    "06",
@@ -243,7 +243,7 @@ window.LANG_EN = {
 
   /* ── CHAPTER 5 COVER ───────────────────────────────────── */
   "c5.cover.eyebrow": "Chapter 05",
-  "c5.cover.h1":      "AI Agents<br>+ MCP",
+  "c5.cover.h1":      "AI Agents<br>& MCP",
   "c5.cover.p":       "From question-answering to autonomous action — AI that plans, uses tools, and gets things done.",
 
   /* ── CH5 SLIDE 1–5 headings ─────────────────────────────── */

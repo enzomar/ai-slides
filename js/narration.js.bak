@@ -1,0 +1,483 @@
+/* ═══════════════════════════════════════════════════════════
+   NARRATION ENGINE v3 — TTS + unified text panel + volume
+   ═══════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  /* ── Bail if browser has no TTS ───────────────────────────── */
+  if (!window.speechSynthesis) {
+    document.getElementById('narr-player').style.display = 'none';
+    return;
+  }
+
+  /* ── State ────────────────────────────────────────────────── */
+  let playing       = false;
+  let paused        = false;
+  let panelMode     = 'none';    // 'none' | 'notes'
+  let rate          = 1.0;
+  let volume        = 1.0;
+  let muted         = false;
+  let utterance     = null;
+  let words         = [];
+  let wordSpans     = [];        // spans in the unified text panel
+  let lastWordIdx   = 0;
+  let chosenVoice   = null;
+  let voiceMenuOpen = false;
+  let chromePauseWA = null;
+  let simTimer      = null;      // fallback word-highlight timer
+
+  const synth     = window.speechSynthesis;
+  const rateSteps = [0.6, 0.75, 0.85, 1.0, 1.15, 1.3, 1.5, 1.75];
+  let rateIdx     = 3;
+
+  const LANG_MAP = { en: 'en-US', it: 'it-IT', fr: 'fr-FR', es: 'es-ES' };
+
+  /* ── DOM refs ─────────────────────────────────────────────── */
+  const player      = document.getElementById('narr-player');
+  const btnPlay     = document.getElementById('narr-play');
+  const btnPause    = document.getElementById('narr-pause');
+  const btnStop     = document.getElementById('narr-stop');
+  const btnSlower   = document.getElementById('narr-slower');
+  const btnFaster   = document.getElementById('narr-faster');
+  const btnNotes    = document.getElementById('narr-notes-btn');
+  const btnVoice    = document.getElementById('narr-voice-btn');
+  const textPanel   = document.getElementById('narr-text-panel');
+  const voiceMenu   = document.getElementById('narr-voice-menu');
+  const speedLbl    = document.getElementById('narr-speed-lbl');
+  const progressWrap= document.getElementById('narr-progress-wrap');
+  const progressBar = document.getElementById('narr-progress-bar');
+  const volSlider   = document.getElementById('narr-vol');
+  const volIcon     = document.getElementById('narr-vol-icon');
+
+  /* ═══════════════════════════════════════════════════════════
+     VOLUME
+     ═══════════════════════════════════════════════════════════ */
+  function updateVolIcon() {
+    if (muted || volume === 0) volIcon.textContent = '🔇';
+    else if (volume < 0.4)     volIcon.textContent = '🔈';
+    else if (volume < 0.75)    volIcon.textContent = '🔉';
+    else                       volIcon.textContent = '🔊';
+  }
+
+  volSlider.addEventListener('input', () => {
+    volume = parseInt(volSlider.value, 10) / 100;
+    muted = volume === 0;
+    updateVolIcon();
+    if (utterance) utterance.volume = muted ? 0 : volume;
+  });
+
+  volIcon.addEventListener('click', () => {
+    muted = !muted;
+    updateVolIcon();
+    if (utterance) utterance.volume = muted ? 0 : volume;
+    volSlider.style.opacity = muted ? '.35' : '1';
+  });
+
+  /* ═══════════════════════════════════════════════════════════
+     VOICE SELECTION
+     ═══════════════════════════════════════════════════════════ */
+  let voicesReady = false;
+  let voicesForLang = [];
+
+  const QUALITY_HINTS = [
+    'enhanced', 'premium', 'natural', 'neural', 'wavenet',
+    'samantha', 'karen', 'daniel', 'moira', 'tessa',
+    'google us', 'google uk',
+    'microsoft aria', 'microsoft guy', 'microsoft jenny',
+    'microsoft elsa', 'microsoft cosimo', 'microsoft isabella'
+  ];
+
+  function scoreVoice(v) {
+    const name = v.name.toLowerCase();
+    let score = 0;
+    if (v.localService) score += 1;
+    QUALITY_HINTS.forEach((hint, i) => { if (name.includes(hint)) score += 10 + i; });
+    if (name.includes('espeak') || name.includes('compact')) score -= 50;
+    return score;
+  }
+
+  function refreshVoices() {
+    const lang = LANG_MAP[typeof currentLang !== 'undefined' ? currentLang : 'en'] || 'en-US';
+    const langPrefix = lang.substring(0, 2);
+    const all = synth.getVoices();
+    voicesForLang = all.filter(v => v.lang.startsWith(langPrefix)).sort((a, b) => scoreVoice(b) - scoreVoice(a));
+    if (!chosenVoice || !chosenVoice.lang.startsWith(langPrefix)) {
+      chosenVoice = voicesForLang[0] || null;
+    }
+    voicesReady = voicesForLang.length > 0;
+  }
+
+  synth.onvoiceschanged = refreshVoices;
+  refreshVoices();
+
+  function buildVoiceMenu() {
+    refreshVoices();
+    voiceMenu.innerHTML = '';
+    if (!voicesForLang.length) {
+      voiceMenu.innerHTML = '<div style="padding:10px 16px;color:rgba(255,255,255,.4);">No voices found</div>';
+      return;
+    }
+    voicesForLang.forEach(v => {
+      const opt = document.createElement('div');
+      opt.className = 'narr-voice-opt' + (chosenVoice === v ? ' selected' : '');
+      const label = v.name.replace(/Microsoft |Google |Apple /gi, '');
+      const vn = v.name.toLowerCase();
+      let tag = '';
+      if (vn.includes('neural') || vn.includes('natural') || vn.includes('enhanced') || vn.includes('premium'))
+        tag = '<span class="voice-tag">HD</span>';
+      opt.innerHTML = label + tag;
+      opt.addEventListener('click', () => {
+        chosenVoice = v;
+        try { localStorage.setItem('narr-voice-' + (currentLang || 'en'), v.name); } catch(e) {}
+        toggleVoiceMenu(false);
+        if (playing) speakSlide();
+      });
+      voiceMenu.appendChild(opt);
+    });
+  }
+
+  function toggleVoiceMenu(show) {
+    voiceMenuOpen = typeof show === 'boolean' ? show : !voiceMenuOpen;
+    if (voiceMenuOpen) buildVoiceMenu();
+    voiceMenu.style.display = voiceMenuOpen ? 'block' : 'none';
+    btnVoice.classList.toggle('active', voiceMenuOpen);
+  }
+
+  function restoreSavedVoice() {
+    try {
+      const savedName = localStorage.getItem('narr-voice-' + (typeof currentLang !== 'undefined' ? currentLang : 'en'));
+      if (savedName) { const m = voicesForLang.find(v => v.name === savedName); if (m) chosenVoice = m; }
+    } catch(e) {}
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     HELPERS
+     ═══════════════════════════════════════════════════════════ */
+  function getNotes(slide) {
+    if (!slide) return '';
+    const aside = slide.querySelector('aside.notes');
+    if (!aside) return '';
+    return aside.textContent.replace(/\s+/g, ' ').trim();
+  }
+
+  function buildWordSpans(container, text) {
+    const ws = text.split(/\s+/).filter(Boolean);
+    const spans = [];
+    container.innerHTML = '';
+    ws.forEach((w, i) => {
+      const sp = document.createElement('span');
+      sp.className = 'nw';
+      sp.textContent = w + ' ';
+      sp.dataset.idx = i;
+      spans.push(sp);
+      container.appendChild(sp);
+    });
+    return spans;
+  }
+
+  function buildPanel(text) {
+    words = text.split(/\s+/).filter(Boolean);
+    if (panelMode !== 'none') {
+      wordSpans = buildWordSpans(textPanel, text);
+    } else {
+      wordSpans = [];
+      textPanel.innerHTML = '';
+    }
+    lastWordIdx = 0;
+    progressBar.style.width = '0%';
+  }
+
+  function highlightWord(charIndex) {
+    let pos = 0;
+    for (let i = 0; i < words.length; i++) {
+      if (pos >= charIndex) { applyHighlight(i); return; }
+      pos += words[i].length + 1;
+    }
+  }
+
+  function applyHighlight(idx) {
+    if (!wordSpans.length) return;
+    for (let j = lastWordIdx; j < idx; j++) {
+      if (wordSpans[j]) wordSpans[j].className = 'nw spoken';
+    }
+    if (wordSpans[idx]) {
+      wordSpans[idx].className = 'nw current';
+      wordSpans[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    }
+    lastWordIdx = idx;
+    if (words.length > 1) {
+      progressBar.style.width = Math.round((idx / (words.length - 1)) * 100) + '%';
+    }
+  }
+
+  /* ── Simulated word highlighting (fallback) ───────────────── */
+  /**
+   * When the browser/voice does NOT fire onboundary events, this
+   * estimates average time-per-word from the text length and speech
+   * rate, then advances the highlight with a setInterval timer.
+   * ~160 words-per-minute at rate 1.0 ≈ 375 ms per word.
+   */
+  function startSimHighlight() {
+    stopSimHighlight();
+    if (!words.length || !wordSpans.length) return;
+    const msPerWord = Math.round(375 / rate);
+    let idx = 0;
+    // Highlight the first word immediately
+    applyHighlight(0);
+    simTimer = setInterval(() => {
+      idx++;
+      if (idx >= words.length || !playing) { stopSimHighlight(); return; }
+      applyHighlight(idx);
+    }, msPerWord);
+  }
+  function stopSimHighlight() {
+    if (simTimer) { clearInterval(simTimer); simTimer = null; }
+  }
+
+  /* ── Panel mode management ────────────────────────────────── */
+  function setPanelMode(mode) {
+    panelMode = mode;
+    btnNotes.classList.toggle('active', mode === 'notes');
+    if (mode === 'none') {
+      textPanel.style.display = 'none';
+      textPanel.innerHTML = '';
+      wordSpans = [];
+    } else {
+      textPanel.setAttribute('data-mode', 'notes');
+      if (playing) {
+        textPanel.style.display = 'block';
+        const slide = Reveal.getCurrentSlide();
+        const text = getNotes(slide);
+        if (text) wordSpans = buildWordSpans(textPanel, text);
+      }
+    }
+  }
+
+  function setUIState(state) {
+    if (state === 'idle') {
+      btnPlay.innerHTML  = '▶ Play';
+      btnPlay.disabled   = false;
+      btnPause.disabled  = true;
+      btnStop.disabled   = true;
+      btnPause.textContent = '⏸';
+      player.style.opacity = '.45';
+      progressWrap.classList.remove('visible');
+      textPanel.style.display = 'none';
+    } else if (state === 'playing') {
+      btnPlay.innerHTML  = '&nbsp;';
+      btnPlay.disabled   = true;
+      btnPause.disabled  = false;
+      btnStop.disabled   = false;
+      btnPause.textContent = '⏸';
+      player.style.opacity = '1';
+      progressWrap.classList.add('visible');
+      if (panelMode !== 'none') textPanel.style.display = 'block';
+    } else if (state === 'paused') {
+      btnPlay.innerHTML  = '▶ Resume';
+      btnPlay.disabled   = false;
+      btnPause.disabled  = true;
+      btnStop.disabled   = false;
+      player.style.opacity = '1';
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     CORE NARRATION
+     ═══════════════════════════════════════════════════════════ */
+  function startChromeKeepAlive() {
+    stopChromeKeepAlive();
+    chromePauseWA = setInterval(() => {
+      if (synth.speaking && !synth.paused) { synth.pause(); synth.resume(); }
+    }, 10000);
+  }
+  function stopChromeKeepAlive() {
+    if (chromePauseWA) { clearInterval(chromePauseWA); chromePauseWA = null; }
+  }
+
+  function speakSlide() {
+    if (typeof Reveal === 'undefined') return;
+    synth.cancel();
+    stopChromeKeepAlive();
+    stopSimHighlight();
+
+    const slide = Reveal.getCurrentSlide();
+    const text  = getNotes(slide);
+
+    if (!text) {
+      if (panelMode !== 'none') textPanel.style.display = 'none';
+      progressBar.style.width = '100%';
+      setTimeout(() => { if (playing) Reveal.next(); }, 1500);
+      return;
+    }
+
+    refreshVoices();
+    restoreSavedVoice();
+    buildPanel(text);
+
+    utterance = new SpeechSynthesisUtterance(text);
+    if (chosenVoice) utterance.voice = chosenVoice;
+    utterance.lang   = LANG_MAP[typeof currentLang !== 'undefined' ? currentLang : 'en'] || 'en-US';
+    utterance.rate   = rate;
+    utterance.pitch  = 1.0;
+    utterance.volume = muted ? 0 : volume;
+
+    let boundaryFired = false;
+    utterance.onboundary = (e) => {
+      if (e.name === 'word') {
+        boundaryFired = true;
+        stopSimHighlight();           // native events work — kill fallback
+        highlightWord(e.charIndex);
+      }
+    };
+    // Fallback: if browser/voice never fires boundary events after 800ms,
+    // start a timer-based word-by-word highlight simulation
+    setTimeout(() => {
+      if (!boundaryFired && playing && wordSpans.length) {
+        startSimHighlight();
+      }
+    }, 800);
+
+    utterance.onend = () => {
+      stopChromeKeepAlive();
+      if (!playing) return;
+      progressBar.style.width = '100%';
+      setTimeout(() => {
+        if (playing) {
+          const hasNext = Reveal.hasNextSlide ? Reveal.hasNextSlide() : true;
+          if (hasNext) Reveal.next(); else stopNarration();
+        }
+      }, 1000);
+    };
+
+    utterance.onerror = (e) => {
+      stopChromeKeepAlive();
+      if (e.error !== 'interrupted' && e.error !== 'canceled') console.warn('TTS error:', e.error);
+    };
+
+    synth.speak(utterance);
+    startChromeKeepAlive();
+  }
+
+  function startNarration() {
+    playing = true; paused = false;
+    if (panelMode === 'none') setPanelMode('notes');
+    setUIState('playing');
+    speakSlide();
+  }
+
+  function pauseNarration() {
+    paused = true;
+    synth.pause();
+    stopChromeKeepAlive();
+    stopSimHighlight();
+    setUIState('paused');
+  }
+
+  function resumeNarration() {
+    paused = false;
+    setUIState('playing');
+    synth.resume();
+    setTimeout(() => {
+      if (playing && !paused && synth.paused) speakSlide();
+      else startChromeKeepAlive();
+    }, 350);
+  }
+
+  function stopNarration() {
+    playing = false; paused = false;
+    synth.cancel();
+    stopChromeKeepAlive();
+    stopSimHighlight();
+    setUIState('idle');
+    textPanel.innerHTML = '';
+    wordSpans = [];
+    progressBar.style.width = '0%';
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     BUTTON EVENTS
+     ═══════════════════════════════════════════════════════════ */
+  btnPlay.addEventListener('click', () => {
+    if (!playing && !paused) startNarration();
+    else if (paused) resumeNarration();
+  });
+  btnPause.addEventListener('click', () => { if (playing && !paused) pauseNarration(); });
+  btnStop.addEventListener('click', stopNarration);
+
+  btnSlower.addEventListener('click', () => {
+    rateIdx = Math.max(0, rateIdx - 1); rate = rateSteps[rateIdx];
+    speedLbl.textContent = rate + '×';
+    if (playing && !paused) speakSlide();
+  });
+  btnFaster.addEventListener('click', () => {
+    rateIdx = Math.min(rateSteps.length - 1, rateIdx + 1); rate = rateSteps[rateIdx];
+    speedLbl.textContent = rate + '×';
+    if (playing && !paused) speakSlide();
+  });
+
+  // Toggle notes overlay with word highlighting
+  btnNotes.addEventListener('click', () => {
+    setPanelMode(panelMode === 'notes' ? 'none' : 'notes');
+  });
+
+  btnVoice.addEventListener('click', (e) => { e.stopPropagation(); toggleVoiceMenu(); });
+  document.addEventListener('click', (e) => {
+    if (voiceMenuOpen && !voiceMenu.contains(e.target) && e.target !== btnVoice) toggleVoiceMenu(false);
+  });
+
+  /* ═══════════════════════════════════════════════════════════
+     KEYBOARD SHORTCUTS
+     ═══════════════════════════════════════════════════════════ */
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    switch (e.code) {
+      case 'KeyN':
+        if (!playing && !paused) startNarration();
+        else if (playing && !paused) pauseNarration();
+        else if (paused) resumeNarration();
+        e.preventDefault(); break;
+      case 'KeyT': btnNotes.click(); e.preventDefault(); break;
+      case 'KeyM':
+        volIcon.click(); e.preventDefault(); break;
+      case 'Escape':
+        if (playing || paused) { stopNarration(); e.preventDefault(); }
+        if (voiceMenuOpen) toggleVoiceMenu(false);
+        break;
+      case 'Minus': case 'NumpadSubtract':
+        if (playing) { btnSlower.click(); e.preventDefault(); } break;
+      case 'Equal': case 'NumpadAdd':
+        if (playing) { btnFaster.click(); e.preventDefault(); } break;
+    }
+  });
+
+  /* ═══════════════════════════════════════════════════════════
+     SYNC WITH REVEAL
+     ═══════════════════════════════════════════════════════════ */
+  document.addEventListener('DOMContentLoaded', () => {
+    const interval = setInterval(() => {
+      if (typeof Reveal !== 'undefined' && Reveal.isReady && Reveal.isReady()) {
+        clearInterval(interval);
+
+        Reveal.on('slidechanged', () => {
+          if (playing && !paused) speakSlide();
+          if (paused) { paused = false; playing = true; setUIState('playing'); speakSlide(); }
+        });
+
+        player.style.display = 'flex';
+
+        const origSetLang = window.setLang;
+        if (origSetLang) {
+          window.setLang = function(lang) {
+            origSetLang(lang);
+            refreshVoices(); restoreSavedVoice();
+            if (playing && !paused) speakSlide();
+          };
+        }
+      }
+    }, 200);
+  });
+
+  player.addEventListener('mouseenter', () => player.style.opacity = '1');
+  player.addEventListener('mouseleave', () => { if (!playing && !paused) player.style.opacity = '.45'; });
+
+})();
