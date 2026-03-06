@@ -1,0 +1,321 @@
+/* ═══════════════════════════════════════════════════════════
+   AI SLIDES — Italian Language Strings
+   Usato da setLang('it') via window.LANG_IT
+   ═══════════════════════════════════════════════════════════ */
+window.LANG_IT = {
+
+  /* ── COVER SLIDE ───────────────────────────────────────── */
+  "cover.eyebrow":    "Un Viaggio Visivo per Tutti",
+  "cover.h1":         "Capire<br>l'Intelligenza Artificiale",
+  "cover.author":     "Vincenzo MARAFIOTI",
+  "cover.start":      "Inizia →",
+  "cover.agenda":     "Vai all'Agenda ↓",
+
+  /* ── AGENDA ────────────────────────────────────────────── */
+  "agenda.h2":        "Cosa Vedremo",
+
+  "agenda.c1.num":    "01",
+  "agenda.c1.title":  "Introduzione all'AI",
+  "agenda.c1.desc":   "Come funzionano gli LLM, parametri chiave, hardware e il panorama AI.",
+
+  "agenda.c2.num":    "02",
+  "agenda.c2.title":  "Prompt Engineering",
+  "agenda.c2.desc":   "Da zero-shot a chain-of-thought — costruisci prompt che ottengono risultati.",
+
+  "agenda.c3.num":    "03",
+  "agenda.c3.title":  "Coding Assistito da AI",
+  "agenda.c3.desc":   "Copilots, IDE AI-native, guadagni di produttività misurati e best practice.",
+
+  "agenda.c4.num":    "04",
+  "agenda.c4.title":  "Architettura RAG",
+  "agenda.c4.desc":   "Retrieval-Augmented Generation — dare agli LLM accesso alla tua conoscenza.",
+
+  "agenda.c5.num":    "05",
+  "agenda.c5.title":  "Agenti AI + MCP",
+  "agenda.c5.desc":   "Agenti autonomi, il ciclo ReAct, tool use e il Model Context Protocol.",
+
+  "agenda.c6.num":    "06",
+  "agenda.c6.title":  "Etica e Futuro",
+  "agenda.c6.desc":   "Bias, allucinazioni, EU AI Act, framework di governance e cosa ci aspetta.",
+
+  "agenda.ca.num":    "A",
+  "agenda.ca.title":  "Annesso",
+  "agenda.ca.desc":   "Glossario, confronto modelli, guida HuggingFace &amp; GGUF, strumenti LLM locali e risorse di apprendimento.",
+
+  /* ── CHAPTER 1 COVER ───────────────────────────────────── */
+  "c1.cover.eyebrow": "Capitolo 01",
+  "c1.cover.h1":      "Introduzione<br>all'AI",
+  "c1.cover.p":       "Dai bit ai cervelli — come i modelli linguistici pensano, predicono e ci sorprendono.",
+
+  /* ── CH1 SLIDE 1 ────────────────────────────────────────── */
+  "c1.s1.eyebrow":    "Diapositiva 01 · Fondamenti",
+  "c1.s1.h2":         "Sistemi Deterministici<br>vs Probabilistici",
+  "c1.s1.det.badge":  "Deterministico",
+  "c1.s1.det.p":      "Stesso input → sempre stesso output. Nessuna sorpresa, completamente prevedibile.",
+  "c1.s1.det.li1":    "Calcolatrice: 2+2 = sempre 4",
+  "c1.s1.det.li2":    "Compilatore: stesso codice → stesso binario",
+  "c1.s1.det.li3":    "Algoritmo di ordinamento: stesso array → stesso risultato",
+  "c1.s1.prob.badge": "Probabilistico",
+  "c1.s1.prob.p":     "Stesso input → output diverso ogni volta, campionato da una distribuzione di probabilità.",
+  "c1.s1.prob.li1":   "Modello linguistico: 'Il cielo è ___' → blu / scuro / vasto / limpido",
+  "c1.s1.prob.li2":   "Generatore di immagini: stesso prompt → immagini diverse",
+  "c1.s1.prob.li3":   "Motore di raccomandazione: stessa cronologia → suggerimenti variati",
+  "c1.s1.why.label":  "Perché è importante?",
+  "c1.s1.why.p":      "Gli output AI <strong>non sono fatti</strong> — sono <strong>ipotesi ad alta probabilità</strong> basate su pattern nei dati di training. Ecco perché due prompt identici possono restituire risposte diverse e perché la revisione umana è importante.",
+
+  /* ── CH1 SLIDE 2 ────────────────────────────────────────── */
+  "c1.s2.eyebrow":    "Diapositiva 02 · Storia",
+  "c1.s2.h2":         "Cronologia AI:<br>Dagli anni '50 ad oggi",
+
+  /* ── CH1 SLIDE 3 ────────────────────────────────────────── */
+  "c1.s3.eyebrow":    "Diapositiva 03 · Architettura",
+  "c1.s3.h2":         "L'Architettura<br>Transformer",
+  "c1.s3.p":          "Ogni LLM importante oggi — GPT, Claude, Gemini, Llama — è costruito sull'architettura <strong>Transformer</strong> introdotta da Google nel 2017.",
+  "c1.s3.steps.title":"Come elabora il testo:",
+  "c1.s3.step1":      "<strong>Tokenizza</strong> — divide il testo in token (parole o sub-parole)",
+  "c1.s3.step2":      "<strong>Incorpora</strong> — mappa ogni token in un vettore nello spazio ad alta dimensione",
+  "c1.s3.step3":      "<strong>Attenzione</strong> — l'attenzione multi-testa pesa le relazioni tra token",
+  "c1.s3.step4":      "<strong>Feed-Forward</strong> — strati profondi trasformano le rappresentazioni",
+  "c1.s3.step5":      "<strong>Predice</strong> — lo strato output fornisce la probabilità sul token successivo",
+  "c1.s3.insight":    "<strong>Intuizione chiave:</strong> L'attenzione permette al modello di correlare qualsiasi token con qualsiasi altro indipendentemente dalla distanza — nessuna perdita come nelle RNN.",
+
+  /* ── CH1 SLIDE 3b ───────────────────────────────────────── */
+  "c1.s3b.eyebrow":   "Diapositiva 03b · Demo Live",
+  "c1.s3b.h2":        "Animazione: Predizione Token",
+
+  /* ── CH1 SLIDE 3c ───────────────────────────────────────── */
+  "c1.s3c.eyebrow":   "Diapositiva 03c · Demo Live",
+  "c1.s3c.h2":        "Animazione: Heatmap Attenzione",
+
+  /* ── CH1 SLIDE 4 ────────────────────────────────────────── */
+  "c1.s4.eyebrow":    "Diapositiva 04 · Configurazione",
+  "c1.s4.h2":         "Parametri Chiave del Modello",
+  "c1.s4.temp.name":  "Temperatura",
+  "c1.s4.temp.desc":  "Controlla la casualità. Bassa = deterministico &amp; preciso. Alta = creativo &amp; imprevedibile.",
+  "c1.s4.temp.range": "Range: 0.0 (deterministico) → 2.0 (caotico). Consigliato: 0.7 per task bilanciati.",
+  "c1.s4.maxt.name":  "Max Token",
+  "c1.s4.maxt.desc":  "Lunghezza massima della risposta del modello in token (≈ ¾ di una parola).",
+  "c1.s4.maxt.range": "Limiti tipici: 4K–200K token. 1 pagina ≈ 500 token.",
+  "c1.s4.topk.name":  "Top-K",
+  "c1.s4.topk.desc":  "Considera solo i K token successivi più probabili ad ogni passo.",
+  "c1.s4.topk.range": "Esempio: Top-K=5 → solo 5 candidati. Riduce il rischio di allucinazione.",
+  "c1.s4.topp.name":  "Top-P (Nucleo)",
+  "c1.s4.topp.desc":  "Considera il set minimo di token la cui probabilità cumulativa ≥ P.",
+  "c1.s4.topp.range": "Esempio: Top-P=0.9 → il modello sceglie tra token che sommano al 90% di probabilità.",
+
+  /* ── CH1 SLIDE 5 ────────────────────────────────────────── */
+  "c1.s5.eyebrow":    "Diapositiva 05 · Infrastruttura",
+  "c1.s5.h2":         "Hardware &amp; Infrastruttura",
+  "c1.s5.cpu.title":  "Inferenza CPU",
+  "c1.s5.cpu.p":      "Modelli piccoli (≤ 7B) con quantizzazione (GGUF/llama.cpp). Lento ma accessibile.",
+  "c1.s5.cgpu.title": "GPU Consumer",
+  "c1.s5.cgpu.p":     "RTX 3090/4090 (24 GB VRAM) esegue modelli 7B–70B. Ideale per sviluppo locale.",
+  "c1.s5.dcgpu.title":"GPU Data Center",
+  "c1.s5.dcgpu.p":    "NVIDIA A100/H100 (80 GB HBM). Standard industriale per training &amp; inferenza su larga scala.",
+  "c1.s5.tpu.title":  "TPU Cloud",
+  "c1.s5.tpu.p":      "Google TPU v5. Costruito per moltiplicazione di matrici. Alimenta il training di Gemini.",
+
+  /* ── CH1 SLIDE 6 ────────────────────────────────────────── */
+  "c1.s6.eyebrow":    "Diapositiva 06 · Capacità",
+  "c1.s6.h2":         "Cosa Possono Fare gli LLM?",
+  "c1.s6.legend.gen":    "Generazione",
+  "c1.s6.legend.nlp":    "NLP",
+  "c1.s6.legend.class":  "Classificazione",
+  "c1.s6.legend.reason": "Ragionamento",
+  "c1.s6.legend.multi":  "Multimodale",
+
+  /* ── CH1 SLIDE 7 ────────────────────────────────────────── */
+  "c1.s7.eyebrow":    "Diapositiva 07 · Panorama",
+  "c1.s7.h2":         "LLM Frontier (2025)",
+  "c1.s7.open.label": "Aperto?",
+
+  /* ── CH1 REFERENCES ─────────────────────────────────────── */
+  "c1.refs.eyebrow":  "Riferimenti",
+  "c1.refs.h2":       "Fonti e Approfondimenti",
+
+  /* ── CHAPTER 2 COVER ───────────────────────────────────── */
+  "c2.cover.eyebrow": "Capitolo 02",
+  "c2.cover.h1":      "Prompt<br>Engineering",
+  "c2.cover.p":       "L'arte e la scienza di parlare con l'AI — costruire input che ottengono gli output che vuoi davvero.",
+
+  /* ── CH2 SLIDES ─────────────────────────────────────────── */
+  "c2.s1.eyebrow":    "Diapositiva 01 · Fondamenti",
+  "c2.s1.h2":         "Anatomia di un Prompt",
+  "c2.s1.role.label": "Ruolo",
+  "c2.s1.role.p":     "Chi deve essere l'AI",
+  "c2.s1.ctx.label":  "Contesto",
+  "c2.s1.ctx.p":      "Informazioni di sfondo",
+  "c2.s1.task.label": "Compito",
+  "c2.s1.task.p":     "Cosa fare",
+  "c2.s1.fmt.label":  "Formato",
+  "c2.s1.fmt.p":      "Struttura dell'output",
+  "c2.s1.cst.label":  "Vincoli",
+  "c2.s1.cst.p":      "Limiti &amp; regole",
+  "c2.s2.eyebrow":    "Diapositiva 02 · Tecniche",
+  "c2.s2.h2":         "Pattern di Prompting",
+  "c2.s2.zs.name":    "Zero-Shot",
+  "c2.s2.zs.desc":    "Nessun esempio fornito. Chiedi direttamente.",
+  "c2.s2.zs.range":   "Ideale per: task semplici e chiari che il modello conosce bene.",
+  "c2.s2.fs.name":    "Few-Shot",
+  "c2.s2.fs.desc":    "Fornisci 2–5 esempi di input → output prima della tua domanda.",
+  "c2.s2.fs.range":   "Ideale per: formattazione, classificazione, corrispondenza di stile.",
+  "c2.s2.cot.name":   "Chain-of-Thought",
+  "c2.s2.cot.desc":   "Chiedi al modello di 'pensare passo dopo passo' prima di rispondere.",
+  "c2.s2.cot.range":  "Ideale per: matematica, logica, ragionamento multi-step.",
+  "c2.s2.sc.name":    "Auto-Consistenza",
+  "c2.s2.sc.desc":    "Esegui lo stesso prompt più volte, scegli la risposta più comune.",
+  "c2.s2.sc.range":   "Ideale per: decisioni ad alto rischio che richiedono affidabilità.",
+  "c2.s3.eyebrow":    "Diapositiva 03 · Avanzato",
+  "c2.s3.h2":         "Tecniche Avanzate",
+  "c2.s4.eyebrow":    "Diapositiva 04 · Best Practice",
+  "c2.s4.h2":         "Cosa Fare &amp; Non Fare",
+  "c2.s4.do.badge":   "✅ Da Fare",
+  "c2.s4.dont.badge": "❌ Da Evitare",
+  "c2.s5.eyebrow":    "Diapositiva 05 · Esempi",
+  "c2.s5.h2":         "Esempi Reali",
+  "c2.s6.eyebrow":    "Diapositiva 06 · Interattivo",
+  "c2.s6.h2":         "Playground dei Parametri",
+  "c2.s6.temp.label": "Temperatura",
+  "c2.s6.topp.label": "Top-P",
+  "c2.s6.tokens.title":"Probabilità Token Successivo",
+  "c2.s6.output.title":"Output di Esempio",
+  "c2.s7.eyebrow":    "Diapositiva 07 · Pratica",
+  "c2.s7.h2":         "Esercizio: Raffinamento Prompt",
+  "c2.refs.eyebrow":  "Riferimenti",
+  "c2.refs.h2":       "Fonti e Approfondimenti",
+
+  /* ── CHAPTER 3 COVER ───────────────────────────────────── */
+  "c3.cover.eyebrow": "Capitolo 03",
+  "c3.cover.h1":      "Coding<br>Assistito da AI",
+  "c3.cover.p":       "Dall'autocompletamento agli agenti di codifica autonomi — l'AI sta ridisegnando come viene costruito il software.",
+
+  "c3.s1.eyebrow":    "Diapositiva 01 · Concetto",
+  "c3.s1.h2":         "Cos'è il Coding Assistito da AI?",
+  "c3.s2.eyebrow":    "Diapositiva 02 · Flusso di Lavoro",
+  "c3.s2.h2":         "Il Ciclo AI-Dev",
+  "c3.s3.eyebrow":    "Diapositiva 03 · Strumenti",
+  "c3.s3.h2":         "Panorama degli Strumenti",
+  "c3.s4.eyebrow":    "Diapositiva 04 · Reality Check",
+  "c3.s4.h2":         "Reality Check",
+  "c3.s5.eyebrow":    "Diapositiva 05 · Ricerca",
+  "c3.s5.h2":         "Impatto Misurato",
+  "c3.s6.eyebrow":    "Diapositiva 06 · Pratica",
+  "c3.s6.h2":         "Esercizio: Tool CSV da CLI",
+  "c3.refs.eyebrow":  "Riferimenti",
+  "c3.refs.h2":       "Fonti e Approfondimenti",
+
+  /* ── CHAPTER 4 COVER ───────────────────────────────────── */
+  "c4.cover.eyebrow": "Capitolo 04",
+  "c4.cover.h1":      "Architettura<br>RAG",
+  "c4.cover.p":       "Retrieval-Augmented Generation — dare al tuo LLM una memoria e una biblioteca.",
+
+  "c4.s1.eyebrow":    "Diapositiva 01 · Problema",
+  "c4.s1.h2":         "Il Problema che RAG Risolve",
+  "c4.s2.eyebrow":    "Diapositiva 02 · Architettura",
+  "c4.s2.h2":         "Pipeline RAG",
+  "c4.s3.eyebrow":    "Diapositiva 03 · Componenti",
+  "c4.s3.h2":         "Embedding &amp; Vector DB",
+  "c4.s4.eyebrow":    "Diapositiva 04 · Strategia",
+  "c4.s4.h2":         "Strategie di Chunking",
+  "c4.s5.eyebrow":    "Diapositiva 05 · Produzione",
+  "c4.s5.h2":         "RAG in Produzione",
+  "c4.s6.eyebrow":    "Diapositiva 06 · Pratica",
+  "c4.s6.h2":         "Esercizio: Progetta un Sistema RAG",
+  "c4.refs.eyebrow":  "Riferimenti",
+  "c4.refs.h2":       "Fonti e Approfondimenti",
+
+  /* ── CHAPTER 5 COVER ───────────────────────────────────── */
+  "c5.cover.eyebrow": "Capitolo 05",
+  "c5.cover.h1":      "Agenti AI<br>+ MCP",
+  "c5.cover.p":       "Dal question-answering all'azione autonoma — AI che pianifica, usa strumenti e fa le cose.",
+
+  "c5.s1.eyebrow":    "Diapositiva 01 · Concetto",
+  "c5.s1.h2":         "Cos'è un Agente AI?",
+  "c5.s1b.eyebrow":   "Diapositiva 01b · Pattern Agentici (DeepLearning.AI)",
+  "c5.s1b.h2":        "I 4 Pattern Agentici<br>di Andrew Ng",
+  "c5.s2.eyebrow":    "Diapositiva 02 · ReAct",
+  "c5.s2.h2":         "Ragionare + Agire:<br>Il Ciclo ReAct",
+  "c5.s3.eyebrow":    "Diapositiva 03 · Tool Use",
+  "c5.s3.h2":         "Uso di Strumenti<br>e Function Calling",
+  "c5.s4.eyebrow":    "Diapositiva 04 · MCP",
+  "c5.s4.h2":         "Model Context Protocol<br>(MCP)",
+  "c5.s5.eyebrow":    "Diapositiva 05 · Multi-Agente",
+  "c5.s5.h2":         "Sistemi<br>Multi-Agente",
+  "c5.refs.eyebrow":  "Riferimenti",
+  "c5.refs.h2":       "Fonti e Approfondimenti",
+
+  /* ── CHAPTER 6 COVER ───────────────────────────────────── */
+  "c6.cover.eyebrow": "Capitolo 06",
+  "c6.cover.h1":      "Etica e<br>Futuro",
+  "c6.cover.p":       "La potenza senza guardrail è un rischio. Comprendere i limiti e le responsabilità dell'AI è un compito di tutti.",
+
+  "c6.s1.eyebrow":    "Diapositiva 01 · Rischi Noti",
+  "c6.s1.h2":         "Bias e Allucinazioni",
+  "c6.s2.eyebrow":    "Diapositiva 02 · Governance",
+  "c6.s2.h2":         "EU AI Act e<br>Governance",
+  "c6.s3.eyebrow":    "Diapositiva 03 · Casi Studio",
+  "c6.s3.h2":         "Fallimenti AI<br>nel Mondo Reale",
+  "c6.s4.eyebrow":    "Diapositiva 04 · Framework",
+  "c6.s4.h2":         "Framework di<br>Governance AI",
+  "c6.s5.eyebrow":    "Diapositiva 05 · AI Responsabile",
+  "c6.s5.h2":         "AI Responsabile<br>in Pratica",
+  "c6.s6.eyebrow":    "Diapositiva 06 · Futuro",
+  "c6.s6.h2":         "La Strada Avanti",
+  "c6.refs.eyebrow":  "Riferimenti",
+  "c6.refs.h2":       "Fonti e Approfondimenti",
+
+  /* ── ANNEX ──────────────────────────────────────────────── */
+  "ann.cover.eyebrow":"Annesso",
+  "ann.cover.h1":     "Glossario &amp;<br>Risorse",
+  "ann.cover.p":      "Definizioni chiave, confronto modelli, guida HuggingFace &amp; GGUF, strumenti LLM locali e link di apprendimento curati.",
+  "ann.g1.eyebrow":   "Glossario · A–L",
+  "ann.g1.h2":        "Termini Chiave A–L",
+  "ann.g2.eyebrow":   "Glossario · M–Z",
+  "ann.g2.h2":        "Termini Chiave M–Z",
+  "ann.mc.eyebrow":   "Confronto Modelli",
+  "ann.mc.h2":        "Panorama LLM (2025)",
+  "ann.mc.open":      "Aperto?",
+
+  "ann.hg.eyebrow":   "Annesso · HuggingFace &amp; GGUF",
+  "ann.hg.h2":        "HuggingFace &amp;<br>Anatomia GGUF",
+  "ann.hg.hf.badge":  "🤗 HuggingFace",
+  "ann.hg.hf.p":      "Il GitHub dell'AI — il più grande hub al mondo per modelli open-source, dataset e Spaces (demo live).",
+  "ann.hg.hf.li1":    "<strong>Modelli</strong> — 900k+ modelli pre-addestrati (testo, visione, audio)",
+  "ann.hg.hf.li2":    "<strong>Dataset</strong> — 200k+ dataset per training &amp; valutazione",
+  "ann.hg.hf.li3":    "<strong>Spaces</strong> — app Gradio/Streamlit ospitate gratuitamente",
+  "ann.hg.hf.li4":    "<strong>Libreria Transformers</strong> — API Python unificata per 100+ architetture",
+  "ann.hg.hf.li5":    "<strong>API Inference</strong> — esegui modelli via REST senza GPU",
+  "ann.hg.gguf.badge":"📦 Formato GGUF",
+  "ann.hg.gguf.p":    "<strong>GGUF</strong> (GPT-Generated Unified Format) è il contenitore standard per i modelli quantizzati usato con <strong>llama.cpp</strong>, Ollama, LM Studio e GPT4All.",
+  "ann.hg.quant.title":"Livelli di Quantizzazione — compromesso dimensione vs qualità:",
+  "ann.hg.filename":  "Come leggere un nome file: <code>Llama-3.2-3B-Instruct-Q4_K_M.gguf</code>",
+  "ann.hg.insight":   "<strong>Punto di partenza consigliato:</strong> <code>Q4_K_M</code> — eccellente equilibrio tra dimensione, velocità e qualità per la maggior parte degli use case su hardware consumer.",
+
+  "ann.ll.eyebrow":   "Annesso · Strumenti LLM Locali",
+  "ann.ll.h2":        "Eseguire LLM<br>in Locale",
+  "ann.ll.why.badge": "Perché Eseguire In Locale?",
+  "ann.ll.why.li1":   "🔒 <strong>Privacy</strong> — i dati non lasciano mai il tuo dispositivo",
+  "ann.ll.why.li2":   "✈️ <strong>Offline</strong> — funziona senza internet",
+  "ann.ll.why.li3":   "💰 <strong>Gratuito</strong> — nessun costo API dopo il download",
+  "ann.ll.why.li4":   "🧪 <strong>Dev &amp; test</strong> — iterazione veloce, nessun rate limit",
+  "ann.ll.tools.badge":"Strumenti Popolari",
+  "ann.ll.hw.badge":  "Requisiti Hardware (GGUF Q4_K_M)",
+  "ann.ll.hw.note":   "RAM minima = dimensione modello × 1,2 (sistema) + VRAM se accelerato GPU.",
+  "ann.ll.quick.badge":"Avvio Rapido",
+
+  "ann.lr.eyebrow":   "Risorse di Apprendimento",
+  "ann.lr.h2":        "Dove Imparare di Più",
+  "ann.lr.found":     "📚 Fondamentali",
+  "ann.lr.pract":     "🛠️ Pratici",
+  "ann.lr.curr":      "📰 Rimani Aggiornato",
+
+  "ann.close.eyebrow":"Grazie",
+  "ann.close.h1":     "Domande?",
+  "ann.close.back":   "← Torna all'Agenda",
+
+  "common.refs":      "Riferimenti",
+  "common.sources":   "Fonti e Approfondimenti",
+  "common.insight":   "Intuizione Chiave",
+  "common.example":   "Esempio",
+
+};

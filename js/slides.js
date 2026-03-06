@@ -1,21 +1,44 @@
 /* ═══════════════════════════════════════════════════════════
    AI SLIDES — Shared JavaScript
    Language switcher + Reveal.js init + utilities
+   Single-file merged presentation edition
    ═══════════════════════════════════════════════════════════ */
 
 let currentLang = 'en';
 
+/* ── LANGUAGE SWITCHER ───────────────────────────────────── */
 function setLang(lang) {
   currentLang = lang;
+
+  // Update active button state
   document.querySelectorAll('.lang-btn').forEach(b =>
     b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang)
   );
-  document.querySelectorAll('[data-' + lang + ']').forEach(el => {
-    el.innerHTML = el.getAttribute('data-' + lang);
-  });
+
+  // Try external lang file first (window.LANG_XX), fall back to data-{lang} attributes
+  const langObj = window['LANG_' + lang.toUpperCase()];
+
+  if (langObj) {
+    // data-i18n key lookup from external language file
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (langObj[key] !== undefined) el.innerHTML = langObj[key];
+    });
+    // Also update any remaining data-{lang} elements for compatibility
+    document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+      if (!el.dataset.i18n) el.innerHTML = el.getAttribute('data-' + lang);
+    });
+  } else {
+    // Fallback: inline data-{lang} attributes
+    document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+      el.innerHTML = el.getAttribute('data-' + lang);
+    });
+  }
+
   try { localStorage.setItem('ai-slides-lang', lang); } catch(e) {}
 }
 
+/* ── REVEAL.JS INIT ──────────────────────────────────────── */
 function initSlides(opts) {
   const plugins = [];
   if (typeof RevealNotes !== 'undefined') plugins.push(RevealNotes);
@@ -45,99 +68,16 @@ function initSlides(opts) {
     }
   };
 
-  // Wire the ☰ nav-bar link to native menu toggle
-  const menuBtn = document.querySelector('.nav-bar a');
-  if (menuBtn && menuBtn.textContent.trim() === '☰') {
-    menuBtn.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      try {
-        const menu = Reveal.getPlugin('menu');
-        if (menu && menu.toggle) menu.toggle();
-      } catch (err) { /* Reveal not ready yet */ }
-    });
-  }
-
   Reveal.initialize(Object.assign(defaults, opts || {})).then(() => {
-    // ── Chapter-to-chapter navigation ──
-    // On the last slide → right arrow goes to next chapter
-    // On the first slide → left arrow goes to previous chapter
-    const chapterOrder = [
-      'index.html',
-      'chapter1.html',
-      'chapter2.html',
-      'chapter3.html',
-      'chapter4.html',
-      'chapter5.html',
-      'chapter6.html',
-      'annex.html'
-    ];
-    const currentFile = location.pathname.split('/').pop() || 'index.html';
-    const currentIdx  = chapterOrder.indexOf(currentFile);
-
-    function getNextChapter() {
-      return currentIdx >= 0 && currentIdx < chapterOrder.length - 1
-        ? chapterOrder[currentIdx + 1] : null;
-    }
-    function getPrevChapter() {
-      return currentIdx > 0 ? chapterOrder[currentIdx - 1] : null;
-    }
-
-    Reveal.on('slidechanged', evt => {
-      const totalSlides = Reveal.getTotalSlides();
-      const currentSlide = Reveal.getIndices().h;
-
-      // Show/hide nav hints on last/first slides
-      const navBar = document.querySelector('.nav-bar');
-      if (navBar) {
-        const nextLink = navBar.querySelector('a:last-child');
-        const prevLink = navBar.querySelectorAll('a')[1];
-        if (nextLink && currentSlide === totalSlides - 1) {
-          nextLink.style.animation = 'pulse .8s ease-in-out 2';
-        } else if (nextLink) {
-          nextLink.style.animation = '';
-        }
+    // Restore saved language after Reveal is ready
+    try {
+      const saved = localStorage.getItem('ai-slides-lang');
+      if (saved && ['en','it','fr','es'].includes(saved)) {
+        setLang(saved);
       }
-    });
-
-    // Listen for keyboard at document level to catch "beyond last slide" navigation
-    document.addEventListener('keydown', evt => {
-      const totalSlides = Reveal.getTotalSlides();
-      const currentSlide = Reveal.getIndices().h;
-
-      if ((evt.key === 'ArrowRight' || evt.key === 'Right') && currentSlide === totalSlides - 1) {
-        const next = getNextChapter();
-        if (next) { evt.preventDefault(); window.location.href = next; }
-      }
-      if ((evt.key === 'ArrowLeft' || evt.key === 'Left') && currentSlide === 0) {
-        const prev = getPrevChapter();
-        if (prev) { evt.preventDefault(); window.location.href = prev + '?last=1'; }
-      }
-    });
-
-    // If we arrived via "prev" navigation, jump to last slide
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('last') === '1') {
-      const total = Reveal.getTotalSlides();
-      Reveal.slide(total - 1);
-      // Clean up the URL without reloading
-      history.replaceState(null, '', window.location.pathname + window.location.hash);
-    }
+    } catch(e) {}
   });
-
-  // Restore saved language
-  try {
-    const saved = localStorage.getItem('ai-slides-lang');
-    if (saved && ['en','it','fr','es'].includes(saved)) {
-      setTimeout(() => setLang(saved), 100);
-    }
-  } catch(e) {}
-
-
-
 }
-
-
 
 /* ── WORD CLOUD BUILDER ─────────────────────────────────── */
 function buildCloud(containerId, tasks, colors) {
