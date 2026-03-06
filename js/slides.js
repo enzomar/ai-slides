@@ -42,6 +42,9 @@ function setLang(lang) {
 
   // Sync tag-bar slide-tags with eyebrow text
   syncTagBars();
+
+  // Refresh slide menu translations
+  if (typeof window.refreshSlideMenu === 'function') window.refreshSlideMenu();
 }
 
 /* ── SPEAKER NOTES LOADER ────────────────────────────────── */
@@ -109,6 +112,13 @@ function initSlides(opts) {
   };
 
   Reveal.initialize(Object.assign(defaults, opts || {})).then(() => {
+    // Populate version footer from js/version.js
+    const vEl = document.getElementById('slide-version');
+    if (vEl && window.AI_SLIDES_VERSION) {
+      const { version, updated } = window.AI_SLIDES_VERSION;
+      vEl.textContent = `Last Updated: ${updated}\u00a0\u00b7\u00a0v${version}`;
+    }
+
     // Populate notes from external file for the current language
     updateNotes(currentLang);
 

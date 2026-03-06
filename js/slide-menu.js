@@ -14,15 +14,111 @@
   let menuOpen = false;
   let slideData = []; // { idx, title, chapter, chapterLabel }
 
+  /* ── i18n strings ─────────────────────────────────────────── */
+  const MENU_I18N = {
+    en: {
+      toggle:    '☰ Slides',
+      title:     'SLIDE NAVIGATOR',
+      search:    'Search slides…',
+      close:     'Close',
+      noResults: 'No slides matching',
+      preface:   'Preface',
+      chapters: {
+        'chapter-1': '01 — Introduction',
+        'chapter-2': '02 — Prompt Engineering',
+        'chapter-3': '03 — AI-Assisted Coding',
+        'chapter-4': '04 — RAG Architecture',
+        'chapter-5': '05 — AI Agents & MCP',
+        'chapter-6': '06 — Ethics & Governance',
+        'annex':     'Annex',
+      },
+    },
+    it: {
+      toggle:    '☰ Diapositive',
+      title:     'NAVIGATORE DIAPOSITIVE',
+      search:    'Cerca diapositive…',
+      close:     'Chiudi',
+      noResults: 'Nessuna diapositiva per',
+      preface:   'Premessa',
+      chapters: {
+        'chapter-1': '01 — Introduzione',
+        'chapter-2': '02 — Prompt Engineering',
+        'chapter-3': '03 — AI-Assisted Coding',
+        'chapter-4': '04 — Architettura RAG',
+        'chapter-5': '05 — Agenti AI & MCP',
+        'chapter-6': '06 — Etica & Governance',
+        'annex':     'Allegato',
+      },
+    },
+    fr: {
+      toggle:    '☰ Diapositives',
+      title:     'NAVIGATEUR DE DIAPOSITIVES',
+      search:    'Rechercher…',
+      close:     'Fermer',
+      noResults: 'Aucune diapositive pour',
+      preface:   'Préface',
+      chapters: {
+        'chapter-1': '01 — Introduction',
+        'chapter-2': '02 — Prompt Engineering',
+        'chapter-3': '03 — AI-Assisted Coding',
+        'chapter-4': '04 — Architecture RAG',
+        'chapter-5': '05 — Agents IA & MCP',
+        'chapter-6': '06 — Éthique & Gouvernance',
+        'annex':     'Annexe',
+      },
+    },
+    es: {
+      toggle:    '☰ Diapositivas',
+      title:     'NAVEGADOR DE DIAPOSITIVAS',
+      search:    'Buscar diapositivas…',
+      close:     'Cerrar',
+      noResults: 'Ninguna diapositiva para',
+      preface:   'Prefacio',
+      chapters: {
+        'chapter-1': '01 — Introducción',
+        'chapter-2': '02 — Prompt Engineering',
+        'chapter-3': '03 — AI-Assisted Coding',
+        'chapter-4': '04 — Arquitectura RAG',
+        'chapter-5': '05 — Agentes IA & MCP',
+        'chapter-6': '06 — Ética & Gobernanza',
+        'annex':     'Anexo',
+      },
+    },
+  };
+
+  function getLang() {
+    return (typeof currentLang !== 'undefined' && currentLang) || 'en';
+  }
+
+  function t(key) {
+    const lang = getLang();
+    return (MENU_I18N[lang] && MENU_I18N[lang][key]) || MENU_I18N.en[key] || key;
+  }
+
+  function chapterLabel(id) {
+    const lang = getLang();
+    const chs = (MENU_I18N[lang] && MENU_I18N[lang].chapters) || MENU_I18N.en.chapters;
+    return chs[id] || MENU_I18N.en.chapters[id] || id;
+  }
+
+  /** Update static UI strings (button, title, placeholder) */
+  function updateMenuStrings() {
+    if (toggle)   toggle.innerHTML  = t('toggle');
+    if (closeBtn) closeBtn.title    = t('close');
+    if (search)   search.placeholder = t('search');
+    const titleEl = document.getElementById('sm-title');
+    if (titleEl)  titleEl.textContent = t('title');
+  }
+
   /* ── Chapter mapping ──────────────────────────────────────── */
   const CHAPTERS = [
-    { id: 'chapter-1', label: '01 — Introduction',       tag: 'Chapter 1 · Introduction' },
-    { id: 'chapter-2', label: '02 — Prompt Engineering',  tag: 'Chapter 2 · Prompt Engineering' },
-    { id: 'chapter-3', label: '03 — AI-Assisted Coding',  tag: 'Chapter 3 · AI-Assisted Coding' },
-    { id: 'chapter-4', label: '04 — RAG Architecture',    tag: 'Chapter 4 · RAG Architecture' },
-    { id: 'chapter-5', label: '05 — AI Agents & MCP',     tag: 'Chapter 5 · AI Agents & MCP' },
-    { id: 'chapter-6', label: '06 — Ethics & Governance',  tag: 'Chapter 6 · Ethics & Governance' },
-    { id: 'annex',     label: 'Annex',                    tag: 'Annex' },
+    { id: 'chapter-1', tag: 'Chapter 1 · Introduction' },
+    { id: 'chapter-2', tag: 'Chapter 2 · Prompt Engineering' },
+    { id: 'chapter-3', tag: 'Chapter 3 · AI-Assisted Coding' },
+    { id: 'chapter-4', tag: 'Chapter 4 · RAG Architecture' },
+    { id: 'chapter-5', tag: 'Chapter 5 · AI Agents & MCP' },
+    { id: 'chapter-6', tag: 'Chapter 6 · Ethics & Governance' },
+    { id: 'annex',     tag: 'Annex' },
   ];
 
   function getChapterForSlide(section) {
@@ -46,7 +142,7 @@
     if (typeof Reveal === 'undefined') return;
     slideData = [];
     const slides = Reveal.getSlides();
-    let currentChapter = { id: 'preface', label: 'Preface', tag: '' };
+    let currentChapter = { id: 'preface', tag: '' };
 
     slides.forEach((section, idx) => {
       // Check if this slide starts a new chapter
@@ -68,7 +164,7 @@
         idx,
         title,
         chapter: currentChapter.id,
-        chapterLabel: currentChapter.label,
+        chapterLabel: chapterLabel(currentChapter.id),
         isChapterDivider: section.classList.contains('chapter-divider'),
       });
     });
@@ -134,7 +230,7 @@
     });
 
     if (!anyResults) {
-      list.innerHTML = '<div class="sm-no-results">No slides matching "' + escHtml(query) + '"</div>';
+      list.innerHTML = '<div class="sm-no-results">' + escHtml(t('noResults')) + ' "' + escHtml(query) + '"</div>';
     }
   }
 
@@ -152,6 +248,7 @@
 
   /* ── Open / Close ─────────────────────────────────────────── */
   function openMenu() {
+    updateMenuStrings();
     collectSlides();
     renderMenu('');
     search.value = '';
@@ -207,4 +304,13 @@
       }
     }, 200);
   });
+
+  // Expose a refresh function so the language switcher can update the menu
+  window.refreshSlideMenu = function() {
+    updateMenuStrings();
+    if (menuOpen) {
+      collectSlides();
+      renderMenu(search.value);
+    }
+  };
 })();

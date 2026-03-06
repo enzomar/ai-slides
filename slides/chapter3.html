@@ -1,0 +1,554 @@
+<!-- chapter3.html -->
+
+<!-- ══════════════════════ CHAPTER COVER ══════════════════════ -->
+<section class="chapter-divider" id="chapter-3">
+  <div class="cover-dot"></div>
+  <div class="eyebrow" style="color:var(--ink-mute);"
+    data-en="Chapter 03" data-it="Capitolo 03" data-fr="Chapitre 03" data-es="Capítulo 03">Chapter 03</div>
+  <div class="rule" style="margin:0 auto 28px;"></div>
+  <h1 style="text-align:center;"
+    data-en="AI-Assisted Coding" data-it="AI-Assisted Coding" data-fr="AI-Assisted Coding" data-es="AI-Assisted Coding">AI-Assisted Coding</h1>
+  <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
+    data-en="In 2022, writing a REST API from scratch took hours. In 2025, it takes minutes. This chapter shows you exactly how — and how to stay the human who directs the machine, not the one replaced by it."
+    data-it="Nel 2022, scrivere una REST API da zero richiedeva ore. Nel 2025, ci vogliono minuti. Questo capitolo ti mostra esattamente come — e come rimanere l'umano che dirige la macchina, non quello sostituito da essa."
+    data-fr="En 2022, écrire une API REST de zéro prenait des heures. En 2025, cela prend des minutes. Ce chapitre vous montre exactement comment — et comment rester l'humain qui dirige la machine, pas celui qu'elle remplace."
+    data-es="En 2022, escribir una API REST desde cero llevaba horas. En 2025, lleva minutos. Este capítulo te muestra exactamente cómo — y cómo mantenerte como el humano que dirige la máquina, no el que es reemplazado por ella.">In 2022, writing a REST API from scratch took hours. In 2025, it takes minutes. This chapter shows you exactly how — and how to stay the human who directs the machine, not the one replaced by it.</p>
+  <span class="chapter-tag" style="color:rgba(255,255,255,.25);">AI-Assisted Coding</span>
+  <aside class="notes"></aside>
+</section>
+
+<!-- ══════════════════════ SLIDE 1: WHAT IS VIBE-CODING ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 01 · Concept" data-it="Diapositiva 01 · Concetto" data-fr="Diapo 01 · Concept" data-es="Diapositiva 01 · Concepto">Slide 01 · Concept</div>
+  <h2 data-en="What is AI-Assisted Coding?"
+      data-it="Cos'è il AI-Assisted Coding?"
+      data-fr="Qu'est-ce que le AI-Assisted Coding ?"
+      data-es="¿Qué es el AI-Assisted Coding?">What is AI-Assisted Coding?</h2>
+
+  <div class="two-col">
+    <div>
+      <p style="font-size:.85rem;max-width:420px;margin:0 0 16px;"
+        data-en="AI-assisted coding spans a wide spectrum — from intelligent autocomplete to fully conversational development. Karpathy's 'vibe-coding' (Feb 2025) captures the most radical end:"
+        data-it="Il coding assistito dall'AI abbraccia un ampio spettro — dall'autocompletamento intelligente allo sviluppo completamente conversazionale. Il 'vibe-coding' di Karpathy (Feb 2025) rappresenta l'estremo più radicale:"
+        data-fr="Le coding assisté par l'IA couvre un large spectre — de l'auto-complétion intelligente au développement conversationnel. Le 'vibe-coding' de Karpathy (Fév 2025) capture l'extrême le plus radical :"
+        data-es="La programación asistida por IA abarca un amplio espectro — desde el autocompletado inteligente hasta el desarrollo conversacional. El 'vibe-coding' de Karpathy (Feb 2025) captura el extremo más radical:">AI-assisted coding spans a wide spectrum — from intelligent autocomplete to fully conversational development. Karpathy's "vibe-coding" (Feb 2025) captures the most radical end:</p>
+
+      <ol class="step-list">
+        <li>
+          <span class="step-num">1</span>
+          <div>
+            <strong data-en="Describe what you want" data-it="Descrivi cosa vuoi" data-fr="Décris ce que tu veux" data-es="Describe lo que quieres">Describe what you want</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);"
+              data-en="In plain language, not code"
+              data-it="In linguaggio naturale, non codice"
+              data-fr="En langage naturel, pas en code"
+              data-es="En lenguaje natural, no en código">In plain language, not code</div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div>
+            <strong data-en="AI generates the code" data-it="L'AI genera il codice" data-fr="L'IA génère le code" data-es="La IA genera el código">AI generates the code</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);"
+              data-en="Full functions, files, even entire projects"
+              data-it="Funzioni complete, file, persino interi progetti"
+              data-fr="Fonctions complètes, fichiers, voire projets entiers"
+              data-es="Funciones completas, archivos, incluso proyectos enteros">Full functions, files, even entire projects</div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div>
+            <strong data-en="You review & iterate" data-it="Revisioni e iteri" data-fr="Tu révises et itères" data-es="Revisas e iteras">You review & iterate</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);"
+              data-en="Accept, modify, or refine via conversation"
+              data-it="Accetti, modifichi o raffini tramite conversazione"
+              data-fr="Accepter, modifier ou affiner par conversation"
+              data-es="Aceptas, modificas o refinas por conversación">Accept, modify, or refine via conversation</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div>
+      <div style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);color:var(--ink);border-radius:14px;padding:22px 24px;margin-bottom:16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;"
+          data-en="The Karpathy Quote" data-it="La Citazione di Karpathy" data-fr="La Citation de Karpathy" data-es="La Cita de Karpathy">The Karpathy Quote</div>
+        <div style="font-family:var(--serif);font-size:1rem;line-height:1.4;font-style:italic;"
+          data-en=""I just see stuff, say stuff, run stuff, and copy-paste stuff, and it mostly works.""
+          data-it=""Vedo cose, dico cose, eseguo cose, copio e incollo, e per lo più funziona.""
+          data-fr=""Je vois des trucs, dis des trucs, exécute des trucs, copie-colle, et ça marche.""
+          data-es=""Solo veo cosas, digo cosas, ejecuto cosas, copio y pego, y casi siempre funciona."">"I just see stuff, say stuff, run stuff, and copy-paste stuff, and it mostly works."</div>
+        <div style="font-family:var(--mono);font-size:.65rem;color:var(--ink-mute);margin-top:10px;">— Andrej Karpathy, Feb 2025</div>
+      </div>
+
+      <div class="key-insight" style="margin-top:0;">
+        <strong data-en="Spectrum:" data-it="Spettro:" data-fr="Spectre :" data-es="Espectro:">Spectrum:</strong>
+        <span data-en=" ① Autocomplete (Copilot) → ② Chat-assisted edits (Cursor, Copilot Chat) → ③ Fully conversational 'vibe-coding'. The skill shifts from writing code to reviewing and directing it."
+              data-it=" ① Autocompletamento (Copilot) → ② Modifiche chat-assistite (Cursor, Copilot Chat) → ③ 'Vibe-coding' completamente conversazionale. La competenza si sposta dallo scrivere codice al revisionare e dirigerlo."
+              data-fr=" ① Auto-complétion (Copilot) → ② Modifications par chat (Cursor, Copilot Chat) → ③ 'Vibe-coding' conversationnel. La compétence passe de l'écriture à la revue et la direction du code."
+              data-es=" ① Autocompletado (Copilot) → ② Ediciones asistidas por chat (Cursor, Copilot Chat) → ③ 'Vibe-coding' completamente conversacional. La habilidad cambia de escribir código a revisarlo y dirigirlo."> ① Autocomplete (Copilot) → ② Chat-assisted edits (Cursor, Copilot Chat) → ③ Fully conversational "vibe-coding." The skill shifts from writing code to reviewing and directing it.</span>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">01 / 06</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 2: THE WORKFLOW ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 02 · Workflow" data-it="Diapositiva 02 · Workflow" data-fr="Diapo 02 · Workflow" data-es="Diapositiva 02 · Flujo">Slide 02 · Workflow</div>
+  <h2 data-en="The AI-Assisted Coding Loop"
+      data-it="Il Ciclo del AI-Assisted Coding"
+      data-fr="La Boucle AI-Assisted Coding"
+      data-es="El Ciclo del AI-Assisted Coding">The AI-Assisted Coding Loop</h2>
+
+  <div class="flow-row" style="margin:20px 0;">
+    <div class="flow-box blue"
+      data-en="💡 Intent<br><span style='font-size:.6rem;font-weight:400;'>What you want</span>"
+      data-it="💡 Intento<br><span style='font-size:.6rem;font-weight:400;'>Cosa vuoi</span>"
+      data-fr="💡 Intention<br><span style='font-size:.6rem;font-weight:400;'>Ce que tu veux</span>"
+      data-es="💡 Intención<br><span style='font-size:.6rem;font-weight:400;'>Lo que quieres</span>">💡 Intent<br><span style="font-size:.6rem;font-weight:400;">What you want</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box green"
+      data-en="💬 Prompt<br><span style='font-size:.6rem;font-weight:400;'>Natural language</span>"
+      data-it="💬 Prompt<br><span style='font-size:.6rem;font-weight:400;'>Linguaggio naturale</span>"
+      data-fr="💬 Prompt<br><span style='font-size:.6rem;font-weight:400;'>Langage naturel</span>"
+      data-es="💬 Prompt<br><span style='font-size:.6rem;font-weight:400;'>Lenguaje natural</span>">💬 Prompt<br><span style="font-size:.6rem;font-weight:400;">Natural language</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box purple"
+      data-en="🤖 AI Code<br><span style='font-size:.6rem;font-weight:400;'>Generated output</span>"
+      data-it="🤖 Codice AI<br><span style='font-size:.6rem;font-weight:400;'>Output generato</span>"
+      data-fr="🤖 Code IA<br><span style='font-size:.6rem;font-weight:400;'>Sortie générée</span>"
+      data-es="🤖 Código IA<br><span style='font-size:.6rem;font-weight:400;'>Salida generada</span>">🤖 AI Code<br><span style="font-size:.6rem;font-weight:400;">Generated output</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box amber"
+      data-en="👁️ Review<br><span style='font-size:.6rem;font-weight:400;'>Accept / Refine</span>"
+      data-it="👁️ Revisione<br><span style='font-size:.6rem;font-weight:400;'>Accetta / Raffina</span>"
+      data-fr="👁️ Révision<br><span style='font-size:.6rem;font-weight:400;'>Accepter / Affiner</span>"
+      data-es="👁️ Revisión<br><span style='font-size:.6rem;font-weight:400;'>Aceptar / Refinar</span>">👁️ Review<br><span style="font-size:.6rem;font-weight:400;">Accept / Refine</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box dark"
+      data-en="✅ Ship<br><span style='font-size:.6rem;font-weight:400;'>Production</span>"
+      data-it="✅ Deploy<br><span style='font-size:.6rem;font-weight:400;'>Produzione</span>"
+      data-fr="✅ Livrer<br><span style='font-size:.6rem;font-weight:400;'>Production</span>"
+      data-es="✅ Enviar<br><span style='font-size:.6rem;font-weight:400;'>Producción</span>">✅ Ship<br><span style="font-size:.6rem;font-weight:400;">Production</span></div>
+  </div>
+
+  <div style="text-align:center;margin:8px 0;font-family:var(--mono);font-size:.7rem;color:var(--ink-mute);"
+    data-en="⟲ Iterate until satisfied — average 2-4 rounds per feature"
+    data-it="⟲ Itera fino a quando sei soddisfatto — media 2-4 round per feature"
+    data-fr="⟲ Itérer jusqu'à satisfaction — en moyenne 2-4 tours par fonctionnalité"
+    data-es="⟲ Itera hasta estar satisfecho — promedio 2-4 rondas por funcionalidad">⟲ Iterate until satisfied — average 2-4 rounds per feature</div>
+
+  <div class="two-col" style="margin-top:16px;">
+    <div class="model-card" style="padding:18px 20px;">
+      <div class="badge badge-det"
+        data-en="Traditional Coding" data-it="Coding Tradizionale" data-fr="Codage Traditionnel" data-es="Programación Tradicional">Traditional Coding</div>
+      <ul class="example-list">
+        <li data-en="Write every line yourself" data-it="Scrivi ogni riga tu stesso" data-fr="Écrire chaque ligne soi-même" data-es="Escribe cada línea tú mismo">Write every line yourself</li>
+        <li data-en="Search Stack Overflow" data-it="Cerca su Stack Overflow" data-fr="Chercher sur Stack Overflow" data-es="Buscar en Stack Overflow">Search Stack Overflow</li>
+        <li data-en="Hours to scaffold a project" data-it="Ore per scaffoldare un progetto" data-fr="Des heures pour structurer un projet" data-es="Horas para estructurar un proyecto">Hours to scaffold a project</li>
+      </ul>
+    </div>
+    <div class="model-card" style="padding:18px 20px;">
+      <div class="badge badge-green"
+        data-en="AI-Assisted Coding" data-it="AI-Assisted Coding" data-fr="AI-Assisted Coding" data-es="AI-Assisted Coding">AI-Assisted Coding</div>
+      <ul class="example-list">
+        <li data-en="Describe intent, AI writes code" data-it="Descrivi l'intento, l'AI scrive il codice" data-fr="Décrire l'intention, l'IA écrit le code" data-es="Describe la intención, la IA escribe código">Describe intent, AI writes code</li>
+        <li data-en="Context-aware inline suggestions" data-it="Suggerimenti inline context-aware" data-fr="Suggestions contextuelles en ligne" data-es="Sugerencias contextuales en línea">Context-aware inline suggestions</li>
+        <li data-en="Minutes for full scaffolds" data-it="Minuti per scaffold completi" data-fr="Minutes pour un scaffold complet" data-es="Minutos para scaffolds completos">Minutes for full scaffolds</li>
+      </ul>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">02 / 06</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 3: TOOLS LANDSCAPE ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 03 · Tools" data-it="Diapositiva 03 · Strumenti" data-fr="Diapo 03 · Outils" data-es="Diapositiva 03 · Herramientas">Slide 03 · Tools</div>
+  <h2 data-en="The Tools Landscape"
+      data-it="Il Panorama degli Strumenti"
+      data-fr="Le Paysage des Outils"
+      data-es="El Panorama de Herramientas">The Tools Landscape</h2>
+
+  <div class="three-col">
+    <!-- IDE EXTENSIONS -->
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-det"
+        data-en="IDE Extensions" data-it="Estensioni IDE" data-fr="Extensions IDE" data-es="Extensiones IDE">IDE Extensions</div>
+      <h3 style="font-size:.82rem;margin-bottom:8px;"
+        data-en="Inside your editor" data-it="Dentro il tuo editor" data-fr="Dans votre éditeur" data-es="Dentro de tu editor">Inside your editor</h3>
+      <ul class="example-list">
+        <li>GitHub Copilot</li>
+        <li>Amazon CodeWhisperer</li>
+        <li>Tabnine</li>
+        <li>Codeium / Supermaven</li>
+      </ul>
+      <p style="font-size:.65rem;color:var(--ink-mute);margin:8px 0 0;"
+        data-en="Autocomplete, inline chat, explain code"
+        data-it="Autocomplete, chat inline, spiega codice"
+        data-fr="Autocomplétion, chat en ligne, explication"
+        data-es="Autocompletar, chat en línea, explicar código">Autocomplete, inline chat, explain code</p>
+    </div>
+
+    <!-- AI-NATIVE IDES -->
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-green"
+        data-en="AI-Native IDEs" data-it="IDE AI-Nativi" data-fr="IDE IA-Natifs" data-es="IDEs IA-Nativos">AI-Native IDEs</div>
+      <h3 style="font-size:.82rem;margin-bottom:8px;"
+        data-en="Built for AI-first workflows" data-it="Costruiti per workflow AI-first" data-fr="Conçus pour des workflows IA" data-es="Diseñados para flujos IA">Built for AI-first workflows</h3>
+      <ul class="example-list">
+        <li>Cursor</li>
+        <li>Windsurf (Codeium)</li>
+        <li>Void (open source)</li>
+        <li>Zed (AI panel)</li>
+      </ul>
+      <p style="font-size:.65rem;color:var(--ink-mute);margin:8px 0 0;"
+        data-en="Full codebase context, multi-file edits, agents"
+        data-it="Contesto codebase completo, edit multi-file, agenti"
+        data-fr="Contexte codebase complet, éditions multi-fichiers, agents"
+        data-es="Contexto completo del código, ediciones multi-archivo, agentes">Full codebase context, multi-file edits, agents</p>
+    </div>
+
+    <!-- CHAT / WEB -->
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-purple"
+        data-en="Chat & App Builders" data-it="Chat e App Builder" data-fr="Chat & App Builders" data-es="Chat y App Builders">Chat & App Builders</div>
+      <h3 style="font-size:.82rem;margin-bottom:8px;"
+        data-en="Conversational coding" data-it="Coding conversazionale" data-fr="Codage conversationnel" data-es="Programación conversacional">Conversational coding</h3>
+      <ul class="example-list">
+        <li>ChatGPT / Gemini</li>
+        <li>v0 by Vercel</li>
+        <li>Bolt.new / Lovable</li>
+        <li>Replit Agent</li>
+      </ul>
+      <p style="font-size:.65rem;color:var(--ink-mute);margin:8px 0 0;"
+        data-en="Generate full apps from a single prompt"
+        data-it="Genera app complete da un singolo prompt"
+        data-fr="Générer des apps complètes d'un seul prompt"
+        data-es="Genera apps completas con un solo prompt">Generate full apps from a single prompt</p>
+    </div>
+  </div>
+
+  <!-- CLAUDE SPOTLIGHT -->
+  <div style="background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:14px;padding:16px 22px;margin-top:14px;display:flex;gap:20px;align-items:start;">
+    <div style="font-size:1.8rem;flex-shrink:0;">🟣</div>
+    <div style="flex:1;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;"
+        data-en="Spotlight: Claude for Coding" data-it="Focus: Claude per il Coding" data-fr="Focus : Claude pour le Code" data-es="Enfoque: Claude para Programar">Spotlight: Claude for Coding</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+        <div>
+          <strong style="font-size:.72rem;color:var(--ink);"
+            data-en="Claude Code (CLI)" data-it="Claude Code (CLI)" data-fr="Claude Code (CLI)" data-es="Claude Code (CLI)">Claude Code (CLI)</strong>
+          <div style="font-size:.6rem;color:var(--ink-mute);"
+            data-en="Agentic coding in your terminal. Reads your repo, runs tests, creates PRs autonomously."
+            data-it="Coding agentico nel terminale. Legge il repo, esegue test, crea PR in autonomia."
+            data-fr="Codage agentique dans le terminal. Lit le repo, lance les tests, crée des PR."
+            data-es="Codificación agéntica en la terminal. Lee el repo, ejecuta tests, crea PRs.">Agentic coding in your terminal. Reads repo, runs tests, creates PRs.</div>
+        </div>
+        <div>
+          <strong style="font-size:.72rem;color:var(--ink);"
+            data-en="Artifacts" data-it="Artifacts" data-fr="Artifacts" data-es="Artifacts">Artifacts</strong>
+          <div style="font-size:.6rem;color:var(--ink-mute);"
+            data-en="Live preview of HTML/CSS/JS, React, SVGs. Edit and iterate in real-time."
+            data-it="Anteprima live di HTML/CSS/JS, React, SVG. Modifica e itera in tempo reale."
+            data-fr="Aperçu live HTML/CSS/JS, React, SVG. Modifier et itérer en temps réel."
+            data-es="Vista previa live de HTML/CSS/JS, React, SVG. Edita e itera en tiempo real.">Live preview of HTML/CSS/JS, React, SVGs. Edit in real-time.</div>
+        </div>
+        <div>
+          <strong style="font-size:.72rem;color:var(--ink);"
+            data-en="200k Context" data-it="200k di Contesto" data-fr="200k de Contexte" data-es="200k Contexto">200k Context</strong>
+          <div style="font-size:.6rem;color:var(--ink-mute);"
+            data-en="Paste entire codebases. Claude sees the big picture — architecture + implementation."
+            data-it="Incolla intere codebase. Claude vede il quadro completo — architettura + implementazione."
+            data-fr="Collez des bases de code entières. Claude voit l'ensemble — architecture + implémentation."
+            data-es="Pega codebases enteras. Claude ve el panorama — arquitectura + implementación.">Paste entire codebases. Claude sees architecture + implementation.</div>
+        </div>
+        <div>
+          <strong style="font-size:.72rem;color:var(--ink);"
+            data-en="Extended Thinking" data-it="Extended Thinking" data-fr="Extended Thinking" data-es="Extended Thinking">Extended Thinking</strong>
+          <div style="font-size:.6rem;color:var(--ink-mute);"
+            data-en="Chain-of-thought for complex debugging & refactoring. Shows reasoning before code."
+            data-it="Chain-of-thought per debug complessi e refactoring. Mostra il ragionamento prima del codice."
+            data-fr="Chain-of-thought pour le débogage complexe. Montre le raisonnement avant le code."
+            data-es="Chain-of-thought para debugging complejo. Muestra el razonamiento antes del código.">Chain-of-thought for complex debugging. Shows reasoning before code.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <strong data-en="Trend:" data-it="Tendenza:" data-fr="Tendance :" data-es="Tendencia:">Trend:</strong>
+    <span data-en=" The boundary between 'IDE' and 'AI assistant' is disappearing. In 2025+, every editor is an AI editor."
+          data-it=" Il confine tra 'IDE' e 'assistente AI' sta scomparendo. Nel 2025+, ogni editor è un editor AI."
+          data-fr=" La frontière entre 'IDE' et 'assistant IA' disparaît. En 2025+, chaque éditeur est un éditeur IA."
+          data-es=" La frontera entre 'IDE' y 'asistente IA' está desapareciendo. En 2025+, cada editor es un editor IA."> The boundary between "IDE" and "AI assistant" is disappearing. In 2025+, every editor is an AI editor.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">03 / 06</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 4: WHEN IT WORKS / WHEN IT DOESN'T ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 04 · Reality Check" data-it="Diapositiva 04 · Verifica" data-fr="Diapo 04 · Bilan" data-es="Diapositiva 04 · Realidad">Slide 04 · Reality Check</div>
+  <h2 data-en="When It Shines &<br>When It Doesn't"
+      data-it="Quando Funziona e<br>Quando No"
+      data-fr="Quand Ça Marche &<br>Quand Non"
+      data-es="Cuándo Funciona y<br>Cuándo No">When It Shines &<br>When It Doesn't</h2>
+
+  <div class="two-col">
+    <div class="model-card" style="border-left:3px solid var(--green);">
+      <div class="badge badge-green"
+        data-en="✓ Works Great" data-it="✓ Funziona Bene" data-fr="✓ Marche Bien" data-es="✓ Funciona Bien">✓ Works Great</div>
+      <ul class="example-list">
+        <li data-en="CRUD operations & boilerplate"
+            data-it="Operazioni CRUD e boilerplate"
+            data-fr="Opérations CRUD et boilerplate"
+            data-es="Operaciones CRUD y boilerplate">CRUD operations & boilerplate</li>
+        <li data-en="Unit tests & test data generation"
+            data-it="Test unitari e generazione dati di test"
+            data-fr="Tests unitaires et génération de données"
+            data-es="Tests unitarios y generación de datos">Unit tests & test data generation</li>
+        <li data-en="Regex, SQL, config files"
+            data-it="Regex, SQL, file di configurazione"
+            data-fr="Regex, SQL, fichiers de configuration"
+            data-es="Regex, SQL, archivos de configuración">Regex, SQL, config files</li>
+        <li data-en="Prototyping & MVPs"
+            data-it="Prototyping e MVP"
+            data-fr="Prototypage et MVP"
+            data-es="Prototipos y MVPs">Prototyping & MVPs</li>
+        <li data-en="Documentation & comments"
+            data-it="Documentazione e commenti"
+            data-fr="Documentation et commentaires"
+            data-es="Documentación y comentarios">Documentation & comments</li>
+      </ul>
+    </div>
+
+    <div class="model-card" style="border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob"
+        data-en="⚠ Be Careful" data-it="⚠ Attenzione" data-fr="⚠ Attention" data-es="⚠ Cuidado">⚠ Be Careful</div>
+      <ul class="example-list">
+        <li data-en="Complex business logic (domain-specific)"
+            data-it="Logica di business complessa (domain-specific)"
+            data-fr="Logique métier complexe (domain-specific)"
+            data-es="Lógica de negocio compleja (domain-specific)">Complex business logic (domain-specific)</li>
+        <li data-en="Security-critical code"
+            data-it="Codice critico per la sicurezza"
+            data-fr="Code critique pour la sécurité"
+            data-es="Código crítico de seguridad">Security-critical code</li>
+        <li data-en="Performance-sensitive algorithms"
+            data-it="Algoritmi sensibili alle prestazioni"
+            data-fr="Algorithmes sensibles aux performances"
+            data-es="Algoritmos sensibles al rendimiento">Performance-sensitive algorithms</li>
+        <li data-en="Legacy codebase with poor docs"
+            data-it="Codebase legacy con poca documentazione"
+            data-fr="Codebase legacy mal documenté"
+            data-es="Codebase legacy con poca documentación">Legacy codebase with poor docs</li>
+        <li data-en="Compliance & regulated systems"
+            data-it="Sistemi di compliance e regolamentati"
+            data-fr="Systèmes réglementés et de conformité"
+            data-es="Sistemas regulados y de cumplimiento">Compliance & regulated systems</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <strong data-en="Golden rule:" data-it="Regola d'oro:" data-fr="Règle d'or :" data-es="Regla de oro:">Golden rule:</strong>
+    <span data-en=" Never ship AI-generated code you don't understand. Vibe-coding amplifies your skills — it doesn't replace them."
+          data-it=" Non mettere mai in produzione codice AI che non capisci. Il vibe-coding amplifica le tue competenze — non le sostituisce."
+          data-fr=" Ne jamais déployer du code IA que vous ne comprenez pas. Le vibe-coding amplifie vos compétences."
+          data-es=" Nunca envíes código IA que no entiendas. El vibe-coding amplifica tus habilidades — no las reemplaza."> Never ship AI-generated code you don't understand. Vibe-coding amplifies your skills — it doesn't replace them.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">04 / 06</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 5: IMPACT & METRICS ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 05 · Impact" data-it="Diapositiva 05 · Impatto" data-fr="Diapo 05 · Impact" data-es="Diapositiva 05 · Impacto">Slide 05 · Impact</div>
+  <h2 data-en="Measured Impact"
+      data-it="Impatto Misurato"
+      data-fr="Impact Mesuré"
+      data-es="Impacto Medido">Measured Impact</h2>
+
+  <div class="three-col">
+    <div class="model-card" style="text-align:center;padding:24px 18px;">
+      <div style="font-family:var(--serif);font-size:2.6rem;color:var(--accent);line-height:1;">55%</div>
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin:8px 0;"
+        data-en="Faster task completion" data-it="Completamento task più veloce" data-fr="Complétion des tâches plus rapide" data-es="Completamiento de tareas más rápido">Faster task completion</div>
+      <p style="font-size:.7rem;color:var(--ink-mute);margin:0;"
+        data-en="GitHub Copilot study (2022): developers completed an HTTP server task 55% faster with Copilot."
+        data-it="Studio GitHub Copilot (2022): gli sviluppatori hanno completato un task HTTP server il 55% più velocemente con Copilot."
+        data-fr="Étude GitHub Copilot (2022) : les développeurs ont terminé une tâche serveur HTTP 55% plus vite avec Copilot."
+        data-es="Estudio GitHub Copilot (2022): los desarrolladores completaron una tarea de servidor HTTP 55% más rápido con Copilot.">GitHub Copilot study (2022): developers completed an HTTP server task 55% faster with Copilot.</p>
+      <div style="font-family:var(--mono);font-size:.55rem;color:var(--accent);margin-top:6px;"
+        data-en="Source: Kalliamvakou et al., GitHub blog Sep 2022" data-it="Fonte: Kalliamvakou et al., GitHub blog Set 2022" data-fr="Source : Kalliamvakou et al., blog GitHub Sep 2022" data-es="Fuente: Kalliamvakou et al., blog GitHub Sep 2022">Source: Kalliamvakou et al., GitHub blog Sep 2022</div>
+    </div>
+
+    <div class="model-card" style="text-align:center;padding:24px 18px;">
+      <div style="font-family:var(--serif);font-size:2.6rem;color:var(--green);line-height:1;">46%</div>
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin:8px 0;"
+        data-en="Code written by AI" data-it="Codice scritto dall'AI" data-fr="Code écrit par l'IA" data-es="Código escrito por IA">Code written by AI</div>
+      <p style="font-size:.7rem;color:var(--ink-mute);margin:0;"
+        data-en="Copilot generates an average of 46% of code in files where it is enabled (Octoverse 2024)."
+        data-it="Copilot genera in media il 46% del codice nei file dove è abilitato (Octoverse 2024)."
+        data-fr="Copilot génère en moyenne 46% du code dans les fichiers où il est activé (Octoverse 2024)."
+        data-es="Copilot genera en promedio el 46% del código en archivos donde está habilitado (Octoverse 2024).">Copilot generates an average of 46% of code in files where it is enabled (Octoverse 2024).</p>
+      <div style="font-family:var(--mono);font-size:.55rem;color:var(--green);margin-top:6px;"
+        data-en="Source: GitHub Octoverse 2024 Report" data-it="Fonte: GitHub Octoverse 2024 Report" data-fr="Source : Rapport GitHub Octoverse 2024" data-es="Fuente: Informe GitHub Octoverse 2024">Source: GitHub Octoverse 2024 Report</div>
+    </div>
+
+    <div class="model-card" style="text-align:center;padding:24px 18px;">
+      <div style="font-family:var(--serif);font-size:2.6rem;color:var(--accent2);line-height:1;">76%</div>
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin:8px 0;"
+        data-en="Developers using AI" data-it="Sviluppatori che usano AI" data-fr="Développeurs utilisant l'IA" data-es="Desarrolladores usando IA">Developers using AI</div>
+      <p style="font-size:.7rem;color:var(--ink-mute);margin:0;"
+        data-en="76% of developers use or plan to use AI coding tools (Stack Overflow Developer Survey 2024)."
+        data-it="Il 76% degli sviluppatori usa o prevede di usare strumenti AI per il codice (Stack Overflow Developer Survey 2024)."
+        data-fr="76% des développeurs utilisent ou prévoient d'utiliser des outils de codage IA (SO Dev Survey 2024)."
+        data-es="76% de los desarrolladores usan o planean usar herramientas IA de codificación (SO Dev Survey 2024).">76% of developers use or plan to use AI coding tools (SO Dev Survey 2024).</p>
+      <div style="font-family:var(--mono);font-size:.55rem;color:var(--accent2);margin-top:6px;"
+        data-en="Source: Stack Overflow Developer Survey 2024" data-it="Fonte: Stack Overflow Developer Survey 2024" data-fr="Source : Stack Overflow Developer Survey 2024" data-es="Fuente: Stack Overflow Developer Survey 2024">Source: Stack Overflow Developer Survey 2024</div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:16px;">
+    <strong data-en="Bottom line:" data-it="Conclusione:" data-fr="En résumé :" data-es="En resumen:">Bottom line:</strong>
+    <span data-en=" Vibe-coding is not a fad — it's the new baseline for software development. Teams not adopting it risk falling behind."
+          data-it=" Il vibe-coding non è una moda — è la nuova baseline per lo sviluppo software. I team che non lo adottano rischiano di restare indietro."
+          data-fr=" Le vibe-coding n'est pas une mode — c'est la nouvelle norme du développement. Les équipes qui ne l'adoptent pas risquent de prendre du retard."
+          data-es=" El vibe-coding no es una moda — es la nueva línea base del desarrollo. Los equipos que no lo adoptan corren el riesgo de quedarse atrás."> Vibe-coding is not a fad — it's the new baseline. Teams not adopting it risk falling behind.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">05 / 06</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 6: PRACTICAL EXERCISE ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 06 · Exercise" data-it="Diapositiva 06 · Esercizio" data-fr="Diapo 06 · Exercice" data-es="Diapositiva 06 · Ejercicio">Slide 06 · Exercise</div>
+  <h2 data-en="🛠️ Hands-On Exercise"
+      data-it="🛠️ Esercizio Pratico"
+      data-fr="🛠️ Exercice Pratique"
+      data-es="🛠️ Ejercicio Práctico">🛠️ Hands-On Exercise</h2>
+
+  <div class="two-col">
+    <div>
+      <div class="badge badge-det" style="margin-bottom:10px;"
+        data-en="Challenge: AI Pair Programming" data-it="Sfida: Pair Programming con AI" data-fr="Défi : Pair Programming avec IA" data-es="Desafío: Pair Programming con IA">Challenge: AI Pair Programming</div>
+      <p style="font-size:.75rem;margin:0 0 12px;"
+        data-en="Use an AI coding assistant to build a small utility. Compare the AI-generated code against what you would write manually."
+        data-it="Usa un assistente di codifica AI per costruire una piccola utility. Confronta il codice AI-generato con quello che scriveresti manualmente."
+        data-fr="Utilisez un assistant de codage IA pour construire un petit utilitaire. Comparez le code IA avec ce que vous écririez manuellement."
+        data-es="Usa un asistente de codificación IA para construir una pequeña utilidad. Compara el código IA generado con lo que escribirías manualmente.">Use an AI coding assistant to build a small utility. Compare the AI-generated code against what you would write manually.</p>
+
+      <div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:12px;margin-bottom:10px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);margin-bottom:4px;"
+          data-en="📋 TASK" data-it="📋 COMPITO" data-fr="📋 TÂCHE" data-es="📋 TAREA">📋 TASK</div>
+        <p style="font-size:.7rem;margin:0;color:var(--ink);"
+          data-en="Build a CLI tool that reads a CSV file and outputs a summary: row count, column names, and the top 5 values of a user-specified column."
+          data-it="Costruisci un tool CLI che legga un file CSV e produca un riepilogo: conteggio righe, nomi colonne e i top 5 valori di una colonna specificata dall'utente."
+          data-fr="Construisez un outil CLI qui lit un fichier CSV et produit un résumé : nombre de lignes, noms des colonnes et les 5 premières valeurs d'une colonne spécifiée."
+          data-es="Construye una herramienta CLI que lea un archivo CSV y produzca un resumen: conteo de filas, nombres de columnas y los 5 valores principales de una columna especificada.">Build a CLI tool that reads a CSV file and outputs a summary: row count, column names, and the top 5 values of a user-specified column.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="badge badge-green" style="margin-bottom:10px;"
+        data-en="⚡ Process" data-it="⚡ Processo" data-fr="⚡ Processus" data-es="⚡ Proceso">⚡ Process</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="<strong>1.</strong> Describe the task to Copilot Chat / Cursor / Claude"
+          data-it="<strong>1.</strong> Descrivi il compito a Copilot Chat / Cursor / Claude"
+          data-fr="<strong>1.</strong> Décrivez la tâche à Copilot Chat / Cursor / Claude"
+          data-es="<strong>1.</strong> Describe la tarea a Copilot Chat / Cursor / Claude"><strong>1.</strong> Describe the task to Copilot Chat / Cursor / Claude</div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="<strong>2.</strong> Review the generated code — does it handle errors? Edge cases?"
+          data-it="<strong>2.</strong> Rivedi il codice generato — gestisce errori? Casi limite?"
+          data-fr="<strong>2.</strong> Examinez le code généré — gère-t-il les erreurs ? Les cas limites ?"
+          data-es="<strong>2.</strong> Revisa el código generado — ¿maneja errores? ¿Casos límite?"><strong>2.</strong> Review the generated code — does it handle errors? Edge cases?</div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="<strong>3.</strong> Ask the AI to add tests, then run them"
+          data-it="<strong>3.</strong> Chiedi all'AI di aggiungere test, poi eseguili"
+          data-fr="<strong>3.</strong> Demandez à l'IA d'ajouter des tests, puis exécutez-les"
+          data-es="<strong>3.</strong> Pide al IA que agregue tests, luego ejecútalos"><strong>3.</strong> Ask the AI to add tests, then run them</div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="<strong>4.</strong> Refactor: ask for improvements — \"Make this production-ready\""
+          data-it="<strong>4.</strong> Refactoring: chiedi miglioramenti — \"Rendilo production-ready\""
+          data-fr="<strong>4.</strong> Refactoring : demandez des améliorations — \"Rendez-le production-ready\""
+          data-es="<strong>4.</strong> Refactoring: pide mejoras — \"Hazlo production-ready\""><strong>4.</strong> Refactor: ask for improvements — "Make this production-ready"</div>
+      </div>
+
+      <div class="key-insight fragment" style="margin-top:12px;">
+        <strong data-en="Reflection:" data-it="Riflessione:" data-fr="Réflexion :" data-es="Reflexión:">Reflection:</strong>
+        <span data-en=" What did the AI get right on the first try? What required human correction? Would you trust this code without review?"
+              data-it=" Cosa ha azzeccato l'AI al primo tentativo? Cosa ha richiesto correzione umana? Ti fideresti di questo codice senza revisione?"
+              data-fr=" Qu'est-ce que l'IA a réussi du premier coup ? Qu'a-t-il fallu corriger ? Feriez-vous confiance à ce code sans vérification ?"
+              data-es=" ¿Qué hizo bien la IA al primer intento? ¿Qué requirió corrección humana? ¿Confiarías en este código sin revisión?"> What did the AI get right on the first try? What required human correction? Would you trust this code without review?</span>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">06 / 06</span></div>
+</section>
+
+<!-- ══════════════════════ CHAPTER 3 SUMMARY ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="Chapter 3 · Summary" data-it="Capitolo 3 · Riepilogo" data-fr="Chapitre 3 · Résumé" data-es="Capítulo 3 · Resumen">Chapter 3 · Summary</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Takeaways" data-it="Punti Chiave" data-fr="Points Clés" data-es="Puntos Clave">Key Takeaways</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent);">
+      <div class="badge badge-det" style="margin-bottom:8px;" data-en="AI codes faster, you code smarter" data-it="L'AI codifica più veloce, tu codifichi in modo più intelligente" data-fr="L'IA code plus vite, vous codez plus intelligemment" data-es="La IA codifica más rápido, tú codificas de manera más inteligente">AI codes faster, you code smarter</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Studies show 35–55% productivity gains in real-world settings. The gains come from eliminating boilerplate, speeding up research, and accelerating the test-debug cycle — not from removing developers." data-it="Gli studi mostrano guadagni di produttività del 35–55% in scenari reali. I guadagni derivano dall'eliminazione del codice boilerplate, dall'accelerazione della ricerca e dall'accelezione del ciclo test-debug — non dalla rimozione degli sviluppatori." data-fr="Les études montrent des gains de productivité de 35 à 55% dans des contextes réels. Les gains viennent de l'élimination du boilerplate, de l'accélération de la recherche et du cycle test-debug — pas de la suppression des développeurs." data-es="Los estudios muestran ganancias de productividad del 35–55% en entornos reales. Las ganancias provienen de eliminar el boilerplate, acelerar la investigación y el ciclo test-debug — no de eliminar desarrolladores.">Studies show 35–55% real-world productivity gains. You direct; AI accelerates.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--green);">
+      <div class="badge badge-green" style="margin-bottom:8px;" data-en="Right tool, right task" data-it="Lo strumento giusto per il compito giusto" data-fr="Le bon outil pour la bonne tâche" data-es="La herramienta correcta para la tarea correcta">Right tool, right task</div>
+      <p style="font-size:.72rem;margin:0;" data-en="GitHub Copilot for inline completion, Cursor for full-file refactoring, Claude/ChatGPT for architecture conversations. The tools differ in how much context they can hold and how deeply they integrate with your editor." data-it="GitHub Copilot per il completamento inline, Cursor per il refactoring di file completi, Claude/ChatGPT per conversazioni architetturali. Gli strumenti differiscono per quanto contesto possono tenere e quanto si integrano nell'editor." data-fr="GitHub Copilot pour la complétion inline, Cursor pour le refactoring complet, Claude/ChatGPT pour les conversations architecturales. Les outils diffèrent par la quantité de contexte qu'ils peuvent gérer." data-es="GitHub Copilot para completado inline, Cursor para refactoring completo, Claude/ChatGPT para conversaciones arquitecturales. Las herramientas difieren en cuánto contexto pueden mantener.">Copilot for inline, Cursor for files, Claude/ChatGPT for architecture. Match tool to context size.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--purple);">
+      <div class="badge badge-purple" style="margin-bottom:8px;" data-en="AI fails at the edges" data-it="L'AI fallisce ai margini" data-fr="L'IA échoue en conditions limites" data-es="La IA falla en los bordes">AI fails at the edges</div>
+      <p style="font-size:.72rem;margin:0;" data-en="AI-assisted coding struggles with: large codebases it hasn't seen, security-critical logic, novel algorithms, and concurrency bugs. Always review security-sensitive output. AI is a junior developer without production experience — you are the senior." data-it="La programmazione assistita dall'AI ha difficoltà con: basi di codice grandi che non ha visto, logica critica per la sicurezza, algoritmi nuovi e bug di concorrenza. Rivedi sempre l'output sensibile alla sicurezza." data-fr="La programmation assistée par IA échoue avec : les grandes bases de code non vues, la logique critique de sécurité, les algorithmes nouveaux et les bugs de concurrence. Révisez toujours les sorties sensibles à la sécurité." data-es="La programación asistida por IA falla con: bases de código grandes no vistas, lógica crítica de seguridad, algoritmos nuevos y bugs de concurrencia. Siempre revisa la salida sensible a la seguridad.">Struggles with: unknown codebases, security logic, novel algorithms. You are the senior developer.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob" style="margin-bottom:8px;" data-en="The vibe-coding workflow" data-it="Il workflow del vibe-coding" data-fr="Le workflow du vibe-coding" data-es="El flujo de trabajo del vibe-coding">The vibe-coding workflow</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Spec in natural language → generate skeleton → iterate with AI → review diff → commit. The skill isn't writing code — it's writing clear specifications and critically reviewing AI-generated output before it ships." data-it="Specifica in linguaggio naturale → genera lo scheletro → itera con AI → rivedi il diff → commit. La competenza non è scrivere codice — è scrivere specifiche chiare e revisionare criticamente l'output AI prima che venga rilasciato." data-fr="Spécification en langage naturel → générer le squelette → itérer avec l'IA → revoir le diff → commit. La compétence n'est pas écrire du code — c'est écrire des specs claires et revoir l'output IA." data-es="Especificación en lenguaje natural → generar esqueleto → iterar con IA → revisar diff → commit. La habilidad no es escribir código — es escribir especificaciones claras y revisar críticamente el output IA.">Spec → generate → iterate → review diff → commit. Your skill is specification and critical review.</p>
+    </div>
+  </div>
+  <div class="key-insight" style="margin-top:14px;">
+    <strong data-en="Next up:" data-it="Prossimamente:" data-fr="Ensuite :" data-es="A continuación:">Next up:</strong>
+    <span data-en=" AI can write code, but it can't read your internal documents. Chapter 4 introduces RAG — how to give any model access to your private knowledge." data-it=" L'AI può scrivere codice, ma non può leggere i tuoi documenti interni. Il Capitolo 4 introduce RAG — come dare a qualsiasi modello accesso alla tua conoscenza privata." data-fr=" L'IA peut écrire du code, mais elle ne peut pas lire vos documents internes. Le Chapitre 4 présente RAG — comment donner à n'importe quel modèle l'accès à votre base de connaissances privée." data-es=" La IA puede escribir código, pero no puede leer tus documentos internos. El Capítulo 4 introduce RAG — cómo dar a cualquier modelo acceso a tu conocimiento privado."> AI can write code, but it can't read your internal documents. Chapter 4 introduces RAG.</span>
+  </div>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span></div>
+</section>
+
+<!-- ══════════════════════ REFERENCES ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="References" data-it="Riferimenti" data-fr="Références" data-es="Referencias">References</div>
+  <div class="rule"></div>
+  <h2 data-en="Sources & Further Reading" data-it="Fonti e Approfondimenti" data-fr="Sources & Lectures" data-es="Fuentes y Lecturas">Sources & Further Reading</h2>
+  <ul class="ref-list">
+    <li>Karpathy, A., <a href="https://x.com/karpathy/status/1886192184808149383" target="_blank">"AI-Assisted Coding" tweet</a>, Feb 2025</li>
+    <li>GitHub, <a href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" target="_blank">"Quantifying Copilot's Impact on Developer Productivity"</a>, 2023</li>
+    <li>GitHub, <a href="https://github.blog/news-insights/octoverse/octoverse-2024/" target="_blank">"Octoverse 2024 Report"</a>, 2024</li>
+    <li>Stack Overflow, <a href="https://survey.stackoverflow.co/2024/" target="_blank">"Developer Survey 2024"</a></li>
+    <li><a href="https://cursor.sh" target="_blank">Cursor — AI-Native IDE</a></li>
+    <li><a href="https://github.com/features/copilot" target="_blank">GitHub Copilot</a></li>
+  </ul>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span></div>
+</section>

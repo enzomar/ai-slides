@@ -509,18 +509,34 @@ strong { color: var(--ink); font-weight: 500; }
 /* ── PRINT / PDF EXPORT ───────────────────────────────────── */
 /*
  * Reveal.js ?print-pdf mode: append ?print-pdf to the URL, then
- * Ctrl+P / Cmd+P → Save as PDF. The @page rule must match the
- * Reveal.js slide dimensions (width=1280, height=720) and use
- * zero margin so slides fill pages edge-to-edge.
+ * Ctrl+P / Cmd+P → Save as PDF.
+ *
+ * How it works in Reveal.js 4.x:
+ *   1. Body gets class "print-pdf"
+ *   2. Each slide is wrapped in a .pdf-page div (1280×720)
+ *   3. pdf.min.css lays them out vertically
+ *   4. This @media print block adds our theme tweaks on top
+ *
+ * The @page rule MUST match the Reveal.js slide dimensions
+ * (width=1280, height=720) with zero margin so slides fill
+ * pages edge-to-edge.
  */
 @media print {
-  /* Exact slide size — 1280×720 px (16:9). Overrides browser default. */
+
+  /* ── Page size ──────────────────────────────────────────── */
   @page {
     size: 1280px 720px;
     margin: 0;
   }
 
-  /* Hide all chrome that must not appear in the PDF */
+  /* ── Force background colours / images to print ─────────── */
+  html {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* ── Hide all chrome that must not appear in the PDF ─────── */
   #print-banner,
   .lang-bar,
   #narr-player,
@@ -531,37 +547,107 @@ strong { color: var(--ink); font-weight: 500; }
   .navigate-left,
   .navigate-right,
   .navigate-up,
-  .navigate-down {
+  .navigate-down,
+  .slide-number {
     display: none !important;
   }
 
-  /* Kill any body/html margins the browser might add */
+  /* ── Kill any body/html margins the browser might add ──── */
   html, body {
     margin: 0 !important;
     padding: 0 !important;
-    background: #1C1C1E !important;
+    background: var(--bg, #1C1C1E) !important;
+    width: auto !important;
+    height: auto !important;
   }
 
-  /*
-   * Each section fills exactly one page.
-   * Reveal.js pdf.min.css already does most of this; these rules
-   * ensure the custom theme does not override it.
-   */
-  .reveal .slides section {
-    box-sizing: border-box !important;
+  /* ── Reveal container: remove viewport constraints ──────── */
+  .reveal-viewport {
+    overflow: visible !important;
+    background: var(--bg, #1C1C1E) !important;
+  }
+
+  .reveal {
+    overflow: visible !important;
+  }
+
+  .reveal .slides {
+    /* Strip transforms Reveal uses for presentation mode */
+    transform: none !important;
+    position: relative !important;
+    width: 1280px !important;
+    height: auto !important;
+    left: 0 !important;
+    top: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    pointer-events: all !important;
+  }
+
+  /* ── PDF-page wrapper (created by Reveal 4.x) ──────────── */
+  .pdf-page {
+    width: 1280px !important;
+    height: 720px !important;
+    overflow: hidden !important;
+    position: relative !important;
     page-break-after: always !important;
     break-after: page !important;
-    /* Prevent double-page for slides taller than 720 px */
-    overflow: hidden !important;
   }
 
-  /* Last section must not add a trailing blank page */
+  .pdf-page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  /* ── Individual slides ──────────────────────────────────── */
+  .reveal .slides section {
+    box-sizing: border-box !important;
+    width: 1280px !important;
+    height: 720px !important;
+    overflow: hidden !important;
+    /* If no .pdf-page wrapper, break pages on sections */
+    page-break-after: always !important;
+    break-after: page !important;
+    /* Reset any transforms Reveal applies to individual slides */
+    transform: none !important;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
   .reveal .slides section:last-child {
     page-break-after: avoid !important;
     break-after: avoid !important;
   }
 
-  /* Author / LinkedIn footer — visible in PDF only */
+  /* Inside a .pdf-page, the section shouldn't add its own break */
+  .pdf-page .reveal .slides section,
+  .pdf-page > section,
+  .reveal .slides .pdf-page section {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  /* ── Slide backgrounds in print mode ────────────────────── */
+  .slide-background {
+    display: block !important;
+    position: absolute !important;
+    width: 1280px !important;
+    height: 720px !important;
+  }
+
+  /* ── Make all fragments visible in the PDF ──────────────── */
+  .reveal .slides section .fragment {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  /* ── Author / LinkedIn footer — visible in PDF only ─────── */
   .reveal .slides section::after {
     content: "Vincenzo Marafioti  ·  linkedin.com/in/vincenzo-marafioti/";
     display: block;
@@ -573,6 +659,8 @@ strong { color: var(--ink); font-weight: 500; }
     color: rgba(255,255,255,.30);
     letter-spacing: .03em;
     pointer-events: none;
+    /* Don't let the pseudo-element affect flex layout */
+    flex-shrink: 0;
   }
 }
 

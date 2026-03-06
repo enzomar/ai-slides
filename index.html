@@ -104,7 +104,7 @@
     This material may be shared for educational purposes with proper attribution to the respective authors.
   </p>
 
-  <p style="margin-top:10px;text-align:center;color:rgba(255,255,255,.2);font-size:.5rem;font-family:var(--mono);">Last Updated: March 2026 &nbsp;·&nbsp; v2.0</p>
+  <p id="slide-version" style="margin-top:10px;text-align:center;color:rgba(255,255,255,.2);font-size:.5rem;font-family:var(--mono);">Last Updated: March 2026 &nbsp;·&nbsp; v2.0</p>
 
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">2026</span>
   <aside class="notes"></aside>
@@ -212,7 +212,7 @@
   </div>
 
   <aside class="notes"></aside>
-  <span class="chapter-tag">Understanding AI</span>
+  <div class="tag-bar"><span class="chapter-tag">Understanding AI</span></div>
 </section>
 
 <!-- ══════════════════════ AGENDA ══════════════════════ -->
@@ -331,7 +331,7 @@
   </div>
 
   <aside class="notes"></aside>
-  <span class="chapter-tag">Understanding AI</span>
+  <div class="tag-bar"><span class="chapter-tag">Understanding AI</span></div>
 </section>
 
 
@@ -353,10 +353,10 @@
     data-fr="Introduction"
     data-es="Introducción">Introduction</h1>
   <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
-    data-en="From binary logic to probabilistic reasoning — how machines learned to think in shades of grey."
-    data-it="Dalla logica binaria al ragionamento probabilistico — come le macchine hanno imparato a pensare in sfumature."
-    data-fr="De la logique binaire au raisonnement probabiliste — comment les machines ont appris à penser en nuances."
-    data-es="De la lógica binaria al razonamiento probabilístico — cómo las máquinas aprendieron a pensar en matices.">From binary logic to probabilistic reasoning — how machines learned to think in shades of grey.</p>
+    data-en="Imagine teaching a machine to predict the next word in a sentence — then scaling that up 100 billion times. Suddenly it writes code, translates poetry, and reasons about the world. This chapter unpacks how that miracle works."
+    data-it="Immagina di insegnare a una macchina a predire la prossima parola in una frase — poi di scalare quell'idea 100 miliardi di volte. All'improvviso scrive codice, traduce poesia e ragiona sul mondo. Questo capitolo spiega come funziona quel miracolo."
+    data-fr="Imaginez apprendre à une machine à prédire le prochain mot d'une phrase — puis à mettre ça à l'échelle de 100 milliards de fois. Soudain, elle écrit du code, traduit de la poésie et raisonne sur le monde. Ce chapitre explique comment ce miracle fonctionne."
+    data-es="Imagina enseñar a una máquina a predecir la siguiente palabra de una frase — luego escalar eso 100 mil millones de veces. De repente escribe código, traduce poesía y razona sobre el mundo. Este capítulo explica cómo funciona ese milagro.">Imagine teaching a machine to predict the next word in a sentence — then scaling that up 100 billion times. Suddenly it writes code, translates poetry, and reasons about the world. This chapter unpacks how that miracle works.</p>
   <div class="tag-bar"><span class="chapter-tag" style="color:rgba(255,255,255,.25);">AI Fundamentals</span> <span class="slide-tag" style="color:rgba(255,255,255,.25);">01 / 06</span></div>
   <aside class="notes"></aside>
 </section>
@@ -680,10 +680,10 @@
     data-it="Diapositiva 03 · Architettura"
     data-fr="Diapo 03 · Architecture"
     data-es="Diapositiva 03 · Arquitectura">Slide 03 · Architecture</div>
-  <h2 data-en="The Transformer"
-      data-it="Il Transformer"
-      data-fr="Le Transformer"
-      data-es="El Transformer">The Transformer</h2>
+  <h2 data-en="The Transformer Architecture"
+      data-it="L'Architettura Transformer"
+      data-fr="L'Architecture Transformer"
+      data-es="La Arquitectura Transformer">The Transformer Architecture</h2>
 
   <!-- Transformer: architecture + inline example -->
   <div style="display:flex;gap:24px;align-items:flex-start;width:100%;">
@@ -716,36 +716,89 @@
       </div>
     </div>
 
-    <!-- RIGHT: Standard Architecture Flow -->
-    <div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;">
-      <div class="arch-diagram" style="flex-direction:column;gap:8px;">
-        <div class="arch-block">
-          <div class="arch-box output"
-            data-en="Output Token" data-it="Token di Output" data-fr="Token de Sortie" data-es="Token de Salida">Output Token</div>
-        </div>
-        <div class="arch-arrow">↑</div>
-        <div class="arch-block">
-          <div class="arch-box norm">Softmax (Probabilities)</div>
-        </div>
-        <div class="arch-arrow">↑</div>
-        <div class="arch-block">
-          <div class="arch-box ffn"
-            data-en="Feed-Forward Network" data-it="Rete Feed-Forward" data-fr="Réseau Feed-Forward" data-es="Red Feed-Forward">Feed-Forward Network</div>
-        </div>
-        <div class="arch-arrow">↑</div>
-        <div class="arch-block">
-          <div class="arch-box attn" style="height:auto;padding:12px;font-size:.7rem;"
-            data-en="⚡ Multi-Head<br>Self-Attention" data-it="⚡ Multi-Head<br>Self-Attention" data-fr="⚡ Multi-Head<br>Self-Attention" data-es="⚡ Multi-Head<br>Self-Attention">⚡ Multi-Head<br>Self-Attention</div>
-        </div>
-        <div class="arch-arrow">↑</div>
-        <div class="arch-block">
-          <div class="arch-box embed"
-             data-en="Text Embedding" data-it="Embedding del Testo" data-fr="Plongement de Texte" data-es="Incrustación de Texto">Text Embedding</div>
-        </div>
-        <div class="arch-arrow">↑</div>
-        <div class="arch-block">
-          <div class="arch-box input"
-            data-en="Input Tokens" data-it="Token di Input" data-fr="Tokens d'Entrée" data-es="Tokens de Entrada">Input Tokens</div>
+    <!-- RIGHT: End-to-end token flow -->
+    <div style="flex:1;min-width:0;display:flex;align-items:flex-start;justify-content:center;">
+      <div style="width:100%;max-width:680px;background:rgba(255,255,255,.03);border:1px solid var(--rule);border-radius:16px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.55rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;"
+          data-en="End-to-end token flow"
+          data-it="Flusso end-to-end del token"
+          data-fr="Flux token de bout en bout"
+          data-es="Flujo end-to-end del token">End-to-end token flow</div>
+
+        <div style="display:grid;grid-template-columns:180px 1fr;column-gap:14px;row-gap:6px;align-items:center;">
+          <div class="arch-box input" style="width:auto;display:flex;flex-direction:column;gap:3px;padding:10px 12px;">
+            <div style="font-size:.46rem;letter-spacing:.12em;"
+              data-en="INPUT TOKENS" data-it="TOKEN DI INPUT" data-fr="TOKENS D'ENTRÉE" data-es="TOKENS DE ENTRADA">INPUT TOKENS</div>
+            <div style="font-family:var(--serif);font-size:.78rem;letter-spacing:0;color:var(--ink);">“The cat sat on the”</div>
+          </div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);"
+            data-en="Context window: the model reads the tokens already present before predicting what comes next."
+            data-it="Finestra di contesto: il modello legge i token già presenti prima di prevedere il successivo."
+            data-fr="Fenêtre de contexte : le modèle lit les tokens déjà présents avant de prédire le suivant."
+            data-es="Ventana de contexto: el modelo lee los tokens ya presentes antes de predecir el siguiente.">Context window: the model reads the tokens already present before predicting what comes next.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box embed" style="width:auto;padding:10px 12px;"
+            data-en="Embedding" data-it="Embedding" data-fr="Embedding" data-es="Embedding">Embedding</div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);"
+            data-en="Converts token IDs into dense vectors so the model can operate on meaning and similarity, not raw text IDs."
+            data-it="Converte gli ID dei token in vettori densi, così il modello lavora su significato e similarità, non su ID testuali grezzi."
+            data-fr="Convertit les identifiants de tokens en vecteurs denses afin que le modèle travaille sur le sens et la similarité, pas sur de simples IDs."
+            data-es="Convierte los IDs de los tokens en vectores densos para que el modelo opere sobre significado y similitud, no sobre IDs de texto sin procesar.">Converts token IDs into dense vectors so the model can operate on meaning and similarity, not raw text IDs.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box" style="width:auto;height:auto;padding:10px 12px;background:rgba(167,139,250,.12);color:var(--purple);border:1.5px solid rgba(167,139,250,.3);"
+            data-en="Self-Attention" data-it="Self-Attention" data-fr="Self-Attention" data-es="Self-Attention">Self-Attention</div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);"
+            data-en="Each token looks at the others and assigns weights: this is where the model decides which past words matter most right now."
+            data-it="Ogni token guarda gli altri e assegna pesi: qui il modello decide quali parole precedenti contano di più in questo momento."
+            data-fr="Chaque token regarde les autres et leur attribue des poids : c'est ici que le modèle décide quels mots précédents comptent le plus."
+            data-es="Cada token mira a los demás y asigna pesos: aquí el modelo decide qué palabras anteriores importan más en este momento.">Each token looks at the others and assigns weights: this is where the model decides which past words matter most right now.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box" style="width:auto;padding:10px 12px;background:rgba(251,191,36,.1);color:var(--amber);border:1.5px solid rgba(251,191,36,.28);"
+            data-en="Feed-Forward" data-it="Feed-Forward" data-fr="Feed-Forward" data-es="Feed-Forward">Feed-Forward</div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);"
+            data-en="Transforms each token representation independently with learned non-linear layers — much of the model's stored knowledge lives here."
+            data-it="Trasforma ogni rappresentazione di token in modo indipendente con layer non lineari appresi — gran parte della conoscenza del modello vive qui."
+            data-fr="Transforme chaque représentation de token indépendamment via des couches non linéaires apprises — une grande partie du savoir du modèle se trouve ici."
+            data-es="Transforma cada representación de token de forma independiente con capas no lineales aprendidas — gran parte del conocimiento del modelo vive aquí.">Transforms each token representation independently with learned non-linear layers — much of the model's stored knowledge lives here.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box" style="width:auto;padding:10px 12px;background:rgba(255,107,61,.15);color:var(--accent2);border:1.5px solid rgba(255,107,61,.35);"
+            data-en="Softmax" data-it="Softmax" data-fr="Softmax" data-es="Softmax">Softmax</div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);"
+            data-en="Turns the final scores (logits) into a probability distribution over the whole vocabulary."
+            data-it="Trasforma i punteggi finali (logits) in una distribuzione di probabilità sull'intero vocabolario."
+            data-fr="Transforme les scores finaux (logits) en une distribution de probabilités sur tout le vocabulaire."
+            data-es="Convierte las puntuaciones finales (logits) en una distribución de probabilidad sobre todo el vocabulario.">Turns the final scores (logits) into a probability distribution over the whole vocabulary.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box" style="width:auto;padding:10px 12px;background:rgba(59,130,246,.08);color:var(--accent);border:1.5px dashed rgba(59,130,246,.35);"
+            data-en="Sampling" data-it="Campionamento" data-fr="Échantillonnage" data-es="Muestreo">Sampling</div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);"
+            data-en="Applies temperature, top-k, or top-p rules and actually picks one candidate token from the probability distribution."
+            data-it="Applica regole come temperatura, top-k o top-p e sceglie davvero un token candidato dalla distribuzione di probabilità."
+            data-fr="Applique des règles comme la température, le top-k ou le top-p et choisit réellement un token candidat dans la distribution."
+            data-es="Aplica reglas como temperatura, top-k o top-p y realmente elige un token candidato de la distribución de probabilidad.">Applies temperature, top-k, or top-p rules and actually picks one candidate token from the probability distribution.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box" style="width:auto;display:flex;flex-direction:column;gap:3px;padding:10px 12px;background:rgba(59,130,246,.18);color:var(--accent);border:1.5px solid rgba(59,130,246,.4);">
+            <div style="font-size:.46rem;letter-spacing:.12em;"
+              data-en="OUTPUT TOKEN" data-it="TOKEN DI OUTPUT" data-fr="TOKEN DE SORTIE" data-es="TOKEN DE SALIDA">OUTPUT TOKEN</div>
+            <div style="font-family:var(--serif);font-size:.82rem;letter-spacing:0;color:var(--ink);">“mat”</div>
+          </div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);"
+            data-en="The chosen token is appended to the sequence, becomes part of the new context, and the whole loop runs again."
+            data-it="Il token scelto viene aggiunto alla sequenza, diventa parte del nuovo contesto e l'intero ciclo riparte."
+            data-fr="Le token choisi est ajouté à la séquence, devient une partie du nouveau contexte et toute la boucle recommence."
+            data-es="El token elegido se añade a la secuencia, pasa a formar parte del nuevo contexto y todo el ciclo vuelve a ejecutarse.">The chosen token is appended to the sequence, becomes part of the new context, and the whole loop runs again.</div>
         </div>
       </div>
     </div>
@@ -778,59 +831,1008 @@
   <span class="fragment" data-anim-target="ch1TokenPred"></span>
   <span class="fragment" data-anim-target="ch1TokenPred"></span>
 
-  <div class="key-insight" style="margin-top:20px;display:flex;gap:16px;align-items:center;">
-    <div style="flex:1;">
-      <strong data-en="How it works:" data-it="Come funziona:" data-fr="Comment ça marche :" data-es="Cómo funciona:">How it works:</strong>
-      <span data-en=" The model reads &quot;The capital of France is&quot;, computes probabilities based on patterns learned, and samples &quot;Paris&quot;."
-            data-it=" Il modello legge &quot;La capitale della Francia è&quot;, calcola le probabilità in base ai pattern, e campiona &quot;Parigi&quot;."
-            data-fr=" Le modèle lit &quot;La capitale de la France est&quot;, calcule les probabilités et échantillonne &quot;Paris&quot;."
-            data-es=" El modelo lee &quot;La capital de Francia es&quot;, calcula probabilidades y muestrea &quot;París&quot;."> The model reads "The capital of France is", computes probabilities based on patterns learned, and samples "Paris".</span>
-    </div>
-    <div style="flex:0 0 45%;background:var(--bg-card);border:1px solid var(--rule);padding:10px 14px;border-radius:10px;">
-      <div style="font-family:var(--mono);font-size:.6rem;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">Internal Pipeline</div>
-      <div style="font-size:.65rem;display:flex;flex-direction:column;gap:4px;">
-        <div><span style="color:var(--green)">1. Embed:</span> Convert words to numbers</div>
-        <div><span style="color:var(--accent)">2. Attend:</span> "is" links to "France" + "capital"</div>
-        <div><span style="color:var(--accent2)">3. Predict:</span> Paris (92%) · Lyon (4%)</div>
-      </div>
-    </div>
+  <div class="key-insight" style="margin-top:20px;">
+    <span
+      data-en="LLMs generate text one token at a time — each step samples from a probability distribution over the entire vocabulary."
+      data-it="Gli LLM generano testo un token alla volta — ogni passo campiona da una distribuzione di probabilità sull'intero vocabolario."
+      data-fr="Les LLM génèrent du texte un token à la fois — chaque étape échantillonne depuis une distribution de probabilité sur tout le vocabulaire."
+      data-es="Los LLM generan texto un token a la vez — cada paso muestrea desde una distribución de probabilidad sobre todo el vocabulario.">LLMs generate text one token at a time — each step samples from a probability distribution over the entire vocabulary.</span>
   </div>
+
   <aside class="notes"></aside>
   <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">03b / 08</span></div>
 </section>
 
-<!-- ══════════════════════ SLIDE 3c: ANIMATED ATTENTION HEATMAP ══════════════════════ -->
-<section>
+<!-- ══════════════════════ SLIDE 3a: SAMPLING PIPELINE ══════════════════════ -->
+<section id="slide-03a">
   <div class="eyebrow"
-    data-en="Interactive · The Heart of Transformers"
-    data-it="Interattivo · Il Cuore dei Transformer"
-    data-fr="Interactif · Le Cœur des Transformers"
-    data-es="Interactivo · El Corazón de los Transformers">Interactive · The Heart of Transformers</div>
-  <h2 data-en="Self-Attention in Action"
-      data-it="Self-Attention in Azione"
-      data-fr="Self-Attention en Action"
-      data-es="Self-Attention en Acción">Self-Attention in Action</h2>
+    data-en="Slide 03a · Sampling"
+    data-it="Diapositiva 03a · Campionamento"
+    data-fr="Diapo 03a · Échantillonnage"
+    data-es="Diapositiva 03a · Muestreo">Slide 03a · Sampling</div>
+  <h2 data-en="How the Next Word is Chosen"
+      data-it="Come viene Scelto il Prossimo Token"
+      data-fr="Comment le Prochain Mot est Choisi"
+      data-es="Cómo se Elige la Siguiente Palabra">How the Next Word is Chosen</h2>
 
-  <div id="ch1AttnHeatmap" data-anim="attention-heatmap"></div>
+  <div style="display:flex;gap:18px;align-items:flex-start;width:100%;margin-top:4px;">
 
-  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
-  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
-  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
-  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
-  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
-  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
-  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+    <!-- LEFT: Mini Transformer diagram — click any box to see its interactive demo -->
+    <div style="flex:0 0 148px;display:flex;flex-direction:column;gap:0;align-items:stretch;">
+      <!-- Input -->
+      <div style="background:rgba(59,130,246,.18);border:1px solid rgba(59,130,246,.4);border-radius:6px;padding:6px 8px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:.52rem;color:var(--accent);">INPUT TOKENS</div>
+        <div style="font-family:var(--serif);font-size:.68rem;color:var(--ink);margin-top:2px;">"The cat sat on the"</div>
+      </div>
+      <div style="text-align:center;color:var(--ink-mute);font-size:.8rem;line-height:1.2;">↓</div>
+      <!-- Embedding -->
+      <div id="s03a-box-embed" class="s03a-box s03a-box-active" data-panel="embed" style="cursor:pointer;background:rgba(52,211,153,.1);border:2px solid rgba(52,211,153,.25);border-radius:6px;padding:5px 8px;text-align:center;transition:box-shadow .3s,border-color .3s;box-shadow:0 0 10px rgba(52,211,153,.35);">
+        <div style="font-family:var(--mono);font-size:.5rem;color:var(--green);">EMBEDDING</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-top:2px;">tokens → vectors</div>
+      </div>
+      <div style="text-align:center;color:var(--ink-mute);font-size:.8rem;line-height:1.2;">↓</div>
+      <!-- Self-Attention -->
+      <div id="s03a-box-attn" class="s03a-box" data-panel="attn" style="cursor:pointer;background:rgba(167,139,250,.12);border:2px solid rgba(167,139,250,.3);border-radius:6px;padding:5px 8px;text-align:center;transition:box-shadow .3s,border-color .3s;">
+        <div style="font-family:var(--mono);font-size:.5rem;color:#a78bfa;">SELF-ATTENTION</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-top:2px;">who attends to whom</div>
+      </div>
+      <div style="text-align:center;color:var(--ink-mute);font-size:.8rem;line-height:1.2;">↓</div>
+      <!-- FFN -->
+      <div id="s03a-box-ffn" class="s03a-box" data-panel="ffn" style="cursor:pointer;background:rgba(251,191,36,.1);border:2px solid rgba(251,191,36,.25);border-radius:6px;padding:5px 8px;text-align:center;transition:box-shadow .3s,border-color .3s;">
+        <div style="font-family:var(--mono);font-size:.5rem;color:var(--amber);">FEED-FORWARD</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-top:2px;">transform features</div>
+      </div>
+      <div style="text-align:center;color:var(--ink-mute);font-size:.8rem;line-height:1.2;">↓</div>
+      <!-- Softmax -->
+      <div id="s03a-box-softmax" class="s03a-box" data-panel="softmax" style="cursor:pointer;background:rgba(255,107,61,.15);border:2px solid rgba(255,107,61,.5);border-radius:6px;padding:6px 8px;text-align:center;transition:box-shadow .3s,border-color .3s;">
+        <div style="font-family:var(--mono);font-size:.5rem;color:var(--accent2);">SOFTMAX</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-top:2px;">→ probabilities</div>
+      </div>
+      <div style="text-align:center;color:var(--ink-mute);font-size:.8rem;line-height:1.2;">↓</div>
+      <!-- Sampling box -->
+      <div id="s03a-box-sampling" class="s03a-box" data-panel="sampling" style="cursor:pointer;background:rgba(59,130,246,.08);border:2px dashed rgba(59,130,246,.3);border-radius:6px;padding:5px 8px;text-align:center;transition:box-shadow .3s,border-color .3s;">
+        <div style="font-family:var(--mono);font-size:.5rem;color:var(--accent);">SAMPLING</div>
+        <div style="font-size:.56rem;color:var(--ink-mute);margin-top:2px;">T · Top-K · Top-P</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);text-align:center;margin-top:4px;opacity:.7;">→ next key advances · click to replay</div>
+    </div>
 
-  <div class="key-insight" style="margin-top:16px;">
-    <strong data-en="Insight:" data-it="Concetto:" data-fr="Concept :" data-es="Concepto:">Insight:</strong>
-    <span data-en=" Each row shows which words a token 'pays attention to'. Brighter = stronger connection. This is how 'it' resolves to 'cat', not 'mat'."
-          data-it=" Ogni riga mostra a quali parole un token presta attenzione. Più luminoso = più forte. Così 'esso' si riferisce a 'gatto', non 'tappeto'."
-          data-fr=" Chaque ligne montre les mots auxquels un token fait attention. Plus lumineux = plus fort. C'est ainsi que le modèle comprend les références."
-          data-es=" Cada fila muestra a qué palabras un token presta atención. Más brillante = más fuerte. Así el modelo entiende las referencias."> Each row shows which words a token "pays attention to." Brighter = stronger connection. This is how "it" resolves to "cat", not "mat".</span>
+    <!-- RIGHT: switchable interactive demo panels -->
+    <div style="flex:1;min-width:0;position:relative;">
+
+      <!-- ═══ PANEL: EMBEDDING ═══ -->
+      <div id="s03a-panel-embed" class="s03a-panel" style="display:block;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--green);margin-bottom:6px;">EMBEDDING — tokens → high-dimensional vectors</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-bottom:10px;">Each token is mapped to a dense vector. Similar meanings → nearby vectors.</div>
+        <!-- Token-to-vector rows -->
+        <div id="s03a-embed-rows" style="display:flex;flex-direction:column;gap:8px;">
+          <div class="s03a-embed-row" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 42px;font-family:var(--mono);font-size:.65rem;text-align:right;color:var(--green);font-weight:600;">The</div>
+            <div style="flex:1;display:flex;gap:2px;height:18px;" class="s03a-vec" data-vals="0.12,-0.44,0.91,0.03,-0.67,0.55,0.28,-0.11">
+            </div>
+            <div style="flex:0 0 62px;font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);">[0.12, −0.44…]</div>
+          </div>
+          <div class="s03a-embed-row" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 42px;font-family:var(--mono);font-size:.65rem;text-align:right;color:var(--green);font-weight:600;">cat</div>
+            <div style="flex:1;display:flex;gap:2px;height:18px;" class="s03a-vec" data-vals="0.85,0.62,-0.33,0.71,0.14,-0.52,0.93,0.07">
+            </div>
+            <div style="flex:0 0 62px;font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);">[0.85, 0.62…]</div>
+          </div>
+          <div class="s03a-embed-row" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 42px;font-family:var(--mono);font-size:.65rem;text-align:right;color:var(--green);font-weight:600;">sat</div>
+            <div style="flex:1;display:flex;gap:2px;height:18px;" class="s03a-vec" data-vals="-0.21,0.38,0.77,-0.55,0.44,0.19,-0.82,0.61">
+            </div>
+            <div style="flex:0 0 62px;font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);">[−0.21, 0.38…]</div>
+          </div>
+          <div class="s03a-embed-row" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 42px;font-family:var(--mono);font-size:.65rem;text-align:right;color:var(--green);font-weight:600;">on</div>
+            <div style="flex:1;display:flex;gap:2px;height:18px;" class="s03a-vec" data-vals="0.05,-0.18,0.66,0.22,-0.51,0.43,0.11,-0.74">
+            </div>
+            <div style="flex:0 0 62px;font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);">[0.05, −0.18…]</div>
+          </div>
+          <div class="s03a-embed-row" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 42px;font-family:var(--mono);font-size:.65rem;text-align:right;color:var(--green);font-weight:600;">the</div>
+            <div style="flex:1;display:flex;gap:2px;height:18px;" class="s03a-vec" data-vals="0.11,-0.42,0.89,0.05,-0.65,0.53,0.30,-0.13">
+            </div>
+            <div style="flex:0 0 62px;font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);">[0.11, −0.42…]</div>
+          </div>
+        </div>
+        <!-- Similarity callout -->
+        <div style="margin-top:12px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:6px;padding:8px 10px;">
+          <div style="font-family:var(--mono);font-size:.52rem;color:var(--green);margin-bottom:4px;">Cosine similarity</div>
+          <div style="display:flex;gap:12px;font-size:.56rem;">
+            <div><span style="color:var(--green);font-weight:600;">"The" ↔ "the"</span> <span style="color:var(--ink);">= 0.98</span> <span style="color:var(--ink-mute);">· nearly identical</span></div>
+            <div><span style="color:var(--green);font-weight:600;">"cat" ↔ "sat"</span> <span style="color:var(--ink);">= 0.31</span> <span style="color:var(--ink-mute);">· different meaning</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PANEL: SELF-ATTENTION ═══ -->
+      <div id="s03a-panel-attn" class="s03a-panel" style="display:none;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:#a78bfa;margin-bottom:6px;">SELF-ATTENTION — each token looks at every other token</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-bottom:8px;">Click a row to see which tokens that word attends to. Brighter = stronger connection.</div>
+        <!-- Heatmap grid -->
+        <div style="display:flex;gap:0;">
+          <!-- Row labels -->
+          <div style="display:flex;flex-direction:column;gap:3px;padding-top:19px;">
+            <div class="s03a-attn-row-lbl" data-row="0" style="cursor:pointer;height:28px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--mono);font-size:.58rem;color:var(--ink-mute);border-radius:4px;transition:background .2s;">The</div>
+            <div class="s03a-attn-row-lbl" data-row="1" style="cursor:pointer;height:28px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--mono);font-size:.58rem;color:var(--ink-mute);border-radius:4px;transition:background .2s;">cat</div>
+            <div class="s03a-attn-row-lbl" data-row="2" style="cursor:pointer;height:28px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--mono);font-size:.58rem;color:#a78bfa;font-weight:700;border-radius:4px;transition:background .2s;">sat</div>
+            <div class="s03a-attn-row-lbl" data-row="3" style="cursor:pointer;height:28px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--mono);font-size:.58rem;color:var(--ink-mute);border-radius:4px;transition:background .2s;">on</div>
+            <div class="s03a-attn-row-lbl" data-row="4" style="cursor:pointer;height:28px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--mono);font-size:.58rem;color:var(--ink-mute);border-radius:4px;transition:background .2s;">the</div>
+          </div>
+          <!-- Grid body -->
+          <div>
+            <!-- Column headers -->
+            <div style="display:grid;grid-template-columns:repeat(5,42px);gap:3px;height:16px;line-height:16px;margin-bottom:3px;">
+              <div style="font-family:var(--mono);font-size:.52rem;color:var(--ink-mute);text-align:center;">The</div>
+              <div style="font-family:var(--mono);font-size:.52rem;color:var(--ink-mute);text-align:center;">cat</div>
+              <div style="font-family:var(--mono);font-size:.52rem;color:#a78bfa;text-align:center;font-weight:700;">sat</div>
+              <div style="font-family:var(--mono);font-size:.52rem;color:var(--ink-mute);text-align:center;">on</div>
+              <div style="font-family:var(--mono);font-size:.52rem;color:var(--ink-mute);text-align:center;">the</div>
+            </div>
+            <!-- Heat cells -->
+            <div id="s03a-attn-grid" style="display:grid;grid-template-columns:repeat(5,42px);gap:3px;">
+              <!-- row 0: The -->
+              <div class="s03a-attn-cell" data-r="0" data-w=".80" style="height:28px;border-radius:4px;background:rgba(167,139,250,.80);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">80</div>
+              <div class="s03a-attn-cell" data-r="0" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <div class="s03a-attn-cell" data-r="0" data-w=".02" style="height:28px;border-radius:4px;background:rgba(167,139,250,.02);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">2</div>
+              <div class="s03a-attn-cell" data-r="0" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <div class="s03a-attn-cell" data-r="0" data-w=".08" style="height:28px;border-radius:4px;background:rgba(167,139,250,.08);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">8</div>
+              <!-- row 1: cat -->
+              <div class="s03a-attn-cell" data-r="1" data-w=".10" style="height:28px;border-radius:4px;background:rgba(167,139,250,.10);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">10</div>
+              <div class="s03a-attn-cell" data-r="1" data-w=".65" style="height:28px;border-radius:4px;background:rgba(167,139,250,.65);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">65</div>
+              <div class="s03a-attn-cell" data-r="1" data-w=".08" style="height:28px;border-radius:4px;background:rgba(167,139,250,.08);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">8</div>
+              <div class="s03a-attn-cell" data-r="1" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <div class="s03a-attn-cell" data-r="1" data-w=".12" style="height:28px;border-radius:4px;background:rgba(167,139,250,.12);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">12</div>
+              <!-- row 2: sat (key row) -->
+              <div class="s03a-attn-cell" data-r="2" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <div class="s03a-attn-cell" data-r="2" data-w=".42" style="height:28px;border-radius:4px;background:rgba(167,139,250,.42);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">42</div>
+              <div class="s03a-attn-cell" data-r="2" data-w=".18" style="height:28px;border-radius:4px;background:rgba(167,139,250,.18);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">18</div>
+              <div class="s03a-attn-cell" data-r="2" data-w=".30" style="height:28px;border-radius:4px;background:rgba(167,139,250,.30);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">30</div>
+              <div class="s03a-attn-cell" data-r="2" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <!-- row 3: on -->
+              <div class="s03a-attn-cell" data-r="3" data-w=".03" style="height:28px;border-radius:4px;background:rgba(167,139,250,.03);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">3</div>
+              <div class="s03a-attn-cell" data-r="3" data-w=".08" style="height:28px;border-radius:4px;background:rgba(167,139,250,.08);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">8</div>
+              <div class="s03a-attn-cell" data-r="3" data-w=".20" style="height:28px;border-radius:4px;background:rgba(167,139,250,.20);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">20</div>
+              <div class="s03a-attn-cell" data-r="3" data-w=".55" style="height:28px;border-radius:4px;background:rgba(167,139,250,.55);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">55</div>
+              <div class="s03a-attn-cell" data-r="3" data-w=".14" style="height:28px;border-radius:4px;background:rgba(167,139,250,.14);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">14</div>
+              <!-- row 4: the -->
+              <div class="s03a-attn-cell" data-r="4" data-w=".25" style="height:28px;border-radius:4px;background:rgba(167,139,250,.25);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">25</div>
+              <div class="s03a-attn-cell" data-r="4" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <div class="s03a-attn-cell" data-r="4" data-w=".08" style="height:28px;border-radius:4px;background:rgba(167,139,250,.08);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">8</div>
+              <div class="s03a-attn-cell" data-r="4" data-w=".22" style="height:28px;border-radius:4px;background:rgba(167,139,250,.22);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">22</div>
+              <div class="s03a-attn-cell" data-r="4" data-w=".40" style="height:28px;border-radius:4px;background:rgba(167,139,250,.40);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">40</div>
+            </div>
+          </div>
+        </div>
+        <div id="s03a-attn-info" style="margin-top:8px;font-size:.54rem;color:var(--ink-mute);min-height:20px;font-family:var(--mono);">← click a row to highlight</div>
+      </div>
+
+      <!-- ═══ PANEL: FEED-FORWARD ═══ -->
+      <div id="s03a-panel-ffn" class="s03a-panel" style="display:none;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--amber);margin-bottom:6px;">FEED-FORWARD — non-linear feature transformation</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-bottom:10px;">Each token's vector passes independently through two dense layers with a ReLU activation. This adds the model's "knowledge".</div>
+        <!-- FFN diagram: input vector → hidden → output -->
+        <div style="display:flex;align-items:center;gap:10px;justify-content:center;">
+          <!-- Input vector -->
+          <div>
+            <div style="font-family:var(--mono);font-size:.46rem;color:var(--ink-mute);text-align:center;margin-bottom:4px;">Input (d=8)</div>
+            <div id="s03a-ffn-input" style="display:flex;flex-direction:column;gap:2px;"></div>
+          </div>
+          <div style="font-size:.7rem;color:var(--amber);">→</div>
+          <!-- Hidden layer -->
+          <div>
+            <div style="font-family:var(--mono);font-size:.46rem;color:var(--amber);text-align:center;margin-bottom:4px;">Hidden (4×d)</div>
+            <div id="s03a-ffn-hidden" style="display:flex;flex-direction:column;gap:2px;"></div>
+            <div style="font-family:var(--mono);font-size:.42rem;color:var(--amber);text-align:center;margin-top:4px;">ReLU: max(0, x)</div>
+          </div>
+          <div style="font-size:.7rem;color:var(--amber);">→</div>
+          <!-- Output vector -->
+          <div>
+            <div style="font-family:var(--mono);font-size:.46rem;color:var(--ink-mute);text-align:center;margin-bottom:4px;">Output (d=8)</div>
+            <div id="s03a-ffn-output" style="display:flex;flex-direction:column;gap:2px;"></div>
+          </div>
+        </div>
+        <!-- insight -->
+        <div style="margin-top:14px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:6px;padding:8px 10px;">
+          <div style="font-size:.54rem;color:var(--ink);">
+            <span style="color:var(--amber);font-weight:600;">Key idea:</span> The FFN acts like a "knowledge store" — attention figures out <em>what</em> to look at; the FFN transforms <em>what it means</em>.
+            In GPT-4 class models, FFN parameters are ~⅔ of total weights.
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PANEL: SOFTMAX (existing bar chart) ═══ -->
+      <div id="s03a-panel-softmax" class="s03a-panel" style="display:none;">
+        <div style="font-family:var(--mono);font-size:.58rem;color:var(--ink-mute);margin-bottom:8px;"
+          data-en="Softmax output — full vocabulary (50 000+ tokens), showing top 8:"
+          data-it="Output Softmax — vocabolario completo (50 000+ token), top 8:"
+          data-fr="Sortie Softmax — vocabulaire complet (50 000+ tokens), top 8 :"
+          data-es="Salida Softmax — vocabulario completo (50 000+ tokens), top 8:">Softmax output — full vocabulary (50 000+ tokens), showing top 8:</div>
+        <div id="s03a-bars" style="display:flex;flex-direction:column;gap:5px;">
+          <div class="s03a-bar-row" data-rank="1" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink);">mat</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:40%;background:var(--accent);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--accent);">40%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="2" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink);">floor</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:28%;background:var(--green);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--green);">28%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="3" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink);">chair</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:15%;background:#a78bfa;border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:#a78bfa;">15%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="4" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink);">sofa</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:9%;background:var(--amber);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--amber);">9%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="5" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink);">ground</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:5%;background:#34d399;border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:#34d399;">5%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="6" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink-mute);">carpet</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:2%;background:rgba(255,255,255,.25);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);">2%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="7" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink-mute);">table</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:0.8%;background:rgba(255,255,255,.2);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);">0.8%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="8" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink-mute);">…49993</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:0.2%;background:rgba(255,255,255,.1);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);">≈0%</div>
+          </div>
+        </div>
+        <div id="s03a-step-label" style="margin-top:10px;min-height:48px;"></div>
+      </div>
+
+      <!-- ═══ PANEL: SAMPLING ═══ -->
+      <div id="s03a-panel-sampling" class="s03a-panel" style="display:none;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);margin-bottom:6px;">SAMPLING — picking the next token</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-bottom:10px;">After softmax, three knobs control which token is selected. Click <strong>Spin</strong> to sample!</div>
+        <!-- Probability wheel -->
+        <div style="display:flex;align-items:flex-start;gap:16px;">
+          <div style="position:relative;width:180px;height:180px;flex:0 0 180px;">
+            <canvas id="s03a-wheel" width="360" height="360" style="width:180px;height:180px;"></canvas>
+            <div id="s03a-wheel-result" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--mono);font-size:1.1rem;color:var(--ink);font-weight:700;opacity:0;transition:opacity .3s;"></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
+            <!-- T slider -->
+            <div>
+              <div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);">Temperature <span id="s03a-t-val" style="color:var(--accent);">0.7</span></div>
+              <input id="s03a-t-slider" type="range" min="1" max="20" value="7" style="width:100%;accent-color:var(--accent);height:4px;">
+            </div>
+            <!-- Top-K slider -->
+            <div>
+              <div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);">Top-K <span id="s03a-k-val" style="color:var(--green);">5</span></div>
+              <input id="s03a-k-slider" type="range" min="1" max="8" value="5" style="width:100%;accent-color:var(--green);height:4px;">
+            </div>
+            <!-- Top-P slider -->
+            <div>
+              <div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);">Top-P <span id="s03a-p-val" style="color:#a78bfa;">0.9</span></div>
+              <input id="s03a-p-slider" type="range" min="1" max="10" value="9" style="width:100%;accent-color:#a78bfa;height:4px;">
+            </div>
+            <!-- Spin button -->
+            <button id="s03a-spin-btn" style="margin-top:4px;padding:6px 16px;border:none;border-radius:6px;background:var(--accent);color:#fff;font-family:var(--mono);font-size:.6rem;cursor:pointer;transition:transform .15s;">🎲 Spin</button>
+            <!-- Result log -->
+            <div id="s03a-sample-log" style="font-family:var(--mono);font-size:.5rem;color:var(--ink-mute);min-height:32px;margin-top:2px;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end right panel -->
   </div>
+
+  <!-- Fragment triggers: each fires the JS step function -->
+  <span class="fragment" data-s03a-panel="attn"></span>
+  <span class="fragment" data-s03a-panel="ffn"></span>
+  <span class="fragment" data-s03a-panel="softmax"></span>
+  <span class="fragment" data-s03a-step="1"></span>
+  <span class="fragment" data-s03a-step="2"></span>
+  <span class="fragment" data-s03a-step="3"></span>
+  <span class="fragment" data-s03a-step="4"></span>
+  <span class="fragment" data-s03a-panel="sampling"></span>
+
+  <script>
+  (function(){
+    /* ═══ PANEL SWITCHING ═══ */
+    var panels = ['embed','attn','ffn','softmax','sampling'];
+    var boxes = document.querySelectorAll('.s03a-box');
+    var glowMap = {
+      embed:   'rgba(52,211,153,.35)',
+      attn:    'rgba(167,139,250,.35)',
+      ffn:     'rgba(251,191,36,.35)',
+      softmax: 'rgba(255,107,61,.35)',
+      sampling:'rgba(59,130,246,.35)'
+    };
+
+    var currentPanel = 'embed';
+    var activeSoftmaxStep = 0;
+    var queuedAnimations = [];
+    var highlightAttnRow = null;
+    var resetAttnInteractive = null;
+    var updateSamplingWheel = null;
+    var spinSamplingWheel = null;
+    var baseSoftmaxState = null;
+
+    function queueAnimation(fn, delay){
+      var id = window.setTimeout(fn, delay);
+      queuedAnimations.push(id);
+      return id;
+    }
+
+    function clearQueuedAnimations(){
+      while(queuedAnimations.length){
+        window.clearTimeout(queuedAnimations.pop());
+      }
+    }
+
+    function pulseActiveBox(name){
+      var box = document.querySelector('.s03a-box[data-panel="'+name+'"]');
+      if(!box) return;
+      if(typeof box.animate === 'function'){
+        box.animate(
+          [
+            { transform:'scale(1)' },
+            { transform:'scale(1.05)' },
+            { transform:'scale(1)' }
+          ],
+          { duration:420, easing:'ease-out' }
+        );
+      } else {
+        box.style.transform = 'scale(1.05)';
+        queueAnimation(function(){ box.style.transform = 'scale(1)'; }, 220);
+      }
+    }
+
+    function getVisibleSoftmaxStep(){
+      return Array.from(document.querySelectorAll('#slide-03a .fragment.visible[data-s03a-step]'))
+        .map(function(fragment){ return parseInt(fragment.getAttribute('data-s03a-step'), 10) || 0; })
+        .reduce(function(max, step){ return Math.max(max, step); }, 0);
+    }
+
+    function getVisibleSlideState(){
+      var state = { panel:'embed', step:0 };
+      document.querySelectorAll('#slide-03a .fragment').forEach(function(fragment){
+        if(!fragment.classList.contains('visible')) return;
+        var panel = fragment.getAttribute('data-s03a-panel');
+        var step = fragment.getAttribute('data-s03a-step');
+        if(panel){
+          state.panel = panel;
+          if(panel !== 'softmax') state.step = 0;
+        }
+        if(step){
+          state.panel = 'softmax';
+          state.step = parseInt(step, 10) || 0;
+        }
+      });
+      return state;
+    }
+
+    function resetEmbedPanel(){
+      var rows = document.querySelectorAll('.s03a-embed-row');
+      rows.forEach(function(row){
+        row.style.background = 'transparent';
+        row.style.opacity = '0.55';
+        var token = row.children[0];
+        if(token){
+          token.style.opacity = '0.55';
+          token.style.transform = 'translateX(-6px)';
+          token.style.transition = 'opacity .25s, transform .25s';
+        }
+        row.querySelectorAll('.s03a-vec > div').forEach(function(cell){
+          cell.style.opacity = '0.12';
+          cell.style.transform = 'scaleY(.18)';
+          cell.style.filter = 'blur(.5px)';
+        });
+      });
+      var callout = document.querySelector('#s03a-panel-embed > div:last-child');
+      if(callout){
+        callout.style.opacity = '0';
+        callout.style.transform = 'translateY(6px)';
+        callout.style.transition = 'opacity .35s, transform .35s';
+      }
+    }
+
+    function animateEmbedPanel(){
+      resetEmbedPanel();
+      var rows = Array.from(document.querySelectorAll('.s03a-embed-row'));
+      rows.forEach(function(row, rowIdx){
+        queueAnimation(function(){
+          row.style.opacity = '1';
+          row.style.background = 'rgba(52,211,153,.08)';
+          var token = row.children[0];
+          if(token){
+            token.style.opacity = '1';
+            token.style.transform = 'translateX(0)';
+          }
+          row.querySelectorAll('.s03a-vec > div').forEach(function(cell, cellIdx){
+            queueAnimation(function(){
+              cell.style.opacity = '1';
+              cell.style.transform = 'scaleY(1)';
+              cell.style.filter = 'none';
+            }, cellIdx * 40);
+          });
+          queueAnimation(function(){
+            row.style.background = 'transparent';
+          }, 420);
+        }, rowIdx * 150);
+      });
+      var callout = document.querySelector('#s03a-panel-embed > div:last-child');
+      if(callout){
+        queueAnimation(function(){
+          callout.style.opacity = '1';
+          callout.style.transform = 'translateY(0)';
+        }, rows.length * 150 + 120);
+      }
+    }
+
+    function animateAttnPanel(){
+      if(resetAttnInteractive) resetAttnInteractive();
+      var panel = document.getElementById('s03a-panel-attn');
+      if(!panel || !highlightAttnRow) return;
+
+      panel.querySelectorAll('.s03a-attn-cell').forEach(function(cell){
+        cell.style.opacity = '0.16';
+        cell.style.transform = 'scale(.96)';
+      });
+      panel.querySelectorAll('.s03a-attn-row-lbl').forEach(function(label){
+        label.style.opacity = '0.55';
+        label.style.transition = 'opacity .2s, background .2s';
+      });
+
+      [0,1,2,3,4,2].forEach(function(rowIdx, idx){
+        queueAnimation(function(){
+          highlightAttnRow(rowIdx);
+          panel.querySelectorAll('.s03a-attn-row-lbl').forEach(function(label){
+            label.style.opacity = (parseInt(label.getAttribute('data-row'), 10) === rowIdx) ? '1' : '0.65';
+          });
+        }, 80 + idx * 360);
+      });
+    }
+
+    function animateBarCollection(bars, startDelay, stepDelay){
+      bars.forEach(function(bar){
+        bar.style.height = '2px';
+        bar.style.opacity = '0.16';
+        bar.style.transform = 'scaleX(.7)';
+      });
+
+      bars.forEach(function(bar, idx){
+        queueAnimation(function(){
+          bar.style.height = bar.dataset.targetHeight || bar.style.height;
+          bar.style.opacity = '1';
+          bar.style.transform = 'scaleX(1)';
+        }, startDelay + idx * stepDelay);
+      });
+    }
+
+    function animateFFNPanel(){
+      var inputBars = Array.from(document.querySelectorAll('#s03a-ffn-input > div'));
+      var hiddenBars = Array.from(document.querySelectorAll('#s03a-ffn-hidden > div'));
+      var outputBars = Array.from(document.querySelectorAll('#s03a-ffn-output > div'));
+      var insight = document.querySelector('#s03a-panel-ffn > div:last-child');
+
+      animateBarCollection(inputBars, 40, 35);
+      animateBarCollection(hiddenBars, 360, 28);
+      animateBarCollection(outputBars, 820, 40);
+
+      if(insight){
+        insight.style.opacity = '0';
+        insight.style.transform = 'translateY(6px)';
+        insight.style.transition = 'opacity .35s, transform .35s';
+        queueAnimation(function(){
+          insight.style.opacity = '1';
+          insight.style.transform = 'translateY(0)';
+        }, 1180);
+      }
+    }
+
+    function ensureSoftmaxBaseState(){
+      if(baseSoftmaxState) return baseSoftmaxState;
+      baseSoftmaxState = {
+        label: '<span style="color:var(--accent2);font-family:var(--mono);">Softmax</span><br><span style="font-size:.62rem;color:var(--ink-mute);">Logits are normalized into a probability distribution over the whole vocabulary.</span>',
+        bars: Array.from(document.querySelectorAll('.s03a-bar-row')).map(function(row){
+          var fill = row.querySelector('.s03a-fill');
+          return {
+            w: fill ? (fill.style.width || '0%') : '0%',
+            op: 1,
+            glow: false
+          };
+        })
+      };
+      return baseSoftmaxState;
+    }
+
+    function animateSoftmaxPanel(stepIndex){
+      var state = stepIndex > 0 ? steps[stepIndex] : ensureSoftmaxBaseState();
+      var rows = Array.from(document.querySelectorAll('.s03a-bar-row'));
+      var label = document.getElementById('s03a-step-label');
+
+      rows.forEach(function(row){
+        var fill = row.querySelector('.s03a-fill');
+        if(fill){
+          fill.style.width = '0%';
+          fill.style.opacity = '0.12';
+          fill.style.boxShadow = 'none';
+        }
+        row.style.opacity = '0.35';
+      });
+
+      if(label) label.innerHTML = state.label || '';
+
+      rows.forEach(function(row, idx){
+        var barState = state.bars[idx];
+        if(!barState) return;
+        queueAnimation(function(){
+          var fill = row.querySelector('.s03a-fill');
+          if(fill){
+            fill.style.width = barState.w;
+            fill.style.opacity = barState.op;
+            fill.style.boxShadow = barState.glow ? '0 0 8px 2px rgba(59,130,246,.6)' : 'none';
+          }
+          row.style.opacity = barState.op < 0.15 ? '0.25' : '1';
+        }, 80 + idx * 70);
+      });
+    }
+
+    function animateSamplingPanel(){
+      var result = document.getElementById('s03a-wheel-result');
+      var log = document.getElementById('s03a-sample-log');
+      var button = document.getElementById('s03a-spin-btn');
+
+      if(result) result.style.opacity = '0';
+      if(log) log.innerHTML = '';
+      if(updateSamplingWheel) updateSamplingWheel();
+      if(button && typeof button.animate === 'function'){
+        button.animate(
+          [
+            { transform:'scale(1)' },
+            { transform:'scale(1.04)' },
+            { transform:'scale(1)' }
+          ],
+          { duration:520, easing:'ease-out' }
+        );
+      }
+      queueAnimation(function(){
+        if(spinSamplingWheel) spinSamplingWheel();
+      }, 260);
+    }
+
+    function runPanelAnimation(name){
+      clearQueuedAnimations();
+      pulseActiveBox(name);
+      if(name === 'embed') animateEmbedPanel();
+      else if(name === 'attn') animateAttnPanel();
+      else if(name === 'ffn') animateFFNPanel();
+      else if(name === 'softmax') animateSoftmaxPanel(activeSoftmaxStep);
+      else if(name === 'sampling') animateSamplingPanel();
+    }
+
+    function showPanel(name, options){
+      options = options || {};
+      currentPanel = name;
+      panels.forEach(function(p){
+        var el = document.getElementById('s03a-panel-'+p);
+        if(el) el.style.display = (p===name)?'block':'none';
+      });
+      boxes.forEach(function(b){
+        var pn = b.getAttribute('data-panel');
+        if(pn===name){
+          b.classList.add('s03a-box-active');
+          b.style.boxShadow = '0 0 10px '+glowMap[pn];
+        } else {
+          b.classList.remove('s03a-box-active');
+          b.style.boxShadow = 'none';
+        }
+      });
+      if(options.animate !== false){
+        runPanelAnimation(name);
+      }
+    }
+
+    function syncSlideState(options){
+      options = options || {};
+      var state = getVisibleSlideState();
+      currentPanel = state.panel;
+      activeSoftmaxStep = state.step;
+
+      if(state.panel === 'softmax' && state.step > 0){
+        showPanel('softmax', { animate:false });
+        applyStep(state.step);
+        return;
+      }
+
+      showPanel(state.panel, { animate: options.animate !== false });
+    }
+
+    boxes.forEach(function(b){
+      b.style.transition = 'box-shadow .3s, border-color .3s, transform .25s';
+      b.addEventListener('click', function(e){
+        e.stopPropagation();
+        showPanel(b.getAttribute('data-panel'));
+      });
+    });
+
+    /* ═══ EMBEDDING VISUALIZATION ═══ */
+    (function initEmbedPanel(){
+      var vecs = document.querySelectorAll('.s03a-vec');
+      vecs.forEach(function(v){
+        var vals = v.getAttribute('data-vals').split(',').map(Number);
+        v.innerHTML = '';
+        vals.forEach(function(val){
+          var cell = document.createElement('div');
+          var abs = Math.abs(val);
+          var hue = val >= 0 ? '152' : '340';
+          cell.style.cssText = 'flex:1;border-radius:2px;background:hsla('+hue+',70%,55%,'+abs+');transition:transform .2s;';
+          cell.style.transition = 'transform .25s, opacity .25s, filter .25s';
+          cell.style.transformOrigin = 'center bottom';
+          cell.title = val.toFixed(2);
+          v.appendChild(cell);
+        });
+      });
+      /* Hover highlight row */
+      var rows = document.querySelectorAll('.s03a-embed-row');
+      rows.forEach(function(r){
+        r.style.cursor = 'pointer';
+        r.style.borderRadius = '4px';
+        r.style.padding = '2px 4px';
+        r.style.transition = 'background .2s';
+        r.addEventListener('mouseenter', function(){
+          r.style.background = 'rgba(52,211,153,.08)';
+          var cells = r.querySelectorAll('.s03a-vec > div');
+          cells.forEach(function(c){ c.style.transform='scaleY(1.6)'; });
+        });
+        r.addEventListener('mouseleave', function(){
+          r.style.background = 'transparent';
+          var cells = r.querySelectorAll('.s03a-vec > div');
+          cells.forEach(function(c){ c.style.transform='scaleY(1)'; });
+        });
+      });
+    })();
+
+    /* ═══ SELF-ATTENTION INTERACTION ═══ */
+    (function initAttnPanel(){
+      var cells = document.querySelectorAll('.s03a-attn-cell');
+      var labels = document.querySelectorAll('.s03a-attn-row-lbl');
+      var info = document.getElementById('s03a-attn-info');
+      var tokenNames = ['The','cat','sat','on','the'];
+
+      function highlightRow(rowIdx){
+        cells.forEach(function(c){
+          var r = parseInt(c.getAttribute('data-r'));
+          c.style.opacity = (r===rowIdx) ? '1' : '0.2';
+          if(r===rowIdx) c.style.transform='scale(1.08)';
+          else c.style.transform='scale(1)';
+        });
+        labels.forEach(function(l){
+          var r = parseInt(l.getAttribute('data-row'));
+          l.style.background = (r===rowIdx) ? 'rgba(167,139,250,.15)' : 'transparent';
+        });
+        /* find top-2 attended */
+        var rowCells = [];
+        cells.forEach(function(c){
+          if(parseInt(c.getAttribute('data-r'))===rowIdx){
+            rowCells.push({col: rowCells.length, w: parseFloat(c.getAttribute('data-w'))});
+          }
+        });
+        rowCells.sort(function(a,b){ return b.w-a.w; });
+        if(info){
+          info.innerHTML = '<span style="color:#a78bfa;">'+tokenNames[rowIdx]+'</span> attends most to <strong>'+tokenNames[rowCells[0].col]+'</strong> ('+Math.round(rowCells[0].w*100)+'%) and <strong>'+tokenNames[rowCells[1].col]+'</strong> ('+Math.round(rowCells[1].w*100)+'%)';
+        }
+      }
+
+      function resetAttn(){
+        cells.forEach(function(c){ c.style.opacity='1'; c.style.transform='scale(1)'; });
+        labels.forEach(function(l){ l.style.background='transparent'; });
+        if(info) info.innerHTML='← click a row to highlight';
+      }
+
+      highlightAttnRow = highlightRow;
+      resetAttnInteractive = resetAttn;
+
+      labels.forEach(function(l){
+        l.addEventListener('click', function(){ highlightRow(parseInt(l.getAttribute('data-row'))); });
+      });
+      /* click outside to reset */
+      var panel = document.getElementById('s03a-panel-attn');
+      if(panel) panel.addEventListener('click', function(e){
+        if(!e.target.closest('.s03a-attn-row-lbl') && !e.target.closest('.s03a-attn-cell')) resetAttn();
+      });
+    })();
+
+    /* ═══ FEED-FORWARD VISUALIZATION ═══ */
+    (function initFFNPanel(){
+      var inputVals  = [0.85,0.62,-0.33,0.71,0.14,-0.52,0.93,0.07];
+      var hiddenVals = [0,0,0,0,0,0,0,0, 0.92,0.18,0,0.55,0,0.34,0.71,0, 0,0.41,0,0,0.67,0,0,0.22, 0.33,0,0.88,0,0.12,0,0,0.45];
+      var outputVals = [0.71,0.48,-0.11,0.63,0.29,-0.38,0.82,0.15];
+
+      function makeBar(containerId, vals, hue){
+        var el = document.getElementById(containerId);
+        if(!el) return;
+        el.innerHTML = '';
+        vals.forEach(function(v){
+          var abs = Math.min(Math.abs(v),1);
+          var targetHeight = (abs*18+2)+'px';
+          var bar = document.createElement('div');
+          bar.dataset.targetHeight = targetHeight;
+          bar.style.cssText = 'width:22px;height:'+targetHeight+';border-radius:2px;background:hsla('+hue+',70%,55%,'+Math.max(abs,0.08)+');transition:height .35s,opacity .35s,transform .35s;';
+          bar.style.transformOrigin = 'left center';
+          bar.title = v.toFixed(2);
+          el.appendChild(bar);
+        });
+      }
+      makeBar('s03a-ffn-input', inputVals, '152');
+      makeBar('s03a-ffn-hidden', hiddenVals.slice(0,16), '45');
+      makeBar('s03a-ffn-output', outputVals, '210');
+    })();
+
+    /* ═══ SAMPLING WHEEL ═══ */
+    (function initSamplingPanel(){
+      var baseProbs = [
+        {word:'mat',   p:.40, color:'#3b82f6'},
+        {word:'floor', p:.28, color:'#34d399'},
+        {word:'chair', p:.15, color:'#a78bfa'},
+        {word:'sofa',  p:.09, color:'#fbbf24'},
+        {word:'ground',p:.05, color:'#22d3ee'},
+        {word:'carpet',p:.02, color:'#f97316'},
+        {word:'table', p:.008,color:'#94a3b8'},
+        {word:'other', p:.002,color:'#64748b'}
+      ];
+
+      var canvas = document.getElementById('s03a-wheel');
+      if(!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var resultEl = document.getElementById('s03a-wheel-result');
+      var logEl = document.getElementById('s03a-sample-log');
+      var spinBtn = document.getElementById('s03a-spin-btn');
+      var tSlider = document.getElementById('s03a-t-slider');
+      var kSlider = document.getElementById('s03a-k-slider');
+      var pSlider = document.getElementById('s03a-p-slider');
+      var tVal = document.getElementById('s03a-t-val');
+      var kVal = document.getElementById('s03a-k-val');
+      var pVal = document.getElementById('s03a-p-val');
+
+      function getParams(){
+        return {
+          T: parseFloat(tSlider.value)/10,
+          K: parseInt(kSlider.value),
+          P: parseFloat(pSlider.value)/10
+        };
+      }
+
+      function applyParams(probs, params){
+        /* Temperature */
+        var logits = probs.map(function(p){ return Math.log(Math.max(p.p,1e-10)); });
+        var scaled = logits.map(function(l){ return l/params.T; });
+        var maxL = Math.max.apply(null, scaled);
+        var exps = scaled.map(function(l){ return Math.exp(l-maxL); });
+        var sum = exps.reduce(function(a,b){return a+b;},0);
+        var newProbs = exps.map(function(e){ return e/sum; });
+        /* Top-K */
+        var indexed = newProbs.map(function(p,i){ return {i:i,p:p}; });
+        indexed.sort(function(a,b){ return b.p-a.p; });
+        for(var i=params.K;i<indexed.length;i++) indexed[i].p=0;
+        /* Top-P */
+        var cum=0;
+        for(var i=0;i<indexed.length;i++){
+          cum+=indexed[i].p;
+          if(cum>params.P){ for(var j=i+1;j<indexed.length;j++) indexed[j].p=0; break; }
+        }
+        /* Re-normalize */
+        var s2=indexed.reduce(function(a,b){return a+b.p;},0);
+        var result=probs.map(function(p){ return {word:p.word, p:0, color:p.color}; });
+        indexed.forEach(function(x){ result[x.i].p = s2>0 ? x.p/s2 : 0; });
+        return result;
+      }
+
+      function drawWheel(probs, highlightIdx){
+        ctx.clearRect(0,0,360,360);
+        var cx=180, cy=180, r=165;
+        var angle=-Math.PI/2;
+        probs.forEach(function(p,i){
+          if(p.p<=0) return;
+          var slice=p.p*Math.PI*2;
+          ctx.beginPath();
+          ctx.moveTo(cx,cy);
+          ctx.arc(cx,cy,r,angle,angle+slice);
+          ctx.closePath();
+          ctx.fillStyle = (highlightIdx===i) ? '#fff' : p.color;
+          ctx.globalAlpha = (highlightIdx===i) ? 1 : 0.75;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          ctx.strokeStyle='rgba(0,0,0,.3)'; ctx.lineWidth=1.5; ctx.stroke();
+          /* Label */
+          if(p.p>0.03){
+            var mid=angle+slice/2;
+            var lx=cx+Math.cos(mid)*(r*0.6);
+            var ly=cy+Math.sin(mid)*(r*0.6);
+            ctx.fillStyle=(highlightIdx===i)?p.color:'#fff';
+            ctx.font='bold 18px monospace';
+            ctx.textAlign='center'; ctx.textBaseline='middle';
+            ctx.fillText(p.word,lx,ly);
+            ctx.font='13px monospace';
+            ctx.fillText(Math.round(p.p*100)+'%',lx,ly+16);
+          }
+          angle+=slice;
+        });
+        /* Center circle */
+        ctx.beginPath(); ctx.arc(cx,cy,28,0,Math.PI*2);
+        ctx.fillStyle='rgba(15,23,42,.85)'; ctx.fill();
+        ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=2; ctx.stroke();
+        /* Pointer triangle at top */
+        ctx.beginPath(); ctx.moveTo(180,8); ctx.lineTo(172,24); ctx.lineTo(188,24); ctx.closePath();
+        ctx.fillStyle='var(--accent2,#ff6b3d)'; ctx.fill();
+      }
+
+      function updateWheel(){
+        var params = getParams();
+        var probs = applyParams(baseProbs, params);
+        drawWheel(probs, -1);
+        if(resultEl) resultEl.style.opacity='0';
+      }
+
+      function spin(){
+        var params = getParams();
+        var probs = applyParams(baseProbs, params);
+        /* Sample */
+        var rand = Math.random(), cum=0, chosen=0;
+        for(var i=0;i<probs.length;i++){
+          cum+=probs[i].p;
+          if(rand<=cum){ chosen=i; break; }
+        }
+        /* Animate spin */
+        var frames=30, frame=0;
+        var tempIdx=0;
+        function tick(){
+          tempIdx = Math.floor(Math.random()*probs.filter(function(p){return p.p>0;}).length);
+          drawWheel(probs, frame<frames-5 ? tempIdx : chosen);
+          frame++;
+          if(frame<frames) requestAnimationFrame(tick);
+          else {
+            drawWheel(probs, chosen);
+            if(resultEl){ resultEl.textContent=probs[chosen].word; resultEl.style.opacity='1'; resultEl.style.color=probs[chosen].color; }
+            if(logEl) logEl.innerHTML='Sampled: <strong style="color:'+probs[chosen].color+';">'+probs[chosen].word+'</strong> ('+Math.round(probs[chosen].p*100)+'%)';
+            if(spinBtn){ spinBtn.style.transform='scale(1)'; }
+          }
+        }
+        if(spinBtn) spinBtn.style.transform='scale(0.95)';
+        tick();
+      }
+
+      if(tSlider){ tSlider.addEventListener('input', function(){ tVal.textContent=(parseFloat(this.value)/10).toFixed(1); updateWheel(); }); }
+      if(kSlider){ kSlider.addEventListener('input', function(){ kVal.textContent=this.value; updateWheel(); }); }
+      if(pSlider){ pSlider.addEventListener('input', function(){ pVal.textContent=(parseFloat(this.value)/10).toFixed(1); updateWheel(); }); }
+      if(spinBtn) spinBtn.addEventListener('click', spin);
+
+      updateSamplingWheel = updateWheel;
+      spinSamplingWheel = spin;
+
+      /* Draw initial wheel when panel becomes visible */
+      var observer = new MutationObserver(function(){
+        var panel = document.getElementById('s03a-panel-sampling');
+        if(panel && panel.style.display!=='none') updateWheel();
+      });
+      var samplingPanel = document.getElementById('s03a-panel-sampling');
+      if(samplingPanel) observer.observe(samplingPanel, {attributes:true, attributeFilter:['style']});
+    })();
+
+    /* ═══ SOFTMAX FRAGMENT STEPS (preserved) ═══ */
+    var steps = [
+      null,
+      {
+        label: '<span style="color:var(--accent);font-family:var(--mono);">Step 1 · Temperature (T = 0.7)</span><br><span style="font-size:.62rem;color:var(--ink-mute);">Scales logits before softmax. T&lt;1 sharpens peaks → top tokens dominate. T&gt;1 flattens → longer tail gets a chance.</span>',
+        bars: [ {w:'52%',op:1}, {w:'24%',op:.9}, {w:'12%',op:.8}, {w:'6%',op:.7}, {w:'3%',op:.6}, {w:'1.5%',op:.4}, {w:'0.5%',op:.25}, {w:'0.1%',op:.15} ]
+      },
+      {
+        label: '<span style="color:var(--green);font-family:var(--mono);">Step 2 · Top-K (K = 5)</span><br><span style="font-size:.62rem;color:var(--ink-mute);">Hard cap: keep only the 5 highest-probability tokens. Ranks 6-8 are discarded entirely.</span>',
+        bars: [ {w:'52%',op:1}, {w:'24%',op:.9}, {w:'12%',op:.8}, {w:'6%',op:.7}, {w:'3%',op:.6}, {w:'0%',op:.12}, {w:'0%',op:.08}, {w:'0%',op:.05} ]
+      },
+      {
+        label: '<span style="color:#a78bfa;font-family:var(--mono);">Step 3 · Top-P / Nucleus (P = 0.9)</span><br><span style="font-size:.62rem;color:var(--ink-mute);">Cumulative sum: mat 52% → floor 76% → chair 88% → sofa 94% ✂️ Nucleus stops here.</span>',
+        bars: [ {w:'52%',op:1}, {w:'24%',op:1}, {w:'12%',op:.9}, {w:'6%',op:.75}, {w:'0%',op:.1}, {w:'0%',op:.08}, {w:'0%',op:.05}, {w:'0%',op:.04} ]
+      },
+      {
+        label: '<span style="color:var(--accent2);font-family:var(--mono);">Step 4 · Sample → <span style="background:rgba(255,107,61,.2);padding:1px 8px;border-radius:4px;">mat</span></span><br><span style="font-size:.62rem;color:var(--ink-mute);">A token is randomly drawn from the nucleus. "mat" wins with the highest weight.</span>',
+        bars: [ {w:'52%',op:1,glow:true}, {w:'24%',op:.35}, {w:'12%',op:.25}, {w:'6%',op:.2}, {w:'0%',op:.08}, {w:'0%',op:.05}, {w:'0%',op:.04}, {w:'0%',op:.03} ]
+      }
+    ];
+
+    function applyStep(n){
+      activeSoftmaxStep = n;
+      /* Auto-switch to softmax panel when fragment steps fire */
+      showPanel('softmax', { animate:false });
+      var s = steps[n];
+      if(!s) return;
+      var rows = document.querySelectorAll('.s03a-bar-row');
+      rows.forEach(function(row, i){
+        var b = s.bars[i]; if(!b) return;
+        var fill = row.querySelector('.s03a-fill');
+        if(fill){
+          fill.style.width = b.w;
+          fill.style.opacity = b.op;
+          fill.style.boxShadow = b.glow ? '0 0 8px 2px rgba(59,130,246,.6)' : 'none';
+        }
+        row.style.opacity = b.op < 0.15 ? '0.25' : '1';
+      });
+      var lbl = document.getElementById('s03a-step-label');
+      if(lbl) lbl.innerHTML = s.label;
+    }
+
+    function initS03a(){
+      if(typeof Reveal === 'undefined'){ setTimeout(initS03a, 200); return; }
+
+      function handleActivation(){
+        var slide = document.getElementById('slide-03a');
+        if(!slide || !Reveal.getCurrentSlide || Reveal.getCurrentSlide() !== slide) return;
+        syncSlideState({ animate:true });
+      }
+
+      Reveal.on('fragmentshown', function(e){
+        var panel = e.fragment && e.fragment.getAttribute('data-s03a-panel');
+        var step = e.fragment && e.fragment.getAttribute('data-s03a-step');
+        if(panel){
+          activeSoftmaxStep = 0;
+          currentPanel = panel;
+          showPanel(panel, { animate:true });
+          return;
+        }
+        if(step) applyStep(parseInt(step, 10));
+      });
+      Reveal.on('fragmenthidden', function(e){
+        var panel = e.fragment && e.fragment.getAttribute('data-s03a-panel');
+        var step = e.fragment && e.fragment.getAttribute('data-s03a-step');
+        if(!panel && !step) return;
+        syncSlideState({ animate:false });
+      });
+
+      Reveal.on('ready', handleActivation);
+      Reveal.on('slidechanged', function(event){
+        var slide = document.getElementById('slide-03a');
+        if(event.previousSlide === slide){
+          clearQueuedAnimations();
+        }
+        if(event.currentSlide === slide){
+          handleActivation();
+        }
+      });
+
+      handleActivation();
+    }
+    document.addEventListener('DOMContentLoaded', initS03a);
+  })();
+  </script>
+
   <aside class="notes"></aside>
-  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">03c / 08</span></div>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">03a / 08</span></div>
 </section>
+
+<!-- OLD 03b PLACEHOLDER REMOVED -->
 
 <!-- ══════════════════════ SLIDE 3d: WHAT LLMs ARE BAD AT ══════════════════════ -->
 <section>
@@ -951,13 +1953,16 @@
         data-fr="Contrôle le hasard. Basse = focalisé. Haute = créatif."
         data-es="Controla la aleatoriedad. Baja = enfocado. Alta = creativo.">Controls randomness. Low = focused. High = creative.</div>
       <div class="temp-bar"><div class="temp-marker" style="left:28%"></div></div>
-      <div class="temp-labels"><span>0.0</span><span
-        data-en="balanced" data-it="bilanciato" data-fr="équilibré" data-es="equilibrado">balanced</span><span>2.0</span></div>
+      <div class="temp-labels">
+        <span data-en="0.0 · precise" data-it="0.0 · precisa" data-fr="0.0 · précis" data-es="0.0 · precisa">0.0 · precise</span>
+        <span data-en="1.0 · sweet spot" data-it="1.0 · ideale" data-fr="1.0 · idéal" data-es="1.0 · ideal">1.0 · sweet spot</span>
+        <span data-en="2.0 · chaotic" data-it="2.0 · caotica" data-fr="2.0 · chaotique" data-es="2.0 · caótica">2.0 · chaotic</span>
+      </div>
       <div class="param-range"
-        data-en="0.2 (code) → 0.7 (chat) → 1.0 (creative writing)"
-        data-it="0.2 (codice) → 0.7 (chat) → 1.0 (scrittura creativa)"
-        data-fr="0.2 (code) → 0.7 (chat) → 1.0 (écriture créative)"
-        data-es="0.2 (código) → 0.7 (chat) → 1.0 (escritura creativa)">0.2 (code) → 0.7 (chat) → 1.0 (creative writing)</div>
+        data-en="0.2 (code) · 0.7 (chat) · 1.0 (creative) · &gt;1.5 ⚠ unstable"
+        data-it="0.2 (codice) · 0.7 (chat) · 1.0 (creativo) · &gt;1.5 ⚠ instabile"
+        data-fr="0.2 (code) · 0.7 (chat) · 1.0 (créatif) · &gt;1.5 ⚠ instable"
+        data-es="0.2 (código) · 0.7 (chat) · 1.0 (creativo) · &gt;1.5 ⚠ inestable">0.2 (code) · 0.7 (chat) · 1.0 (creative) · &gt;1.5 ⚠ unstable</div>
     </div>
 
     <!-- MAX TOKENS -->
@@ -1013,10 +2018,37 @@
         data-it="Seleziona token la cui probabilità cumulativa ≤ P."
         data-fr="Sélectionne les tokens dont la probabilité cumulée ≤ P."
         data-es="Selecciona tokens cuya probabilidad acumulada ≤ P.">Pick tokens whose cumulative probability ≤ P.</div>
-      <div style="margin:8px 0;font-family:var(--mono);font-size:.68rem;">
-        <span style="color:var(--accent)">P=0.1</span> <span style="color:var(--ink-mute)">→ very focused</span><br>
-        <span style="color:var(--green)">P=0.5</span> <span style="color:var(--ink-mute)">→ balanced</span><br>
-        <span style="color:var(--accent2)">P=0.95</span> <span style="color:var(--ink-mute)">→ creative</span>
+      <!-- Cumulative probability bar for nucleus sampling -->
+      <div style="margin:8px 0;">
+        <!-- Stacked token bars -->
+        <div style="display:flex;height:20px;border-radius:4px;overflow:hidden;width:100%;gap:1px;margin-bottom:3px;">
+          <div style="flex:42;background:var(--accent);opacity:.9;" title="token 1: 42%"></div>
+          <div style="flex:26;background:var(--green);opacity:.85;" title="token 2: 26%"></div>
+          <div style="flex:17;background:#a78bfa;opacity:.8;" title="token 3: 17%"></div>
+          <div style="flex:9;background:#fbbf24;opacity:.75;" title="token 4: 9% — nucleus boundary at P=0.9"></div>
+          <div style="flex:4;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);" title="token 5: 4% (excluded)"></div>
+          <div style="flex:2;background:rgba(255,255,255,.05);" title="token 6: 2% (excluded)"></div>
+        </div>
+        <!-- Token probability labels -->
+        <div style="display:flex;font-family:var(--mono);font-size:.52rem;margin-bottom:4px;">
+          <div style="flex:42;color:var(--accent);">42%</div>
+          <div style="flex:26;color:var(--green);">26%</div>
+          <div style="flex:17;color:#a78bfa;">17%</div>
+          <div style="flex:9;color:#fbbf24;">9%</div>
+          <div style="flex:6;color:rgba(255,255,255,.25);">6%</div>
+        </div>
+        <!-- Cumulative sum annotation -->
+        <div style="font-family:var(--mono);font-size:.57rem;line-height:1.6;">
+          <span style="color:var(--ink-mute);">cumul: </span>
+          <span style="color:var(--accent);">42</span>
+          <span style="color:var(--ink-mute);">→</span>
+          <span style="color:var(--green);">68</span>
+          <span style="color:var(--ink-mute);">→</span>
+          <span style="color:#a78bfa;">85</span>
+          <span style="color:var(--ink-mute);">→</span>
+          <span style="color:#fbbf24;">94%</span>
+          <span style="color:var(--ink-mute);font-family:var(--sans);font-size:.55rem;"> ← nucleus stops here (P=0.9)</span>
+        </div>
       </div>
       <div class="param-range"
         data-en="Range: 0.0 – 1.0 · Default: 0.9"
@@ -1252,6 +2284,37 @@
   <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">07 / 08</span></div>
 </section>
 
+<!-- ══════════════════════ CHAPTER 1 SUMMARY ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="Chapter 1 · Summary" data-it="Capitolo 1 · Riepilogo" data-fr="Chapitre 1 · Résumé" data-es="Capítulo 1 · Resumen">Chapter 1 · Summary</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Takeaways" data-it="Punti Chiave" data-fr="Points Clés" data-es="Puntos Clave">Key Takeaways</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent);">
+      <div class="badge badge-det" style="margin-bottom:8px;" data-en="Probabilistic, not deterministic" data-it="Probabilistico, non deterministico" data-fr="Probabiliste, pas déterministe" data-es="Probabilístico, no determinista">Probabilistic, not deterministic</div>
+      <p style="font-size:.72rem;margin:0;" data-en="LLMs don't look up answers — they predict the most likely next token. Same prompt, different output. Understand sampling to control behaviour." data-it="Gli LLM non cercano risposte — predicono il token più probabile. Stesso prompt, output diverso. Comprendi il campionamento per controllare il comportamento." data-fr="Les LLM ne cherchent pas des réponses — ils prédisent le token le plus probable. Même prompt, résultat différent. Comprendre l'échantillonnage pour contrôler le comportement." data-es="Los LLM no buscan respuestas — predicen el token más probable. Mismo prompt, diferente salida. Comprende el muestreo para controlar el comportamiento.">LLMs don't look up answers — they predict the most likely next token. Same prompt, different output. Understand sampling to control behaviour.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--green);">
+      <div class="badge badge-green" style="margin-bottom:8px;" data-en="Attention is the superpower" data-it="L'attenzione è il superpotere" data-fr="L'attention est le superpouvoir" data-es="La atención es el superpoder">Attention is the superpower</div>
+      <p style="font-size:.72rem;margin:0;" data-en="The transformer's self-attention mechanism lets every token look at every other token simultaneously. That's why context matters — and why longer context windows are valuable." data-it="Il meccanismo di self-attention del transformer permette a ogni token di guardare ogni altro token contemporaneamente. Per questo il contesto conta — e per questo le context window più lunghe sono preziose." data-fr="Le mécanisme de self-attention du transformer permet à chaque token de voir tous les autres tokens simultanément. C'est pourquoi le contexte compte — et pourquoi les context windows longues sont précieuses." data-es="El mecanismo de auto-atención del transformer permite a cada token ver todos los demás tokens simultáneamente. Por eso el contexto importa — y por eso las ventanas de contexto largas son valiosas.">The transformer's self-attention mechanism lets every token look at every other token simultaneously. That's why context matters — and why longer context windows are valuable.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--purple);">
+      <div class="badge badge-purple" style="margin-bottom:8px;" data-en="Parameters shape behaviour" data-it="I parametri modellano il comportamento" data-fr="Les paramètres façonnent le comportement" data-es="Los parámetros moldean el comportamiento">Parameters shape behaviour</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Temperature controls creativity vs precision. Top-p limits the candidate pool. Context window determines memory. Know these three and you control the model." data-it="La temperature controlla creatività vs precisione. Il top-p limita il pool dei candidati. La context window determina la memoria. Conosci questi tre e controlli il modello." data-fr="La température contrôle créativité vs précision. Le top-p limite le pool de candidats. La context window détermine la mémoire. Maîtrisez ces trois paramètres et vous contrôlez le modèle." data-es="La temperatura controla creatividad vs precisión. El top-p limita el conjunto de candidatos. La ventana de contexto determina la memoria. Domina estos tres y controlas el modelo.">Temperature controls creativity vs precision. Top-p limits the candidate pool. Context window determines memory. Know these three and you control the model.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob" style="margin-bottom:8px;" data-en="No single 'best' model" data-it="Nessun modello 'migliore' unico" data-fr="Pas de modèle 'meilleur' unique" data-es="No hay un único modelo 'mejor'">No single 'best' model</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Choose based on your use case: cost, latency, context length, privacy, and task complexity. GPT-4o for reasoning, Gemini for multimodal, Claude for long context, local models for privacy." data-it="Scegli in base al tuo caso d'uso: costo, latenza, lunghezza del contesto, privacy e complessità del task. GPT-4o per il ragionamento, Gemini per il multimodale, Claude per il contesto lungo, modelli locali per la privacy." data-fr="Choisissez en fonction de votre cas d'utilisation : coût, latence, longueur de contexte, confidentialité et complexité des tâches. GPT-4o pour le raisonnement, Gemini pour le multimodal, Claude pour les contextes longs, modèles locaux pour la confidentialité." data-es="Elije según tu caso de uso: costo, latencia, longitud de contexto, privacidad y complejidad de la tarea. GPT-4o para razonamiento, Gemini para multimodal, Claude para contextos largos, modelos locales para privacidad.">Choose based on your use case: cost, latency, context length, privacy, and task complexity.</p>
+    </div>
+  </div>
+  <div class="key-insight" style="margin-top:14px;">
+    <strong data-en="Next up:" data-it="Prossimamente:" data-fr="Ensuite :" data-es="A continuación:">Next up:</strong>
+    <span data-en=" Now you know how the model thinks — Chapter 2 shows you how to talk to it effectively." data-it=" Ora sai come pensa il modello — il Capitolo 2 ti mostra come comunicare con esso in modo efficace." data-fr=" Vous savez maintenant comment le modèle pense — le Chapitre 2 vous montre comment lui parler efficacement." data-es=" Ahora sabes cómo piensa el modelo — el Capítulo 2 te muestra cómo hablar con él de manera efectiva."> Now you know how the model thinks — Chapter 2 shows you how to talk to it effectively.</span>
+  </div>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span></div>
+</section>
+
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
 <section>
   <div class="eyebrow"
@@ -1274,7 +2337,7 @@
     <li>Krizhevsky et al., <a href="https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html" target="_blank">"ImageNet Classification with Deep CNNs"</a> (AlexNet), 2012</li>
   </ul>
   <aside class="notes"></aside>
-  <span class="chapter-tag">Chapter 1 · Introduction</span>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span></div>
 </section>
 <!-- chapter2.html -->
 
@@ -1288,10 +2351,10 @@
   <h1 style="text-align:center;"
     data-en="Prompt<br>Engineering" data-it="Prompt<br>Engineering" data-fr="Ingénierie<br>de Prompts" data-es="Ingeniería<br>de Prompts">Prompt<br>Engineering</h1>
   <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
-    data-en="The art and science of communicating effectively with language models."
-    data-it="L'arte e la scienza di comunicare efficacemente con i modelli linguistici."
-    data-fr="L'art et la science de communiquer efficacement avec les modèles de langage."
-    data-es="El arte y la ciencia de comunicarse eficazmente con los modelos de lenguaje.">The art and science of communicating effectively with language models.</p>
+    data-en="The best AI in the world gives mediocre results with poor instructions. Master the 4-part anatomy of a prompt and you'll get dramatically better outputs from the same model — starting today."
+    data-it="La migliore AI del mondo dà risultati mediocri con istruzioni scadenti. Padroneggia l'anatomia in 4 parti di un prompt e otterrai output notevolmente migliori dallo stesso modello — a partire da oggi."
+    data-fr="La meilleure IA du monde donne des résultats médiocres avec de mauvaises instructions. Maîtrisez l'anatomie en 4 parties d'un prompt et vous obtiendrez des résultats bien meilleurs du même modèle — dès aujourd'hui."
+    data-es="La mejor IA del mundo da resultados mediocres con instrucciones pobres. Domina la anatomía de 4 partes de un prompt y obtendrás resultados dramáticamente mejores del mismo modelo — a partir de hoy.">The best AI in the world gives mediocre results with poor instructions. Master the 4-part anatomy of a prompt and you'll get dramatically better outputs from the same model — starting today.</p>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">Prompt Engineering</span>
   <aside class="notes"></aside>
 </section>
@@ -1848,10 +2911,10 @@
         <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);margin-bottom:4px;"
           data-en="❌ NAIVE PROMPT" data-it="❌ PROMPT INGENUO" data-fr="❌ PROMPT NAÏF" data-es="❌ PROMPT INGENUO">❌ NAIVE PROMPT</div>
         <code style="font-size:.7rem;color:var(--ink);"
-          data-en="\"Write me an email about a project delay\""
-          data-it="\"Scrivimi un'email su un ritardo del progetto\""
-          data-fr="\"Écris-moi un email sur un retard de projet\""
-          data-es="\"Escríbeme un email sobre un retraso del proyecto\"">"Write me an email about a project delay"</code>
+          data-en="&quot;Write me an email about a project delay&quot;"
+          data-it="&quot;Scrivimi un'email su un ritardo del progetto&quot;"
+          data-fr="&quot;Écris-moi un email sur un retard de projet&quot;"
+          data-es="&quot;Escríbeme un email sobre un retraso del proyecto&quot;">&quot;Write me an email about a project delay&quot;</code>
       </div>
 
       <div style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:12px;">
@@ -1902,6 +2965,37 @@
   <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">07 / 07</span></div>
 </section>
 
+<!-- ══════════════════════ CHAPTER 2 SUMMARY ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="Chapter 2 · Summary" data-it="Capitolo 2 · Riepilogo" data-fr="Chapitre 2 · Résumé" data-es="Capítulo 2 · Resumen">Chapter 2 · Summary</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Takeaways" data-it="Punti Chiave" data-fr="Points Clés" data-es="Puntos Clave">Key Takeaways</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent);">
+      <div class="badge badge-det" style="margin-bottom:8px;" data-en="The 4-part anatomy" data-it="L'anatomia in 4 parti" data-fr="L'anatomie en 4 parties" data-es="La anatomía de 4 partes">The 4-part anatomy</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Every great prompt has: Role (who is the model?), Context (what's the situation?), Task (what do you want?), Format (how should it respond?). Miss any one and quality drops." data-it="Ogni grande prompt ha: Ruolo (chi è il modello?), Contesto (qual è la situazione?), Compito (cosa vuoi?), Formato (come dovrebbe rispondere?). Mancarne uno e la qualità cala." data-fr="Chaque bon prompt comporte : Rôle (qui est le modèle ?), Contexte (quelle est la situation ?), Tâche (que voulez-vous ?), Format (comment doit-il répondre ?). En omettre un et la qualité chute." data-es="Todo buen prompt tiene: Rol (¿quién es el modelo?), Contexto (¿cuál es la situación?), Tarea (¿qué quieres?), Formato (¿cómo debe responder?). Omite uno y la calidad baja.">Every great prompt has: Role, Context, Task, Format. Miss any one and quality drops.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--green);">
+      <div class="badge badge-green" style="margin-bottom:8px;" data-en="Start simple, add complexity" data-it="Inizia semplice, aggiungi complessità" data-fr="Commencer simple, ajouter la complexité" data-es="Empieza simple, añade complejidad">Start simple, add complexity</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Zero-shot first. If the output isn't right, add 2-5 examples (few-shot). For reasoning tasks, ask the model to 'think step by step' (chain-of-thought). Each technique has its use case." data-it="Prima zero-shot. Se l'output non va, aggiungi 2-5 esempi (few-shot). Per i task di ragionamento, chiedi al modello di 'pensare passo passo' (chain-of-thought). Ogni tecnica ha il suo caso d'uso." data-fr="D'abord zero-shot. Si le résultat ne convient pas, ajouter 2-5 exemples (few-shot). Pour les tâches de raisonnement, demander au modèle de 'penser étape par étape' (chain-of-thought)." data-es="Primero zero-shot. Si la salida no es correcta, añade 2-5 ejemplos (few-shot). Para tareas de razonamiento, pide al modelo que 'piense paso a paso' (chain-of-thought).">Zero-shot → few-shot → chain-of-thought. Each technique has its use case.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--purple);">
+      <div class="badge badge-purple" style="margin-bottom:8px;" data-en="System prompts are invisible power" data-it="I system prompt sono potere invisibile" data-fr="Les prompts système sont un pouvoir invisible" data-es="Los prompts de sistema son poder invisible">System prompts are invisible power</div>
+      <p style="font-size:.72rem;margin:0;" data-en="System prompts define the model's persona, rules, and guardrails — users never see them. They are your primary lever for reliable, consistent AI behaviour in production applications." data-it="I system prompt definiscono la persona, le regole e i guardrail del modello — gli utenti non li vedono. Sono il tuo principale leva per un comportamento AI affidabile e coerente nelle applicazioni di produzione." data-fr="Les prompts système définissent la persona, les règles et les garde-fous du modèle — les utilisateurs ne les voient pas. C'est votre principal levier pour un comportement IA fiable et cohérent." data-es="Los prompts de sistema definen la persona, las reglas y los guardrails del modelo — los usuarios nunca los ven. Son tu principal palanca para un comportamiento IA confiable y consistente.">System prompts define persona, rules, guardrails — invisible to users, essential in production.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob" style="margin-bottom:8px;" data-en="Prompting is iterative" data-it="Il prompting è iterativo" data-fr="Le prompting est itératif" data-es="El prompting es iterativo">Prompting is iterative</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Your first prompt is never your best. Write → test → analyse the failure mode → refine. The best prompt engineers treat prompts the same way developers treat code: version them, test them, improve them." data-it="Il tuo primo prompt non è mai il migliore. Scrivi → testa → analizza il fallimento → raffina. I migliori prompt engineer trattano i prompt come gli sviluppatori trattano il codice: versionali, testali, migliorali." data-fr="Votre premier prompt n'est jamais le meilleur. Écrire → tester → analyser le mode d'échec → affiner. Les meilleurs prompt engineers traitent les prompts comme du code : les versionner, les tester, les améliorer." data-es="Tu primer prompt nunca es el mejor. Escribe → prueba → analiza el modo de fallo → refina. Los mejores prompt engineers tratan los prompts como código: versionarlos, probarlos, mejorarlos.">Your first prompt is never your best. Iterate: write → test → analyse → refine.</p>
+    </div>
+  </div>
+  <div class="key-insight" style="margin-top:14px;">
+    <strong data-en="Next up:" data-it="Prossimamente:" data-fr="Ensuite :" data-es="A continuación:">Next up:</strong>
+    <span data-en=" You can prompt fluently — Chapter 3 shows how to use that skill to supercharge your development workflow." data-it=" Sai fare il prompt con fluidità — il Capitolo 3 mostra come usare questa abilità per potenziare il tuo flusso di sviluppo." data-fr=" Vous maîtrisez le prompting — le Chapitre 3 montre comment utiliser cette compétence pour booster votre flux de développement." data-es=" Puedes hacer prompting con fluidez — el Capítulo 3 muestra cómo usar esa habilidad para potenciar tu flujo de desarrollo."> You can prompt fluently — Chapter 3 shows how to use that skill to supercharge your development workflow.</span>
+  </div>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span></div>
+</section>
+
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
 <section>
   <div class="eyebrow" data-en="References" data-it="Riferimenti" data-fr="Références" data-es="Referencias">References</div>
@@ -1916,7 +3010,7 @@
     <li><a href="https://learnprompting.org/" target="_blank">Learn Prompting — Free Course</a></li>
   </ul>
   <aside class="notes"></aside>
-  <span class="chapter-tag">Chapter 2 · Prompt Engineering</span>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span></div>
 </section>
 
 <!-- chapter3.html -->
@@ -1930,10 +3024,10 @@
   <h1 style="text-align:center;"
     data-en="AI-Assisted Coding" data-it="AI-Assisted Coding" data-fr="AI-Assisted Coding" data-es="AI-Assisted Coding">AI-Assisted Coding</h1>
   <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
-    data-en="When coding feels like a conversation — AI-assisted development changes everything."
-    data-it="Quando programmare sembra una conversazione — lo sviluppo assistito dall'AI cambia tutto."
-    data-fr="Quand coder ressemble à une conversation — le développement assisté par l'IA change tout."
-    data-es="Cuando programar se siente como una conversación — el desarrollo asistido por IA lo cambia todo.">When coding feels like a conversation — AI-assisted development changes everything.</p>
+    data-en="In 2022, writing a REST API from scratch took hours. In 2025, it takes minutes. This chapter shows you exactly how — and how to stay the human who directs the machine, not the one replaced by it."
+    data-it="Nel 2022, scrivere una REST API da zero richiedeva ore. Nel 2025, ci vogliono minuti. Questo capitolo ti mostra esattamente come — e come rimanere l'umano che dirige la macchina, non quello sostituito da essa."
+    data-fr="En 2022, écrire une API REST de zéro prenait des heures. En 2025, cela prend des minutes. Ce chapitre vous montre exactement comment — et comment rester l'humain qui dirige la machine, pas celui qu'elle remplace."
+    data-es="En 2022, escribir una API REST desde cero llevaba horas. En 2025, lleva minutos. Este capítulo te muestra exactamente cómo — y cómo mantenerte como el humano que dirige la máquina, no el que es reemplazado por ella.">In 2022, writing a REST API from scratch took hours. In 2025, it takes minutes. This chapter shows you exactly how — and how to stay the human who directs the machine, not the one replaced by it.</p>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">AI-Assisted Coding</span>
   <aside class="notes"></aside>
 </section>
@@ -2426,6 +3520,37 @@
   <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span> <span class="slide-tag">06 / 06</span></div>
 </section>
 
+<!-- ══════════════════════ CHAPTER 3 SUMMARY ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="Chapter 3 · Summary" data-it="Capitolo 3 · Riepilogo" data-fr="Chapitre 3 · Résumé" data-es="Capítulo 3 · Resumen">Chapter 3 · Summary</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Takeaways" data-it="Punti Chiave" data-fr="Points Clés" data-es="Puntos Clave">Key Takeaways</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent);">
+      <div class="badge badge-det" style="margin-bottom:8px;" data-en="AI codes faster, you code smarter" data-it="L'AI codifica più veloce, tu codifichi in modo più intelligente" data-fr="L'IA code plus vite, vous codez plus intelligemment" data-es="La IA codifica más rápido, tú codificas de manera más inteligente">AI codes faster, you code smarter</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Studies show 35–55% productivity gains in real-world settings. The gains come from eliminating boilerplate, speeding up research, and accelerating the test-debug cycle — not from removing developers." data-it="Gli studi mostrano guadagni di produttività del 35–55% in scenari reali. I guadagni derivano dall'eliminazione del codice boilerplate, dall'accelerazione della ricerca e dall'accelezione del ciclo test-debug — non dalla rimozione degli sviluppatori." data-fr="Les études montrent des gains de productivité de 35 à 55% dans des contextes réels. Les gains viennent de l'élimination du boilerplate, de l'accélération de la recherche et du cycle test-debug — pas de la suppression des développeurs." data-es="Los estudios muestran ganancias de productividad del 35–55% en entornos reales. Las ganancias provienen de eliminar el boilerplate, acelerar la investigación y el ciclo test-debug — no de eliminar desarrolladores.">Studies show 35–55% real-world productivity gains. You direct; AI accelerates.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--green);">
+      <div class="badge badge-green" style="margin-bottom:8px;" data-en="Right tool, right task" data-it="Lo strumento giusto per il compito giusto" data-fr="Le bon outil pour la bonne tâche" data-es="La herramienta correcta para la tarea correcta">Right tool, right task</div>
+      <p style="font-size:.72rem;margin:0;" data-en="GitHub Copilot for inline completion, Cursor for full-file refactoring, Claude/ChatGPT for architecture conversations. The tools differ in how much context they can hold and how deeply they integrate with your editor." data-it="GitHub Copilot per il completamento inline, Cursor per il refactoring di file completi, Claude/ChatGPT per conversazioni architetturali. Gli strumenti differiscono per quanto contesto possono tenere e quanto si integrano nell'editor." data-fr="GitHub Copilot pour la complétion inline, Cursor pour le refactoring complet, Claude/ChatGPT pour les conversations architecturales. Les outils diffèrent par la quantité de contexte qu'ils peuvent gérer." data-es="GitHub Copilot para completado inline, Cursor para refactoring completo, Claude/ChatGPT para conversaciones arquitecturales. Las herramientas difieren en cuánto contexto pueden mantener.">Copilot for inline, Cursor for files, Claude/ChatGPT for architecture. Match tool to context size.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--purple);">
+      <div class="badge badge-purple" style="margin-bottom:8px;" data-en="AI fails at the edges" data-it="L'AI fallisce ai margini" data-fr="L'IA échoue en conditions limites" data-es="La IA falla en los bordes">AI fails at the edges</div>
+      <p style="font-size:.72rem;margin:0;" data-en="AI-assisted coding struggles with: large codebases it hasn't seen, security-critical logic, novel algorithms, and concurrency bugs. Always review security-sensitive output. AI is a junior developer without production experience — you are the senior." data-it="La programmazione assistita dall'AI ha difficoltà con: basi di codice grandi che non ha visto, logica critica per la sicurezza, algoritmi nuovi e bug di concorrenza. Rivedi sempre l'output sensibile alla sicurezza." data-fr="La programmation assistée par IA échoue avec : les grandes bases de code non vues, la logique critique de sécurité, les algorithmes nouveaux et les bugs de concurrence. Révisez toujours les sorties sensibles à la sécurité." data-es="La programación asistida por IA falla con: bases de código grandes no vistas, lógica crítica de seguridad, algoritmos nuevos y bugs de concurrencia. Siempre revisa la salida sensible a la seguridad.">Struggles with: unknown codebases, security logic, novel algorithms. You are the senior developer.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob" style="margin-bottom:8px;" data-en="The vibe-coding workflow" data-it="Il workflow del vibe-coding" data-fr="Le workflow du vibe-coding" data-es="El flujo de trabajo del vibe-coding">The vibe-coding workflow</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Spec in natural language → generate skeleton → iterate with AI → review diff → commit. The skill isn't writing code — it's writing clear specifications and critically reviewing AI-generated output before it ships." data-it="Specifica in linguaggio naturale → genera lo scheletro → itera con AI → rivedi il diff → commit. La competenza non è scrivere codice — è scrivere specifiche chiare e revisionare criticamente l'output AI prima che venga rilasciato." data-fr="Spécification en langage naturel → générer le squelette → itérer avec l'IA → revoir le diff → commit. La compétence n'est pas écrire du code — c'est écrire des specs claires et revoir l'output IA." data-es="Especificación en lenguaje natural → generar esqueleto → iterar con IA → revisar diff → commit. La habilidad no es escribir código — es escribir especificaciones claras y revisar críticamente el output IA.">Spec → generate → iterate → review diff → commit. Your skill is specification and critical review.</p>
+    </div>
+  </div>
+  <div class="key-insight" style="margin-top:14px;">
+    <strong data-en="Next up:" data-it="Prossimamente:" data-fr="Ensuite :" data-es="A continuación:">Next up:</strong>
+    <span data-en=" AI can write code, but it can't read your internal documents. Chapter 4 introduces RAG — how to give any model access to your private knowledge." data-it=" L'AI può scrivere codice, ma non può leggere i tuoi documenti interni. Il Capitolo 4 introduce RAG — come dare a qualsiasi modello accesso alla tua conoscenza privata." data-fr=" L'IA peut écrire du code, mais elle ne peut pas lire vos documents internes. Le Chapitre 4 présente RAG — comment donner à n'importe quel modèle l'accès à votre base de connaissances privée." data-es=" La IA puede escribir código, pero no puede leer tus documentos internos. El Capítulo 4 introduce RAG — cómo dar a cualquier modelo acceso a tu conocimiento privado."> AI can write code, but it can't read your internal documents. Chapter 4 introduces RAG.</span>
+  </div>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span></div>
+</section>
+
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
 <section>
   <div class="eyebrow" data-en="References" data-it="Riferimenti" data-fr="Références" data-es="Referencias">References</div>
@@ -2440,7 +3565,7 @@
     <li><a href="https://github.com/features/copilot" target="_blank">GitHub Copilot</a></li>
   </ul>
   <aside class="notes"></aside>
-  <span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 3 · AI-Assisted Coding</span></div>
 </section>
 <!-- chapter4.html -->
 
@@ -2454,10 +3579,10 @@
   <h1 style="text-align:center;"
     data-en="RAG Architecture" data-it="Architettura RAG" data-fr="Architecture RAG" data-es="Arquitectura RAG">RAG Architecture</h1>
   <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
-    data-en="Retrieval-Augmented Generation — grounding language models in your private knowledge."
-    data-it="Retrieval-Augmented Generation — ancorare i modelli linguistici alla tua conoscenza privata."
-    data-fr="Génération augmentée par la recherche — ancrer les modèles de langage dans votre knowledge base."
-    data-es="Generación aumentada por recuperación — fundamentando los modelos en tu conocimiento privado.">Retrieval-Augmented Generation — grounding language models in your private knowledge.</p>
+    data-en="ChatGPT knows everything that was on the internet before its training cutoff — but nothing about your internal docs, last week's meeting notes, or your proprietary data. RAG is the bridge that changes that."
+    data-it="ChatGPT sa tutto ciò che era su internet prima della sua data di cutoff — ma niente sui tuoi documenti interni, le note della riunione della settimana scorsa o i tuoi dati proprietari. RAG è il ponte che cambia tutto questo."
+    data-fr="ChatGPT sait tout ce qui était sur internet avant sa date limite d'entraînement — mais rien sur vos docs internes, les notes de réunion de la semaine dernière ou vos données propriétaires. RAG est le pont qui change cela."
+    data-es="ChatGPT sabe todo lo que había en internet antes de su fecha de corte — pero nada sobre tus documentos internos, las notas de la reunión de la semana pasada o tus datos propietarios. RAG es el puente que cambia eso.">ChatGPT knows everything that was on the internet before its training cutoff — but nothing about your internal docs, last week's meeting notes, or your proprietary data. RAG is the bridge that changes that.</p>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">RAG Architecture</span>
   <aside class="notes"></aside>
 </section>
@@ -2540,72 +3665,107 @@
       data-fr="Le Pipeline RAG"
       data-es="El Pipeline RAG">The RAG Pipeline</h2>
 
-  <!-- INDEXING PHASE -->
-  <div style="margin-bottom:12px;">
-    <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;"
-      data-en="Phase 1 — Indexing (offline)" data-it="Fase 1 — Indicizzazione (offline)" data-fr="Phase 1 — Indexation (hors ligne)" data-es="Fase 1 — Indexación (offline)">Phase 1 — Indexing (offline)</div>
-    <div class="flow-row">
-      <div class="flow-box blue" style="font-size:.62rem;"
-        data-en="📄 Documents<br><span style='font-size:.55rem;font-weight:400;'>PDF, DOCX, MD…</span>"
-        data-it="📄 Documenti<br><span style='font-size:.55rem;font-weight:400;'>PDF, DOCX, MD…</span>"
-        data-fr="📄 Documents<br><span style='font-size:.55rem;font-weight:400;'>PDF, DOCX, MD…</span>"
-        data-es="📄 Documentos<br><span style='font-size:.55rem;font-weight:400;'>PDF, DOCX, MD…</span>">📄 Documents<br><span style="font-size:.55rem;font-weight:400;">PDF, DOCX, MD…</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-box green" style="font-size:.62rem;"
-        data-en="✂️ Chunking<br><span style='font-size:.55rem;font-weight:400;'>Split into passages</span>"
-        data-it="✂️ Chunking<br><span style='font-size:.55rem;font-weight:400;'>Dividi in passaggi</span>"
-        data-fr="✂️ Découpage<br><span style='font-size:.55rem;font-weight:400;'>Diviser en passages</span>"
-        data-es="✂️ Fragmentación<br><span style='font-size:.55rem;font-weight:400;'>Dividir en pasajes</span>">✂️ Chunking<br><span style="font-size:.55rem;font-weight:400;">Split into passages</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-box purple" style="font-size:.62rem;"
-        data-en="🔢 Embed<br><span style='font-size:.55rem;font-weight:400;'>text → vector</span>"
-        data-it="🔢 Embedding<br><span style='font-size:.55rem;font-weight:400;'>testo → vettore</span>"
-        data-fr="🔢 Vectorisation<br><span style='font-size:.55rem;font-weight:400;'>texte → vecteur</span>"
-        data-es="🔢 Embedding<br><span style='font-size:.55rem;font-weight:400;'>texto → vector</span>">🔢 Embed<br><span style="font-size:.55rem;font-weight:400;">text → vector</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-box dark" style="font-size:.62rem;"
-        data-en="🗄️ Vector DB<br><span style='font-size:.55rem;font-weight:400;'>Store & index</span>"
-        data-it="🗄️ Vector DB<br><span style='font-size:.55rem;font-weight:400;'>Archivia e indicizza</span>"
-        data-fr="🗄️ Base Vectorielle<br><span style='font-size:.55rem;font-weight:400;'>Stocker & indexer</span>"
-        data-es="🗄️ BD Vectorial<br><span style='font-size:.55rem;font-weight:400;'>Almacenar e indexar</span>">🗄️ Vector DB<br><span style="font-size:.55rem;font-weight:400;">Store & index</span></div>
+  <!-- RAG ACRONYM STRIP -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:4px 0 14px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:5px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);border-radius:8px;padding:5px 12px;">
+      <span style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--accent);">R</span>
+      <span style="font-size:.65rem;color:var(--ink-mid);" data-en="etrieval — fetch relevant chunks from your knowledge base" data-it="etrieval — recupera i chunk rilevanti dalla tua knowledge base" data-fr="etrieval — récupère les passages pertinents de votre base" data-es="etrieval — recupera fragmentos relevantes de tu base de conocimiento">etrieval — fetch relevant chunks from your knowledge base</span>
+    </div>
+    <span style="color:var(--ink-mute);font-size:.8rem;">+</span>
+    <div style="display:flex;align-items:center;gap:5px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:8px;padding:5px 12px;">
+      <span style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--green);">A</span>
+      <span style="font-size:.65rem;color:var(--ink-mid);" data-en="ugmented — inject those chunks into the prompt" data-it="ugmented — inietta quei chunk nel prompt" data-fr="ugmented — injecter ces passages dans le prompt" data-es="ugmented — inyecta esos fragmentos en el prompt">ugmented — inject those chunks into the prompt</span>
+    </div>
+    <span style="color:var(--ink-mute);font-size:.8rem;">+</span>
+    <div style="display:flex;align-items:center;gap:5px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);border-radius:8px;padding:5px 12px;">
+      <span style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--purple);">G</span>
+      <span style="font-size:.65rem;color:var(--ink-mid);" data-en="eneration — LLM answers using that context" data-it="eneration — l'LLM risponde usando quel contesto" data-fr="eneration — le LLM répond avec ce contexte" data-es="eneration — el LLM responde usando ese contexto">eneration — LLM answers using that context</span>
     </div>
   </div>
 
-  <!-- QUERY PHASE -->
-  <div>
-    <div style="font-family:var(--mono);font-size:.6rem;color:var(--green);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;"
-      data-en="Phase 2 — Query (online / real-time)" data-it="Fase 2 — Query (online / real-time)" data-fr="Phase 2 — Requête (en ligne / temps réel)" data-es="Fase 2 — Consulta (online / tiempo real)">Phase 2 — Query (online / real-time)</div>
-    <div class="flow-row">
-      <div class="flow-box blue" style="font-size:.62rem;"
-        data-en="❓ User Query<br><span style='font-size:.55rem;font-weight:400;'>Natural language</span>"
-        data-it="❓ Query Utente<br><span style='font-size:.55rem;font-weight:400;'>Linguaggio naturale</span>"
-        data-fr="❓ Requête Utilisateur<br><span style='font-size:.55rem;font-weight:400;'>Langage naturel</span>"
-        data-es="❓ Consulta Usuario<br><span style='font-size:.55rem;font-weight:400;'>Lenguaje natural</span>">❓ User Query<br><span style="font-size:.55rem;font-weight:400;">Natural language</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-box purple" style="font-size:.62rem;"
-        data-en="🔢 Embed Query<br><span style='font-size:.55rem;font-weight:400;'>Same model</span>"
-        data-it="🔢 Embedding<br><span style='font-size:.55rem;font-weight:400;'>Stesso modello</span>"
-        data-fr="🔢 Vectoriser<br><span style='font-size:.55rem;font-weight:400;'>Même modèle</span>"
-        data-es="🔢 Vectorizar<br><span style='font-size:.55rem;font-weight:400;'>Mismo modelo</span>">🔢 Embed Query<br><span style="font-size:.55rem;font-weight:400;">Same model</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-box amber" style="font-size:.62rem;"
-        data-en="🔍 Similarity Search<br><span style='font-size:.55rem;font-weight:400;'>Top-k chunks</span>"
-        data-it="🔍 Ricerca Similitudine<br><span style='font-size:.55rem;font-weight:400;'>Top-k chunks</span>"
-        data-fr="🔍 Recherche Similarité<br><span style='font-size:.55rem;font-weight:400;'>Top-k passages</span>"
-        data-es="🔍 Búsqueda Similitud<br><span style='font-size:.55rem;font-weight:400;'>Top-k fragmentos</span>">🔍 Similarity Search<br><span style="font-size:.55rem;font-weight:400;">Top-k chunks</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-box green" style="font-size:.62rem;"
-        data-en="📋 Augment Prompt<br><span style='font-size:.55rem;font-weight:400;'>Context + question</span>"
-        data-it="📋 Aumenta Prompt<br><span style='font-size:.55rem;font-weight:400;'>Contesto + domanda</span>"
-        data-fr="📋 Augmenter Prompt<br><span style='font-size:.55rem;font-weight:400;'>Contexte + question</span>"
-        data-es="📋 Aumentar Prompt<br><span style='font-size:.55rem;font-weight:400;'>Contexto + pregunta</span>">📋 Augment Prompt<br><span style="font-size:.55rem;font-weight:400;">Context + question</span></div>
-      <div class="flow-arrow">→</div>
-      <div class="flow-box dark" style="font-size:.62rem;"
-        data-en="🤖 LLM Answer<br><span style='font-size:.55rem;font-weight:400;'>Grounded response</span>"
-        data-it="🤖 Risposta LLM<br><span style='font-size:.55rem;font-weight:400;'>Risposta ancorata</span>"
-        data-fr="🤖 Réponse LLM<br><span style='font-size:.55rem;font-weight:400;'>Réponse ancrée</span>"
-        data-es="🤖 Respuesta LLM<br><span style='font-size:.55rem;font-weight:400;'>Respuesta fundamentada</span>">🤖 LLM Answer<br><span style="font-size:.55rem;font-weight:400;">Grounded response</span></div>
+  <!-- TWO PHASES SIDE BY SIDE -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+
+    <!-- PHASE 1: INDEXING -->
+    <div style="background:rgba(59,130,246,.04);border:1px solid rgba(59,130,246,.15);border-radius:12px;padding:12px 14px;">
+      <div style="font-family:var(--mono);font-size:.55rem;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;"
+        data-en="⏱ Phase 1 · Indexing (one-time, offline)" data-it="⏱ Fase 1 · Indicizzazione (una tantum, offline)" data-fr="⏱ Phase 1 · Indexation (unique, hors ligne)" data-es="⏱ Fase 1 · Indexación (una vez, offline)">⏱ Phase 1 · Indexing (one-time, offline)</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;min-width:110px;text-align:center;"
+            data-en="📄 Source Documents<br><small style='font-weight:400;color:var(--ink-mute)'>PDF · DOCX · MD · DB</small>"
+            data-it="📄 Documenti Sorgente<br><small style='font-weight:400;color:var(--ink-mute)'>PDF · DOCX · MD · DB</small>"
+            data-fr="📄 Documents Source<br><small style='font-weight:400;color:var(--ink-mute)'>PDF · DOCX · MD · DB</small>"
+            data-es="📄 Documentos Fuente<br><small style='font-weight:400;color:var(--ink-mute)'>PDF · DOCX · MD · DB</small>">📄 Source Documents<br><small style="font-weight:400;color:var(--ink-mute)">PDF · DOCX · MD · DB</small></div>
+        </div>
+        <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+        <div style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;min-width:110px;text-align:center;"
+          data-en="✂️ Chunking<br><small style='font-weight:400;color:var(--ink-mute)'>256–512 tokens, 10% overlap</small>"
+          data-it="✂️ Chunking<br><small style='font-weight:400;color:var(--ink-mute)'>256–512 token, 10% overlap</small>"
+          data-fr="✂️ Découpage<br><small style='font-weight:400;color:var(--ink-mute)'>256–512 tokens, 10% chevauchement</small>"
+          data-es="✂️ Fragmentación<br><small style='font-weight:400;color:var(--ink-mute)'>256–512 tokens, 10% solapamiento</small>">✂️ Chunking<br><small style="font-weight:400;color:var(--ink-mute)">256–512 tokens, 10% overlap</small></div>
+        <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+        <div style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;min-width:110px;text-align:center;"
+          data-en="🔢 Embedding Model<br><small style='font-weight:400;color:var(--ink-mute)'>text → [0.21, -0.84, …]</small>"
+          data-it="🔢 Modello di Embedding<br><small style='font-weight:400;color:var(--ink-mute)'>testo → [0.21, -0.84, …]</small>"
+          data-fr="🔢 Modèle d'Embedding<br><small style='font-weight:400;color:var(--ink-mute)'>texte → [0.21, -0.84, …]</small>"
+          data-es="🔢 Modelo de Embedding<br><small style='font-weight:400;color:var(--ink-mute)'>texto → [0.21, -0.84, …]</small>">🔢 Embedding Model<br><small style="font-weight:400;color:var(--ink-mute)">text → [0.21, -0.84, …]</small></div>
+        <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+        <div style="background:rgba(15,23,42,.5);border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;min-width:110px;text-align:center;"
+          data-en="🗄️ Vector Database<br><small style='font-weight:400;color:var(--ink-mute)'>Pinecone · pgvector · Chroma</small>"
+          data-it="🗄️ Database Vettoriale<br><small style='font-weight:400;color:var(--ink-mute)'>Pinecone · pgvector · Chroma</small>"
+          data-fr="🗄️ Base Vectorielle<br><small style='font-weight:400;color:var(--ink-mute)'>Pinecone · pgvector · Chroma</small>"
+          data-es="🗄️ Base Vectorial<br><small style='font-weight:400;color:var(--ink-mute)'>Pinecone · pgvector · Chroma</small>">🗄️ Vector Database<br><small style="font-weight:400;color:var(--ink-mute)">Pinecone · pgvector · Chroma</small></div>
+      </div>
     </div>
+
+    <!-- PHASE 2: QUERY + R·A·G labelled -->
+    <div style="background:rgba(52,211,153,.03);border:1px solid rgba(52,211,153,.15);border-radius:12px;padding:12px 14px;">
+      <div style="font-family:var(--mono);font-size:.55rem;color:var(--green);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;"
+        data-en="⚡ Phase 2 · Query (every request, real-time)" data-it="⚡ Fase 2 · Query (ogni richiesta, real-time)" data-fr="⚡ Phase 2 · Requête (chaque fois, temps réel)" data-es="⚡ Fase 2 · Consulta (cada petición, tiempo real)">⚡ Phase 2 · Query (every request, real-time)</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;text-align:center;"
+          data-en="❓ User Question<br><small style='font-weight:400;color:var(--ink-mute)'>&amp;ldquo;What is our refund policy?&amp;rdquo;</small>"
+          data-it="❓ Domanda Utente<br><small style='font-weight:400;color:var(--ink-mute)'>&amp;ldquo;Qual è la nostra politica di rimborso?&amp;rdquo;</small>"
+          data-fr="❓ Question Utilisateur<br><small style='font-weight:400;color:var(--ink-mute)'>&amp;ldquo;Quelle est notre politique de remboursement ?&amp;rdquo;</small>"
+          data-es="❓ Pregunta Usuario<br><small style='font-weight:400;color:var(--ink-mute)'>&amp;ldquo;¿Cuál es nuestra política de devolución?&amp;rdquo;</small>">❓ User Question<br><small style="font-weight:400;color:var(--ink-mute)">“What is our refund policy?”</small></div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+          <span style="font-family:var(--mono);font-size:.55rem;font-weight:700;color:var(--accent);background:rgba(59,130,246,.12);border-radius:5px;padding:2px 6px;">R</span>
+        </div>
+        <div style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;text-align:center;"
+          data-en="🔍 Retrieve Top-k Chunks<br><small style='font-weight:400;color:var(--ink-mute)'>Vector similarity search in DB</small>"
+          data-it="🔍 Recupera Top-k Chunk<br><small style='font-weight:400;color:var(--ink-mute)'>Ricerca di similarità vettoriale nel DB</small>"
+          data-fr="🔍 Récupérer Top-k Passages<br><small style='font-weight:400;color:var(--ink-mute)'>Recherche de similarité dans la base</small>"
+          data-es="🔍 Recuperar Top-k Fragmentos<br><small style='font-weight:400;color:var(--ink-mute)'>Búsqueda de similitud en la BD</small>">🔍 Retrieve Top-k Chunks<br><small style="font-weight:400;color:var(--ink-mute)">Vector similarity search in DB ←</small></div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+          <span style="font-family:var(--mono);font-size:.55rem;font-weight:700;color:var(--green);background:rgba(52,211,153,.12);border-radius:5px;padding:2px 6px;">A</span>
+        </div>
+        <div style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;text-align:center;"
+          data-en="📋 Augment the Prompt<br><small style='font-weight:400;color:var(--ink-mute)'>Chunks + question → enriched prompt</small>"
+          data-it="📋 Aumenta il Prompt<br><small style='font-weight:400;color:var(--ink-mute)'>Chunk + domanda → prompt arricchito</small>"
+          data-fr="📋 Augmenter le Prompt<br><small style='font-weight:400;color:var(--ink-mute)'>Passages + question → prompt enrichi</small>"
+          data-es="📋 Aumentar el Prompt<br><small style='font-weight:400;color:var(--ink-mute)'>Fragmentos + pregunta → prompt enriquecido</small>">📋 Augment the Prompt<br><small style="font-weight:400;color:var(--ink-mute)">Chunks + question → enriched prompt</small></div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+          <span style="font-family:var(--mono);font-size:.55rem;font-weight:700;color:var(--purple);background:rgba(167,139,250,.12);border-radius:5px;padding:2px 6px;">G</span>
+        </div>
+        <div style="background:rgba(15,23,42,.5);border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;text-align:center;"
+          data-en="🤖 LLM Generates Answer<br><small style='font-weight:400;color:var(--green)'>Grounded · Accurate · Citable</small>"
+          data-it="🤖 LLM Genera la Risposta<br><small style='font-weight:400;color:var(--green)'>Ancorata · Accurata · Citabile</small>"
+          data-fr="🤖 LLM Génère la Réponse<br><small style='font-weight:400;color:var(--green)'>Ancrée · Précise · Citable</small>"
+          data-es="🤖 LLM Genera la Respuesta<br><small style='font-weight:400;color:var(--green)'>Fundamentada · Precisa · Citable</small>">🤖 LLM Generates Answer<br><small style="font-weight:400;color:var(--green)">Grounded · Accurate · Citable</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:10px;">
+    <strong data-en="Why it works:" data-it="Perché funziona:" data-fr="Pourquoi ça marche :" data-es="Por qué funciona:">Why it works:</strong>
+    <span data-en=" The model never needs to memorise your data. It reads the relevant passages fresh at every query — so the knowledge base can be updated in real time without touching the model."
+          data-it=" Il modello non deve mai memorizzare i tuoi dati. Legge i passaggi rilevanti freschi ad ogni query — quindi la knowledge base può essere aggiornata in tempo reale senza toccare il modello."
+          data-fr=" Le modèle n'a jamais besoin de mémoriser vos données. Il lit les passages pertinents à chaque requête — la base de connaissance peut être mise à jour en temps réel sans toucher le modèle."
+          data-es=" El modelo nunca necesita memorizar tus datos. Lee los pasajes relevantes frescos en cada consulta — por lo que la base de conocimiento puede actualizarse en tiempo real sin tocar el modelo."> The model never memorises your data — it reads it fresh each time. Update your knowledge base without retraining.</span>
   </div>
 
   <aside class="notes"></aside>
@@ -2963,6 +4123,37 @@
   <div class="tag-bar"><span class="chapter-tag">Chapter 4 · RAG Architecture</span> <span class="slide-tag">06 / 06</span></div>
 </section>
 
+<!-- ══════════════════════ CHAPTER 4 SUMMARY ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="Chapter 4 · Summary" data-it="Capitolo 4 · Riepilogo" data-fr="Chapitre 4 · Résumé" data-es="Capítulo 4 · Resumen">Chapter 4 · Summary</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Takeaways" data-it="Punti Chiave" data-fr="Points Clés" data-es="Puntos Clave">Key Takeaways</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent);">
+      <div class="badge badge-det" style="margin-bottom:8px;" data-en="RAG solves frozen knowledge" data-it="RAG risolve la conoscenza congelata" data-fr="RAG résout la connaissance figée" data-es="RAG resuelve el conocimiento congelado">RAG solves frozen knowledge</div>
+      <p style="font-size:.72rem;margin:0;" data-en="LLMs know nothing beyond their training cutoff and nothing about your private data. RAG retrieves relevant documents at query time and injects them into the context window — giving the model up-to-date, private knowledge without retraining." data-it="Gli LLM non sanno nulla oltre la loro data di training cutoff e nulla sui tuoi dati privati. RAG recupera documenti rilevanti al momento della query e li inietta nella context window — dando al modello conoscenze aggiornate e private senza riaddestrarlo." data-fr="Les LLM ne savent rien au-delà de leur date limite d'entraînement et rien sur vos données privées. RAG récupère des documents pertinents au moment de la requête et les injecte dans la context window." data-es="Los LLM no saben nada más allá de su fecha de corte y nada sobre tus datos privados. RAG recupera documentos relevantes en el momento de la consulta y los inyecta en la ventana de contexto.">LLMs have frozen knowledge. RAG retrieves relevant docs at query time — no retraining needed.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--green);">
+      <div class="badge badge-green" style="margin-bottom:8px;" data-en="The pipeline: chunk → embed → retrieve → generate" data-it="La pipeline: chunk → embed → retrieve → generate" data-fr="Le pipeline : découper → embedder → récupérer → générer" data-es="La pipeline: chunk → embed → retrieve → generate">chunk → embed → retrieve → generate</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Documents are split into chunks, converted to vector embeddings, stored in a vector database. At query time: embed the query, find the top-k closest chunks, append them to the prompt, generate a grounded answer." data-it="I documenti vengono divisi in chunk, convertiti in embedding vettoriali e memorizzati in un database vettoriale. Al momento della query: embedda la query, trova i top-k chunk più vicini, aggiungili al prompt, genera una risposta fondata." data-fr="Les documents sont découpés en chunks, convertis en embeddings vectoriels, stockés dans une base de données vectorielle. À la requête : embedder la requête, trouver les top-k chunks les plus proches, les ajouter au prompt, générer une réponse fondée." data-es="Los documentos se dividen en chunks, se convierten en embeddings vectoriales y se almacenan en una base de datos vectorial. En la consulta: embeddar la consulta, encontrar los top-k chunks más cercanos, añadirlos al prompt, generar una respuesta fundamentada.">Split → embed → store. At query time: find closest chunks → inject → generate grounded answer.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--purple);">
+      <div class="badge badge-purple" style="margin-bottom:8px;" data-en="Chunk size changes everything" data-it="La dimensione del chunk cambia tutto" data-fr="La taille des chunks change tout" data-es="El tamaño del chunk lo cambia todo">Chunk size changes everything</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Too large: you retrieve irrelevant noise. Too small: you lose context. The sweet spot is typically 256–512 tokens with 10–20% overlap. Evaluate with recall@k — how often does the right chunk appear in the top-k results?" data-it="Troppo grande: recuperi rumore irrilevante. Troppo piccolo: perdi contesto. Il punto ideale è tipicamente 256–512 token con 10–20% di sovrapposizione. Valuta con recall@k — quanto spesso il chunk giusto appare nei top-k risultati?" data-fr="Trop grand : vous récupérez du bruit non pertinent. Trop petit : vous perdez du contexte. L'idéal est généralement 256–512 tokens avec 10–20% de chevauchement. Évaluez avec recall@k." data-es="Muy grande: recuperas ruido irrelevante. Muy pequeño: pierdes contexto. El punto ideal es típicamente 256–512 tokens con 10–20% de superposición. Evalúa con recall@k.">Too large: noise. Too small: no context. Sweet spot: 256–512 tokens, 10–20% overlap. Measure recall@k.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob" style="margin-bottom:8px;" data-en="RAG > fine-tuning for facts" data-it="RAG > fine-tuning per i fatti" data-fr="RAG > fine-tuning pour les faits" data-es="RAG > fine-tuning para hechos">RAG beats fine-tuning for facts</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Fine-tuning teaches the model new skills (style, domain vocabulary). RAG gives it new facts. For enterprise use cases — QA on internal docs, contract review, policy search — RAG is faster to deploy, cheaper to maintain, and more explainable." data-it="Il fine-tuning insegna al modello nuove competenze (stile, vocabolario di dominio). RAG gli dà nuovi fatti. Per casi d'uso aziendali — QA su documenti interni, revisione contratti, ricerca politiche — RAG è più veloce da distribuire, più economico da mantenere e più spiegabile." data-fr="Le fine-tuning enseigne au modèle de nouvelles compétences (style, vocabulaire de domaine). RAG lui donne de nouveaux faits. Pour les cas d'usage entreprise — QA sur docs internes, révision de contrats, recherche de politiques — RAG est plus rapide, moins cher et plus explicable." data-es="El fine-tuning enseña al modelo nuevas habilidades (estilo, vocabulario de dominio). RAG le da nuevos hechos. Para casos de uso empresarial — QA en docs internos, revisión de contratos, búsqueda de políticas — RAG es más rápido, más barato y más explicable.">Fine-tuning = new skills. RAG = new facts. For enterprise QA, RAG is faster and more explainable.</p>
+    </div>
+  </div>
+  <div class="key-insight" style="margin-top:14px;">
+    <strong data-en="Next up:" data-it="Prossimamente:" data-fr="Ensuite :" data-es="A continuación:">Next up:</strong>
+    <span data-en=" RAG gives the model context. Chapter 5 gives it autonomy — AI agents that plan, use tools, and complete multi-step tasks without human intervention at every step." data-it=" RAG dà al modello il contesto. Il Capitolo 5 gli dà autonomia — agenti AI che pianificano, usano strumenti e completano task multi-step senza intervento umano ad ogni passo." data-fr=" RAG donne au modèle du contexte. Le Chapitre 5 lui donne de l'autonomie — des agents IA qui planifient, utilisent des outils et accomplissent des tâches multi-étapes sans intervention humaine à chaque étape." data-es=" RAG da al modelo contexto. El Capítulo 5 le da autonomía — agentes IA que planifican, usan herramientas y completan tareas de múltiples pasos sin intervención humana en cada paso."> RAG gives the model context. Chapter 5 gives it autonomy — AI agents that plan, use tools, and act.</span>
+  </div>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 4 · RAG Architecture</span></div>
+</section>
+
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
 <section>
   <div class="eyebrow" data-en="References" data-it="Riferimenti" data-fr="Références" data-es="Referencias">References</div>
@@ -2977,7 +4168,7 @@
     <li>Gao et al., <a href="https://arxiv.org/abs/2312.10997" target="_blank">"Retrieval-Augmented Generation for Large Language Models: A Survey"</a>, 2023</li>
   </ul>
   <aside class="notes"></aside>
-  <span class="chapter-tag">Chapter 4 · RAG Architecture</span>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 4 · RAG Architecture</span></div>
 </section>
 <!-- chapter5.html -->
 
@@ -2990,10 +4181,10 @@
   <h1 style="text-align:center;"
     data-en="AI Agents<br>& MCP" data-it="Agenti AI<br>& MCP" data-fr="Agents IA<br>& MCP" data-es="Agentes IA<br>& MCP">AI Agents<br>& MCP</h1>
   <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
-    data-en="From question-answering to autonomous action — AI that plans, uses tools, and gets things done."
-    data-it="Dal question-answering all'azione autonoma — AI che pianifica, usa strumenti e fa le cose."
-    data-fr="Du question-answering à l'action autonome — une IA qui planifie, utilise des outils et agit."
-    data-es="Del question-answering a la acción autónoma — IA que planifica, usa herramientas y actúa.">From question-answering to autonomous action — AI that plans, uses tools, and gets things done.</p>
+    data-en="An LLM answers questions. An AI agent actually does things. This chapter shows how models evolve from passive responders into autonomous workers that plan, use tools, and complete multi-step tasks on your behalf."
+    data-it="Un LLM risponde alle domande. Un agente AI fa davvero le cose. Questo capitolo mostra come i modelli evolvono da risponditori passivi a lavoratori autonomi che pianificano, usano strumenti e completano task multi-step per te."
+    data-fr="Un LLM répond aux questions. Un agent IA fait réellement des choses. Ce chapitre montre comment les modèles évoluent de répondeurs passifs en travailleurs autonomes qui planifient, utilisent des outils et accomplissent des tâches en plusieurs étapes."
+    data-es="Un LLM responde preguntas. Un agente IA realmente hace cosas. Este capítulo muestra cómo los modelos evolucionan de respondedores pasivos a trabajadores autónomos que planifican, usan herramientas y completan tareas de múltiples pasos en tu nombre.">An LLM answers questions. An AI agent actually does things. This chapter shows how models evolve from passive responders into autonomous workers that plan, use tools, and complete multi-step tasks on your behalf.</p>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">AI Agents & MCP</span>
   <aside class="notes"></aside>
 </section>
@@ -3445,6 +4636,37 @@
   <div class="tag-bar"><span class="chapter-tag">Chapter 5 · AI Agents & MCP</span> <span class="slide-tag">05 / 06</span></div>
 </section>
 
+<!-- ══════════════════════ CHAPTER 5 SUMMARY ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="Chapter 5 · Summary" data-it="Capitolo 5 · Riepilogo" data-fr="Chapitre 5 · Résumé" data-es="Capítulo 5 · Resumen">Chapter 5 · Summary</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Takeaways" data-it="Punti Chiave" data-fr="Points Clés" data-es="Puntos Clave">Key Takeaways</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent);">
+      <div class="badge badge-det" style="margin-bottom:8px;" data-en="LLM → Agent: the key difference" data-it="LLM → Agente: la differenza chiave" data-fr="LLM → Agent : la différence clé" data-es="LLM → Agente: la diferencia clave">LLM → Agent: the key difference</div>
+      <p style="font-size:.72rem;margin:0;" data-en="An LLM answers questions in a single call. An agent runs in a loop: it observes, reasons, chooses a tool, acts, observes the result, and repeats — until the task completes. This loop is what makes agents autonomous." data-it="Un LLM risponde alle domande in una singola chiamata. Un agente gira in un ciclo: osserva, ragiona, sceglie uno strumento, agisce, osserva il risultato e ripete — finché il compito non è completato. Questo ciclo è ciò che rende gli agenti autonomi." data-fr="Un LLM répond aux questions en un seul appel. Un agent tourne en boucle : il observe, raisonne, choisit un outil, agit, observe le résultat et répète — jusqu'à ce que la tâche soit terminée. Cette boucle est ce qui rend les agents autonomes." data-es="Un LLM responde preguntas en una sola llamada. Un agente corre en bucle: observa, razona, elige una herramienta, actúa, observa el resultado y repite — hasta que la tarea se completa. Este bucle es lo que hace que los agentes sean autónomos.">LLM = single call. Agent = loop: observe → reason → act → observe → repeat until done.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--green);">
+      <div class="badge badge-green" style="margin-bottom:8px;" data-en="ReAct: reason then act" data-it="ReAct: ragiona poi agisci" data-fr="ReAct : raisonner puis agir" data-es="ReAct: razonar luego actuar">ReAct: reason then act</div>
+      <p style="font-size:.72rem;margin:0;" data-en="The ReAct pattern interleaves Thought (internal reasoning) with Action (tool call) and Observation (tool result). This creates a transparent audit trail — you can see why the agent made every decision, which is critical for debugging and trust." data-it="Il pattern ReAct alterna Pensiero (ragionamento interno) con Azione (chiamata a strumento) e Osservazione (risultato dello strumento). Questo crea una traccia di audit trasparente — puoi vedere perché l'agente ha preso ogni decisione." data-fr="Le schéma ReAct alterne Pensée (raisonnement interne) avec Action (appel d'outil) et Observation (résultat de l'outil). Cela crée une piste d'audit transparente — vous pouvez voir pourquoi l'agent a pris chaque décision." data-es="El patrón ReAct intercala Pensamiento (razonamiento interno) con Acción (llamada a herramienta) y Observación (resultado de la herramienta). Esto crea una pista de auditoría transparente — puedes ver por qué el agente tomó cada decisión.">ReAct: Thought → Action → Observation — a transparent audit trail of every agent decision.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--purple);">
+      <div class="badge badge-purple" style="margin-bottom:8px;" data-en="MCP: the USB-C of AI tools" data-it="MCP: l'USB-C degli strumenti AI" data-fr="MCP : le USB-C des outils IA" data-es="MCP: el USB-C de las herramientas IA">MCP: the USB-C of AI tools</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Model Context Protocol standardises how AI models connect to tools, data sources, and APIs. Before MCP, every integration was custom. Now: build one MCP server, connect any compatible agent. It's the standardisation moment for the agentic ecosystem." data-it="Il Model Context Protocol standardizza come i modelli AI si connettono a strumenti, fonti di dati e API. Prima di MCP, ogni integrazione era personalizzata. Ora: costruisci un server MCP, connetti qualsiasi agente compatibile. È il momento della standardizzazione per l'ecosistema agentivo." data-fr="Le Model Context Protocol standardise la façon dont les modèles IA se connectent aux outils, sources de données et API. Avant MCP, chaque intégration était personnalisée. Maintenant : construire un serveur MCP, connecter n'importe quel agent compatible." data-es="El Model Context Protocol estandariza cómo los modelos IA se conectan a herramientas, fuentes de datos y APIs. Antes de MCP, cada integración era personalizada. Ahora: construye un servidor MCP, conecta cualquier agente compatible.">MCP standardises agent-tool connections. Build once, connect anywhere — the USB-C moment for AI.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob" style="margin-bottom:8px;" data-en="Agents fail differently than LLMs" data-it="Gli agenti falliscono diversamente dagli LLM" data-fr="Les agents échouent différemment des LLM" data-es="Los agentes fallan diferente a los LLM">Agents fail differently than LLMs</div>
+      <p style="font-size:.72rem;margin:0;" data-en="LLM failures: bad text output, easy to spot. Agent failures: runaway actions, cost explosions, prompt injection attacks, and irreversible real-world effects (sent email, deleted file, charged card). Always define a kill switch and scope agent permissions carefully." data-it="Fallimenti LLM: output testuale errato, facile da notare. Fallimenti agente: azioni incontrollate, esplosioni di costo, attacchi di prompt injection ed effetti irreversibili nel mondo reale (email inviata, file cancellato, carta addebitata). Definisci sempre un kill switch e limita attentamente i permessi dell'agente." data-fr="Échecs LLM : mauvais texte, facile à repérer. Échecs agent : actions incontrôlées, explosions de coûts, injections de prompt et effets irréversibles (email envoyé, fichier supprimé, carte débitée). Définissez toujours un kill switch." data-es="Fallos LLM: mal texto, fácil de notar. Fallos agente: acciones descontroladas, explosiones de costo, ataques de prompt injection y efectos irreversibles (email enviado, archivo eliminado, tarjeta cobrada). Define siempre un kill switch.">Agent failures are real-world: runaway actions, costs, irreversible effects. Always define a kill switch.</p>
+    </div>
+  </div>
+  <div class="key-insight" style="margin-top:14px;">
+    <strong data-en="Next up:" data-it="Prossimamente:" data-fr="Ensuite :" data-es="A continuación:">Next up:</strong>
+    <span data-en=" With autonomous agents come serious responsibilities. Chapter 6 explores AI ethics, governance frameworks, and how to deploy AI that the world can trust." data-it=" Con gli agenti autonomi arrivano serie responsabilità. Il Capitolo 6 esplora l'etica dell'AI, i framework di governance e come distribuire un'AI di cui il mondo può fidarsi." data-fr=" Avec les agents autonomes viennent de sérieuses responsabilités. Le Chapitre 6 explore l'éthique IA, les cadres de gouvernance et comment déployer une IA en qui le monde peut avoir confiance." data-es=" Con los agentes autónomos vienen serias responsabilidades. El Capítulo 6 explora la ética IA, los marcos de gobernanza y cómo desplegar una IA en la que el mundo pueda confiar."> With autonomous agents come serious responsibilities. Chapter 6 explores AI ethics and governance.</span>
+  </div>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 5 · AI Agents & MCP</span></div>
+</section>
+
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
 <section>
   <div class="eyebrow" data-en="References" data-it="Riferimenti" data-fr="Références" data-es="Referencias">References</div>
@@ -3463,7 +4685,7 @@
     <li><a href="https://www.deeplearning.ai/short-courses/mcp-build-rich-context-ai-apps-with-anthropic/" target="_blank">DeepLearning.AI — MCP: Build Rich-Context AI Apps (course)</a></li>
   </ul>
   <aside class="notes"></aside>
-  <span class="chapter-tag">Chapter 5 · AI Agents & MCP</span>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 5 · AI Agents & MCP</span></div>
 </section>
 <!-- chapter6.html -->
 
@@ -3477,10 +4699,10 @@
   <h1 style="text-align:center;"
     data-en="Ethics &<br>Future" data-it="Etica e<br>Futuro" data-fr="Éthique &<br>Futur" data-es="Ética y<br>Futuro">Ethics &<br>Future</h1>
   <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
-    data-en="Power without guardrails is a risk. Understanding AI's limits and responsibilities is everyone's job."
-    data-it="La potenza senza guardrail è un rischio. Comprendere i limiti e le responsabilità dell'AI è un compito di tutti."
-    data-fr="La puissance sans garde-fous est un risque. Comprendre les limites et responsabilités de l'IA est l'affaire de tous."
-    data-es="El poder sin guardarraíles es un riesgo. Comprender los límites y responsabilidades de la IA es tarea de todos.">Power without guardrails is a risk. Understanding AI's limits and responsibilities is everyone's job.</p>
+    data-en="The same technology that summarises medical records can reinforce a doctor's biases. The same agent that books flights can be manipulated to leak your data. Power demands wisdom — this chapter shows how to wield it responsibly."
+    data-it="La stessa tecnologia che riassume le cartelle cliniche può rafforzare i pregiudizi di un medico. Lo stesso agente che prenota i voli può essere manipolato per divulgare i tuoi dati. Il potere richiede saggezza — questo capitolo mostra come esercitarlo responsabilmente."
+    data-fr="La même technologie qui résume les dossiers médicaux peut renforcer les biais d'un médecin. Le même agent qui réserve des vols peut être manipulé pour divulguer vos données. Le pouvoir exige de la sagesse — ce chapitre montre comment l'exercer de manière responsable."
+    data-es="La misma tecnología que resume historiales médicos puede reforzar los sesgos de un médico. El mismo agente que reserva vuelos puede ser manipulado para filtrar tus datos. El poder exige sabiduría — este capítulo muestra cómo ejercerlo responsablemente.">The same technology that summarises medical records can reinforce a doctor's biases. The same agent that books flights can be manipulated to leak your data. Power demands wisdom — this chapter shows how to wield it responsibly.</p>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">Ethics & Future</span>
   <aside class="notes"></aside>
 </section>
@@ -4051,6 +5273,37 @@
   <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span> <span class="slide-tag">06 / 06</span></div>
 </section>
 
+<!-- ══════════════════════ CHAPTER 6 SUMMARY ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="Chapter 6 · Summary" data-it="Capitolo 6 · Riepilogo" data-fr="Chapitre 6 · Résumé" data-es="Capítulo 6 · Resumen">Chapter 6 · Summary</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Takeaways" data-it="Punti Chiave" data-fr="Points Clés" data-es="Puntos Clave">Key Takeaways</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob" style="margin-bottom:8px;" data-en="Bias & hallucination are predictable" data-it="Bias e allucinazioni sono prevedibili" data-fr="Biais et hallucinations sont prévisibles" data-es="El sesgo y las alucinaciones son predecibles">Bias and hallucination are predictable</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Amazon's hiring tool, COMPAS, the Mata v. Avianca case, the $25M deepfake fraud — every failure was preventable with proper governance. Bias audits, human oversight, output verification, and authentication protocols are not optional extras; they are baseline engineering." data-it="Il tool di assunzione Amazon, COMPAS, il caso Mata v. Avianca, la frode deepfake da $25M — ogni fallimento era prevenibile con una governance adeguata. Audit dei bias, supervisione umana, verifica degli output e protocolli di autenticazione non sono extra opzionali; sono ingegneria di base." data-fr="L'outil de recrutement Amazon, COMPAS, l'affaire Mata v. Avianca, la fraude deepfake à 25M$ — chaque échec était évitable avec une bonne gouvernance. Les audits de biais, la supervision humaine, la vérification des sorties et les protocoles d'authentification ne sont pas des extras optionnels." data-es="La herramienta de contratación de Amazon, COMPAS, el caso Mata v. Avianca, el fraude deepfake de $25M — cada fallo era prevenible con una gobernanza adecuada. Las auditorías de sesgo, la supervisión humana, la verificación de salidas y los protocolos de autenticación no son extras opcionales.">Every real-world AI failure was preventable. Governance is not optional — it's baseline engineering.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent);">
+      <div class="badge badge-det" style="margin-bottom:8px;" data-en="The EU AI Act sets the global bar" data-it="L'EU AI Act fissa lo standard globale" data-fr="L'AI Act UE fixe le standard mondial" data-es="El EU AI Act fija el listón global">The EU AI Act sets the global bar</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Four risk tiers: Unacceptable (banned), High (heavy regulation), Limited (transparency required), Minimal (free to use). Penalties up to €35M or 7% global turnover. Other jurisdictions are following — this is the direction of travel worldwide." data-it="Quattro livelli di rischio: Inaccettabile (vietato), Alto (regolamentazione pesante), Limitato (trasparenza richiesta), Minimo (libero da usare). Sanzioni fino a €35M o 7% del fatturato globale. Altre giurisdizioni stanno seguendo — questa è la direzione di marcia in tutto il mondo." data-fr="Quatre niveaux de risque : Inacceptable (interdit), Élevé (réglementation stricte), Limité (transparence requise), Minimal (libre d'utilisation). Amendes jusqu'à 35M€ ou 7% du CA mondial. Les autres juridictions suivent — c'est la direction mondiale." data-es="Cuatro niveles de riesgo: Inaceptable (prohibido), Alto (regulación estricta), Limitado (transparencia requerida), Mínimo (libre de usar). Multas hasta €35M o 7% del volumen global. Otras jurisdicciones siguen — esta es la dirección mundial.">4 risk tiers. Fines up to €35M or 7% turnover. The rest of the world is following the EU's lead.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--green);">
+      <div class="badge badge-green" style="margin-bottom:8px;" data-en="Responsible AI is a quality standard" data-it="L'AI responsabile è uno standard di qualità" data-fr="L'IA responsable est un standard de qualité" data-es="La IA responsable es un estándar de calidad">Responsible AI is a quality standard</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Transparency (disclose when AI is in use), Fairness (audit for bias, measure disparate impact), Safety (human-in-the-loop, kill switch, red-team before launch). These are not compliance checkboxes — they are the engineering standards of trustworthy AI products." data-it="Trasparenza (dichiara quando l'AI è in uso), Equità (audit per bias, misura l'impatto disparato), Sicurezza (human-in-the-loop, kill switch, red-team prima del lancio). Non sono caselle da spuntare — sono gli standard ingegneristici di prodotti AI affidabili." data-fr="Transparence (signaler l'utilisation de l'IA), Équité (auditer les biais, mesurer l'impact disparate), Sécurité (humain dans la boucle, kill switch, red-team avant lancement). Ce ne sont pas des cases à cocher — ce sont les standards d'ingénierie de l'IA digne de confiance." data-es="Transparencia (revelar cuando se usa IA), Equidad (auditar sesgo, medir impacto desigual), Seguridad (humano en el bucle, kill switch, red-team antes del lanzamiento). No son casillas de verificación — son los estándares de ingeniería de productos IA confiables.">Transparency + Fairness + Safety = trustworthy AI. Not compliance boxes — engineering standards.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--purple);">
+      <div class="badge badge-purple" style="margin-bottom:8px;" data-en="The constant: accelerating change" data-it="La costante: il cambiamento accelerato" data-fr="La constante : le changement accéléré" data-es="La constante: el cambio acelerado">The constant: accelerating change</div>
+      <p style="font-size:.72rem;margin:0;" data-en="By 2027: autonomous agents mainstream, multimodal AI standard, edge AI ubiquitous. By 2030: AI in drug discovery, personalised education, and human-AI collaboration as the default work mode. The skill that endures: knowing how to work with AI — critically, creatively, and responsibly." data-it="Entro il 2027: agenti autonomi mainstream, AI multimodale standard, edge AI ubiqua. Entro il 2030: AI nella scoperta di farmaci, istruzione personalizzata e collaborazione uomo-AI come modalità di lavoro predefinita. La competenza che dura: sapere come lavorare con l'AI — in modo critico, creativo e responsabile." data-fr="D'ici 2027 : agents autonomes courants, IA multimodale standard, edge AI omniprésente. D'ici 2030 : IA dans la découverte de médicaments, éducation personnalisée, collaboration humain-IA comme mode de travail par défaut. La compétence qui dure : travailler avec l'IA de façon critique, créative et responsable." data-es="Para 2027: agentes autónomos comunes, IA multimodal estándar, edge AI ubicua. Para 2030: IA en descubrimiento de fármacos, educación personalizada, colaboración humano-IA como modo de trabajo predeterminado. La habilidad que perdura: trabajar con IA de forma crítica, creativa y responsable.">2027: agents + multimodal + edge AI. 2030: drug discovery + personalised education. Adapt or fall behind.</p>
+    </div>
+  </div>
+  <div class="key-insight" style="margin-top:14px;">
+    <strong data-en="You've completed all six chapters." data-it="Hai completato tutti e sei i capitoli." data-fr="Vous avez complété les six chapitres." data-es="Has completado los seis capítulos.">You've completed all six chapters.</strong>
+    <span data-en=" Head to the Annex for model comparisons, technical deep-dives, and curated learning resources to keep you current." data-it=" Vai all'Annex per confronti tra modelli, approfondimenti tecnici e risorse di apprendimento curate per mantenerti aggiornato." data-fr=" Rendez-vous à l'Annexe pour les comparaisons de modèles, les analyses techniques approfondies et les ressources sélectionnées pour rester à jour." data-es=" Ve al Anexo para comparaciones de modelos, análisis técnicos y recursos de aprendizaje seleccionados para mantenerte actualizado."> Head to the Annex for model comparisons, technical deep-dives, and curated learning resources.</span>
+  </div>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span></div>
+</section>
+
 <!-- ══════════════════════ REFERENCES ══════════════════════ -->
 <section>
   <div class="eyebrow" data-en="References" data-it="Riferimenti" data-fr="Références" data-es="Referencias">References</div>
@@ -4070,7 +5323,7 @@
     <li>Anthropic, <a href="https://www.anthropic.com/research/core-views-on-ai-safety" target="_blank">"Core Views on AI Safety"</a></li>
   </ul>
   <aside class="notes"></aside>
-  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span></div>
 </section>
 
 <!-- ══════════════════════ KEY TAKEAWAYS ══════════════════════ -->
@@ -4158,7 +5411,7 @@
   </div>
 
   <aside class="notes"></aside>
-  <span class="chapter-tag">Summary</span>
+  <div class="tag-bar"><span class="chapter-tag">Summary</span></div>
 </section>
 
 <!-- ══════════════════════ AI USE CASES BY INDUSTRY ══════════════════════ -->
@@ -4262,7 +5515,7 @@
   </div>
 
   <aside class="notes"></aside>
-  <span class="chapter-tag">Applied AI</span>
+  <div class="tag-bar"><span class="chapter-tag">Applied AI</span></div>
 </section>
 <!-- annex.html -->
 
@@ -4276,12 +5529,45 @@
   <h1 style="text-align:center;"
     data-en="Additional<br>Materials" data-it="Materiali<br>Aggiuntivi" data-fr="Matériaux<br>Supplémentaires" data-es="Materiales<br>Adicionales">Additional<br>Materials</h1>
   <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
-    data-en="Model comparison, technical deep-dives, and curated learning resources."
-    data-it="Confronto tra modelli, approfondimenti tecnici e risorse di apprendimento selezionate."
-    data-fr="Comparaison de modèles, approfondissements techniques et ressources sélectionnées."
-    data-es="Comparación de modelos, profundizaciones técnicas y recursos de aprendizaje seleccionados.">Model comparison, technical deep-dives, and curated learning resources.</p>
+    data-en="You've completed the six chapters. This section is your permanent reference: compare models side-by-side, run AI on your own hardware, and explore the curated resources that will keep you current as the field accelerates."
+    data-it="Hai completato i sei capitoli. Questa sezione è il tuo riferimento permanente: confronta i modelli fianco a fianco, esegui AI sul tuo hardware e scopri le risorse curate che ti manterranno aggiornato man mano che il campo accelera."
+    data-fr="Vous avez terminé les six chapitres. Cette section est votre référence permanente : comparez les modèles côte à côte, exécutez l'IA sur votre propre matériel et explorez les ressources sélectionnées qui vous maintiendront à jour."
+    data-es="Has completado los seis capítulos. Esta sección es tu referencia permanente: compara modelos uno al lado del otro, ejecuta IA en tu propio hardware y explora los recursos seleccionados que te mantendrán actualizado.">You've completed the six chapters. This section is your permanent reference: compare models side-by-side, run AI on your own hardware, and explore the curated resources that will keep you current as the field accelerates.</p>
   <aside class="notes"></aside>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">Annex</span>
+</section>
+
+<!-- ══════════════════════ SELF-ATTENTION IN ACTION (from Ch.1) ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Interactive · The Heart of Transformers"
+    data-it="Interattivo · Il Cuore dei Transformer"
+    data-fr="Interactif · Le Cœur des Transformers"
+    data-es="Interactivo · El Corazón de los Transformers">Interactive · The Heart of Transformers</div>
+  <h2 data-en="Self-Attention in Action"
+      data-it="Self-Attention in Azione"
+      data-fr="Self-Attention en Action"
+      data-es="Self-Attention en Acción">Self-Attention in Action</h2>
+
+  <div id="ch1AttnHeatmap" data-anim="attention-heatmap"></div>
+
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+
+  <div class="key-insight" style="margin-top:16px;">
+    <strong data-en="Insight:" data-it="Concetto:" data-fr="Concept :" data-es="Concepto:">Insight:</strong>
+    <span data-en=" Each row shows which words a token 'pays attention to'. Brighter = stronger connection. This is how 'it' resolves to 'cat', not 'mat'."
+          data-it=" Ogni riga mostra a quali parole un token presta attenzione. Più luminoso = più forte. Così 'esso' si riferisce a 'gatto', non 'tappeto'."
+          data-fr=" Chaque ligne montre les mots auxquels un token fait attention. Plus lumineux = plus fort. C'est ainsi que le modèle comprend les références."
+          data-es=" Cada fila muestra a qué palabras un token presta atención. Más brillante = más fuerte. Así el modelo entiende las referencias."> Each row shows which words a token "pays attention to." Brighter = stronger connection. This is how "it" resolves to "cat", not "mat".</span>
+  </div>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Annex</span> <span class="slide-tag">Self-Attention</span></div>
 </section>
 
 <!-- ══════════════════════ PROMPT PATTERNS CHEAT SHEET ══════════════════════ -->
@@ -4421,7 +5707,7 @@
   </div>
 
   <aside class="notes"></aside>
-  <span class="chapter-tag">Annex</span>
+  <div class="tag-bar"><span class="chapter-tag">Annex</span></div>
 </section>
 
 <!-- ══════════════════════ TYPICAL AI WORKFLOW ══════════════════════ -->
@@ -4523,7 +5809,7 @@
   </div>
 
   <aside class="notes"></aside>
-  <span class="chapter-tag">Annex</span>
+  <div class="tag-bar"><span class="chapter-tag">Annex</span></div>
 </section>
 
 <!-- ══════════════════════ MODERN AI STACK ══════════════════════ -->
@@ -4630,7 +5916,7 @@
   </div>
 
   <aside class="notes"></aside>
-  <span class="chapter-tag">Annex</span>
+  <div class="tag-bar"><span class="chapter-tag">Annex</span></div>
 </section>
 
 <!-- ══════════════════════ COST OF AI ══════════════════════ -->
@@ -4749,7 +6035,7 @@
   </div>
 
   <aside class="notes"></aside>
-  <span class="chapter-tag">Annex</span>
+  <div class="tag-bar"><span class="chapter-tag">Annex</span></div>
 </section>
 
 <!-- ══════════════════════ MODEL COMPARISON ══════════════════════ -->
@@ -4824,7 +6110,7 @@
     </table>
   </div>
   <aside class="notes"></aside>
-  <span class="chapter-tag">Annex · Model Landscape</span>
+  <div class="tag-bar"><span class="chapter-tag">Annex · Model Landscape</span></div>
 </section>
 
 <!-- ══════════════════════ HUGGINGFACE + GGUF ══════════════════════ -->
@@ -4906,7 +6192,7 @@
   </div>
 
   <aside class="notes"></aside>
-  <span class="chapter-tag">Annex · Model Hub &amp; Formats</span>
+  <div class="tag-bar"><span class="chapter-tag">Annex · Model Hub &amp; Formats</span></div>
 </section>
 
 <!-- ══════════════════════ LOCAL LLMS ══════════════════════ -->
@@ -5006,7 +6292,7 @@
   </div>
 
   <aside class="notes"></aside>
-  <span class="chapter-tag">Annex · Local AI</span>
+  <div class="tag-bar"><span class="chapter-tag">Annex · Local AI</span></div>
 </section>
 
 <!-- ══════════════════════ LEARNING RESOURCES ══════════════════════ -->
@@ -5094,7 +6380,7 @@
     </div>
   </div>
   <aside class="notes"></aside>
-  <span class="chapter-tag">Annex · Resources</span>
+  <div class="tag-bar"><span class="chapter-tag">Annex · Resources</span></div>
 </section>
 
 <!-- ══════════════════════ CLOSING ══════════════════════ -->
@@ -5136,6 +6422,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
+<script src="js/version.js"></script>
 <script src="js/lang/en.js"></script>
 <script src="js/lang/it.js"></script>
 <script src="js/lang/fr.js"></script>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Understanding Artificial Intelligence — Vincenzo Marafioti</title>
+<!-- PDF / document metadata ─────────────────────────────────────
+     Browsers embed these into the PDF document properties when
+     the user saves via Print → Save as PDF.
+     Author  → PDF "Author" field
+     description → PDF "Subject" field
+     keywords    → PDF "Keywords" field
+     link[rel=author] → clickable author URL inside the PDF
+──────────────────────────────────────────────────────────────── -->
+<meta name="author"      content="Vincenzo Marafioti"/>
+<meta name="description" content="A 6-chapter course on Artificial Intelligence: foundations, prompt engineering, AI-assisted coding, RAG, AI agents and ethics. By Vincenzo Marafioti — https://www.linkedin.com/in/vincenzo-marafioti/"/>
+<meta name="keywords"    content="Artificial Intelligence, LLM, Prompt Engineering, RAG, AI Agents, MCP, Ethics, GPT, Claude, Gemini, Vincenzo Marafioti"/>
+<meta name="creator"     content="Vincenzo Marafioti"/>
+<meta name="publisher"   content="Vincenzo Marafioti"/>
+<!-- Open Graph (used by some PDF viewers and link-preview tools) -->
+<meta property="og:title"       content="Understanding Artificial Intelligence"/>
+<meta property="og:description" content="A practical 6-chapter AI course covering LLMs, prompt engineering, RAG, agents and ethics."/>
+<meta property="og:type"        content="article"/>
+<meta property="og:url"         content="https://www.linkedin.com/in/vincenzo-marafioti/"/>
+<meta property="article:author" content="Vincenzo Marafioti"/>
+<!-- Canonical author link — embedded as a named destination in the PDF -->
+<link rel="author" href="https://www.linkedin.com/in/vincenzo-marafioti/" title="Vincenzo Marafioti on LinkedIn"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reset.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css"/>
+<link rel="stylesheet" href="css/theme.css"/>
+<link rel="stylesheet" href="css/animations.css"/>
+<link rel="stylesheet" href="css/narration.css"/>
+<link rel="stylesheet" href="css/slide-menu.css"/>
+<!-- Reveal.js print / PDF stylesheet -->
+<script>var _rl=document.createElement('link');_rl.rel='stylesheet';_rl.type='text/css';_rl.href=window.location.search.match(/print-pdf/gi)?'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/print/pdf.min.css':'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/print/paper.min.css';document.head.appendChild(_rl);</script>
+</head>
+<body>
+
+<!-- Print-PDF banner (only visible in ?print-pdf mode) -->
+<div id="print-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#1b5eff;color:#fff;text-align:center;padding:8px 16px;font-size:.8rem;font-family:sans-serif;">
+  📄 Print layout active &mdash; use <strong>Ctrl+P</strong> (or Cmd+P) and choose <strong>Save as PDF</strong>.
+  &nbsp;<a href="?" style="color:#fff;text-decoration:underline;">← Back to presentation</a>
+</div>
+<script>if(window.location.search.indexOf('print-pdf')!==-1){document.addEventListener('DOMContentLoaded',function(){var b=document.getElementById('print-banner');if(b)b.style.display='block';});}</script>
+
+<!-- Language selector -->
+<div class="lang-bar">
+  <span class="lang-btn active" onclick="setLang('en')" title="English (complete)">EN</span>
+  <span class="lang-btn" onclick="setLang('it')" title="Italiano ()">IT</span>
+  <span class="lang-btn" onclick="setLang('fr')" title="Français ()">FR</span>
+  <span class="lang-btn" onclick="setLang('es')" title="Español ()">ES</span>
+  <span class="lang-divider"></span>
+  <button class="lang-btn" id="pdf-btn" onclick="(function(){var url=window.location.href.split('?')[0].split('#')[0];if(window.location.search.indexOf('print-pdf')!==-1){window.print();}else{window.location.href=url+'?print-pdf';}})()" title="Switch to print layout, then use browser Print → Save as PDF" style="font-size:.65rem;padding:2px 8px;border:1px solid rgba(255,255,255,.15);border-radius:5px;background:rgba(27,94,255,.15);color:var(--accent);cursor:pointer;">⬇ PDF</button>
+  <span class="lang-divider"></span>
+  <span class="lang-btn" id="laser-btn" onclick="toggleLaser()" title="Toggle laser pointer (L)">⊹</span>
+</div>
+
+<div class="reveal">
+<div class="slides"><!-- @slides --></div><!-- /slides -->
+</div><!-- /reveal -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
+<script src="js/version.js"></script>
+<script src="js/lang/en.js"></script>
+<script src="js/lang/it.js"></script>
+<script src="js/lang/fr.js"></script>
+<script src="js/lang/es.js"></script>
+<script src="js/notes/en.js"></script>
+<script src="js/notes/it.js"></script>
+<script src="js/notes/fr.js"></script>
+<script src="js/notes/es.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/slides.js"></script>
+<script>initSlides();</script>
+
+<!-- Laser pointer -->
+<script>
+(function(){
+  const dot = document.createElement('div');
+  dot.className = 'laser-dot';
+  document.body.appendChild(dot);
+  let active = false;
+  const btn = document.getElementById('laser-btn');
+
+  window.toggleLaser = function() {
+    active = !active;
+    btn.classList.toggle('active', active);
+    document.body.classList.toggle('laser-active', active);
+    dot.style.display = active ? 'block' : 'none';
+  };
+
+  document.addEventListener('mousemove', function(e) {
+    if (!active) return;
+    dot.style.left = e.clientX + 'px';
+    dot.style.top  = e.clientY + 'px';
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.code === 'KeyL' && !e.ctrlKey && !e.metaKey) { toggleLaser(); e.preventDefault(); }
+  });
+})();
+</script>
+
+<!-- inline scripts: chapter1.html -->
+<script>
+Reveal.on('ready', () => initAnimatedDiagrams());
+
+const tasks = [
+  {text:'Text Generation',size:2.0,cat:'gen'},{text:'Summarization',size:1.7,cat:'gen'},
+  {text:'Translation',size:1.6,cat:'nlp'},{text:'Question Answering',size:1.8,cat:'nlp'},
+  {text:'Sentiment Analysis',size:1.5,cat:'class'},{text:'NER',size:1.3,cat:'class'},
+  {text:'Text Classification',size:1.5,cat:'class'},{text:'Code Generation',size:1.9,cat:'gen'},
+  {text:'Chat / Dialogue',size:2.1,cat:'gen'},{text:'Instruction Following',size:1.7,cat:'gen'},
+  {text:'Reasoning',size:1.6,cat:'reason'},{text:'Math Solving',size:1.3,cat:'reason'},
+  {text:'Logical Inference',size:1.2,cat:'reason'},{text:'Zero-Shot Classification',size:1.2,cat:'class'},
+  {text:'Few-Shot Learning',size:1.4,cat:'reason'},{text:'RAG / Retrieval',size:1.6,cat:'nlp'},
+  {text:'Embedding',size:1.3,cat:'nlp'},{text:'Reranking',size:1.0,cat:'nlp'},
+  {text:'Extraction',size:1.4,cat:'nlp'},{text:'Function Calling',size:1.7,cat:'gen'},
+  {text:'Image Captioning',size:1.4,cat:'multi'},{text:'Visual Q&A',size:1.2,cat:'multi'},
+  {text:'Speech-to-Text',size:1.4,cat:'multi'},{text:'Text-to-Speech',size:1.2,cat:'multi'},
+  {text:'Fill-Mask',size:1.0,cat:'nlp'},{text:'Token Classification',size:1.1,cat:'class'},
+];
+const colors = {gen:'#1B5EFF',nlp:'#0E7A50',class:'#B06000',reason:'#6B35CC',multi:'#FF4B1F'};
+
+Reveal.addEventListener('ready', () => setTimeout(() => buildCloud('wordCloud',tasks,colors), 200));
+Reveal.addEventListener('slidechanged', e => {
+  if (e.currentSlide.querySelector('#wordCloud')) setTimeout(() => buildCloud('wordCloud',tasks,colors), 100);
+});
+</script>
+
+<!-- inline scripts: chapter2.html -->
+<script>
+/* ── Interactive Parameter Playground ─────────────────────── */
+const paramOutputs = {
+  cold: [
+    "The ocean is a vast body of saltwater that covers approximately 71 percent of the Earth's surface.",
+    "The ocean is a large body of saltwater that covers most of the Earth's surface and plays a vital role in regulating the planet's climate.",
+    "The ocean is an immense, continuous body of saltwater covering over 70% of Earth's surface.",
+  ],
+  balanced: [
+    "The ocean is a shimmering expanse of blue that connects continents and harbors an astonishing diversity of life beneath its waves.",
+    "Stretching beyond every horizon, the ocean pulses with tides, storms, and hidden ecosystems that sustain life across the globe.",
+    "The ocean is nature's great equalizer — a restless, salt-laced wilderness that shapes weather, feeds billions, and guards secrets in its abyss.",
+  ],
+  hot: [
+    "The ocean is a dreaming leviathan of turquoise whispers, swallowing horizons and exhaling fog that tastes of forgotten voyages and salt-drunk stars.",
+    "Imagine liquid twilight stretching infinitely — the ocean hums in frequencies only whales and poets understand, folding time into its cerulean belly.",
+    "The ocean? A tantrum of cobalt and emerald, gargling shipwrecks like throat lozenges, forever arguing with the moon about who pulls harder.",
+  ],
+};
+const paramTokens = {
+  cold:     [{w:'vast',pct:89},{w:'large',pct:6},{w:'immense',pct:3},{w:'deep',pct:1},{w:'endless',pct:1}],
+  balanced: [{w:'shimmering',pct:34},{w:'vast',pct:25},{w:'restless',pct:18},{w:'mysterious',pct:14},{w:'boundless',pct:9}],
+  hot:      [{w:'dreaming',pct:15},{w:'liquid',pct:14},{w:'tantrum',pct:13},{w:'cobalt',pct:12},{w:'whispering',pct:11}],
+};
+
+function updateParamDemo() {
+  const temp = (document.getElementById('tempSlider').value / 10).toFixed(1);
+  const topp = (document.getElementById('toppSlider').value / 10).toFixed(1);
+  document.getElementById('tempValue').textContent = temp;
+  document.getElementById('toppValue').textContent = topp;
+
+  let mode = 'balanced';
+  let label = '⚖️ Balanced';
+  if (temp <= 0.3) { mode = 'cold'; label = '🎯 Precise / Deterministic'; }
+  else if (temp >= 1.2) { mode = 'hot'; label = '🎨 Creative / Wild'; }
+  document.getElementById('paramBehavior').textContent = label;
+
+  const outputs = paramOutputs[mode];
+  const idx = Math.floor(Math.random() * outputs.length);
+  const outEl = document.getElementById('paramOutput');
+  outEl.style.opacity = '0';
+  setTimeout(() => {
+    outEl.textContent = outputs[idx];
+    outEl.style.opacity = '1';
+    outEl.style.transition = 'opacity .35s';
+  }, 150);
+
+  // Token bars
+  const bars = document.getElementById('paramBars');
+  const tokens = paramTokens[mode];
+  bars.innerHTML = '';
+  tokens.forEach(t => {
+    const col = document.createElement('div');
+    col.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;';
+    const bar = document.createElement('div');
+    bar.style.cssText = 'width:100%;border-radius:4px 4px 0 0;background:var(--accent);transition:height .4s;';
+    bar.style.height = Math.max(t.pct * 0.55, 4) + 'px';
+    bar.style.opacity = Math.max(t.pct / 100 + 0.3, 0.35);
+    const pct = document.createElement('div');
+    pct.style.cssText = 'font-family:var(--mono);font-size:.5rem;color:var(--ink-mute);';
+    pct.textContent = t.pct + '%';
+    const word = document.createElement('div');
+    word.style.cssText = 'font-family:var(--mono);font-size:.5rem;color:var(--ink-mid);';
+    word.textContent = t.w;
+    col.appendChild(pct);
+    col.appendChild(bar);
+    col.appendChild(word);
+    bars.appendChild(col);
+  });
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', () => setTimeout(updateParamDemo, 300));
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NARRATION ENGINE v3 — TTS + unified text panel + volume
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Unified text panel (notes teleprompter OR CC subtitles) -->
+<div id="narr-text-panel" data-mode="notes"></div>
+
+<!-- Voice selector -->
+<div id="narr-voice-menu"></div>
+
+<!-- Progress bar -->
+<div id="narr-progress-wrap"><div id="narr-progress-bar"></div></div>
+
+<!-- Player bar -->
+<div id="narr-player" style="opacity:.45;">
+  <button class="narr-btn" id="narr-play"  title="Play / Resume narration (N)">▶ Play</button>
+  <button class="narr-btn" id="narr-pause" title="Pause (N)" disabled>⏸</button>
+  <button class="narr-btn" id="narr-stop"  title="Stop narration (Esc)" disabled>■</button>
+  <div class="narr-divider"></div>
+  <button class="narr-btn" id="narr-slower" title="Slower (−)">‹</button>
+  <span id="narr-speed-lbl">1×</span>
+  <button class="narr-btn" id="narr-faster" title="Faster (+)">›</button>
+  <div class="narr-divider"></div>
+  <div class="narr-vol-wrap">
+    <span id="narr-vol-icon" title="Mute / unmute (M)">🔊</span>
+    <input type="range" id="narr-vol" min="0" max="100" value="100" title="Volume">
+  </div>
+  <div class="narr-divider"></div>
+  <button class="narr-btn" id="narr-notes-btn" title="Toggle notes (T)">📝</button>
+  <button class="narr-btn" id="narr-voice-btn" title="Choose voice">🎙</button>
+</div>
+
+<script src="js/narration.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CUSTOM SLIDE MENU — chapters (collapsible) + search
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Toggle button -->
+<button id="sm-toggle" title="Slide navigator (/)">☰ Slides</button>
+
+<!-- Overlay -->
+<div id="slide-menu-overlay"></div>
+
+<!-- Menu panel -->
+<div id="slide-menu">
+  <div id="sm-header">
+    <div id="sm-header-row">
+      <span id="sm-title">SLIDE NAVIGATOR</span>
+      <button id="sm-close" title="Close">✕</button>
+    </div>
+    <input id="sm-search" type="text" placeholder="Search slides…" autocomplete="off" />
+  </div>
+  <div id="sm-list"></div>
+</div>
+
+<script src="js/slide-menu.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FILMSTRIP — Horizontal slide overview strip
+     Open: click ⊞ Overview button (bottom-left) or press F
+     Close: click again, press Esc, or click outside the strip
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Toggle button -->
+<button id="fs-btn" title="Slide overview (F)" aria-expanded="false" aria-controls="fs-panel">
+  <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true">
+    <rect x="0"  y="0" width="4" height="7" rx="1" fill="currentColor"/>
+    <rect x="5.5" y="0" width="4" height="7" rx="1" fill="currentColor" opacity=".7"/>
+    <rect x="11" y="0" width="4" height="7" rx="1" fill="currentColor" opacity=".45"/>
+    <rect x="0"  y="9" width="15" height="2" rx="1" fill="currentColor" opacity=".25"/>
+  </svg>
+  Overview
+</button>
+
+<!-- Filmstrip panel (slides up from bottom) -->
+<div id="fs-panel" role="region" aria-label="Slide overview" aria-hidden="true">
+  <div id="fs-strip"></div>
+</div>
+
+<script src="js/filmstrip.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,674 @@
+<!-- chapter2.html -->
+
+
+<!-- ══════════════════════ CHAPTER COVER ══════════════════════ -->
+<section class="chapter-divider" id="chapter-2">
+  <div class="cover-dot"></div>
+  <div class="eyebrow" style="color:var(--ink-mute);"
+    data-en="Chapter 02" data-it="Capitolo 02" data-fr="Chapitre 02" data-es="Capítulo 02">Chapter 02</div>
+  <div class="rule" style="margin:0 auto 28px;"></div>
+  <h1 style="text-align:center;"
+    data-en="Prompt<br>Engineering" data-it="Prompt<br>Engineering" data-fr="Ingénierie<br>de Prompts" data-es="Ingeniería<br>de Prompts">Prompt<br>Engineering</h1>
+  <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
+    data-en="The best AI in the world gives mediocre results with poor instructions. Master the 4-part anatomy of a prompt and you'll get dramatically better outputs from the same model — starting today."
+    data-it="La migliore AI del mondo dà risultati mediocri con istruzioni scadenti. Padroneggia l'anatomia in 4 parti di un prompt e otterrai output notevolmente migliori dallo stesso modello — a partire da oggi."
+    data-fr="La meilleure IA du monde donne des résultats médiocres avec de mauvaises instructions. Maîtrisez l'anatomie en 4 parties d'un prompt et vous obtiendrez des résultats bien meilleurs du même modèle — dès aujourd'hui."
+    data-es="La mejor IA del mundo da resultados mediocres con instrucciones pobres. Domina la anatomía de 4 partes de un prompt y obtendrás resultados dramáticamente mejores del mismo modelo — a partir de hoy.">The best AI in the world gives mediocre results with poor instructions. Master the 4-part anatomy of a prompt and you'll get dramatically better outputs from the same model — starting today.</p>
+  <span class="chapter-tag" style="color:rgba(255,255,255,.25);">Prompt Engineering</span>
+  <aside class="notes"></aside>
+</section>
+
+<!-- ══════════════════════ SLIDE 1: ANATOMY OF A PROMPT ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 01 · Anatomy" data-it="Diapositiva 01 · Anatomia" data-fr="Diapo 01 · Anatomie" data-es="Diapositiva 01 · Anatomía">Slide 01 · Anatomy</div>
+  <h2 data-en="Anatomy of a Prompt"
+      data-it="Anatomia di un Prompt"
+      data-fr="Anatomie d'un Prompt"
+      data-es="Anatomía de un Prompt">Anatomy of a Prompt</h2>
+
+  <div class="two-col" style="align-items:start;">
+    <div>
+      <div class="prompt-block" style="font-size:.68rem;">
+        <div><span class="role">SYSTEM:</span> <span class="comment"
+          data-en="You are a helpful travel planner. Be friendly and concise."
+          data-it="Sei un travel planner utile. Sii amichevole e conciso."
+          data-fr="Tu es un planificateur de voyage. Sois amical et concis."
+          data-es="Eres un planificador de viajes. Sé amable y conciso.">You are a helpful travel planner. Be friendly and concise.</span>
+          <span style="display:inline-block;background:rgba(59,130,246,.25);color:var(--accent);font-size:.5rem;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;">① Role</span></div>
+        <br>
+        <div><span class="role">USER:</span></div>
+        <div><span class="highlight"
+          data-en="[Context]" data-it="[Contesto]" data-fr="[Contexte]" data-es="[Contexto]">[Context]</span> <span
+          data-en="I'm planning a 5-day trip to Japan in April with my partner. Budget: ~€3,000 total."
+          data-it="Sto pianificando un viaggio di 5 giorni in Giappone ad aprile con il mio partner. Budget: ~€3.000 totali."
+          data-fr="Je prépare un voyage de 5 jours au Japon en avril avec mon partenaire. Budget : ~3 000 € au total."
+          data-es="Estoy planeando un viaje de 5 días a Japón en abril con mi pareja. Presupuesto: ~€3.000 en total.">I'm planning a 5-day trip to Japan in April with my partner. Budget: ~€3,000 total.</span>
+          <span style="display:inline-block;background:rgba(52,211,153,.25);color:var(--green);font-size:.5rem;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;">② Context</span></div>
+        <div style="margin-top:4px;"><span class="highlight"
+          data-en="[Task]" data-it="[Compito]" data-fr="[Tâche]" data-es="[Tarea]">[Task]</span> <span
+          data-en="Create a day-by-day itinerary with must-see places, local food spots, and transport tips."
+          data-it="Crea un itinerario giorno per giorno con luoghi imperdibili, ristoranti locali e consigli di trasporto."
+          data-fr="Crée un itinéraire jour par jour avec les incontournables, restaurants locaux et conseils transport."
+          data-es="Crea un itinerario día a día con lugares imprescindibles, restaurantes locales y consejos de transporte.">Create a day-by-day itinerary with must-see places, local food spots, and transport tips.</span>
+          <span style="display:inline-block;background:rgba(255,107,61,.25);color:var(--accent2);font-size:.5rem;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;">③ Task</span></div>
+        <div style="margin-top:4px;"><span class="highlight"
+          data-en="[Format]" data-it="[Formato]" data-fr="[Format]" data-es="[Formato]">[Format]</span> <span
+          data-en="Use a table: Day | Morning | Afternoon | Evening | Est. Cost."
+          data-it="Usa una tabella: Giorno | Mattina | Pomeriggio | Sera | Costo stimato."
+          data-fr="Utilise un tableau : Jour | Matin | Après-midi | Soir | Coût estimé."
+          data-es="Usa una tabla: Día | Mañana | Tarde | Noche | Coste estimado.">Use a table: Day | Morning | Afternoon | Evening | Est. Cost.</span>
+          <span style="display:inline-block;background:rgba(167,139,250,.25);color:var(--purple);font-size:.5rem;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;">④ Format</span></div>
+        <div style="margin-top:4px;"><span class="highlight"
+          data-en="[Constraints]" data-it="[Vincoli]" data-fr="[Contraintes]" data-es="[Restricciones]">[Constraints]</span> <span
+          data-en="Avoid tourist traps. Include at least one hidden gem per day."
+          data-it="Evita le trappole per turisti. Includi almeno una gemma nascosta al giorno."
+          data-fr="Évite les pièges à touristes. Inclus au moins un lieu caché par jour."
+          data-es="Evita trampas turísticas. Incluye al menos una joya oculta por día.">Avoid tourist traps. Include at least one hidden gem per day.</span>
+          <span style="display:inline-block;background:rgba(167,139,250,.25);color:var(--purple);font-size:.5rem;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;">④</span></div>
+      </div>
+    </div>
+
+    <div>
+      <ol class="step-list">
+        <li>
+          <span class="step-num" style="background:rgba(59,130,246,.2);color:var(--accent);">1</span>
+          <div>
+            <strong data-en="Role / System" data-it="Ruolo / Sistema" data-fr="Rôle / Système" data-es="Rol / Sistema">Role / System</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);"
+              data-en="Who is the model? Sets tone, expertise, personality."
+              data-it="Chi è il modello? Imposta tono, competenza, personalità."
+              data-fr="Qui est le modèle ? Fixe le ton, l'expertise, la personnalité."
+              data-es="¿Quién es el modelo? Establece tono, experiencia, personalidad.">Who is the model? Sets tone, expertise, personality.</div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num" style="background:rgba(52,211,153,.2);color:var(--green);">2</span>
+          <div>
+            <strong data-en="Context" data-it="Contesto" data-fr="Contexte" data-es="Contexto">Context</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);"
+              data-en="Background info: who, what, when, budget, constraints."
+              data-it="Info di contesto: chi, cosa, quando, budget, vincoli."
+              data-fr="Info de contexte : qui, quoi, quand, budget, contraintes."
+              data-es="Info de contexto: quién, qué, cuándo, presupuesto, restricciones.">Background info: who, what, when, budget, constraints.</div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num" style="background:rgba(255,107,61,.2);color:var(--accent2);">3</span>
+          <div>
+            <strong data-en="Task / Instruction" data-it="Compito / Istruzione" data-fr="Tâche / Instruction" data-es="Tarea / Instrucción">Task / Instruction</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);"
+              data-en="What do you want? Be specific and action-oriented."
+              data-it="Cosa vuoi? Sii specifico e orientato all'azione."
+              data-fr="Que voulez-vous ? Soyez précis et orienté action."
+              data-es="¿Qué quieres? Sé específico y orientado a la acción.">What do you want? Be specific and action-oriented.</div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num" style="background:rgba(167,139,250,.2);color:var(--purple);">4</span>
+          <div>
+            <strong data-en="Format & Constraints" data-it="Formato e Vincoli" data-fr="Format & Contraintes" data-es="Formato y Restricciones">Format & Constraints</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);"
+              data-en="Output shape (table, list, JSON), length, rules to follow."
+              data-it="Forma output (tabella, lista, JSON), lunghezza, regole da seguire."
+              data-fr="Forme de sortie (tableau, liste, JSON), longueur, règles."
+              data-es="Formato de salida (tabla, lista, JSON), longitud, reglas.">Output shape (table, list, JSON), length, rules to follow.</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">01 / 07</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 2: PROMPTING PATTERNS ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 02 · Patterns" data-it="Diapositiva 02 · Pattern" data-fr="Diapo 02 · Modèles" data-es="Diapositiva 02 · Patrones">Slide 02 · Patterns</div>
+  <h2 data-en="Prompting Patterns"
+      data-it="Pattern di Prompting"
+      data-fr="Modèles de Prompting"
+      data-es="Patrones de Prompting">Prompting Patterns</h2>
+
+  <div class="three-col">
+    <!-- ZERO-SHOT -->
+    <div class="model-card" style="padding:20px 18px;">
+      <div class="badge badge-det"
+        data-en="Zero-Shot" data-it="Zero-Shot" data-fr="Zero-Shot" data-es="Zero-Shot">Zero-Shot</div>
+      <p style="font-size:.75rem;margin:0 0 10px;"
+        data-en="No examples given. Direct instruction."
+        data-it="Nessun esempio fornito. Istruzione diretta."
+        data-fr="Aucun exemple. Instruction directe."
+        data-es="Sin ejemplos. Instrucción directa.">No examples given. Direct instruction.</p>
+      <div class="prompt-block" style="font-size:.6rem;padding:12px;">
+        <span class="role"
+          data-en="Classify this review as positive or negative:"
+          data-it="Classifica questa recensione come positiva o negativa:"
+          data-fr="Classifie cet avis comme positif ou négatif :"
+          data-es="Clasifica esta reseña como positiva o negativa:">Classify this review as positive or negative:</span><br>
+        "The food was amazing."
+      </div>
+      <p style="font-size:.65rem;color:var(--green);margin:8px 0 0;"
+        data-en="✓ Best for: simple, well-known tasks"
+        data-it="✓ Ideale per: task semplici e ben noti"
+        data-fr="✓ Idéal pour : tâches simples et connues"
+        data-es="✓ Ideal para: tareas simples y conocidas">✓ Best for: simple, well-known tasks</p>
+    </div>
+
+    <!-- FEW-SHOT -->
+    <div class="model-card" style="padding:20px 18px;">
+      <div class="badge badge-green"
+        data-en="Few-Shot" data-it="Few-Shot" data-fr="Few-Shot" data-es="Few-Shot">Few-Shot</div>
+      <p style="font-size:.75rem;margin:0 0 10px;"
+        data-en="Provide 2-5 examples to guide the model."
+        data-it="Fornisci 2-5 esempi per guidare il modello."
+        data-fr="Fournir 2 à 5 exemples pour guider le modèle."
+        data-es="Proporciona 2-5 ejemplos para guiar al modelo.">Provide 2-5 examples to guide the model.</p>
+      <div class="prompt-block" style="font-size:.6rem;padding:12px;">
+        "Great!" → Positive<br>
+        "Terrible." → Negative<br>
+        "OK." → Neutral<br><br>
+        <span class="role">"The food was amazing."</span> → <span class="highlight">?</span>
+      </div>
+      <p style="font-size:.65rem;color:var(--green);margin:8px 0 0;"
+        data-en="✓ Best for: custom formats, niche tasks"
+        data-it="✓ Ideale per: formati custom, task di nicchia"
+        data-fr="✓ Idéal pour : formats custom, tâches niche"
+        data-es="✓ Ideal para: formatos personalizados, tareas de nicho">✓ Best for: custom formats, niche tasks</p>
+    </div>
+
+    <!-- CHAIN OF THOUGHT -->
+    <div class="model-card" style="padding:20px 18px;">
+      <div class="badge badge-purple"
+        data-en="Chain-of-Thought" data-it="Chain-of-Thought" data-fr="Chain-of-Thought" data-es="Cadena de Pensamiento">Chain-of-Thought</div>
+      <p style="font-size:.75rem;margin:0 0 10px;"
+        data-en="Ask the model to reason step by step."
+        data-it="Chiedi al modello di ragionare passo passo."
+        data-fr="Demander au modèle de raisonner étape par étape."
+        data-es="Pide al modelo que razone paso a paso.">Ask the model to reason step by step.</p>
+      <div class="prompt-block" style="font-size:.6rem;padding:12px;">
+        <span class="role"
+          data-en="Solve this. Think step by step."
+          data-it="Risolvi. Pensa passo passo."
+          data-fr="Résous. Réfléchis étape par étape."
+          data-es="Resuelve. Piensa paso a paso.">Solve this. Think step by step.</span><br><br>
+        <span class="highlight"
+          data-en="Step 1: identify the variables…"
+          data-it="Passo 1: identifica le variabili…"
+          data-fr="Étape 1 : identifier les variables…"
+          data-es="Paso 1: identifica las variables…">Step 1: identify the variables…</span><br>
+        <span class="highlight"
+          data-en="Step 2: apply the formula…"
+          data-it="Passo 2: applica la formula…"
+          data-fr="Étape 2 : appliquer la formule…"
+          data-es="Paso 2: aplica la fórmula…">Step 2: apply the formula…</span>
+      </div>
+      <p style="font-size:.65rem;color:var(--green);margin:8px 0 0;"
+        data-en="✓ Best for: math, logic, complex reasoning"
+        data-it="✓ Ideale per: matematica, logica, ragionamento"
+        data-fr="✓ Idéal pour : maths, logique, raisonnement"
+        data-es="✓ Ideal para: matemáticas, lógica, razonamiento">✓ Best for: math, logic, complex reasoning</p>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <strong data-en="Rule of thumb:" data-it="Regola generale:" data-fr="Règle générale :" data-es="Regla general:">Rule of thumb:</strong>
+    <span data-en=" Start with zero-shot. If the output isn't right, add examples (few-shot). For reasoning tasks, always use chain-of-thought."
+          data-it=" Inizia con zero-shot. Se l'output non va, aggiungi esempi (few-shot). Per task di ragionamento, usa sempre chain-of-thought."
+          data-fr=" Commencer en zero-shot. Si le résultat ne convient pas, ajouter des exemples. Pour le raisonnement, toujours utiliser le chain-of-thought."
+          data-es=" Empieza con zero-shot. Si el resultado no es correcto, añade ejemplos. Para razonamiento, siempre usa chain-of-thought."> Start with zero-shot. If the output isn't right, add examples (few-shot). For reasoning tasks, always use chain-of-thought.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">02 / 07</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 3: ADVANCED TECHNIQUES ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 03 · Advanced" data-it="Diapositiva 03 · Avanzato" data-fr="Diapo 03 · Avancé" data-es="Diapositiva 03 · Avanzado">Slide 03 · Advanced</div>
+  <h2 data-en="Advanced Techniques"
+      data-it="Tecniche Avanzate"
+      data-fr="Techniques Avancées"
+      data-es="Técnicas Avanzadas">Advanced Techniques</h2>
+
+  <div class="param-grid">
+    <div class="param-card">
+      <div class="param-name" data-en="System Prompts" data-it="System Prompts" data-fr="Prompts Système" data-es="Prompts de Sistema">System Prompts</div>
+      <div class="param-desc"
+        data-en="Hidden instructions that define the model's persona, rules, and guardrails. Users never see them."
+        data-it="Istruzioni nascoste che definiscono persona, regole e limiti del modello. L'utente non le vede."
+        data-fr="Instructions cachées qui définissent la persona, les règles et les garde-fous. Invisibles pour l'utilisateur."
+        data-es="Instrucciones ocultas que definen la persona, reglas y límites del modelo. El usuario no las ve.">Hidden instructions that define the model's persona, rules, and guardrails. Users never see them.</div>
+      <div class="prompt-block" style="font-size:.58rem;padding:10px;">
+        <span class="role">SYSTEM:</span> You are a helpful assistant for Acme Corp. Never discuss competitors. Always respond in JSON format.
+      </div>
+    </div>
+
+    <div class="param-card">
+      <div class="param-name" data-en="Role Playing" data-it="Gioco di Ruolo" data-fr="Jeu de Rôle" data-es="Juego de Roles">Role Playing</div>
+      <div class="param-desc"
+        data-en="Assign a specific expert role to improve output quality. The model adapts vocabulary, depth, and style."
+        data-it="Assegna un ruolo esperto specifico per migliorare la qualità. Il modello adatta vocabolario, profondità e stile."
+        data-fr="Attribuer un rôle d'expert pour améliorer la qualité. Le modèle adapte vocabulaire et style."
+        data-es="Asigna un rol de experto para mejorar la calidad. El modelo adapta vocabulario, profundidad y estilo.">Assign a specific expert role to improve output quality. The model adapts vocabulary, depth, and style.</div>
+      <div class="prompt-block" style="font-size:.58rem;padding:10px;">
+        <span class="role"
+          data-en="Act as a cybersecurity auditor with 15 years of experience…"
+          data-it="Agisci come un auditor di cybersecurity con 15 anni di esperienza…"
+          data-fr="Agis comme un auditeur cybersécurité avec 15 ans d'expérience…"
+          data-es="Actúa como un auditor de ciberseguridad con 15 años de experiencia…">Act as a cybersecurity auditor with 15 years of experience…</span>
+      </div>
+    </div>
+
+    <div class="param-card">
+      <div class="param-name" data-en="Output Formatting" data-it="Formattazione Output" data-fr="Formatage de Sortie" data-es="Formato de Salida">Output Formatting</div>
+      <div class="param-desc"
+        data-en="Specify exactly what structure you want: JSON, Markdown table, bullet points, YAML, XML…"
+        data-it="Specifica esattamente la struttura: JSON, tabella Markdown, elenco puntato, YAML, XML…"
+        data-fr="Spécifier la structure exacte : JSON, tableau Markdown, puces, YAML, XML…"
+        data-es="Especifica la estructura exacta: JSON, tabla Markdown, viñetas, YAML, XML…">Specify exactly what structure you want: JSON, Markdown table, bullet points, YAML, XML…</div>
+      <div class="prompt-block" style="font-size:.58rem;padding:10px;">
+        <span class="highlight"
+          data-en="Return a JSON object with keys: title, summary, score (1-10), tags[]"
+          data-it="Restituisci un oggetto JSON con chiavi: title, summary, score (1-10), tags[]"
+          data-fr="Retourne un objet JSON avec : title, summary, score (1-10), tags[]"
+          data-es="Devuelve un objeto JSON con: title, summary, score (1-10), tags[]">Return a JSON object with keys: title, summary, score (1-10), tags[]</span>
+      </div>
+    </div>
+
+    <div class="param-card">
+      <div class="param-name" data-en="Meta-Prompting" data-it="Meta-Prompting" data-fr="Méta-Prompting" data-es="Meta-Prompting">Meta-Prompting</div>
+      <div class="param-desc"
+        data-en="Ask the model to improve its own prompt. Iterate for better results."
+        data-it="Chiedi al modello di migliorare il proprio prompt. Itera per risultati migliori."
+        data-fr="Demander au modèle d'améliorer son propre prompt. Itérer pour de meilleurs résultats."
+        data-es="Pide al modelo que mejore su propio prompt. Itera para mejores resultados.">Ask the model to improve its own prompt. Iterate for better results.</div>
+      <div class="prompt-block" style="font-size:.58rem;padding:10px;">
+        <span class="role"
+          data-en="Rewrite this prompt to be clearer, more specific, and get better results…"
+          data-it="Riscrivi questo prompt per essere più chiaro, specifico e ottenere risultati migliori…"
+          data-fr="Réécris ce prompt pour être plus clair, spécifique et obtenir de meilleurs résultats…"
+          data-es="Reescribe este prompt para ser más claro, específico y obtener mejores resultados…">Rewrite this prompt to be clearer, more specific, and get better results…</span>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">03 / 07</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 4: BEST PRACTICES ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 04 · Best Practices" data-it="Diapositiva 04 · Best Practice" data-fr="Diapo 04 · Bonnes Pratiques" data-es="Diapositiva 04 · Mejores Prácticas">Slide 04 · Best Practices</div>
+  <h2 data-en="Do's & Don'ts"
+      data-it="Da Fare e Da Evitare"
+      data-fr="À Faire & À Éviter"
+      data-es="Qué Hacer y Qué Evitar">Do's & Don'ts</h2>
+
+  <div class="two-col">
+    <div class="model-card" style="border-left:3px solid var(--green);">
+      <div class="badge badge-green"
+        data-en="✓ Do" data-it="✓ Fai" data-fr="✓ Faire" data-es="✓ Hacer">✓ Do</div>
+      <ul class="example-list">
+        <li style="border-color:rgba(14,122,80,.15);"
+          data-en="Be specific and explicit"
+          data-it="Sii specifico ed esplicito"
+          data-fr="Soyez spécifique et explicite"
+          data-es="Sé específico y explícito">Be specific and explicit</li>
+        <li style="border-color:rgba(14,122,80,.15);"
+          data-en="Provide context and examples"
+          data-it="Fornisci contesto ed esempi"
+          data-fr="Fournir contexte et exemples"
+          data-es="Proporciona contexto y ejemplos">Provide context and examples</li>
+        <li style="border-color:rgba(14,122,80,.15);"
+          data-en="Specify output format (JSON, table…)"
+          data-it="Specifica il formato output (JSON, tabella…)"
+          data-fr="Spécifier le format (JSON, tableau…)"
+          data-es="Especifica el formato (JSON, tabla…)">Specify output format (JSON, table…)</li>
+        <li style="border-color:rgba(14,122,80,.15);"
+          data-en="Break complex tasks into steps"
+          data-it="Dividi i task complessi in passi"
+          data-fr="Découper les tâches complexes en étapes"
+          data-es="Divide tareas complejas en pasos">Break complex tasks into steps</li>
+        <li style="border-color:rgba(14,122,80,.15);"
+          data-en="Iterate and refine your prompt"
+          data-it="Itera e raffina il tuo prompt"
+          data-fr="Itérer et affiner votre prompt"
+          data-es="Itera y refina tu prompt">Iterate and refine your prompt</li>
+      </ul>
+    </div>
+
+    <div class="model-card" style="border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob"
+        data-en="✗ Don't" data-it="✗ Non fare" data-fr="✗ Ne pas faire" data-es="✗ No hacer">✗ Don't</div>
+      <ul class="example-list">
+        <li style="border-color:rgba(255,75,31,.15);"
+          data-en="Use vague instructions ('do something good')"
+          data-it="Usare istruzioni vaghe ('fai qualcosa di buono')"
+          data-fr="Utiliser des instructions vagues ('fais quelque chose de bien')"
+          data-es="Usar instrucciones vagas ('haz algo bueno')">Use vague instructions ("do something good")</li>
+        <li style="border-color:rgba(255,75,31,.15);"
+          data-en="Send multiple unrelated tasks at once"
+          data-it="Inviare più task non correlati insieme"
+          data-fr="Envoyer plusieurs tâches non liées en même temps"
+          data-es="Enviar múltiples tareas no relacionadas a la vez">Send multiple unrelated tasks at once</li>
+        <li style="border-color:rgba(255,75,31,.15);"
+          data-en="Assume the model remembers past chats"
+          data-it="Presumere che il modello ricordi chat passate"
+          data-fr="Supposer que le modèle se souvient des anciens chats"
+          data-es="Asumir que el modelo recuerda chats anteriores">Assume the model remembers past chats</li>
+        <li style="border-color:rgba(255,75,31,.15);"
+          data-en="Trust output blindly (always verify!)"
+          data-it="Fidarsi ciecamente dell'output (verificare sempre!)"
+          data-fr="Faire confiance aveuglément (toujours vérifier !)"
+          data-es="Confiar ciegamente en el output (¡siempre verificar!)">Trust output blindly (always verify!)</li>
+        <li style="border-color:rgba(255,75,31,.15);"
+          data-en="Share sensitive data in prompts"
+          data-it="Condividere dati sensibili nei prompt"
+          data-fr="Partager des données sensibles dans les prompts"
+          data-es="Compartir datos sensibles en los prompts">Share sensitive data in prompts</li>
+      </ul>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">04 / 07</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 5: PRACTICAL EXAMPLES ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 05 · In Practice" data-it="Diapositiva 05 · In Pratica" data-fr="Diapo 05 · En Pratique" data-es="Diapositiva 05 · En Práctica">Slide 05 · In Practice</div>
+  <h2 data-en="Real-World Examples"
+      data-it="Esempi Reali"
+      data-fr="Exemples Concrets"
+      data-es="Ejemplos Reales">Real-World Examples</h2>
+
+  <div class="three-col">
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-det"
+        data-en="For Managers" data-it="Per Manager" data-fr="Pour Managers" data-es="Para Managers">For Managers</div>
+      <div class="prompt-block" style="font-size:.64rem;padding:10px;">
+        <span class="role"
+          data-en="Summarize this 20-page report in 5 bullet points. Focus on budget impact and key risks."
+          data-it="Riassumi questo report di 20 pagine in 5 punti. Focus su impatto budget e rischi."
+          data-fr="Résume ce rapport de 20 pages en 5 points. Accent sur le budget et les risques."
+          data-es="Resume este informe de 20 páginas en 5 puntos. Enfoque en presupuesto y riesgos.">Summarize this 20-page report in 5 bullet points. Focus on budget impact and key risks.</span>
+      </div>
+      <p style="font-size:.72rem;color:var(--ink-mute);margin:8px 0 0;"
+        data-en="→ Zero-shot, format constraint"
+        data-it="→ Zero-shot, vincolo di formato"
+        data-fr="→ Zero-shot, contrainte de format"
+        data-es="→ Zero-shot, restricción de formato">→ Zero-shot, format constraint</p>
+    </div>
+
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-green"
+        data-en="For Architects" data-it="Per Architetti" data-fr="Pour Architectes" data-es="Para Arquitectos">For Architects</div>
+      <div class="prompt-block" style="font-size:.64rem;padding:10px;">
+        <span class="role"
+          data-en="Act as a cloud architect. Compare 3 approaches for real-time order processing: Kafka vs SQS vs EventBridge. Return a Markdown comparison table."
+          data-it="Agisci come cloud architect. Confronta 3 approcci per order processing real-time: Kafka vs SQS vs EventBridge. Restituisci tabella Markdown."
+          data-fr="Agis comme architecte cloud. Compare 3 approches pour le traitement d'ordres en temps réel. Retourne un tableau Markdown."
+          data-es="Actúa como arquitecto cloud. Compara 3 enfoques para procesamiento de pedidos en tiempo real. Devuelve tabla Markdown.">Act as a cloud architect. Compare 3 approaches for real-time order processing: Kafka vs SQS vs EventBridge. Markdown table.</span>
+      </div>
+      <p style="font-size:.72rem;color:var(--ink-mute);margin:8px 0 0;"
+        data-en="→ Role + format + specificity"
+        data-it="→ Ruolo + formato + specificità"
+        data-fr="→ Rôle + format + spécificité"
+        data-es="→ Rol + formato + especificidad">→ Role + format + specificity</p>
+    </div>
+
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-purple"
+        data-en="For Developers" data-it="Per Sviluppatori" data-fr="Pour Développeurs" data-es="Para Desarrolladores">For Developers</div>
+      <div class="prompt-block" style="font-size:.64rem;padding:10px;">
+        <span class="role"
+          data-en="Review this Python function for: 1) bugs 2) performance 3) security. For each issue, show the fix. Think step by step."
+          data-it="Revisiona questa funzione Python per: 1) bug 2) performance 3) sicurezza. Per ogni problema, mostra la fix. Pensa passo passo."
+          data-fr="Revois cette fonction Python : 1) bugs 2) performance 3) sécurité. Pour chaque problème, montre la correction. Étape par étape."
+          data-es="Revisa esta función Python: 1) bugs 2) rendimiento 3) seguridad. Para cada problema, muestra la corrección. Paso a paso.">Review this Python function for: 1) bugs 2) performance 3) security. Show fixes. Think step by step.</span>
+      </div>
+      <p style="font-size:.72rem;color:var(--ink-mute);margin:8px 0 0;"
+        data-en="→ CoT + structured output"
+        data-it="→ CoT + output strutturato"
+        data-fr="→ CoT + sortie structurée"
+        data-es="→ CoT + salida estructurada">→ CoT + structured output</p>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <strong data-en="Remember:" data-it="Ricorda:" data-fr="Rappel :" data-es="Recuerda:">Remember:</strong>
+    <span data-en=" Prompt engineering is iterative. Your first prompt is never your best. Refine, test, and improve progressively."
+          data-it=" Il prompt engineering è iterativo. Il primo prompt non è mai il migliore. Raffina, testa e migliora progressivamente."
+          data-fr=" L'ingénierie de prompts est itérative. Le premier prompt n'est jamais le meilleur. Affiner, tester, améliorer."
+          data-es=" La ingeniería de prompts es iterativa. Tu primer prompt nunca es el mejor. Refina, prueba y mejora progresivamente."> Prompt engineering is iterative. Your first prompt is never your best. Refine, test, and improve.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">05 / 07</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 6: INTERACTIVE PARAMETER PLAYGROUND ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 06 · Interactive"
+    data-it="Diapositiva 06 · Interattivo"
+    data-fr="Diapo 06 · Interactif"
+    data-es="Diapositiva 06 · Interactivo">Slide 06 · Interactive</div>
+  <h2 data-en="Parameter Playground"
+      data-it="Playground Parametri"
+      data-fr="Terrain de Jeu des Paramètres"
+      data-es="Playground de Parámetros">Parameter Playground</h2>
+
+  <div class="two-col" style="gap:32px;align-items:start;">
+    <!-- LEFT: Controls -->
+    <div>
+      <div class="model-card" style="padding:20px 24px;">
+        <div class="badge badge-det"
+          data-en="Adjust Parameters" data-it="Regola i Parametri" data-fr="Ajuster les Paramètres" data-es="Ajustar Parámetros">Adjust Parameters</div>
+
+        <div style="margin-bottom:18px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+            <span style="font-family:var(--mono);font-size:.7rem;color:var(--accent);">Temperature</span>
+            <span id="tempValue" style="font-family:var(--mono);font-size:.7rem;color:var(--ink);">0.7</span>
+          </div>
+          <p style="font-size:.58rem;color:var(--ink-mute);margin:0 0 6px;line-height:1.4;"
+            data-en="Controls randomness: at 0 the model always picks the most likely token (deterministic); higher values let less probable tokens through, producing more creative but less predictable output."
+            data-it="Controlla la casualità: a 0 il modello sceglie sempre il token più probabile (deterministico); valori più alti lasciano passare token meno probabili, producendo output più creativo ma meno prevedibile."
+            data-fr="Contrôle le hasard : à 0 le modèle choisit toujours le token le plus probable (déterministe) ; des valeurs plus élevées laissent passer des tokens moins probables, produisant un résultat plus créatif mais moins prévisible."
+            data-es="Controla la aleatoriedad: en 0 el modelo siempre elige el token más probable (determinista); valores más altos permiten tokens menos probables, produciendo salidas más creativas pero menos predecibles.">Controls randomness: at 0 the model always picks the most likely token (deterministic); higher values let less probable tokens through, producing more creative but less predictable output.</p>
+          <input type="range" id="tempSlider" min="0" max="20" value="7" style="width:100%;accent-color:var(--accent);"
+            oninput="updateParamDemo()">
+          <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.55rem;color:var(--ink-mute);">
+            <span>0.0 Precise</span><span>1.0 Balanced</span><span>2.0 Creative</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+            <span style="font-family:var(--mono);font-size:.7rem;color:var(--green);">Top-P</span>
+            <span id="toppValue" style="font-family:var(--mono);font-size:.7rem;color:var(--ink);">0.9</span>
+          </div>
+          <p style="font-size:.58rem;color:var(--ink-mute);margin:0 0 6px;line-height:1.4;"
+            data-en="Nucleus sampling: only tokens whose cumulative probability reaches P are considered. A low value (e.g. 0.1) restricts output to the safest words; 1.0 considers the full vocabulary."
+            data-it="Campionamento nucleus: vengono considerati solo i token la cui probabilità cumulativa raggiunge P. Un valore basso (es. 0.1) limita l'output alle parole più sicure; 1.0 considera l'intero vocabolario."
+            data-fr="Échantillonnage nucleus : seuls les tokens dont la probabilité cumulée atteint P sont considérés. Une valeur basse (ex. 0.1) restreint la sortie aux mots les plus sûrs ; 1.0 considère tout le vocabulaire."
+            data-es="Muestreo nucleus: solo se consideran los tokens cuya probabilidad acumulada alcanza P. Un valor bajo (ej. 0.1) restringe la salida a las palabras más seguras; 1.0 considera todo el vocabulario.">Nucleus sampling: only tokens whose cumulative probability reaches P are considered. A low value (e.g. 0.1) restricts output to the safest words; 1.0 considers the full vocabulary.</p>
+          <input type="range" id="toppSlider" min="1" max="10" value="9" style="width:100%;accent-color:var(--green);"
+            oninput="updateParamDemo()">
+          <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.55rem;color:var(--ink-mute);">
+            <span>0.1 Narrow</span><span>0.5 Balanced</span><span>1.0 Wide</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="model-card" style="padding:14px 20px;margin-top:12px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;"
+          data-en="Prompt" data-it="Prompt" data-fr="Prompt" data-es="Prompt">Prompt</div>
+        <div class="prompt-block" style="font-size:.62rem;padding:10px;">
+          <span class="role">USER:</span> Write a one-sentence description of the ocean.
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Output preview -->
+    <div>
+      <div class="model-card" style="padding:20px 24px;min-height:280px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div class="badge badge-green" style="margin-bottom:0;"
+            data-en="Model Output" data-it="Output del Modello" data-fr="Sortie du Modèle" data-es="Salida del Modelo">Model Output</div>
+          <span id="paramBehavior" style="font-family:var(--mono);font-size:.6rem;color:var(--accent);"></span>
+        </div>
+        <div id="paramOutput" style="font-size:.78rem;color:var(--ink-mid);line-height:1.7;min-height:80px;"></div>
+
+        <div style="margin-top:16px;border-top:1px solid var(--rule);padding-top:12px;">
+          <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;"
+            data-en="Token probabilities" data-it="Probabilità dei token" data-fr="Probabilités des tokens" data-es="Probabilidades de tokens">Token probabilities</div>
+          <div id="paramBars" style="display:flex;gap:6px;align-items:flex-end;height:60px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment">
+    <strong data-en="Experiment:" data-it="Esperimento:" data-fr="Expérience :" data-es="Experimento:">Experiment:</strong>
+    <span data-en=" Move the Temperature slider from 0 to 2 and watch how the output changes from precise and repetitive to wildly creative."
+          data-it=" Muovi lo slider Temperature da 0 a 2 e osserva come l'output cambia da preciso e ripetitivo a selvaggiamente creativo."
+          data-fr=" Déplacez le curseur Temperature de 0 à 2 et observez comment la sortie passe de précise à sauvagement créative."
+          data-es=" Mueve el slider Temperature de 0 a 2 y observa cómo la salida cambia de precisa y repetitiva a salvajemente creativa."> Move the Temperature slider from 0 to 2 and watch how the output changes from precise and repetitive to wildly creative.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">06 / 07</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 7: PRACTICAL EXERCISE ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 07 · Exercise" data-it="Diapositiva 07 · Esercizio" data-fr="Diapo 07 · Exercice" data-es="Diapositiva 07 · Ejercicio">Slide 07 · Exercise</div>
+  <h2 data-en="🛠️ Hands-On Exercise"
+      data-it="🛠️ Esercizio Pratico"
+      data-fr="🛠️ Exercice Pratique"
+      data-es="🛠️ Ejercicio Práctico">🛠️ Hands-On Exercise</h2>
+
+  <div class="two-col">
+    <div>
+      <div class="badge badge-det" style="margin-bottom:10px;"
+        data-en="Challenge: Prompt Refinement" data-it="Sfida: Affinamento Prompt" data-fr="Défi : Affinage de Prompt" data-es="Desafío: Refinamiento de Prompt">Challenge: Prompt Refinement</div>
+      <p style="font-size:.75rem;margin:0 0 12px;"
+        data-en="Start with the naive prompt below. Iteratively improve it using patterns from this chapter until the output quality is excellent."
+        data-it="Parti dal prompt ingenuo sotto. Miglioralo iterativamente usando i pattern di questo capitolo fino a ottenere una qualità eccellente."
+        data-fr="Partez du prompt naïf ci-dessous. Améliorez-le itérativement avec les patterns de ce chapitre jusqu'à une qualité excellente."
+        data-es="Comienza con el prompt ingenuo abajo. Mejóralo iterativamente usando los patrones de este capítulo hasta lograr una calidad excelente.">Start with the naive prompt below. Iteratively improve it using patterns from this chapter until the output quality is excellent.</p>
+
+      <div style="background:rgba(255,107,61,.08);border:1px solid rgba(255,107,61,.2);border-radius:8px;padding:12px;margin-bottom:10px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);margin-bottom:4px;"
+          data-en="❌ NAIVE PROMPT" data-it="❌ PROMPT INGENUO" data-fr="❌ PROMPT NAÏF" data-es="❌ PROMPT INGENUO">❌ NAIVE PROMPT</div>
+        <code style="font-size:.7rem;color:var(--ink);"
+          data-en="&quot;Write me an email about a project delay&quot;"
+          data-it="&quot;Scrivimi un'email su un ritardo del progetto&quot;"
+          data-fr="&quot;Écris-moi un email sur un retard de projet&quot;"
+          data-es="&quot;Escríbeme un email sobre un retraso del proyecto&quot;">&quot;Write me an email about a project delay&quot;</code>
+      </div>
+
+      <div style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:12px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--green);margin-bottom:4px;"
+          data-en="✅ YOUR GOAL" data-it="✅ IL TUO OBIETTIVO" data-fr="✅ VOTRE OBJECTIF" data-es="✅ TU OBJETIVO">✅ YOUR GOAL</div>
+        <code style="font-size:.7rem;color:var(--ink);"
+          data-en="Produce a professional, empathetic email that a PM could actually send — with specific details and next steps."
+          data-it="Produrre un'email professionale ed empatica che un PM potrebbe davvero inviare — con dettagli specifici e prossimi passi."
+          data-fr="Produire un email professionnel et empathique qu'un PM pourrait réellement envoyer — avec détails spécifiques et prochaines étapes."
+          data-es="Producir un email profesional y empático que un PM podría realmente enviar — con detalles específicos y próximos pasos.">Produce a professional, empathetic email that a PM could actually send — with specific details and next steps.</code>
+      </div>
+    </div>
+
+    <div>
+      <div class="badge badge-green" style="margin-bottom:10px;"
+        data-en="⚡ Steps to Follow" data-it="⚡ Passi da Seguire" data-fr="⚡ Étapes à Suivre" data-es="⚡ Pasos a Seguir">⚡ Steps to Follow</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:rgba(59,130,246,.06);border-left:3px solid var(--accent);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="<strong>1.</strong> Add a <strong>Role</strong> — \"You are a senior project manager…\""
+          data-it="<strong>1.</strong> Aggiungi un <strong>Ruolo</strong> — \"Sei un senior project manager…\""
+          data-fr="<strong>1.</strong> Ajoutez un <strong>Rôle</strong> — \"Vous êtes un chef de projet senior…\""
+          data-es="<strong>1.</strong> Agrega un <strong>Rol</strong> — \"Eres un senior project manager…\""><strong>1.</strong> Add a <strong>Role</strong> — "You are a senior project manager…"</div>
+        <div style="background:rgba(59,130,246,.06);border-left:3px solid var(--accent);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="<strong>2.</strong> Add <strong>Context</strong> — project name, 2-week delay, reason, stakeholders"
+          data-it="<strong>2.</strong> Aggiungi <strong>Contesto</strong> — nome progetto, ritardo 2 settimane, motivo, stakeholder"
+          data-fr="<strong>2.</strong> Ajoutez du <strong>Contexte</strong> — nom du projet, retard de 2 semaines, raison, parties prenantes"
+          data-es="<strong>2.</strong> Agrega <strong>Contexto</strong> — nombre del proyecto, retraso de 2 semanas, razón, stakeholders"><strong>2.</strong> Add <strong>Context</strong> — project name, 2-week delay, reason, stakeholders</div>
+        <div style="background:rgba(59,130,246,.06);border-left:3px solid var(--accent);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="<strong>3.</strong> Specify <strong>Format</strong> — tone, length, structure (greeting, body, next steps, closing)"
+          data-it="<strong>3.</strong> Specifica <strong>Formato</strong> — tono, lunghezza, struttura"
+          data-fr="<strong>3.</strong> Spécifiez le <strong>Format</strong> — ton, longueur, structure"
+          data-es="<strong>3.</strong> Especifica <strong>Formato</strong> — tono, longitud, estructura"><strong>3.</strong> Specify <strong>Format</strong> — tone, length, structure (greeting, body, next steps, closing)</div>
+        <div style="background:rgba(59,130,246,.06);border-left:3px solid var(--accent);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="<strong>4.</strong> Add a <strong>Few-shot example</strong> of a good delay email"
+          data-it="<strong>4.</strong> Aggiungi un <strong>Esempio few-shot</strong> di una buona email di ritardo"
+          data-fr="<strong>4.</strong> Ajoutez un <strong>Exemple few-shot</strong> d'un bon email de retard"
+          data-es="<strong>4.</strong> Agrega un <strong>Ejemplo few-shot</strong> de un buen email de retraso"><strong>4.</strong> Add a <strong>Few-shot example</strong> of a good delay email</div>
+        <div style="background:rgba(59,130,246,.06);border-left:3px solid var(--accent);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="<strong>5.</strong> Use <strong>Chain-of-Thought</strong> — \"Think step by step about what the recipient needs to know\""
+          data-it="<strong>5.</strong> Usa <strong>Chain-of-Thought</strong> — \"Pensa passo passo a cosa il destinatario deve sapere\""
+          data-fr="<strong>5.</strong> Utilisez <strong>Chain-of-Thought</strong> — \"Réfléchissez étape par étape à ce que le destinataire doit savoir\""
+          data-es="<strong>5.</strong> Usa <strong>Chain-of-Thought</strong> — \"Piensa paso a paso qué necesita saber el destinatario\""><strong>5.</strong> Use <strong>Chain-of-Thought</strong> — "Think step by step about what the recipient needs to know"</div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span> <span class="slide-tag">07 / 07</span></div>
+</section>
+
+<!-- ══════════════════════ CHAPTER 2 SUMMARY ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="Chapter 2 · Summary" data-it="Capitolo 2 · Riepilogo" data-fr="Chapitre 2 · Résumé" data-es="Capítulo 2 · Resumen">Chapter 2 · Summary</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Takeaways" data-it="Punti Chiave" data-fr="Points Clés" data-es="Puntos Clave">Key Takeaways</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent);">
+      <div class="badge badge-det" style="margin-bottom:8px;" data-en="The 4-part anatomy" data-it="L'anatomia in 4 parti" data-fr="L'anatomie en 4 parties" data-es="La anatomía de 4 partes">The 4-part anatomy</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Every great prompt has: Role (who is the model?), Context (what's the situation?), Task (what do you want?), Format (how should it respond?). Miss any one and quality drops." data-it="Ogni grande prompt ha: Ruolo (chi è il modello?), Contesto (qual è la situazione?), Compito (cosa vuoi?), Formato (come dovrebbe rispondere?). Mancarne uno e la qualità cala." data-fr="Chaque bon prompt comporte : Rôle (qui est le modèle ?), Contexte (quelle est la situation ?), Tâche (que voulez-vous ?), Format (comment doit-il répondre ?). En omettre un et la qualité chute." data-es="Todo buen prompt tiene: Rol (¿quién es el modelo?), Contexto (¿cuál es la situación?), Tarea (¿qué quieres?), Formato (¿cómo debe responder?). Omite uno y la calidad baja.">Every great prompt has: Role, Context, Task, Format. Miss any one and quality drops.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--green);">
+      <div class="badge badge-green" style="margin-bottom:8px;" data-en="Start simple, add complexity" data-it="Inizia semplice, aggiungi complessità" data-fr="Commencer simple, ajouter la complexité" data-es="Empieza simple, añade complejidad">Start simple, add complexity</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Zero-shot first. If the output isn't right, add 2-5 examples (few-shot). For reasoning tasks, ask the model to 'think step by step' (chain-of-thought). Each technique has its use case." data-it="Prima zero-shot. Se l'output non va, aggiungi 2-5 esempi (few-shot). Per i task di ragionamento, chiedi al modello di 'pensare passo passo' (chain-of-thought). Ogni tecnica ha il suo caso d'uso." data-fr="D'abord zero-shot. Si le résultat ne convient pas, ajouter 2-5 exemples (few-shot). Pour les tâches de raisonnement, demander au modèle de 'penser étape par étape' (chain-of-thought)." data-es="Primero zero-shot. Si la salida no es correcta, añade 2-5 ejemplos (few-shot). Para tareas de razonamiento, pide al modelo que 'piense paso a paso' (chain-of-thought).">Zero-shot → few-shot → chain-of-thought. Each technique has its use case.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--purple);">
+      <div class="badge badge-purple" style="margin-bottom:8px;" data-en="System prompts are invisible power" data-it="I system prompt sono potere invisibile" data-fr="Les prompts système sont un pouvoir invisible" data-es="Los prompts de sistema son poder invisible">System prompts are invisible power</div>
+      <p style="font-size:.72rem;margin:0;" data-en="System prompts define the model's persona, rules, and guardrails — users never see them. They are your primary lever for reliable, consistent AI behaviour in production applications." data-it="I system prompt definiscono la persona, le regole e i guardrail del modello — gli utenti non li vedono. Sono il tuo principale leva per un comportamento AI affidabile e coerente nelle applicazioni di produzione." data-fr="Les prompts système définissent la persona, les règles et les garde-fous du modèle — les utilisateurs ne les voient pas. C'est votre principal levier pour un comportement IA fiable et cohérent." data-es="Los prompts de sistema definen la persona, las reglas y los guardrails del modelo — los usuarios nunca los ven. Son tu principal palanca para un comportamiento IA confiable y consistente.">System prompts define persona, rules, guardrails — invisible to users, essential in production.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob" style="margin-bottom:8px;" data-en="Prompting is iterative" data-it="Il prompting è iterativo" data-fr="Le prompting est itératif" data-es="El prompting es iterativo">Prompting is iterative</div>
+      <p style="font-size:.72rem;margin:0;" data-en="Your first prompt is never your best. Write → test → analyse the failure mode → refine. The best prompt engineers treat prompts the same way developers treat code: version them, test them, improve them." data-it="Il tuo primo prompt non è mai il migliore. Scrivi → testa → analizza il fallimento → raffina. I migliori prompt engineer trattano i prompt come gli sviluppatori trattano il codice: versionali, testali, migliorali." data-fr="Votre premier prompt n'est jamais le meilleur. Écrire → tester → analyser le mode d'échec → affiner. Les meilleurs prompt engineers traitent les prompts comme du code : les versionner, les tester, les améliorer." data-es="Tu primer prompt nunca es el mejor. Escribe → prueba → analiza el modo de fallo → refina. Los mejores prompt engineers tratan los prompts como código: versionarlos, probarlos, mejorarlos.">Your first prompt is never your best. Iterate: write → test → analyse → refine.</p>
+    </div>
+  </div>
+  <div class="key-insight" style="margin-top:14px;">
+    <strong data-en="Next up:" data-it="Prossimamente:" data-fr="Ensuite :" data-es="A continuación:">Next up:</strong>
+    <span data-en=" You can prompt fluently — Chapter 3 shows how to use that skill to supercharge your development workflow." data-it=" Sai fare il prompt con fluidità — il Capitolo 3 mostra come usare questa abilità per potenziare il tuo flusso di sviluppo." data-fr=" Vous maîtrisez le prompting — le Chapitre 3 montre comment utiliser cette compétence pour booster votre flux de développement." data-es=" Puedes hacer prompting con fluidez — el Capítulo 3 muestra cómo usar esa habilidad para potenciar tu flujo de desarrollo."> You can prompt fluently — Chapter 3 shows how to use that skill to supercharge your development workflow.</span>
+  </div>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span></div>
+</section>
+
+<!-- ══════════════════════ REFERENCES ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="References" data-it="Riferimenti" data-fr="Références" data-es="Referencias">References</div>
+  <div class="rule"></div>
+  <h2 data-en="Sources & Further Reading" data-it="Fonti e Approfondimenti" data-fr="Sources & Lectures" data-es="Fuentes y Lecturas">Sources & Further Reading</h2>
+  <ul class="ref-list">
+    <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Anthropic — Prompt Engineering Guide</a></li>
+    <li><a href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank">OpenAI — Prompt Engineering Guide</a></li>
+    <li><a href="https://www.promptingguide.ai/" target="_blank">Prompting Guide (DAIR.AI)</a></li>
+    <li>Wei et al., <a href="https://arxiv.org/abs/2201.11903" target="_blank">"Chain-of-Thought Prompting"</a>, 2022</li>
+    <li>Brown et al., <a href="https://arxiv.org/abs/2005.14165" target="_blank">"Language Models are Few-Shot Learners"</a>, 2020</li>
+    <li><a href="https://learnprompting.org/" target="_blank">Learn Prompting — Free Course</a></li>
+  </ul>
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 2 · Prompt Engineering</span></div>
+</section>
+

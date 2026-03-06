@@ -1,0 +1,44 @@
+#!/bin/sh
+set -eu
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+VERSION_FILE="$REPO_ROOT/js/version.js"
+
+update_version() {
+  if [ ! -f "$VERSION_FILE" ]; then
+    echo "pre-commit: js/version.js not found, skipping version update"
+    return
+  fi
+
+  MONTH_YEAR=$(date +"%B %Y")
+
+  sed -i.bak "s/updated: \"[^\"]*\"/updated: \"$MONTH_YEAR\"/" "$VERSION_FILE"
+  sed -i.bak "s/updated: '[^']*'/updated: '$MONTH_YEAR'/" "$VERSION_FILE"
+  rm -f "${VERSION_FILE}.bak"
+
+  git add "$VERSION_FILE"
+  echo "pre-commit: js/version.js updated -> $MONTH_YEAR"
+}
+
+compile_index() {
+  if [ ! -f "$REPO_ROOT/package.json" ]; then
+    echo "pre-commit: package.json not found, skipping slide compile"
+    return
+  fi
+
+  if [ ! -d "$REPO_ROOT/node_modules" ]; then
+    echo "pre-commit: dependencies are missing. Run npm install before committing." >&2
+    exit 1
+  fi
+
+  echo "pre-commit: compiling slide partials -> index.html"
+  (
+    cd "$REPO_ROOT"
+    npm run --silent build:index
+  )
+
+  git add "$REPO_ROOT/index.html"
+}
+
+update_version
+compile_index

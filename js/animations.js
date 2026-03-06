@@ -10,13 +10,13 @@ function animTokenPrediction(containerId) {
   const el = document.getElementById(containerId);
   if (!el) return;
 
-  const words = ['The', 'capital', 'of', 'France', 'is'];
+  const words = ['The', 'cat', 'sat', 'on', 'the'];
   const predictions = [
-    { word: 'Paris',  pct: 92, color: 'var(--accent)' },
-    { word: 'Lyon',   pct: 4,  color: 'rgba(27,94,255,.4)' },
-    { word: 'Marseille', pct: 2, color: 'rgba(27,94,255,.25)' },
-    { word: 'a',      pct: 1,  color: 'rgba(27,94,255,.15)' },
-    { word: 'the',    pct: 1,  color: 'rgba(27,94,255,.10)' },
+    { word: 'mat',   pct: 40, color: 'var(--accent)' },
+    { word: 'floor', pct: 28, color: 'rgba(27,94,255,.4)' },
+    { word: 'chair', pct: 15, color: 'rgba(27,94,255,.25)' },
+    { word: 'sofa',  pct: 9,  color: 'rgba(27,94,255,.15)' },
+    { word: 'rug',   pct: 8,  color: 'rgba(27,94,255,.10)' },
   ];
 
   // Build DOM

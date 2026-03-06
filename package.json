@@ -1,0 +1,14 @@
+{
+  "name": "ai-slides",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build:index": "node scripts/build-slides.mjs compile",
+    "check:index": "node scripts/build-slides.mjs check",
+    "bootstrap:slides": "node scripts/build-slides.mjs bootstrap",
+    "prepare": "node scripts/setup-git-hooks.mjs"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}
