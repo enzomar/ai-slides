@@ -98,10 +98,13 @@ function initSlides(opts) {
   if (typeof RevealNotes !== 'undefined') plugins.push(RevealNotes);
 
   const defaults = {
-    hash: true, progress: true, controls: true,
+    hash: true, progress: false, controls: true,
     transition: 'fade', transitionSpeed: 'slow',
     width: 1280, height: 720,
     margin: 0, center: false,
+    // PDF export: one page per slide, don't expand fragments into separate pages
+    pdfSeparateFragments: false,
+    pdfMaxPagesPerSlide: 1,
     plugins
   };
 

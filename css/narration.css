@@ -127,8 +127,7 @@
   border-radius: 2px;
 }
 
-/* ── Unified text panel ─────────────────────────────────────── */
-/*  Two modes via data-mode="notes" (teleprompter) or "cc" (subtitle strip). */
+/* ── Unified text panel (teleprompter / notes mode) ────────── */
 #narr-text-panel {
   position: fixed;
   bottom: 76px;
@@ -162,20 +161,7 @@
   text-align: left;
 }
 
-/* CC mode — compact centred subtitle strip */
-#narr-text-panel[data-mode="cc"] {
-  width: min(820px, 88vw);
-  max-height: none;
-  overflow-y: visible;
-  background: rgba(0,0,0,.78);
-  border-radius: 10px;
-  padding: 10px 18px;
-  font-size: .82rem;
-  line-height: 1.65;
-  color: rgba(255,255,255,.9);
-  text-align: center;
-  pointer-events: none;
-}
+
 
 /* Word highlighting (shared) */
 #narr-text-panel .nw {
@@ -189,13 +175,7 @@
   background: rgba(78,127,255,.25);
   font-weight: 500;
 }
-/* CC mode current word: bolder accent, no background */
-#narr-text-panel[data-mode="cc"] .nw.current {
-  color: #6ea7ff;
-  background: none;
-  font-weight: 600;
-}
-#narr-text-panel[data-mode="cc"] .nw.spoken { color: #fff; font-weight: 500; }
+
 
 /* ── Voice selector dropdown ────────────────────────────────── */
 #narr-voice-menu {

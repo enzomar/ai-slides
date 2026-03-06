@@ -506,4 +506,74 @@ strong { color: var(--ink); font-weight: 500; }
   .hw-grid     { grid-template-columns: 1fr; }
 }
 
+/* ── PRINT / PDF EXPORT ───────────────────────────────────── */
+/*
+ * Reveal.js ?print-pdf mode: append ?print-pdf to the URL, then
+ * Ctrl+P / Cmd+P → Save as PDF. The @page rule must match the
+ * Reveal.js slide dimensions (width=1280, height=720) and use
+ * zero margin so slides fill pages edge-to-edge.
+ */
+@media print {
+  /* Exact slide size — 1280×720 px (16:9). Overrides browser default. */
+  @page {
+    size: 1280px 720px;
+    margin: 0;
+  }
+
+  /* Hide all chrome that must not appear in the PDF */
+  #print-banner,
+  .lang-bar,
+  #narr-player,
+  .slide-menu,
+  .slide-menu-overlay,
+  .controls,
+  .progress,
+  .navigate-left,
+  .navigate-right,
+  .navigate-up,
+  .navigate-down {
+    display: none !important;
+  }
+
+  /* Kill any body/html margins the browser might add */
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #1C1C1E !important;
+  }
+
+  /*
+   * Each section fills exactly one page.
+   * Reveal.js pdf.min.css already does most of this; these rules
+   * ensure the custom theme does not override it.
+   */
+  .reveal .slides section {
+    box-sizing: border-box !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    /* Prevent double-page for slides taller than 720 px */
+    overflow: hidden !important;
+  }
+
+  /* Last section must not add a trailing blank page */
+  .reveal .slides section:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  /* Author / LinkedIn footer — visible in PDF only */
+  .reveal .slides section::after {
+    content: "Vincenzo Marafioti  ·  linkedin.com/in/vincenzo-marafioti/";
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    font-family: 'DM Mono', monospace, sans-serif;
+    font-size: 9px;
+    color: rgba(255,255,255,.30);
+    letter-spacing: .03em;
+    pointer-events: none;
+  }
+}
+
 

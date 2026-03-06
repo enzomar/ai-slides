@@ -3,7 +3,28 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Understanding Artificial Intelligence</title>
+<title>Understanding Artificial Intelligence — Vincenzo Marafioti</title>
+<!-- PDF / document metadata ─────────────────────────────────────
+     Browsers embed these into the PDF document properties when
+     the user saves via Print → Save as PDF.
+     Author  → PDF "Author" field
+     description → PDF "Subject" field
+     keywords    → PDF "Keywords" field
+     link[rel=author] → clickable author URL inside the PDF
+──────────────────────────────────────────────────────────────── -->
+<meta name="author"      content="Vincenzo Marafioti"/>
+<meta name="description" content="A 6-chapter course on Artificial Intelligence: foundations, prompt engineering, AI-assisted coding, RAG, AI agents and ethics. By Vincenzo Marafioti — https://www.linkedin.com/in/vincenzo-marafioti/"/>
+<meta name="keywords"    content="Artificial Intelligence, LLM, Prompt Engineering, RAG, AI Agents, MCP, Ethics, GPT, Claude, Gemini, Vincenzo Marafioti"/>
+<meta name="creator"     content="Vincenzo Marafioti"/>
+<meta name="publisher"   content="Vincenzo Marafioti"/>
+<!-- Open Graph (used by some PDF viewers and link-preview tools) -->
+<meta property="og:title"       content="Understanding Artificial Intelligence"/>
+<meta property="og:description" content="A practical 6-chapter AI course covering LLMs, prompt engineering, RAG, agents and ethics."/>
+<meta property="og:type"        content="article"/>
+<meta property="og:url"         content="https://www.linkedin.com/in/vincenzo-marafioti/"/>
+<meta property="article:author" content="Vincenzo Marafioti"/>
+<!-- Canonical author link — embedded as a named destination in the PDF -->
+<link rel="author" href="https://www.linkedin.com/in/vincenzo-marafioti/" title="Vincenzo Marafioti on LinkedIn"/>
 <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -13,15 +34,26 @@
 <link rel="stylesheet" href="css/animations.css"/>
 <link rel="stylesheet" href="css/narration.css"/>
 <link rel="stylesheet" href="css/slide-menu.css"/>
+<!-- Reveal.js print / PDF stylesheet -->
+<script>var _rl=document.createElement('link');_rl.rel='stylesheet';_rl.type='text/css';_rl.href=window.location.search.match(/print-pdf/gi)?'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/print/pdf.min.css':'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/print/paper.min.css';document.head.appendChild(_rl);</script>
 </head>
 <body>
 
+<!-- Print-PDF banner (only visible in ?print-pdf mode) -->
+<div id="print-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#1b5eff;color:#fff;text-align:center;padding:8px 16px;font-size:.8rem;font-family:sans-serif;">
+  📄 Print layout active &mdash; use <strong>Ctrl+P</strong> (or Cmd+P) and choose <strong>Save as PDF</strong>.
+  &nbsp;<a href="?" style="color:#fff;text-decoration:underline;">← Back to presentation</a>
+</div>
+<script>if(window.location.search.indexOf('print-pdf')!==-1){document.addEventListener('DOMContentLoaded',function(){var b=document.getElementById('print-banner');if(b)b.style.display='block';});}</script>
+
 <!-- Language selector -->
 <div class="lang-bar">
-  <span class="lang-btn active" onclick="setLang('en')">EN</span>
-  <span class="lang-btn" onclick="setLang('it')">IT</span>
-  <span class="lang-btn" onclick="setLang('fr')">FR</span>
-  <span class="lang-btn" onclick="setLang('es')">ES</span>
+  <span class="lang-btn active" onclick="setLang('en')" title="English (complete)">EN</span>
+  <span class="lang-btn" onclick="setLang('it')" title="Italiano ()">IT</span>
+  <span class="lang-btn" onclick="setLang('fr')" title="Français ()">FR</span>
+  <span class="lang-btn" onclick="setLang('es')" title="Español ()">ES</span>
+  <span class="lang-divider"></span>
+  <button class="lang-btn" id="pdf-btn" onclick="(function(){var url=window.location.href.split('?')[0].split('#')[0];if(window.location.search.indexOf('print-pdf')!==-1){window.print();}else{window.location.href=url+'?print-pdf';}})()" title="Switch to print layout, then use browser Print → Save as PDF" style="font-size:.65rem;padding:2px 8px;border:1px solid rgba(255,255,255,.15);border-radius:5px;background:rgba(27,94,255,.15);color:var(--accent);cursor:pointer;">⬇ PDF</button>
   <span class="lang-divider"></span>
   <span class="lang-btn" id="laser-btn" onclick="toggleLaser()" title="Toggle laser pointer (L)">⊹</span>
 </div>
@@ -65,15 +97,122 @@
   </div>
 
   <p style="margin-top:28px;text-align:center;color:rgba(255,255,255,.25);font-size:.55rem;font-family:var(--sans);line-height:1.6;max-width:520px;margin-left:auto;margin-right:auto;"
-    data-en="© 2026 Vincenzo Marafioti — All rights reserved.<br>This material may be shared for educational purposes with proper attribution to the author."
-    data-it="© 2026 Vincenzo Marafioti — Tutti i diritti riservati.<br>Questo materiale può essere condiviso a scopo didattico citando l'autore."
-    data-fr="© 2026 Vincenzo Marafioti — Tous droits réservés.<br>Ce matériel peut être partagé à des fins éducatives en citant l'auteur."
-    data-es="© 2026 Vincenzo Marafioti — Todos los derechos reservados.<br>Este material puede compartirse con fines educativos citando al autor.">
-    © 2026 Vincenzo Marafioti — All rights reserved.<br>This material may be shared for educational purposes with proper attribution to the author.
+    data-en="This material may be shared for educational purposes with proper attribution to the respective authors."
+    data-it="Questo materiale può essere condiviso a scopo didattico citando i rispettivi autori."
+    data-fr="Ce matériel peut être partagé à des fins éducatives en citant les auteurs respectifs."
+    data-es="Este material puede compartirse con fines educativos citando a los respectivos autores.">
+    This material may be shared for educational purposes with proper attribution to the respective authors.
   </p>
+
+  <p style="margin-top:10px;text-align:center;color:rgba(255,255,255,.2);font-size:.5rem;font-family:var(--mono);">Last Updated: March 2026 &nbsp;·&nbsp; v2.0</p>
 
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">2026</span>
   <aside class="notes"></aside>
+</section>
+
+<!-- ══════════════════════ HOW TO USE ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Reader's Guide"
+    data-it="Guida al Lettore"
+    data-fr="Guide du Lecteur"
+    data-es="Guía del Lector">Reader's Guide</div>
+  <div class="rule"></div>
+  <h2 data-en="How to Use<br>This Guide"
+      data-it="Come Usare<br>Questa Guida"
+      data-fr="Comment Utiliser<br>Ce Guide"
+      data-es="Cómo Usar<br>Esta Guía">How to Use<br>This Guide</h2>
+
+  <div class="three-col" style="margin-top:16px;">
+    <div class="model-card" style="padding:20px 18px;">
+      <div class="badge badge-det"
+        data-en="🧭 Navigation"
+        data-it="🧭 Navigazione"
+        data-fr="🧭 Navigation"
+        data-es="🧭 Navegación">🧭 Navigation</div>
+      <ul class="example-list" style="margin-top:10px;">
+        <li data-en="<strong>→ / ←</strong> arrow keys or swipe to advance slides"
+            data-it="<strong>→ / ←</strong> tasti freccia o swipe per avanzare"
+            data-fr="<strong>→ / ←</strong> flèches ou glisser pour avancer"
+            data-es="<strong>→ / ←</strong> flechas o deslizar para avanzar"><strong>→ / ←</strong> arrow keys or swipe to advance slides</li>
+        <li data-en="<strong>☰ Slides</strong> button opens the chapter navigator"
+            data-it="<strong>☰ Slides</strong> apre il navigatore dei capitoli"
+            data-fr="<strong>☰ Slides</strong> ouvre le navigateur de chapitres"
+            data-es="<strong>☰ Slides</strong> abre el navegador de capítulos"><strong>☰ Slides</strong> button opens the chapter navigator</li>
+        <li data-en="<strong>Agenda</strong> slide has clickable chapter links"
+            data-it="La diapositiva <strong>Agenda</strong> ha link ai capitoli"
+            data-fr="La diapo <strong>Agenda</strong> a des liens cliquables"
+            data-es="La diapositiva <strong>Agenda</strong> tiene enlaces a capítulos">Agenda slide has clickable chapter links</li>
+        <li data-en="<strong>⊹ Laser</strong> toggles a laser pointer (key: L)"
+            data-it="<strong>⊹ Laser</strong> attiva il puntatore laser (tasto: L)"
+            data-fr="<strong>⊹ Laser</strong> active le pointeur laser (touche : L)"
+            data-es="<strong>⊹ Laser</strong> activa el puntero láser (tecla: L)"><strong>⊹ Laser</strong> toggles a laser pointer (key: L)</li>
+        <li data-en="<strong>⬇ PDF</strong> button — print / save as PDF from browser"
+            data-it="<strong>⬇ PDF</strong> — stampa/salva come PDF dal browser"
+            data-fr="<strong>⬇ PDF</strong> — imprimer/enregistrer en PDF depuis le navigateur"
+            data-es="<strong>⬇ PDF</strong> — imprimir/guardar como PDF desde el navegador"><strong>⬇ PDF</strong> button — print / save as PDF from browser</li>
+      </ul>
+    </div>
+
+    <div class="model-card" style="padding:20px 18px;">
+      <div class="badge badge-green"
+        data-en="🎯 Audiences"
+        data-it="🎯 Destinatari"
+        data-fr="🎯 Publics"
+        data-es="🎯 Audiencias">🎯 Audiences</div>
+      <ul class="example-list" style="margin-top:10px;">
+        <li data-en="<strong>Everyone</strong> — Introduction (Ch1), Ethics (Ch6)"
+            data-it="<strong>Tutti</strong> — Introduzione (Ca1), Etica (Ca6)"
+            data-fr="<strong>Tous</strong> — Introduction (Ch1), Éthique (Ch6)"
+            data-es="<strong>Todos</strong> — Introducción (Ch1), Ética (Ch6)"><strong>Everyone</strong> — Introduction (Ch1), Ethics (Ch6)</li>
+        <li data-en="<strong>Product / Business</strong> — Ch1 + Ch3 Vibe-coding + Ch6"
+            data-it="<strong>Product / Business</strong> — Ch1 + Ch3 + Ch6"
+            data-fr="<strong>Produit / Business</strong> — Ch1 + Ch3 + Ch6"
+            data-es="<strong>Producto / Negocio</strong> — Ch1 + Ch3 + Ch6"><strong>Product / Business</strong> — Ch1 + Ch3 Vibe-coding + Ch6</li>
+        <li data-en="<strong>Developers</strong> — Ch2 Prompting + Ch3 Coding + Ch4 RAG + Ch5 Agents"
+            data-it="<strong>Sviluppatori</strong> — Ch2 + Ch3 + Ch4 + Ch5"
+            data-fr="<strong>Développeurs</strong> — Ch2 + Ch3 + Ch4 + Ch5"
+            data-es="<strong>Desarrolladores</strong> — Ch2 + Ch3 + Ch4 + Ch5"><strong>Developers</strong> — Ch2 Prompting + Ch3 Coding + Ch4 RAG + Ch5 Agents</li>
+        <li data-en="<strong>AI / ML Engineers</strong> — Full path + Annex"
+            data-it="<strong>AI / ML Engineer</strong> — Percorso completo + Annex"
+            data-fr="<strong>Ingénieurs AI / ML</strong> — Chemin complet + Annexe"
+            data-es="<strong>Ingenieros AI / ML</strong> — Ruta completa + Anexo"><strong>AI / ML Engineers</strong> — Full path + Annex</li>
+      </ul>
+    </div>
+
+    <div class="model-card" style="padding:20px 18px;">
+      <div class="badge badge-purple"
+        data-en="📚 Structure"
+        data-it="📚 Struttura"
+        data-fr="📚 Structure"
+        data-es="📚 Estructura">📚 Structure</div>
+      <ul class="example-list" style="margin-top:10px;">
+        <li data-en="<strong>6 chapters</strong> + Annex (glossary, resources)"
+            data-it="<strong>6 capitoli</strong> + Allegato (glossario, risorse)"
+            data-fr="<strong>6 chapitres</strong> + Annexe (glossaire, ressources)"
+            data-es="<strong>6 capítulos</strong> + Anexo (glosario, recursos)"><strong>6 chapters</strong> + Annex (glossary, resources)</li>
+        <li data-en="Each chapter ends with <strong>References</strong>"
+            data-it="Ogni capitolo termina con i <strong>Riferimenti</strong>"
+            data-fr="Chaque chapitre se termine par les <strong>Références</strong>"
+            data-es="Cada capítulo termina con <strong>Referencias</strong>">Each chapter ends with <strong>References</strong></li>
+        <li data-en="<strong>💡 Key insight</strong> boxes summarise each slide"
+            data-it="I box <strong>💡 Idea chiave</strong> riassumono ogni slide"
+            data-fr="Les encadrés <strong>💡 Point clé</strong> résument chaque diapo"
+            data-es="Los recuadros <strong>💡 Punto clave</strong> resumen cada diapositiva"><strong>💡 Key insight</strong> boxes summarise each slide</li>
+        <li data-en="<strong>Interactive slides</strong> have sliders and animations"
+            data-it="Le <strong>diapositive interattive</strong> hanno slider e animazioni"
+            data-fr="Les <strong>diapositives interactives</strong> ont des curseurs et animations"
+            data-es="Las <strong>diapositivas interactivas</strong> tienen controles y animaciones"><strong>Interactive slides</strong> have sliders and animations</li>
+        <li data-en="<strong>EN · IT/FR/ES </strong>"
+            data-it="<strong>EN completo · IT/FR/ES in corso</strong>"
+            data-fr="<strong>EN complet · IT/FR/ES en cours</strong>"
+            data-es="<strong>EN completo · IT/FR/ES en progreso</strong>"><strong>EN · IT/FR/ES </strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <span class="chapter-tag">Understanding AI</span>
 </section>
 
 <!-- ══════════════════════ AGENDA ══════════════════════ -->
@@ -183,10 +322,10 @@
         data-fr="Annexe"
         data-es="Anexo">Annex</div>
       <div class="agenda-desc"
-        data-en="Glossary of key terms, model comparison table & curated learning resources."
-        data-it="Glossario dei termini chiave, tabella di confronto modelli e risorse di apprendimento."
-        data-fr="Glossaire des termes clés, tableau de comparaison des modèles et ressources d'apprentissage."
-        data-es="Glosario de términos clave, tabla de comparación de modelos y recursos de aprendizaje.">Glossary of key terms, model comparison table & curated learning resources.</div>
+        data-en="Model comparison, technical deep-dives & curated learning resources."
+        data-it="Confronto tra modelli, approfondimenti tecnici e risorse di apprendimento."
+        data-fr="Comparaison des modèles, approfondissements techniques et ressources d'apprentissage."
+        data-es="Comparación de modelos, profundizaciones técnicas y recursos de aprendizaje.">Model comparison, technical deep-dives & curated learning resources.</div>
     </a>
 
   </div>
@@ -445,6 +584,95 @@
   <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">02 / 08</span></div>
 </section>
 
+<!-- ══════════════════════ SLIDE 2b: WHY AI ACCELERATED ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 02b · Drivers"
+    data-it="Diapositiva 02b · Motori"
+    data-fr="Diapo 02b · Moteurs"
+    data-es="Diapositiva 02b · Motores">Slide 02b · Drivers</div>
+  <h2 data-en="Why AI Progress<br>Accelerated (2017–2023)"
+      data-it="Perché l'AI ha<br>Accelerato (2017–2023)"
+      data-fr="Pourquoi l'IA a<br>Accéléré (2017–2023)"
+      data-es="Por Qué la IA<br>Aceleró (2017–2023)">Why AI Progress<br>Accelerated (2017–2023)</h2>
+
+  <div class="three-col" style="margin-top:20px;">
+    <!-- DATA -->
+    <div class="model-card" style="text-align:center;padding:24px 20px;">
+      <div style="font-size:2.2rem;margin-bottom:10px;">📦</div>
+      <div class="badge badge-det" style="margin:0 auto 12px;"
+        data-en="Data" data-it="Dati" data-fr="Données" data-es="Datos">Data</div>
+      <ul class="example-list" style="text-align:left;">
+        <li data-en="Internet-scale text: CommonCrawl, Wikipedia, GitHub, books — trillions of tokens"
+            data-it="Testo su scala internet: trilioni di token"
+            data-fr="Texte à l'échelle d'Internet : trillions de tokens"
+            data-es="Texto a escala de Internet: billones de tokens">Internet-scale text: CommonCrawl, Wikipedia, GitHub — trillions of tokens</li>
+        <li data-en="Digital transformation produced labelled training data en masse"
+            data-it="La trasformazione digitale ha prodotto dati di addestramento etichettati in massa"
+            data-fr="La transformation numérique a produit des données annotées en masse"
+            data-es="La transformación digital produjo datos de entrenamiento etiquetados en masa">Digital transformation produced labelled data en masse</li>
+        <li data-en="RLHF: human feedback to align model behaviour"
+            data-it="RLHF: feedback umano per allineare il comportamento"
+            data-fr="RLHF : retour humain pour aligner le comportement"
+            data-es="RLHF: feedback humano para alinear el comportamiento">RLHF: human feedback to align model behaviour</li>
+      </ul>
+    </div>
+
+    <!-- COMPUTE -->
+    <div class="model-card" style="text-align:center;padding:24px 20px;">
+      <div style="font-size:2.2rem;margin-bottom:10px;">⚡</div>
+      <div class="badge badge-green" style="margin:0 auto 12px;"
+        data-en="Compute" data-it="Calcolo" data-fr="Calcul" data-es="Cómputo">Compute</div>
+      <ul class="example-list" style="text-align:left;">
+        <li data-en="GPU from gaming to AI: NVIDIA A100/H100, millions of CUDA cores"
+            data-it="GPU dal gaming all'AI: NVIDIA A100/H100, milioni di core CUDA"
+            data-fr="GPU du jeu vidéo à l'IA : NVIDIA A100/H100"
+            data-es="GPU del gaming a la IA: NVIDIA A100/H100">GPU: gaming hardware repurposed for AI (A100/H100)</li>
+        <li data-en="Cloud providers (AWS, GCP, Azure) made petaflop compute accessible"
+            data-it="I cloud provider hanno reso accessibile il calcolo petaflop"
+            data-fr="Les fournisseurs cloud ont rendu le calcul petaflop accessible"
+            data-es="Los proveedores cloud hicieron accesible el cómputo petaflop">Cloud made petaflop compute accessible on-demand</li>
+        <li data-en="Training cost fell ~10× every 18 months (AI Moore's Law)"
+            data-it="Il costo di addestramento è sceso di ~10× ogni 18 mesi"
+            data-fr="Le coût d'entraînement a baissé de ~10× tous les 18 mois"
+            data-es="El coste de entrenamiento cayó ~10× cada 18 meses">Training cost fell ~10× every 18 months (AI Moore's Law)</li>
+      </ul>
+    </div>
+
+    <!-- ALGORITHMS -->
+    <div class="model-card" style="text-align:center;padding:24px 20px;">
+      <div style="font-size:2.2rem;margin-bottom:10px;">🧠</div>
+      <div class="badge badge-purple" style="margin:0 auto 12px;"
+        data-en="Algorithms" data-it="Algoritmi" data-fr="Algorithmes" data-es="Algoritmos">Algorithms</div>
+      <ul class="example-list" style="text-align:left;">
+        <li data-en="<strong>Transformers (2017)</strong> — parallelisable, scalable, attention-based"
+            data-it="<strong>Transformer (2017)</strong> — parallelizzabili, scalabili, attention"
+            data-fr="<strong>Transformers (2017)</strong> — parallélisables, scalables, attention"
+            data-es="<strong>Transformers (2017)</strong> — paralelizables, escalables, atención"><strong>Transformers (2017)</strong> — parallelisable, scalable, attention-based</li>
+        <li data-en="<strong>Scaling laws</strong> (Kaplan et al. 2020) — bigger = better, predictably"
+            data-it="<strong>Scaling laws</strong> (2020) — più grande = meglio, prevedibilmente"
+            data-fr="<strong>Lois d'échelle</strong> (2020) — plus grand = meilleur, prévisiblement"
+            data-es="<strong>Leyes de escalado</strong> (2020) — más grande = mejor, predeciblemente"><strong>Scaling laws</strong> (Kaplan et al. 2020) — bigger = better, predictably</li>
+        <li data-en="<strong>RLHF + instruct fine-tuning</strong> — from autocomplete to assistant"
+            data-it="<strong>RLHF + fino-tuning istruttivo</strong> — dall'autocompletamento all'assistente"
+            data-fr="<strong>RLHF + instruction</strong> — de l'autocomplétion à l'assistant"
+            data-es="<strong>RLHF + fine-tuning instruccional</strong> — de autocompletar a asistente"><strong>RLHF + instruct fine-tuning</strong> — from autocomplete to assistant</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:14px;">
+    <strong data-en="The perfect storm:" data-it="La tempesta perfetta:" data-fr="La tempête parfaite :" data-es="La tormenta perfecta:">The perfect storm:</strong>
+    <span data-en=" Data + Compute + Transformers converged simultaneously. No single factor explains the AI boom — all three were necessary."
+          data-it=" Dati + Calcolo + Transformer hanno convergito simultaneamente. Nessun fattore singolo spiega il boom dell'AI."
+          data-fr=" Données + Calcul + Transformers ont convergé simultanément. Aucun facteur seul n'explique l'essor de l'IA."
+          data-es=" Datos + Cómputo + Transformers convergieron simultáneamente. Ningún factor único explica el auge de la IA."> Data + Compute + Transformers converged simultaneously. No single factor explains the AI boom — all three were necessary.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">02b</span></div>
+</section>
+
 <!-- ══════════════════════ SLIDE 3: TRANSFORMER ARCHITECTURE ══════════════════════ -->
 <section>
   <div class="eyebrow"
@@ -602,6 +830,103 @@
   </div>
   <aside class="notes"></aside>
   <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">03c / 08</span></div>
+</section>
+
+<!-- ══════════════════════ SLIDE 3d: WHAT LLMs ARE BAD AT ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 03d · Limitations"
+    data-it="Diapositiva 03d · Limitazioni"
+    data-fr="Diapo 03d · Limites"
+    data-es="Diapositiva 03d · Limitaciones">Slide 03d · Limitations</div>
+  <h2 data-en="What LLMs<br>Are Bad At"
+      data-it="Cosa gli LLM<br>Non Sanno Fare"
+      data-fr="Ce que les LLM<br>Font Mal"
+      data-es="En Qué Son Malos<br>los LLMs">What LLMs<br>Are Bad At</h2>
+
+  <div class="two-col" style="align-items:start;margin-top:8px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);font-weight:600;margin-bottom:6px;"
+          data-en="🌀 Hallucinations" data-it="🌀 Allucinazioni" data-fr="🌀 Hallucinations" data-es="🌀 Alucinaciones">🌀 Hallucinations</div>
+        <p style="font-size:.72rem;margin:0;"
+          data-en="LLMs generate plausible-sounding text, not verified facts. They confidently fabricate citations, API names, statistics, and historical events."
+          data-it="Gli LLM generano testo plausibile, non fatti verificati. Fabbricano con sicurezza citazioni, nomi API, statistiche ed eventi storici."
+          data-fr="Les LLM génèrent du texte plausible, pas des faits vérifiés. Ils fabriquent citations, noms d'API et statistiques avec assurance."
+          data-es="Los LLMs generan texto plausible, no hechos verificados. Fabrican con confianza citas, nombres de API, estadísticas y eventos históricos.">LLMs generate plausible-sounding text, not verified facts. They confidently fabricate citations, API names, and statistics.</p>
+        <p style="font-size:.65rem;font-family:var(--mono);color:var(--accent2);margin:6px 0 0;"
+          data-en="Real case: a lawyer submitted AI-generated briefs citing non-existent cases (US, 2023)"
+          data-it="Caso reale: un avvocato ha citato casi inesistenti generati da AI (USA, 2023)"
+          data-fr="Cas réel : un avocat a cité des jurisprudences inexistantes générées par IA (USA, 2023)"
+          data-es="Caso real: un abogado presentó alegatos con casos inexistentes generados por IA (EE.UU., 2023)">Real case: a lawyer submitted briefs citing non-existent cases (US, 2023)</p>
+      </div>
+
+      <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);font-weight:600;margin-bottom:6px;"
+          data-en="🔢 Weak Numerics & Reasoning" data-it="🔢 Calcoli e Ragionamento" data-fr="🔢 Calculs et Raisonnement" data-es="🔢 Cálculo y Razonamiento">🔢 Weak Numerics &amp; Reasoning</div>
+        <p style="font-size:.72rem;margin:0;"
+          data-en="LLMs struggle with multi-step arithmetic, logic puzzles, and spatial reasoning. They 'feel' the answer rather than compute it."
+          data-it="Gli LLM faticano con aritmetica a più passi, enigmi logici e ragionamento spaziale. 'Sentono' la risposta anziché calcolarla."
+          data-fr="Les LLM peinent avec l'arithmétique multi-étapes, les énigmes logiques et le raisonnement spatial."
+          data-es="Los LLMs tienen dificultades con aritmética multi-paso, puzzles lógicos y razonamiento espacial.">LLMs struggle with multi-step arithmetic, logic puzzles, and spatial reasoning. They 'feel' the answer rather than compute it.</p>
+      </div>
+
+      <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);font-weight:600;margin-bottom:6px;"
+          data-en="💾 No Persistent Memory" data-it="💾 Nessuna Memoria Persistente" data-fr="💾 Pas de Mémoire Persistante" data-es="💾 Sin Memoria Persistente">💾 No Persistent Memory</div>
+        <p style="font-size:.72rem;margin:0;"
+          data-en="Each conversation starts fresh. The model has no memory of past sessions unless explicitly provided in the context window."
+          data-it="Ogni conversazione inizia da zero. Il modello non ha memoria delle sessioni passate se non fornita esplicitamente nel contesto."
+          data-fr="Chaque conversation repart de zéro. Le modèle n'a pas de mémoire des sessions passées."
+          data-es="Cada conversación comienza de cero. El modelo no tiene memoria de sesiones anteriores.">Each conversation starts fresh. No memory of past sessions unless provided in context.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);font-weight:600;margin-bottom:6px;"
+          data-en="📅 Knowledge Cutoff" data-it="📅 Cutoff della Conoscenza" data-fr="📅 Date Limite de Connaissance" data-es="📅 Corte de Conocimiento">📅 Knowledge Cutoff</div>
+        <p style="font-size:.72rem;margin:0;"
+          data-en="Training data has a cutoff date. Models are unaware of events after that date — unless you use RAG or tool use to retrieve current information."
+          data-it="I dati di addestramento hanno una data di cutoff. I modelli non conoscono eventi successivi — a meno di usare RAG o strumenti."
+          data-fr="Les données d'entraînement ont une date limite. Les modèles ignorent les événements postérieurs — sauf avec RAG ou outils."
+          data-es="Los datos de entrenamiento tienen fecha de corte. Los modelos desconocen eventos posteriores — a menos de usar RAG u herramientas.">Training data has a cutoff date. Models are unaware of events after that date without RAG or tool use.</p>
+      </div>
+
+      <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);font-weight:600;margin-bottom:6px;"
+          data-en="📦 Invented Libraries & APIs" data-it="📦 Librerie e API Inventate" data-fr="📦 Bibliothèques et API Inventées" data-es="📦 Librerías y APIs Inventadas">📦 Invented Libraries &amp; APIs</div>
+        <p style="font-size:.72rem;margin:0;"
+          data-en="A model may generate perfectly formatted code using functions that don't exist. Always verify generated code against official documentation."
+          data-it="Un modello può generare codice perfettamente formattato usando funzioni inesistenti. Verificare sempre contro la documentazione ufficiale."
+          data-fr="Un modèle peut générer du code parfaitement formaté utilisant des fonctions inexistantes. Toujours vérifier face à la documentation."
+          data-es="Un modelo puede generar código perfectamente formateado usando funciones inexistentes. Siempre verificar contra documentación oficial.">Models may generate perfectly formatted code using functions that don't exist. Always verify against official docs.</p>
+      </div>
+
+      <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);font-weight:600;margin-bottom:6px;"
+          data-en="🎯 Consistency at High Temperature" data-it="🎯 Coerenza ad Alta Temperature" data-fr="🎯 Cohérence à Haute Température" data-es="🎯 Consistencia a Alta Temperatura">🎯 Consistency at High Temperature</div>
+        <p style="font-size:.72rem;margin:0;"
+          data-en="Probabilistic sampling means the same question may give different answers. Critical decisions require deterministic verification or human oversight."
+          data-it="Il campionamento probabilistico significa che la stessa domanda può dare risposte diverse. Le decisioni critiche richiedono verifica deterministica."
+          data-fr="L'échantillonnage probabiliste signifie qu'une même question peut donner des réponses différentes. La supervision humaine est essentielle."
+          data-es="El muestreo probabilístico significa que la misma pregunta puede dar respuestas diferentes. Las decisiones críticas requieren verificación.">Probabilistic sampling means same question → different answers. Critical decisions require human oversight.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <strong data-en="Design principle:" data-it="Principio di design:" data-fr="Principe de conception :" data-es="Principio de diseño:">Design principle:</strong>
+    <span data-en=" Always pair LLMs with verification layers — RAG for facts, code linters for code, human review for decisions. LLMs are powerful first drafters, not infallible authorities."
+          data-it=" Accompagnare sempre gli LLM con livelli di verifica — RAG per i fatti, linting per il codice, revisione umana per le decisioni."
+          data-fr=" Toujours associer les LLM à des couches de vérification — RAG pour les faits, linting pour le code, revue humaine pour les décisions."
+          data-es=" Siempre combinar los LLMs con capas de verificación — RAG para hechos, linting para código, revisión humana para decisiones."> Always pair LLMs with verification layers — RAG for facts, code linters for code, human review for decisions. LLMs are powerful first drafters, not infallible authorities.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 1 · Introduction</span> <span class="slide-tag">03d</span></div>
 </section>
 
 <!-- ══════════════════════ SLIDE 4: KEY PARAMETERS ══════════════════════ -->
@@ -1593,8 +1918,8 @@
   <aside class="notes"></aside>
   <span class="chapter-tag">Chapter 2 · Prompt Engineering</span>
 </section>
-<!-- chapter3.html -->
 
+<!-- chapter3.html -->
 
 <!-- ══════════════════════ CHAPTER COVER ══════════════════════ -->
 <section class="chapter-divider" id="chapter-3">
@@ -2656,7 +2981,6 @@
 </section>
 <!-- chapter5.html -->
 
-
 <!-- ══════════════════════ CHAPTER COVER ══════════════════════ -->
 <section class="chapter-divider" id="chapter-5">
   <div class="cover-dot"></div>
@@ -3388,6 +3712,98 @@
   <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span> <span class="slide-tag">03 / 06</span></div>
 </section>
 
+<!-- ══════════════════════ SLIDE 3b: AI ETHICS IN 2024 ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 03b · 2024 Turning Points"
+    data-it="Diapositiva 03b · Punti di Svolta 2024"
+    data-fr="Diapo 03b · Tournants 2024"
+    data-es="Diapositiva 03b · Puntos de Inflexión 2024">Slide 03b · 2024 Turning Points</div>
+  <div class="rule"></div>
+  <h2 data-en="AI Ethics in 2024:<br>Three Landmark Cases"
+      data-it="Etica AI nel 2024:<br>Tre Casi Emblematici"
+      data-fr="Éthique IA en 2024 :<br>Trois Cas Emblématiques"
+      data-es="Ética IA en 2024:<br>Tres Casos Emblemáticos">AI Ethics in 2024:<br>Three Landmark Cases</h2>
+
+  <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px;">
+
+    <!-- Biden Deepfake Robocall -->
+    <div style="background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.22);border-radius:10px;padding:14px 20px;display:flex;gap:18px;align-items:flex-start;">
+      <div style="font-size:1.8rem;flex-shrink:0;">🗳️</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span class="badge badge-purple"
+            data-en="Deepfake Robocall · New Hampshire Primary, Jan 2024"
+            data-it="Deepfake Robocall · Primaria New Hampshire, Gen 2024"
+            data-fr="Robocall Deepfake · Primaire New Hampshire, Jan 2024"
+            data-es="Deepfake Robocall · Primaria New Hampshire, Ene 2024">Deepfake Robocall · New Hampshire Primary, Jan 2024</span>
+        </div>
+        <p style="font-size:.72rem;margin:0 0 6px;"
+          data-en="A voice clone of President Biden's voice told registered Democrats not to vote in the primary. ~25,000 robocalls were sent using ElevenLabs-style voice cloning technology. The FCC subsequently banned AI-generated voices in robocalls."
+          data-it="Un clone vocale della voce del Presidente Biden ha detto ai democratici registrati di non votare alle primarie. ~25.000 robocall inviate con tecnologia di clonazione vocale. L'FCC ha successivamente vietato le voci AI nelle robocall."
+          data-fr="Un clone vocal de la voix du Président Biden a dit aux démocrates de ne pas voter à la primaire. ~25 000 appels automatisés envoyés via la technologie de clonage vocal. La FCC a ensuite interdit les voix IA dans les robocalls."
+          data-es="Un clon de voz del Presidente Biden dijo a los demócratas registrados que no votaran en las primarias. ~25.000 robocalls enviados usando tecnología de clonación de voz. La FCC prohibió posteriormente las voces IA en robocalls.">A voice clone of President Biden told registered Democrats not to vote in the primary. ~25,000 robocalls sent using voice-cloning technology. The FCC subsequently banned AI-generated voice robocalls.</p>
+        <div style="font-family:var(--mono);font-size:.58rem;color:var(--purple);"
+          data-en="⚖ Precedent: Regulatory response to AI-generated political disinformation."
+          data-it="⚖ Precedente: risposta normativa alla disinformazione politica generata dall'AI."
+          data-fr="⚖ Précédent : réponse réglementaire à la désinformation politique IA."
+          data-es="⚖ Precedente: Respuesta regulatoria a la desinformación política generada por IA.">⚖ Precedent: Regulatory response to AI-generated political disinformation.</div>
+      </div>
+    </div>
+
+    <!-- NYT vs OpenAI -->
+    <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 20px;display:flex;gap:18px;align-items:flex-start;">
+      <div style="font-size:1.8rem;flex-shrink:0;">📰</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span class="badge badge-prob"
+            data-en="NYT vs OpenAI · Copyright Lawsuit, Dec 2023 → ongoing"
+            data-it="NYT vs OpenAI · Causa per Copyright, Dic 2023 → in corso"
+            data-fr="NYT vs OpenAI · Procès en droits d'auteur, Déc 2023 → en cours"
+            data-es="NYT vs OpenAI · Demanda por Copyright, Dic 2023 → en curso">NYT vs OpenAI · Copyright Lawsuit, Dec 2023 → ongoing</span>
+        </div>
+        <p style="font-size:.72rem;margin:0 0 6px;"
+          data-en="The New York Times sued OpenAI and Microsoft for training GPT on millions of copyrighted articles without payment or permission. The suit demonstrated that GPT-4 could reproduce near-verbatim NYT content. Core question: does training on copyrighted data constitute fair use?"
+          data-it="Il New York Times ha citato in giudizio OpenAI e Microsoft per aver addestrato GPT su milioni di articoli protetti da copyright senza pagamento o permesso. La causa ha dimostrato che GPT-4 poteva riprodurre contenuti NYT quasi alla lettera."
+          data-fr="Le New York Times a poursuivi OpenAI et Microsoft pour avoir entraîné GPT sur des millions d'articles sous copyright sans autorisation ni paiement. La question centrale : l'entraînement sur des données sous copyright constitue-t-il un usage équitable ?"
+          data-es="El New York Times demandó a OpenAI y Microsoft por entrenar GPT en millones de artículos protegidos por copyright sin pago ni permiso. La pregunta central: ¿entrenar en datos con copyright constituye uso justo?">The New York Times sued OpenAI and Microsoft for training on millions of copyrighted articles. GPT-4 was shown to reproduce near-verbatim NYT content. Core question: is training on copyrighted data fair use?</p>
+        <div style="font-family:var(--mono);font-size:.58rem;color:var(--accent2);"
+          data-en="⚖ Precedent: Could reshape how all AI systems can legally use publicly available content."
+          data-it="⚖ Precedente: potrebbe ridefinire l'uso legale di contenuti pubblicamente disponibili da parte dei sistemi AI."
+          data-fr="⚖ Précédent : pourrait remodeler la façon dont les systèmes IA utilisent légalement du contenu public."
+          data-es="⚖ Precedente: Podría remodelar cómo los sistemas IA pueden usar legalmente contenido públicamente disponible.">⚖ Precedent: Could reshape how AI systems can legally use publicly available content for training.</div>
+      </div>
+    </div>
+
+    <!-- Air Canada Chatbot case -->
+    <div style="background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:10px;padding:14px 20px;display:flex;gap:18px;align-items:flex-start;">
+      <div style="font-size:1.8rem;flex-shrink:0;">✈️</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span class="badge badge-green"
+            data-en="Air Canada Chatbot Ruling · Feb 2024"
+            data-it="Sentenza Chatbot Air Canada · Feb 2024"
+            data-fr="Arrêt Chatbot Air Canada · Fév 2024"
+            data-es="Fallo Chatbot Air Canada · Feb 2024">Air Canada Chatbot Ruling · Feb 2024</span>
+        </div>
+        <p style="font-size:.72rem;margin:0 0 6px;"
+          data-en="A Canadian tribunal ruled Air Canada responsible for misinformation given by its AI chatbot about bereavement fares. Air Canada argued the chatbot was a 'separate entity' — the tribunal rejected this. Airlines must honour AI-given advice."
+          data-it="Un tribunale canadese ha dichiarato Air Canada responsabile per le informazioni errate fornite dal suo chatbot AI sulle tariffe per lutto. Air Canada sosteneva che il chatbot fosse un 'entità separata' — il tribunale ha respinto questo argomento."
+          data-fr="Un tribunal canadien a jugé Air Canada responsable des fausses informations données par son chatbot IA sur les tarifs de deuil. Air Canada soutenait que le chatbot était une 'entité distincte' — le tribunal a rejeté cet argument."
+          data-es="Un tribunal canadiense declaró a Air Canada responsable de la desinformación dada por su chatbot IA sobre tarifas por duelo. Air Canada argumentó que el chatbot era una 'entidad separada' — el tribunal rechazó esto.">A Canadian tribunal ruled Air Canada liable for its AI chatbot's misinformation about bereavement fares. Air Canada's "separate legal entity" defence was rejected — companies own their AI's outputs.</p>
+        <div style="font-family:var(--mono);font-size:.58rem;color:var(--green);"
+          data-en="⚖ Precedent: Companies are legally liable for what their AI systems tell users."
+          data-it="⚖ Precedente: Le aziende sono legalmente responsabili di ciò che i loro sistemi AI dicono agli utenti."
+          data-fr="⚖ Précédent : Les entreprises sont légalement responsables de ce que leurs systèmes IA disent aux utilisateurs."
+          data-es="⚖ Precedente: Las empresas son legalmente responsables de lo que sus sistemas IA dicen a los usuarios.">⚖ Precedent: Companies are legally liable for what their AI systems tell users.</div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <div class="tag-bar"><span class="chapter-tag">Chapter 6 · Ethics & Future</span> <span class="slide-tag">03b · 2024</span></div>
+</section>
+
 <!-- ══════════════════════ SLIDE 4: AI GOVERNANCE FRAMEWORKS ══════════════════════ -->
 <section>
   <div class="eyebrow"
@@ -3656,6 +4072,198 @@
   <aside class="notes"></aside>
   <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
 </section>
+
+<!-- ══════════════════════ KEY TAKEAWAYS ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Wrapping Up · Six Chapters"
+    data-it="Sintesi · Sei Capitoli"
+    data-fr="Récapitulatif · Six Chapitres"
+    data-es="Resumen · Seis Capítulos">Wrapping Up · Six Chapters</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Takeaways"
+      data-it="Punti Chiave"
+      data-fr="Points Clés"
+      data-es="Puntos Clave">Key Takeaways</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+
+    <div style="background:rgba(27,94,255,.06);border:1px solid rgba(27,94,255,.2);border-radius:10px;padding:14px 16px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);margin-bottom:6px;"
+        data-en="Ch. 1 · How LLMs Work" data-it="Cap. 1 · Come Funzionano gli LLM" data-fr="Ch. 1 · Fonctionnement des LLM" data-es="Cap. 1 · Cómo Funcionan los LLM">Ch. 1 · How LLMs Work</div>
+      <p style="font-size:.7rem;margin:0;"
+        data-en="LLMs are probabilistic token predictors trained on massive text corpora. They don't 'know' facts — they encode statistical patterns. Scale (data + compute + architecture) is what unlocked capabilities."
+        data-it="Gli LLM sono predittori probabilistici di token, addestrati su corpus testuali enormi. Non 'conoscono' i fatti — codificano pattern statistici. La scala (dati + calcolo + architettura) ha sbloccato le capacità."
+        data-fr="Les LLM sont des prédicteurs probabilistes de tokens entraînés sur des corpus massifs. Ils n'ont pas de 'connaissance' — ils encodent des patterns statistiques. L'échelle a débloqué les capacités."
+        data-es="Los LLM son predictores probabilísticos de tokens entrenados en corpus masivos. No 'conocen' hechos — codifican patrones estadísticos. La escala desbloqueó las capacidades.">LLMs are probabilistic token predictors. They don't "know" facts — they encode statistical patterns. Scale is what unlocked capabilities.</p>
+    </div>
+
+    <div style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:14px 16px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--purple);margin-bottom:6px;"
+        data-en="Ch. 2 · Prompt Engineering" data-it="Cap. 2 · Prompt Engineering" data-fr="Ch. 2 · Prompt Engineering" data-es="Cap. 2 · Ingeniería de Prompts">Ch. 2 · Prompt Engineering</div>
+      <p style="font-size:.7rem;margin:0;"
+        data-en="How you ask matters as much as what you ask. Clear role, context, format instructions, and examples dramatically improve output quality. Use Chain-of-Thought for complex reasoning."
+        data-it="Come chiedi è importante quanto cosa chiedi. Ruolo, contesto, istruzioni di formato ed esempi chiari migliorano drasticamente la qualità dell'output. Usa Chain-of-Thought per ragionamenti complessi."
+        data-fr="La façon dont vous posez la question est aussi importante que la question elle-même. Rôle, contexte, format et exemples améliorent la qualité. Utilisez Chain-of-Thought pour le raisonnement complexe."
+        data-es="Cómo preguntas importa tanto como qué preguntas. Rol, contexto, formato y ejemplos mejoran drásticamente la calidad. Usa Chain-of-Thought para razonamiento complejo.">How you ask matters as much as what you ask. Role, context, format, and examples dramatically improve output quality.</p>
+    </div>
+
+    <div style="background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.2);border-radius:10px;padding:14px 16px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--green);margin-bottom:6px;"
+        data-en="Ch. 3 · AI-Assisted Coding" data-it="Cap. 3 · Coding Assistito dall'AI" data-fr="Ch. 3 · Codage Assisté par IA" data-es="Cap. 3 · Codificación Asistida por IA">Ch. 3 · AI-Assisted Coding</div>
+      <p style="font-size:.7rem;margin:0;"
+        data-en="AI coding tools boost productivity for boilerplate, test generation, and refactoring. They are unreliable for novel algorithms, security-critical code, and unfamiliar codebases. Always review AI-generated code."
+        data-it="Gli strumenti di coding AI aumentano la produttività per boilerplate, generazione di test e refactoring. Non sono affidabili per algoritmi nuovi, codice critico per la sicurezza, e codebase sconosciute. Rivedi sempre il codice generato dall'AI."
+        data-fr="Les outils de codage IA boostent la productivité pour le boilerplate, la génération de tests. Ils sont peu fiables pour les algorithmes nouveaux et le code critique. Révisez toujours le code généré."
+        data-es="Las herramientas de codificación IA aumentan la productividad para boilerplate y generación de pruebas. No son fiables para algoritmos nuevos o código crítico. Siempre revisa el código generado.">AI coding tools excel at boilerplate and tests. They're unreliable for novel algorithms and security-critical code. Always review AI-generated output.</p>
+    </div>
+
+    <div style="background:rgba(255,107,61,.06);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 16px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);margin-bottom:6px;"
+        data-en="Ch. 4 · RAG Architecture" data-it="Cap. 4 · Architettura RAG" data-fr="Ch. 4 · Architecture RAG" data-es="Cap. 4 · Arquitectura RAG">Ch. 4 · RAG Architecture</div>
+      <p style="font-size:.7rem;margin:0;"
+        data-en="RAG connects LLMs to your private data via vector search. It solves the knowledge cutoff problem and reduces hallucinations in knowledge-intensive tasks. Retrieval quality determines answer quality."
+        data-it="RAG collega gli LLM ai tuoi dati privati tramite la ricerca vettoriale. Risolve il problema del knowledge cutoff e riduce le allucinazioni in task knowledge-intensive. La qualità del retrieval determina la qualità della risposta."
+        data-fr="RAG connecte les LLM à vos données privées via la recherche vectorielle. Il résout le problème de coupure de connaissance et réduit les hallucinations. La qualité de la récupération détermine la qualité de la réponse."
+        data-es="RAG conecta los LLM a tus datos privados mediante búsqueda vectorial. Resuelve el problema de corte de conocimiento y reduce alucinaciones. La calidad de recuperación determina la calidad de la respuesta.">RAG connects LLMs to private data via vector search, solving the knowledge cutoff problem. Retrieval quality determines answer quality.</p>
+    </div>
+
+    <div style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:14px 16px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--amber);margin-bottom:6px;"
+        data-en="Ch. 5 · AI Agents & MCP" data-it="Cap. 5 · AI Agent e MCP" data-fr="Ch. 5 · Agents IA et MCP" data-es="Cap. 5 · Agentes IA y MCP">Ch. 5 · AI Agents & MCP</div>
+      <p style="font-size:.7rem;margin:0;"
+        data-en="Agents combine LLMs with tools, memory, and planning to execute multi-step tasks autonomously. MCP standardises how models connect to external tools and data. Human oversight remains essential."
+        data-it="Gli Agenti combinano LLM con strumenti, memoria e pianificazione per eseguire task multi-step in modo autonomo. MCP standardizza come i modelli si collegano a strumenti e dati esterni. La supervisione umana rimane essenziale."
+        data-fr="Les Agents combinent LLM avec outils, mémoire et planification pour exécuter des tâches autonomes. MCP standardise la connexion des modèles aux outils. La supervision humaine reste essentielle."
+        data-es="Los Agentes combinan LLMs con herramientas, memoria y planificación para ejecutar tareas autónomas. MCP estandariza cómo los modelos se conectan a herramientas externas. La supervisión humana sigue siendo esencial.">Agents combine LLMs with tools and planning for multi-step autonomy. MCP standardises tool connections. Human oversight is essential.</p>
+    </div>
+
+    <div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:14px 16px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:#ef4444;margin-bottom:6px;"
+        data-en="Ch. 6 · Ethics & Future" data-it="Cap. 6 · Etica e Futuro" data-fr="Ch. 6 · Éthique et Avenir" data-es="Cap. 6 · Ética y Futuro">Ch. 6 · Ethics & Future</div>
+      <p style="font-size:.7rem;margin:0;"
+        data-en="AI amplifies existing biases and creates new risks (hallucinations, deepfakes, job displacement). Responsible AI requires transparency, fairness audits, human oversight, and policy frameworks. The technology is neutral — the choices are ours."
+        data-it="L'AI amplifica i bias esistenti e crea nuovi rischi. Un'AI responsabile richiede trasparenza, audit di equità, supervisione umana e framework normativi. La tecnologia è neutra — le scelte sono nostre."
+        data-fr="L'IA amplifie les biais existants et crée de nouveaux risques. Une IA responsable exige transparence, audits, supervision humaine et cadres politiques. La technologie est neutre — les choix nous appartiennent."
+        data-es="La IA amplifica sesgos existentes y crea nuevos riesgos. La IA responsable requiere transparencia, auditorías, supervisión humana y marcos normativos. La tecnología es neutral — las elecciones son nuestras.">AI amplifies biases and creates new risks. Responsible AI requires transparency, fairness audits, and human oversight. The technology is neutral — the choices are ours.</p>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:14px;">
+    <strong data-en="Above all:" data-it="Soprattutto:" data-fr="Avant tout :" data-es="Ante todo:">Above all:</strong>
+    <span data-en=" AI is a powerful tool, not magic. Understanding its mechanics, limitations, and risks makes you a better builder, user, and decision-maker."
+          data-it=" L'AI è uno strumento potente, non magia. Comprendere i suoi meccanismi, limiti e rischi ti rende un migliore costruttore, utente e decisore."
+          data-fr=" L'IA est un outil puissant, pas de la magie. Comprendre ses mécanismes, limites et risques fait de vous un meilleur développeur et décideur."
+          data-es=" La IA es una herramienta poderosa, no magia. Comprender sus mecanismos, limitaciones y riesgos te convierte en un mejor creador y tomador de decisiones."> AI is a powerful tool, not magic. Understanding its mechanics, limitations, and risks makes you a better builder, user, and decision-maker.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <span class="chapter-tag">Summary</span>
+</section>
+
+<!-- ══════════════════════ AI USE CASES BY INDUSTRY ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Applied AI · Industry Perspective"
+    data-it="AI Applicata · Prospettiva di Settore"
+    data-fr="IA Appliquée · Perspective Sectorielle"
+    data-es="IA Aplicada · Perspectiva por Industria">Applied AI · Industry Perspective</div>
+  <div class="rule"></div>
+  <h2 data-en="AI Use Cases by Industry"
+      data-it="Casi d'Uso dell'AI per Settore"
+      data-fr="Cas d'Usage de l'IA par Secteur"
+      data-es="Casos de Uso de IA por Industria">AI Use Cases by Industry</h2>
+
+  <div style="overflow-x:auto;margin-top:14px;">
+    <table style="width:100%;border-collapse:collapse;font-size:.68rem;">
+      <thead>
+        <tr style="background:var(--bg-card);border-bottom:2px solid var(--border);">
+          <th style="padding:10px 14px;text-align:left;font-family:var(--mono);color:var(--ink-mute);font-weight:500;"
+            data-en="Industry" data-it="Settore" data-fr="Secteur" data-es="Sector">Industry</th>
+          <th style="padding:10px 14px;text-align:left;font-family:var(--mono);color:var(--ink-mute);font-weight:500;"
+            data-en="High-Impact Use Cases" data-it="Casi d'Uso ad Alto Impatto" data-fr="Cas d'Usage à Fort Impact" data-es="Casos de Uso de Alto Impacto">High-Impact Use Cases</th>
+          <th style="padding:10px 14px;text-align:left;font-family:var(--mono);color:var(--ink-mute);font-weight:500;"
+            data-en="Maturity" data-it="Maturità" data-fr="Maturité" data-es="Madurez">Maturity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:9px 14px;font-weight:600;">🏦 Finance</td>
+          <td style="padding:9px 14px;color:var(--ink-mid);"
+            data-en="Fraud detection, credit scoring, document analysis, AML, trading signal generation, customer support chatbots"
+            data-it="Rilevamento frodi, credit scoring, analisi documenti, AML, segnali di trading, chatbot di supporto clienti"
+            data-fr="Détection de fraude, scoring crédit, analyse documentaire, LAB, signaux de trading, chatbots support"
+            data-es="Detección de fraude, scoring crediticio, análisis de documentos, AML, señales de trading, chatbots de soporte">Fraud detection, credit scoring, document analysis, AML, trading signals, customer support chatbots</td>
+          <td style="padding:9px 14px;"><span class="badge badge-green">Production</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:9px 14px;font-weight:600;">🏥 Healthcare</td>
+          <td style="padding:9px 14px;color:var(--ink-mid);"
+            data-en="Clinical note summarisation, radiology image analysis, drug interaction checking, trial matching, literature review"
+            data-it="Riassunto note cliniche, analisi immagini radiologiche, controllo interazioni farmacologiche, matching trial, revisione letteratura"
+            data-fr="Résumé de notes cliniques, analyse d'images radiologiques, vérification interactions médicamenteuses, revue de littérature"
+            data-es="Resumen de notas clínicas, análisis de imágenes radiológicas, verificación de interacciones farmacológicas, revisión de literatura">Clinical note summarisation, radiology image analysis, drug interactions, trial matching, literature review</td>
+          <td style="padding:9px 14px;"><span class="badge badge-det">Regulated</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:9px 14px;font-weight:600;">💻 Software</td>
+          <td style="padding:9px 14px;color:var(--ink-mid);"
+            data-en="Code generation, test writing, PR reviews, documentation, bug triage, legacy code migration"
+            data-it="Generazione codice, scrittura test, revisione PR, documentazione, triage bug, migrazione codice legacy"
+            data-fr="Génération de code, écriture de tests, revues PR, documentation, triage de bugs, migration de code"
+            data-es="Generación de código, escritura de pruebas, revisiones PR, documentación, triage de bugs, migración de código legacy">Code generation, test writing, PR reviews, documentation, bug triage, legacy code migration</td>
+          <td style="padding:9px 14px;"><span class="badge badge-green">Production</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:9px 14px;font-weight:600;">📣 Marketing</td>
+          <td style="padding:9px 14px;color:var(--ink-mid);"
+            data-en="Copy generation, personalisation at scale, SEO content, social media scheduling, campaign analysis, A/B testing copy"
+            data-it="Generazione testi, personalizzazione su scala, contenuti SEO, scheduling social media, analisi campagne, copy A/B"
+            data-fr="Génération de textes, personnalisation à l'échelle, contenu SEO, scheduling réseaux sociaux, analyse de campagnes"
+            data-es="Generación de copias, personalización a escala, contenido SEO, programación social media, análisis de campañas">Copy generation, personalisation at scale, SEO content, social scheduling, campaign analysis</td>
+          <td style="padding:9px 14px;"><span class="badge badge-green">Production</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:9px 14px;font-weight:600;">⚖️ Legal</td>
+          <td style="padding:9px 14px;color:var(--ink-mid);"
+            data-en="Contract review, clause extraction, legal research assistance, due diligence summarisation, drafting standard agreements"
+            data-it="Revisione contratti, estrazione clausole, ricerca legale, sintesi due diligence, bozze di accordi standard"
+            data-fr="Révision de contrats, extraction de clauses, recherche juridique, synthèse due diligence, rédaction d'accords"
+            data-es="Revisión de contratos, extracción de cláusulas, investigación legal, resumen due diligence, redacción de acuerdos">Contract review, clause extraction, legal research, due diligence summarisation, drafting agreements</td>
+          <td style="padding:9px 14px;"><span class="badge badge-prob">Caution ⚠</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:9px 14px;font-weight:600;">🎓 Education</td>
+          <td style="padding:9px 14px;color:var(--ink-mid);"
+            data-en="Personalised tutoring, quiz generation, essay feedback, curriculum design, language learning, teacher admin automation"
+            data-it="Tutoraggio personalizzato, generazione quiz, feedback saggi, design curricoli, apprendimento lingue, automazione admin"
+            data-fr="Tutorat personnalisé, génération de quiz, retour sur essais, conception de curricula, apprentissage des langues"
+            data-es="Tutoría personalizada, generación de cuestionarios, feedback de ensayos, diseño curricular, aprendizaje de idiomas">Personalised tutoring, quiz generation, essay feedback, curriculum design, language learning</td>
+          <td style="padding:9px 14px;"><span class="badge badge-det">Growing</span></td>
+        </tr>
+        <tr>
+          <td style="padding:9px 14px;font-weight:600;">🏭 Industry</td>
+          <td style="padding:9px 14px;color:var(--ink-mid);"
+            data-en="Predictive maintenance (IoT + LLM), supply chain optimisation, quality inspection (vision AI), process documentation"
+            data-it="Manutenzione predittiva (IoT + LLM), ottimizzazione supply chain, ispezione qualità (vision AI), documentazione processi"
+            data-fr="Maintenance prédictive (IoT + LLM), optimisation supply chain, inspection qualité (vision AI), documentation processus"
+            data-es="Mantenimiento predictivo (IoT + LLM), optimización de la cadena de suministro, inspección de calidad (visión IA), documentación">Predictive maintenance (IoT + LLM), supply chain optimisation, quality inspection, process documentation</td>
+          <td style="padding:9px 14px;"><span class="badge badge-det">Emerging</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <span data-en="⚠ High maturity ≠ low risk. Finance and healthcare have production deployments but require rigorous validation, auditability, and regulatory compliance before going live."
+          data-it="⚠ Alta maturità ≠ basso rischio. Finance e healthcare hanno deploy in produzione ma richiedono validazione rigorosa, auditabilità e conformità normativa prima del go-live."
+          data-fr="⚠ Maturité élevée ≠ faible risque. La finance et la santé ont des déploiements en production mais nécessitent validation rigoureuse et conformité réglementaire."
+          data-es="⚠ Alta madurez ≠ bajo riesgo. Finanzas y salud tienen despliegues en producción pero requieren validación rigurosa y cumplimiento normativo antes de lanzarse.">⚠ High maturity ≠ low risk. Finance and healthcare have production deployments but require rigorous validation, auditability, and regulatory compliance.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <span class="chapter-tag">Applied AI</span>
+</section>
 <!-- annex.html -->
 
 
@@ -3666,152 +4274,482 @@
     data-en="Annex" data-it="Allegato" data-fr="Annexe" data-es="Anexo">Annex</div>
   <div class="rule" style="margin:0 auto 28px;"></div>
   <h1 style="text-align:center;"
-    data-en="Glossary &<br>Resources" data-it="Glossario<br>e Risorse" data-fr="Glossaire<br>& Ressources" data-es="Glosario<br>y Recursos">Glossary &<br>Resources</h1>
+    data-en="Additional<br>Materials" data-it="Materiali<br>Aggiuntivi" data-fr="Matériaux<br>Supplémentaires" data-es="Materiales<br>Adicionales">Additional<br>Materials</h1>
   <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
-    data-en="Key terms, model comparison, and curated learning resources."
-    data-it="Termini chiave, confronto tra modelli e risorse di apprendimento selezionate."
-    data-fr="Termes clés, comparaison de modèles et ressources d'apprentissage sélectionnées."
-    data-es="Términos clave, comparación de modelos y recursos de aprendizaje seleccionados.">Key terms, model comparison, and curated learning resources.</p>
+    data-en="Model comparison, technical deep-dives, and curated learning resources."
+    data-it="Confronto tra modelli, approfondimenti tecnici e risorse di apprendimento selezionate."
+    data-fr="Comparaison de modèles, approfondissements techniques et ressources sélectionnées."
+    data-es="Comparación de modelos, profundizaciones técnicas y recursos de aprendizaje seleccionados.">Model comparison, technical deep-dives, and curated learning resources.</p>
   <aside class="notes"></aside>
   <span class="chapter-tag" style="color:rgba(255,255,255,.25);">Annex</span>
 </section>
 
-<!-- ══════════════════════ GLOSSARY A–L ══════════════════════ -->
+<!-- ══════════════════════ PROMPT PATTERNS CHEAT SHEET ══════════════════════ -->
 <section>
   <div class="eyebrow"
-    data-en="Glossary · A–L" data-it="Glossario · A–L" data-fr="Glossaire · A–L" data-es="Glosario · A–L">Glossary · A–L</div>
+    data-en="Quick Reference · Patterns"
+    data-it="Riferimento Rapido · Pattern"
+    data-fr="Référence Rapide · Modèles"
+    data-es="Referencia Rápida · Patrones">Quick Reference · Patterns</div>
   <div class="rule"></div>
-  <h2 data-en="Key Terms (A–L)"
-      data-it="Termini Chiave (A–L)"
-      data-fr="Termes Clés (A–L)"
-      data-es="Términos Clave (A–L)">Key Terms (A–L)</h2>
+  <h2 data-en="Prompt Engineering<br>Patterns Cheat Sheet"
+      data-it="Cheat Sheet dei<br>Pattern di Prompting"
+      data-fr="Aide-Mémoire des<br>Modèles de Prompting"
+      data-es="Hoja de Referencia de<br>Patrones de Prompting">Prompt Engineering<br>Patterns Cheat Sheet</h2>
 
-  <div class="two-col" style="gap:20px;">
-    <dl style="font-size:.75rem;line-height:1.5;margin:0;">
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Attention</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="Mechanism that lets the model weigh the relevance of all tokens in context when generating the next token."
-        data-it="Meccanismo che permette al modello di pesare la rilevanza di tutti i token nel contesto."
-        data-fr="Mécanisme permettant au modèle de pondérer la pertinence de tous les tokens du contexte."
-        data-es="Mecanismo que permite al modelo ponderar la relevancia de todos los tokens en contexto.">Mechanism that lets the model weigh the relevance of all tokens in context when generating the next token.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Context Window</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="The maximum number of tokens (input + output) the model can process at once. GPT-4: 128k. Claude 3.7: 200k."
-        data-it="Il numero massimo di token (input + output) che il modello può elaborare in una volta. GPT-4: 128k. Claude 3.7: 200k."
-        data-fr="Le nombre maximum de tokens (entrée + sortie) que le modèle peut traiter à la fois. GPT-4 : 128k. Claude 3.7 : 200k."
-        data-es="El número máximo de tokens (entrada + salida) que el modelo puede procesar a la vez. GPT-4: 128k. Claude 3.7: 200k.">The maximum number of tokens (input + output) the model can process at once. GPT-4: 128k. Claude 3.7: 200k.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Embedding</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="A dense numerical vector representing the semantic meaning of text. Similar texts have similar vectors."
-        data-it="Un vettore numerico denso che rappresenta il significato semantico del testo. Testi simili hanno vettori simili."
-        data-fr="Un vecteur numérique dense représentant le sens sémantique d'un texte. Les textes similaires ont des vecteurs proches."
-        data-es="Un vector numérico denso que representa el significado semántico del texto. Textos similares tienen vectores similares.">A dense numerical vector representing the semantic meaning of text. Similar texts have similar vectors.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Fine-Tuning</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="Continuing training of a pre-trained model on a smaller, domain-specific dataset to specialise its behaviour."
-        data-it="Continuare il training di un modello pre-addestrato su un dataset specifico e più piccolo per specializzare il suo comportamento."
-        data-fr="Continuation de l'entraînement d'un modèle pré-entraîné sur des données spécifiques pour spécialiser son comportement."
-        data-es="Continuar el entrenamiento de un modelo pre-entrenado en un conjunto de datos específico para especializar su comportamiento.">Continuing training of a pre-trained model on a smaller, domain-specific dataset to specialise its behaviour.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Hallucination</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="When a model generates plausible-sounding but factually incorrect or invented content."
-        data-it="Quando un modello genera contenuti che suonano plausibili ma sono fattualmente errati o inventati."
-        data-fr="Lorsqu'un modèle génère un contenu plausible mais factuellement incorrect ou inventé."
-        data-es="Cuando un modelo genera contenido que suena plausible pero es factualmente incorrecto o inventado.">When a model generates plausible-sounding but factually incorrect or invented content.</dd>
-    </dl>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;">
+    <!-- ROLE -->
+    <div class="model-card" style="padding:14px 14px;">
+      <div class="badge badge-det" style="font-size:.58rem;margin-bottom:8px;"
+        data-en="🎭 Role" data-it="🎭 Ruolo" data-fr="🎭 Rôle" data-es="🎭 Rol">🎭 Role</div>
+      <p style="font-size:.65rem;margin:0 0 8px;"
+        data-en="Assign an expert persona to improve depth and style."
+        data-it="Assegna una persona esperta per migliorare profondità e stile."
+        data-fr="Assigner une persona d'expert pour améliorer profondeur et style."
+        data-es="Asignar una persona experta para mejorar profundidad y estilo.">Assign an expert persona to improve depth and style.</p>
+      <div class="prompt-block" style="font-size:.57rem;padding:8px;">
+        <span class="role">Act as a senior security engineer…</span>
+      </div>
+      <p style="font-size:.6rem;color:var(--green);margin:6px 0 0;"
+        data-en="✓ Tone, expertise, vocabulary"
+        data-it="✓ Tono, competenza, vocabolario"
+        data-fr="✓ Ton, expertise, vocabulaire"
+        data-es="✓ Tono, experiencia, vocabulario">✓ Tone, expertise, vocabulary</p>
+    </div>
 
-    <dl style="font-size:.75rem;line-height:1.5;margin:0;">
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Inference</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="The process of running a trained model to generate output for new inputs. Opposite of training."
-        data-it="Il processo di esecuzione di un modello addestrato per generare output per nuovi input. Opposto del training."
-        data-fr="Le processus d'exécution d'un modèle entraîné pour générer des sorties sur de nouvelles entrées. Opposé à l'entraînement."
-        data-es="El proceso de ejecutar un modelo entrenado para generar salidas para nuevas entradas. Opuesto al entrenamiento.">The process of running a trained model to generate output for new inputs. Opposite of training.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">LLM</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="Large Language Model. A neural network trained on massive text corpora to predict and generate text."
-        data-it="Large Language Model. Una rete neurale addestrata su enormi corpus di testo per predire e generare testo."
-        data-fr="Large Language Model. Un réseau de neurones entraîné sur d'immenses corpus textuels pour prédire et générer du texte."
-        data-es="Large Language Model. Una red neuronal entrenada en enormes corpus de texto para predecir y generar texto.">Large Language Model. A neural network trained on massive text corpora to predict and generate text.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">LoRA</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="Low-Rank Adaptation. Efficient fine-tuning technique that trains fewer parameters by adding small adapter matrices."
-        data-it="Low-Rank Adaptation. Tecnica di fine-tuning efficiente che addestra meno parametri aggiungendo piccole matrici adapter."
-        data-fr="Low-Rank Adaptation. Technique de fine-tuning efficace qui entraîne moins de paramètres via des matrices adaptateur."
-        data-es="Low-Rank Adaptation. Técnica de fine-tuning eficiente que entrena menos parámetros añadiendo matrices adaptadoras.">Low-Rank Adaptation. Efficient fine-tuning that trains fewer parameters via small adapter matrices.</dd>
-    </dl>
+    <!-- CoT -->
+    <div class="model-card" style="padding:14px 14px;">
+      <div class="badge badge-purple" style="font-size:.58rem;margin-bottom:8px;"
+        data-en="🔗 Chain-of-Thought" data-it="🔗 Chain-of-Thought" data-fr="🔗 Chaîne de Réflexion" data-es="🔗 Cadena de Razonamiento">🔗 Chain-of-Thought</div>
+      <p style="font-size:.65rem;margin:0 0 8px;"
+        data-en="Force step-by-step reasoning before the final answer."
+        data-it="Forza il ragionamento passo passo prima della risposta finale."
+        data-fr="Forcer un raisonnement étape par étape avant la réponse."
+        data-es="Forzar razonamiento paso a paso antes de la respuesta final.">Force step-by-step reasoning before the final answer.</p>
+      <div class="prompt-block" style="font-size:.57rem;padding:8px;">
+        <span class="role">Think step by step.<br>First, identify…<br>Then, calculate…</span>
+      </div>
+      <p style="font-size:.6rem;color:var(--green);margin:6px 0 0;"
+        data-en="✓ Math, logic, complex analysis"
+        data-it="✓ Matematica, logica, analisi complesse"
+        data-fr="✓ Maths, logique, analyses complexes"
+        data-es="✓ Matemáticas, lógica, análisis complejos">✓ Math, logic, complex analysis</p>
+    </div>
+
+    <!-- Few-Shot -->
+    <div class="model-card" style="padding:14px 14px;">
+      <div class="badge badge-green" style="font-size:.58rem;margin-bottom:8px;"
+        data-en="📋 Few-Shot" data-it="📋 Few-Shot" data-fr="📋 Few-Shot" data-es="📋 Few-Shot">📋 Few-Shot</div>
+      <p style="font-size:.65rem;margin:0 0 8px;"
+        data-en="Show 2–5 examples to define the expected format and style."
+        data-it="Mostra 2–5 esempi per definire il formato e lo stile atteso."
+        data-fr="Montrer 2–5 exemples pour définir le format et le style attendus."
+        data-es="Mostrar 2–5 ejemplos para definir el formato y estilo esperados.">Show 2–5 examples to define the expected format and style.</p>
+      <div class="prompt-block" style="font-size:.57rem;padding:8px;">
+        "Great!" → Positive<br>
+        "Awful." → Negative<br>
+        <span class="role">"Decent." → ?</span>
+      </div>
+      <p style="font-size:.6rem;color:var(--green);margin:6px 0 0;"
+        data-en="✓ Custom formats, niche tasks"
+        data-it="✓ Formati custom, task di nicchia"
+        data-fr="✓ Formats custom, tâches niche"
+        data-es="✓ Formatos personalizados, tareas nicho">✓ Custom formats, niche tasks</p>
+    </div>
+
+    <!-- Structured Output -->
+    <div class="model-card" style="padding:14px 14px;">
+      <div class="badge badge-det" style="font-size:.58rem;margin-bottom:8px;background:rgba(251,191,36,.15);color:var(--amber);border-color:rgba(251,191,36,.3);"
+        data-en="📐 Structured Output" data-it="📐 Output Strutturato" data-fr="📐 Sortie Structurée" data-es="📐 Salida Estructurada">📐 Structured Output</div>
+      <p style="font-size:.65rem;margin:0 0 8px;"
+        data-en="Specify exact format: JSON, table, YAML, Markdown. Enables machine parsing."
+        data-it="Specifica il formato esatto: JSON, tabella, YAML, Markdown. Abilita il parsing automatico."
+        data-fr="Spécifier le format exact : JSON, table, YAML, Markdown. Permet l'analyse automatique."
+        data-es="Especificar formato exacto: JSON, tabla, YAML. Permite análisis automático.">Specify exact format: JSON, table, YAML. Enables machine parsing.</p>
+      <div class="prompt-block" style="font-size:.57rem;padding:8px;">
+        <span class="highlight">Return JSON:<br>{"name":…,"score":…,"tags":[…]}</span>
+      </div>
+      <p style="font-size:.6rem;color:var(--green);margin:6px 0 0;"
+        data-en="✓ APIs, pipelines, automation"
+        data-it="✓ API, pipeline, automazione"
+        data-fr="✓ APIs, pipelines, automatisation"
+        data-es="✓ APIs, pipelines, automatización">✓ APIs, pipelines, automation</p>
+    </div>
   </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px;">
+    <!-- ReAct -->
+    <div class="model-card" style="padding:12px 14px;">
+      <div class="badge badge-purple" style="font-size:.58rem;margin-bottom:6px;"
+        data-en="⚡ ReAct" data-it="⚡ ReAct" data-fr="⚡ ReAct" data-es="⚡ ReAct">⚡ ReAct</div>
+      <p style="font-size:.63rem;margin:0;"
+        data-en="Reason → Act → Observe → Repeat. Used in agents with tool access."
+        data-it="Ragiona → Agisci → Osserva → Ripeti. Usato negli agenti con accesso ai tool."
+        data-fr="Raisonner → Agir → Observer → Répéter. Utilisé dans les agents."
+        data-es="Razonar → Actuar → Observar → Repetir. Usado en agentes con herramientas.">Reason → Act → Observe → Repeat. Used in agents with tool access.</p>
+    </div>
+    <!-- Meta-Prompting -->
+    <div class="model-card" style="padding:12px 14px;">
+      <div class="badge badge-det" style="font-size:.58rem;margin-bottom:6px;"
+        data-en="🔄 Meta-Prompting" data-it="🔄 Meta-Prompting" data-fr="🔄 Méta-Prompting" data-es="🔄 Meta-Prompting">🔄 Meta-Prompting</div>
+      <p style="font-size:.63rem;margin:0;"
+        data-en='"Improve this prompt to be clearer…" — let the model optimise its own instructions.'
+        data-it='"Migliora questo prompt…" — lascia che il modello ottimizzi le proprie istruzioni.'
+        data-fr='"Améliore ce prompt…" — laisser le modèle optimiser ses propres instructions.'
+        data-es='"Mejora este prompt…" — permite que el modelo optimice sus propias instrucciones.'>"Improve this prompt…" — let the model optimise its own instructions.</p>
+    </div>
+    <!-- Negative Constraints -->
+    <div class="model-card" style="padding:12px 14px;">
+      <div class="badge badge-prob" style="font-size:.58rem;margin-bottom:6px;"
+        data-en="🚫 Negative Constraints" data-it="🚫 Vincoli Negativi" data-fr="🚫 Contraintes Négatives" data-es="🚫 Restricciones Negativas">🚫 Negative Constraints</div>
+      <p style="font-size:.63rem;margin:0;"
+        data-en='"Do NOT use bullet points. Never mention competitors." Explicit guardrails improve reliability.'
+        data-it='"NON usare elenchi puntati. Non menzionare i concorrenti." I limiti espliciti migliorano l&apos;affidabilità.'
+        data-fr='"Ne PAS utiliser de puces. Ne jamais mentionner les concurrents." Les garde-fous explicites améliorent la fiabilité.'
+        data-es='"NO uses viñetas. Nunca menciones a la competencia." Los límites explícitos mejoran la fiabilidad.'>"Do NOT use bullet points." Explicit guardrails improve reliability.</p>
+    </div>
+    <!-- Reference Grounding -->
+    <div class="model-card" style="padding:12px 14px;">
+      <div class="badge badge-green" style="font-size:.58rem;margin-bottom:6px;"
+        data-en="📌 Grounding" data-it="📌 Ancoraggio" data-fr="📌 Ancrage" data-es="📌 Anclaje">📌 Grounding</div>
+      <p style="font-size:.63rem;margin:0;"
+        data-en="Provide reference text: "Answer ONLY using the document below." Reduces hallucinations."
+        data-it="Fornisci testo di riferimento: "Rispondi SOLO usando il documento sotto." Riduce le allucinazioni."
+        data-fr="Fournir un texte de référence: "Réponds UNIQUEMENT avec ce document." Réduit les hallucinations."
+        data-es="Proveer texto de referencia: "Responde SOLO usando el documento." Reduce alucinaciones.">"Answer ONLY using the document below." Reduces hallucinations.</p>
+    </div>
+  </div>
+
   <aside class="notes"></aside>
-  <span class="chapter-tag">Annex · Glossary A–L</span>
+  <span class="chapter-tag">Annex</span>
 </section>
 
-<!-- ══════════════════════ GLOSSARY M–Z ══════════════════════ -->
+<!-- ══════════════════════ TYPICAL AI WORKFLOW ══════════════════════ -->
 <section>
   <div class="eyebrow"
-    data-en="Glossary · M–Z" data-it="Glossario · M–Z" data-fr="Glossaire · M–Z" data-es="Glosario · M–Z">Glossary · M–Z</div>
+    data-en="Bridge · Prompt to Output"
+    data-it="Connessione · Prompt → Output"
+    data-fr="Pont · Prompt → Sortie"
+    data-es="Puente · Prompt → Salida">Bridge · Prompt to Output</div>
   <div class="rule"></div>
-  <h2 data-en="Key Terms (M–Z)"
-      data-it="Termini Chiave (M–Z)"
-      data-fr="Termes Clés (M–Z)"
-      data-es="Términos Clave (M–Z)">Key Terms (M–Z)</h2>
+  <h2 data-en="A Typical<br>AI Workflow"
+      data-it="Un Tipico<br>Workflow AI"
+      data-fr="Un Workflow<br>IA Typique"
+      data-es="Un Flujo de Trabajo<br>IA Típico">A Typical<br>AI Workflow</h2>
 
-  <div class="two-col" style="gap:20px;">
-    <dl style="font-size:.75rem;line-height:1.5;margin:0;">
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">MCP</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="Model Context Protocol. Open standard by Anthropic (2024) for connecting AI apps to external tools and data sources."
-        data-it="Model Context Protocol. Standard aperto di Anthropic (2024) per connettere app AI a strumenti e sorgenti dati esterne."
-        data-fr="Model Context Protocol. Standard ouvert d'Anthropic (2024) pour connecter les apps IA à des outils et données externes."
-        data-es="Model Context Protocol. Estándar abierto de Anthropic (2024) para conectar apps IA a herramientas y fuentes de datos externas.">Model Context Protocol. Open standard by Anthropic (2024) for connecting AI apps to external tools.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Parameters</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="The numerical weights of a model, learned during training. GPT-4: ~1.8T. Llama 3: 70B–405B. More ≈ more capable."
-        data-it="I pesi numerici di un modello, appresi durante il training. GPT-4: ~1.8T. Llama 3: 70B–405B. Più ≈ più capace."
-        data-fr="Les poids numériques d'un modèle, appris durant l'entraînement. GPT-4 : ~1,8T. Llama 3 : 70B–405B. Plus = plus capable."
-        data-es="Los pesos numéricos de un modelo, aprendidos durante el entrenamiento. GPT-4: ~1.8T. Llama 3: 70B–405B.">The numerical weights of a model learned during training. GPT-4: ~1.8T params. More ≈ more capable.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">RAG</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="Retrieval-Augmented Generation. Pattern that retrieves relevant documents at query time and injects them into the prompt."
-        data-it="Retrieval-Augmented Generation. Pattern che recupera documenti rilevanti al momento della query e li inietta nel prompt."
-        data-fr="Retrieval-Augmented Generation. Schéma qui récupère des documents pertinents à la requête et les injecte dans le prompt."
-        data-es="Retrieval-Augmented Generation. Patrón que recupera documentos relevantes en tiempo de consulta e los inyecta en el prompt.">Retrieval-Augmented Generation. Retrieves relevant documents at query time and injects them into the prompt.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">System Prompt</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="A hidden instruction block prepended before the user's message. Sets the model's role, tone, and constraints."
-        data-it="Un blocco di istruzioni nascosto preposto prima del messaggio dell'utente. Imposta ruolo, tono e vincoli del modello."
-        data-fr="Un bloc d'instructions masqué placé avant le message de l'utilisateur. Définit rôle, ton et contraintes du modèle."
-        data-es="Un bloque de instrucciones oculto antes del mensaje del usuario. Establece el rol, tono y restricciones del modelo.">Hidden instruction block before the user's message. Sets the model's role, tone, and constraints.</dd>
-    </dl>
-
-    <dl style="font-size:.75rem;line-height:1.5;margin:0;">
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Temperature</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="0 = deterministic / predictable. 1 = creative / variable. Controls randomness in token selection."
-        data-it="0 = deterministico / prevedibile. 1 = creativo / variabile. Controlla la casualità nella selezione dei token."
-        data-fr="0 = déterministe / prévisible. 1 = créatif / variable. Contrôle l'aléatoire dans la sélection des tokens."
-        data-es="0 = determinista / predecible. 1 = creativo / variable. Controla la aleatoriedad en la selección de tokens.">0 = deterministic / predictable. 1 = creative / variable. Controls randomness in token selection.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Token</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="The basic unit of text for LLMs. ~¾ of a word on average. 'Understanding' = 1 token. 1000 tokens ≈ 750 words."
-        data-it="L'unità base di testo per gli LLM. ~¾ di una parola in media. 'Comprendere' = 1 token. 1000 token ≈ 750 parole."
-        data-fr="Unité de base du texte pour les LLM. ~¾ d'un mot en moyenne. 1000 tokens ≈ 750 mots."
-        data-es="La unidad básica de texto para LLMs. ~¾ de una palabra en promedio. 1000 tokens ≈ 750 palabras.">The basic unit of text for LLMs. ~¾ of a word on average. 1000 tokens ≈ 750 words.</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Transformer</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="The neural network architecture at the core of all modern LLMs. Introduced by Google in 'Attention Is All You Need' (2017)."
-        data-it="L'architettura di rete neurale al core di tutti gli LLM moderni. Introdotta da Google in 'Attention Is All You Need' (2017)."
-        data-fr="L'architecture de réseau de neurones au cœur de tous les LLM modernes. Introduite par Google (2017)."
-        data-es="La arquitectura de red neuronal en el núcleo de todos los LLMs modernos. Introducida por Google (2017).">Neural network architecture at the core of all modern LLMs. Introduced by Google (2017).</dd>
-      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Vector Database</dt>
-      <dd style="margin-left:0;color:var(--ink-mid);"
-        data-en="A database optimised for storing and searching high-dimensional vectors. Used for semantic search in RAG systems."
-        data-it="Un database ottimizzato per archiviare e ricercare vettori ad alta dimensione. Usato per la ricerca semantica nei sistemi RAG."
-        data-fr="Base de données optimisée pour stocker et rechercher des vecteurs de haute dimension. Utilisée pour la recherche sémantique RAG."
-        data-es="Base de datos optimizada para almacenar y buscar vectores de alta dimensión. Usada para búsqueda semántica en sistemas RAG.">Database optimised for high-dimensional vector search. Used for semantic search in RAG systems.</dd>
-    </dl>
+  <div class="flow-row" style="margin:24px 0 0;flex-wrap:nowrap;gap:6px;">
+    <div class="flow-box blue" style="flex:1;font-size:.7rem;padding:14px 8px;text-align:center;"
+      data-en="💬 Prompt<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>User or app<br>sends request</span>"
+      data-it="💬 Prompt<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Utente o app invia richiesta</span>"
+      data-fr="💬 Prompt<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>L'utilisateur envoie la requête</span>"
+      data-es="💬 Prompt<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Usuario o app envía solicitud</span>">💬 Prompt<br><span style="font-size:.55rem;font-weight:400;opacity:.7;">User or app<br>sends request</span></div>
+    <div class="flow-arrow" style="font-size:.9rem;">→</div>
+    <div class="flow-box purple" style="flex:1;font-size:.7rem;padding:14px 8px;text-align:center;"
+      data-en="🔤 Tokenize<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Text → token IDs<br>~¾ word each</span>"
+      data-it="🔤 Tokenizza<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Testo → ID token</span>"
+      data-fr="🔤 Tokeniser<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Texte → IDs de tokens</span>"
+      data-es="🔤 Tokenizar<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Texto → IDs de tokens</span>">🔤 Tokenize<br><span style="font-size:.55rem;font-weight:400;opacity:.7;">Text → token IDs<br>~¾ word each</span></div>
+    <div class="flow-arrow" style="font-size:.9rem;">→</div>
+    <div class="flow-box dark" style="flex:1.3;font-size:.7rem;padding:14px 8px;text-align:center;background:rgba(27,94,255,.15);border-color:rgba(27,94,255,.3);"
+      data-en="🧠 LLM Inference<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Attention + FFN layers<br>generate probabilities</span>"
+      data-it="🧠 Inferenza LLM<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Layer Attention + FFN<br>generano probabilità</span>"
+      data-fr="🧠 Inférence LLM<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Attention + FFN<br>génèrent probabilités</span>"
+      data-es="🧠 Inferencia LLM<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Attention + FFN<br>generan probabilidades</span>">🧠 LLM Inference<br><span style="font-size:.55rem;font-weight:400;opacity:.7;">Attention + FFN layers<br>generate probabilities</span></div>
+    <div class="flow-arrow" style="font-size:.9rem;">→</div>
+    <div class="flow-box amber" style="flex:1.2;font-size:.7rem;padding:14px 8px;text-align:center;"
+      data-en="🛠️ Tools / RAG<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Search, run code,<br>call APIs (optional)</span>"
+      data-it="🛠️ Tool / RAG<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Cerca, esegui codice,<br>chiama API (opzionale)</span>"
+      data-fr="🛠️ Outils / RAG<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Recherche, code,<br>APIs (optionnel)</span>"
+      data-es="🛠️ Herramientas / RAG<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Búsqueda, código,<br>APIs (opcional)</span>">🛠️ Tools / RAG<br><span style="font-size:.55rem;font-weight:400;opacity:.7;">Search, run code,<br>call APIs (optional)</span></div>
+    <div class="flow-arrow" style="font-size:.9rem;">→</div>
+    <div class="flow-box green" style="flex:1;font-size:.7rem;padding:14px 8px;text-align:center;"
+      data-en="📄 Output<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Text, JSON,<br>code, image…</span>"
+      data-it="📄 Output<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Testo, JSON,<br>codice, immagine…</span>"
+      data-fr="📄 Sortie<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Texte, JSON,<br>code, image…</span>"
+      data-es="📄 Salida<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Texto, JSON,<br>código, imagen…</span>">📄 Output<br><span style="font-size:.55rem;font-weight:400;opacity:.7;">Text, JSON,<br>code, image…</span></div>
+    <div class="flow-arrow" style="font-size:.9rem;">→</div>
+    <div class="flow-box" style="flex:1.2;font-size:.7rem;padding:14px 8px;text-align:center;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);border-radius:10px;"
+      data-en="👤 Human<br>Validation<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Review, verify,<br>approve or refine</span>"
+      data-it="👤 Validazione<br>Umana<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Revisione, verifica</span>"
+      data-fr="👤 Validation<br>Humaine<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Révision, vérification</span>"
+      data-es="👤 Validación<br>Humana<br><span style='font-size:.55rem;font-weight:400;opacity:.7;'>Revisión, verificar</span>">👤 Human<br>Validation<br><span style="font-size:.55rem;font-weight:400;opacity:.7;">Review, verify,<br>approve or refine</span></div>
   </div>
+
+  <div style="text-align:center;margin:12px 0 4px;font-family:var(--mono);font-size:.65rem;color:var(--ink-mute);"
+    data-en="⟳ Iterate — refine the prompt based on output quality until the result is satisfactory"
+    data-it="⟳ Itera — raffina il prompt basandosi sulla qualità dell'output finché il risultato è soddisfacente"
+    data-fr="⟳ Itérer — affiner le prompt selon la qualité de la sortie jusqu'à satisfaction"
+    data-es="⟳ Iterar — refinar el prompt según la calidad del resultado hasta estar satisfecho">⟳ Iterate — refine the prompt based on output quality until the result is satisfactory</div>
+
+  <div class="two-col" style="margin-top:16px;gap:16px;">
+    <div class="model-card" style="padding:14px 16px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em;"
+        data-en="Simple workflow (no tools)" data-it="Workflow semplice (senza tool)" data-fr="Workflow simple (sans outils)" data-es="Flujo simple (sin herramientas)">Simple workflow (no tools)</div>
+      <div class="flow-row" style="gap:6px;font-size:.65rem;">
+        <div class="flow-box blue" style="padding:6px 10px;">User prompt</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box dark" style="padding:6px 10px;background:rgba(27,94,255,.15);border-color:rgba(27,94,255,.3);">LLM</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box green" style="padding:6px 10px;">Response</div>
+      </div>
+      <p style="font-size:.65rem;color:var(--ink-mute);margin:8px 0 0;"
+        data-en="E.g. ChatGPT, Claude.ai direct chat — ideal for writing, summarisation, Q&amp;A."
+        data-it="Es. chat diretta ChatGPT, Claude.ai — ideale per scrittura, riassunto, Q&amp;A."
+        data-fr="Ex. ChatGPT, Claude.ai — idéal pour l'écriture, le résumé, le Q&amp;R."
+        data-es="Ej. ChatGPT, Claude.ai — ideal para escritura, resumen, Q&amp;A.">E.g. ChatGPT, Claude.ai — ideal for writing, summarisation, Q&amp;A.</p>
+    </div>
+    <div class="model-card" style="padding:14px 16px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--purple);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em;"
+        data-en="Agentic workflow (with tools)" data-it="Workflow agentico (con tool)" data-fr="Workflow agentique (avec outils)" data-es="Flujo agéntico (con herramientas)">Agentic workflow (with tools)</div>
+      <div class="flow-row" style="gap:4px;font-size:.62rem;flex-wrap:wrap;">
+        <div class="flow-box blue" style="padding:5px 8px;">Prompt</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box dark" style="padding:5px 8px;background:rgba(27,94,255,.15);border-color:rgba(27,94,255,.3);">LLM</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box amber" style="padding:5px 8px;">Tool call</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box purple" style="padding:5px 8px;">Result</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box dark" style="padding:5px 8px;background:rgba(27,94,255,.15);border-color:rgba(27,94,255,.3);">LLM</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box green" style="padding:5px 8px;">Answer</div>
+      </div>
+      <p style="font-size:.65rem;color:var(--ink-mute);margin:8px 0 0;"
+        data-en="E.g. RAG pipeline, Copilot coding assistant, autonomous agents — iterate over external data."
+        data-it="Es. pipeline RAG, Copilot, agenti autonomi — iterano su dati esterni."
+        data-fr="Ex. pipeline RAG, Copilot, agents autonomes — itèrent sur données externes."
+        data-es="Ej. pipeline RAG, Copilot, agentes autónomos — iteran sobre datos externos.">E.g. RAG pipeline, Copilot, autonomous agents — iterate over external data.</p>
+    </div>
+  </div>
+
   <aside class="notes"></aside>
-  <span class="chapter-tag">Annex · Glossary M–Z</span>
+  <span class="chapter-tag">Annex</span>
+</section>
+
+<!-- ══════════════════════ MODERN AI STACK ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Architecture Overview"
+    data-it="Architettura di Sistema"
+    data-fr="Architecture Globale"
+    data-es="Arquitectura General">Architecture Overview</div>
+  <div class="rule"></div>
+  <h2 data-en="The Modern AI Stack"
+      data-it="Il Modern AI Stack"
+      data-fr="Le Stack IA Moderne"
+      data-es="El Stack de IA Moderno">The Modern AI Stack</h2>
+
+  <div style="display:flex;flex-direction:column;gap:8px;margin-top:16px;max-width:700px;margin-left:auto;margin-right:auto;">
+
+    <!-- App Layer -->
+    <div style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);border-radius:10px;padding:14px 20px;display:flex;align-items:center;gap:16px;">
+      <div style="font-size:1.6rem;flex-shrink:0;">📱</div>
+      <div style="flex:1;">
+        <div style="font-family:var(--mono);font-size:.7rem;color:var(--accent);font-weight:600;margin-bottom:3px;"
+          data-en="Application Layer" data-it="Livello Applicazione" data-fr="Couche Application" data-es="Capa de Aplicación">Application Layer</div>
+        <div style="font-size:.7rem;color:var(--ink-mute);"
+          data-en="Chat UI, web app, API gateway, mobile app — what users interact with"
+          data-it="Chat UI, app web, API gateway, app mobile — ciò con cui gli utenti interagiscono"
+          data-fr="Interface chat, app web, passerelle API, app mobile — ce avec quoi les utilisateurs interagissent"
+          data-es="Chat UI, app web, API gateway, app móvil — con qué interactúan los usuarios">Chat UI, web app, API gateway, mobile app — what users interact with</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);white-space:nowrap;">Vercel · Streamlit · FastAPI</div>
+    </div>
+
+    <!-- Agents Layer -->
+    <div style="text-align:center;font-size:.7rem;color:var(--ink-mute);">↕ orchestration</div>
+    <div style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:10px;padding:14px 20px;display:flex;align-items:center;gap:16px;">
+      <div style="font-size:1.6rem;flex-shrink:0;">🤖</div>
+      <div style="flex:1;">
+        <div style="font-family:var(--mono);font-size:.7rem;color:var(--purple);font-weight:600;margin-bottom:3px;"
+          data-en="Agents / Orchestration" data-it="Agenti / Orchestrazione" data-fr="Agents / Orchestration" data-es="Agentes / Orquestación">Agents / Orchestration</div>
+        <div style="font-size:.7rem;color:var(--ink-mute);"
+          data-en="Planner, tool selection, multi-step reasoning, memory management, human-in-the-loop"
+          data-it="Pianificatore, selezione tool, ragionamento a più passi, gestione memoria, supervisione umana"
+          data-fr="Planificateur, sélection d'outils, raisonnement multi-étapes, gestion mémoire, supervision humaine"
+          data-es="Planificador, selección de herramientas, razonamiento multi-paso, gestión de memoria, supervisión humana">Planner, tool selection, multi-step reasoning, memory management, human-in-the-loop</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--purple);white-space:nowrap;">LangGraph · AutoGen · MCP</div>
+    </div>
+
+    <!-- LLM Layer -->
+    <div style="text-align:center;font-size:.7rem;color:var(--ink-mute);">↕ inference</div>
+    <div style="background:rgba(27,94,255,.12);border:2px solid rgba(27,94,255,.3);border-radius:10px;padding:14px 20px;display:flex;align-items:center;gap:16px;">
+      <div style="font-size:1.6rem;flex-shrink:0;">🧠</div>
+      <div style="flex:1;">
+        <div style="font-family:var(--mono);font-size:.7rem;color:var(--accent);font-weight:600;margin-bottom:3px;"
+          data-en="LLM Core (the engine)" data-it="LLM Core (il motore)" data-fr="LLM Core (le moteur)" data-es="LLM Core (el motor)">LLM Core (the engine)</div>
+        <div style="font-size:.7rem;color:var(--ink-mute);"
+          data-en="Foundation model: GPT-4o, Claude Sonnet 4, Gemini 2.5, Llama 3, Mistral — generates tokens"
+          data-it="Modello base: GPT-4o, Claude Sonnet 4, Gemini 2.5, Llama 3 — genera token"
+          data-fr="Modèle de base : GPT-4o, Claude Sonnet 4, Gemini 2.5 — génère des tokens"
+          data-es="Modelo base: GPT-4o, Claude Sonnet 4, Gemini 2.5, Llama 3 — genera tokens">Foundation model: GPT-4o, Claude Sonnet 4, Gemini 2.5, Llama 3 — generates tokens</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);white-space:nowrap;">OpenAI · Anthropic · Google</div>
+    </div>
+
+    <!-- Knowledge Layer -->
+    <div style="text-align:center;font-size:.7rem;color:var(--ink-mute);">↕ retrieval</div>
+    <div style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.22);border-radius:10px;padding:14px 20px;display:flex;align-items:center;gap:16px;">
+      <div style="font-size:1.6rem;flex-shrink:0;">📚</div>
+      <div style="flex:1;">
+        <div style="font-family:var(--mono);font-size:.7rem;color:var(--green);font-weight:600;margin-bottom:3px;"
+          data-en="Knowledge / Context" data-it="Conoscenza / Contesto" data-fr="Connaissance / Contexte" data-es="Conocimiento / Contexto">Knowledge / Context</div>
+        <div style="font-size:.7rem;color:var(--ink-mute);"
+          data-en="Vector DB (semantic search), relational DB, docs, APIs, tools, real-time data"
+          data-it="Vector DB (ricerca semantica), DB relazionali, documenti, API, strumenti, dati real-time"
+          data-fr="Vector DB, base de données relationnelle, documents, APIs, outils, données temps réel"
+          data-es="Vector DB (búsqueda semántica), BD relacional, documentos, APIs, herramientas, datos en tiempo real">Vector DB (semantic search), relational DB, documents, APIs, tools, real-time data</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--green);white-space:nowrap;">Pinecone · pgvector · Weaviate</div>
+    </div>
+
+    <!-- Infra Layer -->
+    <div style="text-align:center;font-size:.7rem;color:var(--ink-mute);">↕ compute</div>
+    <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 20px;display:flex;align-items:center;gap:16px;">
+      <div style="font-size:1.6rem;flex-shrink:0;">⚡</div>
+      <div style="flex:1;">
+        <div style="font-family:var(--mono);font-size:.7rem;color:var(--accent2);font-weight:600;margin-bottom:3px;"
+          data-en="Infrastructure" data-it="Infrastruttura" data-fr="Infrastructure" data-es="Infraestructura">Infrastructure</div>
+        <div style="font-size:.7rem;color:var(--ink-mute);"
+          data-en="GPU clusters, cloud (AWS/GCP/Azure), monitoring (LLMOps), cost tracking, security"
+          data-it="Cluster GPU, cloud (AWS/GCP/Azure), monitoraggio (LLMOps), tracciamento costi, sicurezza"
+          data-fr="Clusters GPU, cloud (AWS/GCP/Azure), monitoring (LLMOps), suivi coûts, sécurité"
+          data-es="Clusters GPU, cloud (AWS/GCP/Azure), monitorización (LLMOps), seguimiento costes, seguridad">GPU clusters, cloud (AWS/GCP/Azure), monitoring (LLMOps), cost tracking, security</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);white-space:nowrap;">AWS · GCP · Azure · Weights&amp;Biases</div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:14px;">
+    <strong data-en="Key principle:" data-it="Principio chiave:" data-fr="Principe clé :" data-es="Principio clave:">Key principle:</strong>
+    <span data-en=" The LLM is just one layer. Production AI systems need a full stack — orchestration, retrieval, monitoring, and human validation."
+          data-it=" L'LLM è solo un livello. I sistemi AI in produzione richiedono uno stack completo — orchestrazione, retrieval, monitoraggio e validazione umana."
+          data-fr=" L'LLM n'est qu'une couche. Les systèmes IA en production ont besoin d'un stack complet — orchestration, retrieval, monitoring et validation humaine."
+          data-es=" El LLM es solo una capa. Los sistemas IA en producción necesitan un stack completo — orquestación, recuperación, monitorización y validación humana."> The LLM is just one layer. Production AI systems need a full stack — orchestration, retrieval, monitoring, and human validation.</span>
+  </div>
+
+  <aside class="notes"></aside>
+  <span class="chapter-tag">Annex</span>
+</section>
+
+<!-- ══════════════════════ COST OF AI ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Economics · AI Deployment"
+    data-it="Economia · Deployment AI"
+    data-fr="Économie · Déploiement IA"
+    data-es="Economía · Despliegue IA">Economics · AI Deployment</div>
+  <div class="rule"></div>
+  <h2 data-en="The Cost of AI"
+      data-it="Il Costo dell'AI"
+      data-fr="Le Coût de l'IA"
+      data-es="El Costo de la IA">The Cost of AI</h2>
+
+  <div class="two-col" style="align-items:start;margin-top:8px;">
+    <div>
+      <div class="badge badge-det" style="margin-bottom:12px;"
+        data-en="💰 What Drives Cost" data-it="💰 Cosa Determina il Costo" data-fr="💰 Ce qui Drive les Coûts" data-es="💰 Qué Impulsa el Costo">💰 What Drives Cost</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:rgba(27,94,255,.06);border-left:3px solid var(--accent);padding:10px 14px;border-radius:6px;">
+          <div style="font-family:var(--mono);font-size:.65rem;color:var(--accent);"
+            data-en="📦 Model Size" data-it="📦 Dimensione Modello" data-fr="📦 Taille du Modèle" data-es="📦 Tamaño del Modelo">📦 Model Size</div>
+          <p style="font-size:.7rem;margin:4px 0 0;"
+            data-en="Larger models (GPT-4, Claude Sonnet 4) cost 10–100× more per call than smaller ones (GPT-4o mini, Haiku)."
+            data-it="I modelli grandi costano 10–100× di più per chiamata rispetto a quelli piccoli (GPT-4o mini, Haiku)."
+            data-fr="Les grands modèles coûtent 10 à 100× plus par appel que les petits (GPT-4o mini, Haiku)."
+            data-es="Los modelos grandes cuestan 10–100× más por llamada que los pequeños (GPT-4o mini, Haiku).">Larger models cost 10–100× more per call than smaller ones (GPT-4o mini, Haiku).</p>
+        </div>
+        <div style="background:rgba(27,94,255,.06);border-left:3px solid var(--accent);padding:10px 14px;border-radius:6px;">
+          <div style="font-family:var(--mono);font-size:.65rem;color:var(--accent);"
+            data-en="🔤 Tokens In + Out" data-it="🔤 Token In + Out" data-fr="🔤 Tokens Entrée + Sortie" data-es="🔤 Tokens Entrada + Salida">🔤 Tokens In + Out</div>
+          <p style="font-size:.7rem;margin:4px 0 0;"
+            data-en="Pricing is per token. Long context windows, large documents, or verbose prompts all increase cost. Output tokens cost 3–5× more."
+            data-it="Il prezzo è per token. Finestre di contesto lunghe o prompt verbose aumentano il costo. I token di output costano 3–5× di più."
+            data-fr="La tarification est par token. Fenêtres de contexte longues augmentent le coût. Les tokens de sortie coûtent 3–5× plus."
+            data-es="El precio es por token. Contextos largos o prompts verbosos aumentan el costo. Los tokens de salida cuestan 3–5× más.">Pricing is per token. Long context, verbose prompts all increase cost. Output tokens cost 3–5× more.</p>
+        </div>
+        <div style="background:rgba(27,94,255,.06);border-left:3px solid var(--accent);padding:10px 14px;border-radius:6px;">
+          <div style="font-family:var(--mono);font-size:.65rem;color:var(--accent);"
+            data-en="🔁 Call Frequency" data-it="🔁 Frequenza delle Chiamate" data-fr="🔁 Fréquence des Appels" data-es="🔁 Frecuencia de Llamadas">🔁 Call Frequency</div>
+          <p style="font-size:.7rem;margin:4px 0 0;"
+            data-en="1M users × 10 messages/day × 1k tokens = 10B tokens/day. At $1/1M tokens that's $10k/day."
+            data-it="1M utenti × 10 messaggi/giorno × 1k token = 10B token/giorno. A $1/1M token sono $10k/giorno."
+            data-fr="1M d'utilisateurs × 10 messages/jour × 1k tokens = 10Md tokens/jour. À $1/1M tokens, c'est $10k/jour."
+            data-es="1M usuarios × 10 mensajes/día × 1k tokens = 10B tokens/día. A $1/1M tokens son $10k/día.">1M users × 10 msgs/day × 1k tokens = 10B tokens/day → $10k/day at typical pricing.</p>
+        </div>
+        <div style="background:rgba(27,94,255,.06);border-left:3px solid var(--accent);padding:10px 14px;border-radius:6px;">
+          <div style="font-family:var(--mono);font-size:.65rem;color:var(--accent);"
+            data-en="🗃️ Vector Operations" data-it="🗃️ Operazioni Vettoriali" data-fr="🗃️ Opérations Vectorielles" data-es="🗃️ Operaciones Vectoriales">🗃️ Vector Operations</div>
+          <p style="font-size:.7rem;margin:4px 0 0;"
+            data-en="Embedding + vector search add latency and cost for every RAG query. Caching reduces repeated costs."
+            data-it="Embedding + ricerca vettoriale aggiungono latenza e costo per ogni query RAG. Il caching riduce i costi ripetuti."
+            data-fr="Embedding + recherche vectorielle ajoutent latence et coût à chaque requête RAG. La mise en cache réduit les coûts répétés."
+            data-es="Embedding + búsqueda vectorial añaden latencia y costo por cada consulta RAG. El caché reduce costos repetidos.">Embedding + vector search add cost for every RAG query. Caching reduces repeated costs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="badge badge-green" style="margin-bottom:12px;"
+        data-en="🎯 Cost Optimisation Strategies" data-it="🎯 Strategie di Ottimizzazione Costi" data-fr="🎯 Stratégies d'Optimisation des Coûts" data-es="🎯 Estrategias de Optimización de Costos">🎯 Cost Optimisation Strategies</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:10px 14px;border-radius:6px;">
+          <div style="font-size:.7rem;font-weight:600;"
+            data-en="1. Model routing — use small models for simple tasks"
+            data-it="1. Model routing — usa modelli piccoli per task semplici"
+            data-fr="1. Routage de modèles — utiliser de petits modèles pour les tâches simples"
+            data-es="1. Enrutamiento de modelos — usa modelos pequeños para tareas simples">1. Model routing — use small models for simple tasks</div>
+          <p style="font-size:.65rem;color:var(--ink-mute);margin:4px 0 0;"
+            data-en="GPT-4o mini for classification, GPT-4o for complex reasoning only."
+            data-it="GPT-4o mini per classificazione, GPT-4o solo per ragionamento complesso."
+            data-fr="GPT-4o mini pour le classement, GPT-4o uniquement pour le raisonnement complexe."
+            data-es="GPT-4o mini para clasificación, GPT-4o solo para razonamiento complejo.">GPT-4o mini for classification, GPT-4o for complex reasoning only.</p>
+        </div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:10px 14px;border-radius:6px;">
+          <div style="font-size:.7rem;font-weight:600;"
+            data-en="2. Prompt compression — shorter prompts, same quality"
+            data-it="2. Compressione prompt — prompt più corti, stessa qualità"
+            data-fr="2. Compression des prompts — prompts plus courts, même qualité"
+            data-es="2. Compresión de prompts — prompts más cortos, misma calidad">2. Prompt compression — shorter prompts, same quality</div>
+          <p style="font-size:.65rem;color:var(--ink-mute);margin:4px 0 0;"
+            data-en="Remove boilerplate, use structured context, define output schema up front."
+            data-it="Rimuovi il boilerplate, usa contesto strutturato, definisci lo schema di output in anticipo."
+            data-fr="Supprimer le boilerplate, structurer le contexte, définir le schéma de sortie."
+            data-es="Eliminar boilerplate, usar contexto estructurado, definir esquema de salida.">Remove boilerplate, use structured context, define output schema up front.</p>
+        </div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:10px 14px;border-radius:6px;">
+          <div style="font-size:.7rem;font-weight:600;"
+            data-en="3. Caching — cache repeated prompts (semantic caching)"
+            data-it="3. Caching — memorizza i prompt ripetuti (caching semantico)"
+            data-fr="3. Cache — mettre en cache les prompts répétés (cache sémantique)"
+            data-es="3. Caché — almacenar prompts repetidos (caché semántico)">3. Caching — cache repeated prompts (semantic caching)</div>
+          <p style="font-size:.65rem;color:var(--ink-mute);margin:4px 0 0;"
+            data-en="GPTCache, Langchain cache: FAQs and common queries avoid repeated LLM calls entirely."
+            data-it="GPTCache, Langchain cache: FAQ e query comuni evitano del tutto le chiamate all'LLM."
+            data-fr="GPTCache, Langchain cache : les FAQ évitent les appels LLM répétés."
+            data-es="GPTCache, caché Langchain: las FAQs evitan llamadas repetidas al LLM.">GPTCache, Langchain cache: FAQs avoid repeated LLM calls entirely.</p>
+        </div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:10px 14px;border-radius:6px;">
+          <div style="font-size:.7rem;font-weight:600;"
+            data-en="4. Fine-tuning smaller models — distil GPT-4 behaviour into a 7B model"
+            data-it="4. Fine-tuning modelli piccoli — distilla il comportamento di GPT-4 in un modello 7B"
+            data-fr="4. Fine-tuner des petits modèles — distiller GPT-4 dans un modèle 7B"
+            data-es="4. Fine-tuning de modelos pequeños — destilar comportamiento GPT-4 en un modelo 7B">4. Fine-tuning — distil GPT-4 behaviour into a 7B model</div>
+          <p style="font-size:.65rem;color:var(--ink-mute);margin:4px 0 0;"
+            data-en="One-time fine-tuning cost replaces ongoing inference cost for high-volume use cases."
+            data-it="Il costo una-tantum del fine-tuning sostituisce il costo di inferenza continuo per casi ad alto volume."
+            data-fr="Le coût unique du fine-tuning remplace le coût continu d'inférence pour les cas à haut volume."
+            data-es="El costo único del fine-tuning reemplaza el costo de inferencia continuo para casos de alto volumen.">One-time fine-tuning cost replaces ongoing inference cost for high-volume use cases.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+  <span class="chapter-tag">Annex</span>
 </section>
 
 <!-- ══════════════════════ MODEL COMPARISON ══════════════════════ -->
@@ -3855,10 +4793,10 @@
           <td style="padding:8px 10px;color:var(--accent2);" data-en="No (API)" data-it="No (API)" data-fr="Non (API)" data-es="No (API)">No (API)</td>
         </tr>
         <tr style="border-bottom:1px solid var(--border);">
-          <td style="padding:8px 10px;font-family:var(--mono);font-weight:500;">Claude 3.7</td>
+          <td style="padding:8px 10px;font-family:var(--mono);font-weight:500;">Claude Sonnet 4</td>
           <td style="padding:8px 10px;">Anthropic</td>
           <td style="padding:8px 10px;font-family:var(--mono);">200k</td>
-          <td style="padding:8px 10px;" data-en="Long context, safety, writing" data-it="Contesto lungo, sicurezza, scrittura" data-fr="Long contexte, sécurité, écriture" data-es="Contexto largo, seguridad, escritura">Long context, safety, writing</td>
+          <td style="padding:8px 10px;" data-en="Long context, safety, coding, Claude 4 family" data-it="Contesto lungo, sicurezza, coding, famiglia Claude 4" data-fr="Long contexte, sécurité, codage, famille Claude 4" data-es="Contexto largo, seguridad, codificación, familia Claude 4">Long context, safety, coding, Claude 4 family</td>
           <td style="padding:8px 10px;color:var(--accent2);" data-en="No (API)" data-it="No (API)" data-fr="Non (API)" data-es="No (API)">No (API)</td>
         </tr>
         <tr style="border-bottom:1px solid var(--border);">
@@ -4370,7 +5308,7 @@ document.addEventListener('DOMContentLoaded', () => setTimeout(updateParamDemo, 
     <input type="range" id="narr-vol" min="0" max="100" value="100" title="Volume">
   </div>
   <div class="narr-divider"></div>
-  <button class="narr-btn" id="narr-notes-btn" title="Toggle notes (T)">CC</button>
+  <button class="narr-btn" id="narr-notes-btn" title="Toggle notes (T)">📝</button>
   <button class="narr-btn" id="narr-voice-btn" title="Choose voice">🎙</button>
 </div>
 
@@ -4399,6 +5337,30 @@ document.addEventListener('DOMContentLoaded', () => setTimeout(updateParamDemo, 
 </div>
 
 <script src="js/slide-menu.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FILMSTRIP — Horizontal slide overview strip
+     Open: click ⊞ Overview button (bottom-left) or press F
+     Close: click again, press Esc, or click outside the strip
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Toggle button -->
+<button id="fs-btn" title="Slide overview (F)" aria-expanded="false" aria-controls="fs-panel">
+  <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true">
+    <rect x="0"  y="0" width="4" height="7" rx="1" fill="currentColor"/>
+    <rect x="5.5" y="0" width="4" height="7" rx="1" fill="currentColor" opacity=".7"/>
+    <rect x="11" y="0" width="4" height="7" rx="1" fill="currentColor" opacity=".45"/>
+    <rect x="0"  y="9" width="15" height="2" rx="1" fill="currentColor" opacity=".25"/>
+  </svg>
+  Overview
+</button>
+
+<!-- Filmstrip panel (slides up from bottom) -->
+<div id="fs-panel" role="region" aria-label="Slide overview" aria-hidden="true">
+  <div id="fs-strip"></div>
+</div>
+
+<script src="js/filmstrip.js"></script>
 
 </body>
 </html>
