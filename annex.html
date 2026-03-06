@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Annex — Glossary & Resources | AI Slides</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reset.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css"/>
+<link rel="stylesheet" href="css/theme.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-menu/menu.css"/>
+</head>
+<body>
+
+<div class="nav-bar">
+  <a href="index.html">☰</a>
+  <a href="chapter6.html">← Ch.6</a>
+</div>
+
+<div class="lang-bar">
+  <span class="lang-btn active" onclick="setLang('en')">EN</span>
+  <span class="lang-btn" onclick="setLang('it')">IT</span>
+  <span class="lang-btn" onclick="setLang('fr')">FR</span>
+  <span class="lang-btn" onclick="setLang('es')">ES</span>
+  <span class="font-controls"><span class="font-btn" onclick="changeFontSize(-2)" title="Decrease font">A−</span><span class="font-btn" onclick="resetFontSize()" title="Reset font">A</span><span class="font-btn" onclick="changeFontSize(2)" title="Increase font">A+</span></span>
+</div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ══════════════════════ ANNEX COVER ══════════════════════ -->
+<section class="chapter-divider">
+  <div class="cover-dot"></div>
+  <div class="eyebrow" style="color:var(--ink-mute);"
+    data-en="Annex" data-it="Allegato" data-fr="Annexe" data-es="Anexo">Annex</div>
+  <div class="rule" style="margin:0 auto 28px;"></div>
+  <h1 style="text-align:center;"
+    data-en="Glossary &<br>Resources" data-it="Glossario<br>e Risorse" data-fr="Glossaire<br>& Ressources" data-es="Glosario<br>y Recursos">Glossary &<br>Resources</h1>
+  <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
+    data-en="Key terms, model comparison, and curated learning resources."
+    data-it="Termini chiave, confronto tra modelli e risorse di apprendimento selezionate."
+    data-fr="Termes clés, comparaison de modèles et ressources d'apprentissage sélectionnées."
+    data-es="Términos clave, comparación de modelos y recursos de aprendizaje seleccionados.">Key terms, model comparison, and curated learning resources.</p>
+  <span class="chapter-tag" style="color:rgba(255,255,255,.25);">Annex</span>
+</section>
+
+<!-- ══════════════════════ GLOSSARY A–L ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Glossary · A–L" data-it="Glossario · A–L" data-fr="Glossaire · A–L" data-es="Glosario · A–L">Glossary · A–L</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Terms (A–L)"
+      data-it="Termini Chiave (A–L)"
+      data-fr="Termes Clés (A–L)"
+      data-es="Términos Clave (A–L)">Key Terms (A–L)</h2>
+
+  <div class="two-col" style="gap:20px;">
+    <dl style="font-size:.75rem;line-height:1.5;margin:0;">
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Attention</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="Mechanism that lets the model weigh the relevance of all tokens in context when generating the next token."
+        data-it="Meccanismo che permette al modello di pesare la rilevanza di tutti i token nel contesto."
+        data-fr="Mécanisme permettant au modèle de pondérer la pertinence de tous les tokens du contexte."
+        data-es="Mecanismo que permite al modelo ponderar la relevancia de todos los tokens en contexto.">Mechanism that lets the model weigh the relevance of all tokens in context when generating the next token.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Context Window</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="The maximum number of tokens (input + output) the model can process at once. GPT-4: 128k. Claude 3.7: 200k."
+        data-it="Il numero massimo di token (input + output) che il modello può elaborare in una volta. GPT-4: 128k. Claude 3.7: 200k."
+        data-fr="Le nombre maximum de tokens (entrée + sortie) que le modèle peut traiter à la fois. GPT-4 : 128k. Claude 3.7 : 200k."
+        data-es="El número máximo de tokens (entrada + salida) que el modelo puede procesar a la vez. GPT-4: 128k. Claude 3.7: 200k.">The maximum number of tokens (input + output) the model can process at once. GPT-4: 128k. Claude 3.7: 200k.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Embedding</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="A dense numerical vector representing the semantic meaning of text. Similar texts have similar vectors."
+        data-it="Un vettore numerico denso che rappresenta il significato semantico del testo. Testi simili hanno vettori simili."
+        data-fr="Un vecteur numérique dense représentant le sens sémantique d'un texte. Les textes similaires ont des vecteurs proches."
+        data-es="Un vector numérico denso que representa el significado semántico del texto. Textos similares tienen vectores similares.">A dense numerical vector representing the semantic meaning of text. Similar texts have similar vectors.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Fine-Tuning</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="Continuing training of a pre-trained model on a smaller, domain-specific dataset to specialise its behaviour."
+        data-it="Continuare il training di un modello pre-addestrato su un dataset specifico e più piccolo per specializzare il suo comportamento."
+        data-fr="Continuation de l'entraînement d'un modèle pré-entraîné sur des données spécifiques pour spécialiser son comportement."
+        data-es="Continuar el entrenamiento de un modelo pre-entrenado en un conjunto de datos específico para especializar su comportamiento.">Continuing training of a pre-trained model on a smaller, domain-specific dataset to specialise its behaviour.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Hallucination</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="When a model generates plausible-sounding but factually incorrect or invented content."
+        data-it="Quando un modello genera contenuti che suonano plausibili ma sono fattualmente errati o inventati."
+        data-fr="Lorsqu'un modèle génère un contenu plausible mais factuellement incorrect ou inventé."
+        data-es="Cuando un modelo genera contenido que suena plausible pero es factualmente incorrecto o inventado.">When a model generates plausible-sounding but factually incorrect or invented content.</dd>
+    </dl>
+
+    <dl style="font-size:.75rem;line-height:1.5;margin:0;">
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Inference</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="The process of running a trained model to generate output for new inputs. Opposite of training."
+        data-it="Il processo di esecuzione di un modello addestrato per generare output per nuovi input. Opposto del training."
+        data-fr="Le processus d'exécution d'un modèle entraîné pour générer des sorties sur de nouvelles entrées. Opposé à l'entraînement."
+        data-es="El proceso de ejecutar un modelo entrenado para generar salidas para nuevas entradas. Opuesto al entrenamiento.">The process of running a trained model to generate output for new inputs. Opposite of training.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">LLM</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="Large Language Model. A neural network trained on massive text corpora to predict and generate text."
+        data-it="Large Language Model. Una rete neurale addestrata su enormi corpus di testo per predire e generare testo."
+        data-fr="Large Language Model. Un réseau de neurones entraîné sur d'immenses corpus textuels pour prédire et générer du texte."
+        data-es="Large Language Model. Una red neuronal entrenada en enormes corpus de texto para predecir y generar texto.">Large Language Model. A neural network trained on massive text corpora to predict and generate text.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">LoRA</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="Low-Rank Adaptation. Efficient fine-tuning technique that trains fewer parameters by adding small adapter matrices."
+        data-it="Low-Rank Adaptation. Tecnica di fine-tuning efficiente che addestra meno parametri aggiungendo piccole matrici adapter."
+        data-fr="Low-Rank Adaptation. Technique de fine-tuning efficace qui entraîne moins de paramètres via des matrices adaptateur."
+        data-es="Low-Rank Adaptation. Técnica de fine-tuning eficiente que entrena menos parámetros añadiendo matrices adaptadoras.">Low-Rank Adaptation. Efficient fine-tuning that trains fewer parameters via small adapter matrices.</dd>
+    </dl>
+  </div>
+  <span class="chapter-tag">Annex · Glossary A–L</span>
+</section>
+
+<!-- ══════════════════════ GLOSSARY M–Z ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Glossary · M–Z" data-it="Glossario · M–Z" data-fr="Glossaire · M–Z" data-es="Glosario · M–Z">Glossary · M–Z</div>
+  <div class="rule"></div>
+  <h2 data-en="Key Terms (M–Z)"
+      data-it="Termini Chiave (M–Z)"
+      data-fr="Termes Clés (M–Z)"
+      data-es="Términos Clave (M–Z)">Key Terms (M–Z)</h2>
+
+  <div class="two-col" style="gap:20px;">
+    <dl style="font-size:.75rem;line-height:1.5;margin:0;">
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">MCP</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="Model Context Protocol. Open standard by Anthropic (2024) for connecting AI apps to external tools and data sources."
+        data-it="Model Context Protocol. Standard aperto di Anthropic (2024) per connettere app AI a strumenti e sorgenti dati esterne."
+        data-fr="Model Context Protocol. Standard ouvert d'Anthropic (2024) pour connecter les apps IA à des outils et données externes."
+        data-es="Model Context Protocol. Estándar abierto de Anthropic (2024) para conectar apps IA a herramientas y fuentes de datos externas.">Model Context Protocol. Open standard by Anthropic (2024) for connecting AI apps to external tools.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Parameters</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="The numerical weights of a model, learned during training. GPT-4: ~1.8T. Llama 3: 70B–405B. More ≈ more capable."
+        data-it="I pesi numerici di un modello, appresi durante il training. GPT-4: ~1.8T. Llama 3: 70B–405B. Più ≈ più capace."
+        data-fr="Les poids numériques d'un modèle, appris durant l'entraînement. GPT-4 : ~1,8T. Llama 3 : 70B–405B. Plus = plus capable."
+        data-es="Los pesos numéricos de un modelo, aprendidos durante el entrenamiento. GPT-4: ~1.8T. Llama 3: 70B–405B.">The numerical weights of a model learned during training. GPT-4: ~1.8T params. More ≈ more capable.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">RAG</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="Retrieval-Augmented Generation. Pattern that retrieves relevant documents at query time and injects them into the prompt."
+        data-it="Retrieval-Augmented Generation. Pattern che recupera documenti rilevanti al momento della query e li inietta nel prompt."
+        data-fr="Retrieval-Augmented Generation. Schéma qui récupère des documents pertinents à la requête et les injecte dans le prompt."
+        data-es="Retrieval-Augmented Generation. Patrón que recupera documentos relevantes en tiempo de consulta e los inyecta en el prompt.">Retrieval-Augmented Generation. Retrieves relevant documents at query time and injects them into the prompt.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">System Prompt</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="A hidden instruction block prepended before the user's message. Sets the model's role, tone, and constraints."
+        data-it="Un blocco di istruzioni nascosto preposto prima del messaggio dell'utente. Imposta ruolo, tono e vincoli del modello."
+        data-fr="Un bloc d'instructions masqué placé avant le message de l'utilisateur. Définit rôle, ton et contraintes du modèle."
+        data-es="Un bloque de instrucciones oculto antes del mensaje del usuario. Establece el rol, tono y restricciones del modelo.">Hidden instruction block before the user's message. Sets the model's role, tone, and constraints.</dd>
+    </dl>
+
+    <dl style="font-size:.75rem;line-height:1.5;margin:0;">
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Temperature</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="0 = deterministic / predictable. 1 = creative / variable. Controls randomness in token selection."
+        data-it="0 = deterministico / prevedibile. 1 = creativo / variabile. Controlla la casualità nella selezione dei token."
+        data-fr="0 = déterministe / prévisible. 1 = créatif / variable. Contrôle l'aléatoire dans la sélection des tokens."
+        data-es="0 = determinista / predecible. 1 = creativo / variable. Controla la aleatoriedad en la selección de tokens.">0 = deterministic / predictable. 1 = creative / variable. Controls randomness in token selection.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Token</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="The basic unit of text for LLMs. ~¾ of a word on average. 'Understanding' = 1 token. 1000 tokens ≈ 750 words."
+        data-it="L'unità base di testo per gli LLM. ~¾ di una parola in media. 'Comprendere' = 1 token. 1000 token ≈ 750 parole."
+        data-fr="Unité de base du texte pour les LLM. ~¾ d'un mot en moyenne. 1000 tokens ≈ 750 mots."
+        data-es="La unidad básica de texto para LLMs. ~¾ de una palabra en promedio. 1000 tokens ≈ 750 palabras.">The basic unit of text for LLMs. ~¾ of a word on average. 1000 tokens ≈ 750 words.</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Transformer</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="The neural network architecture at the core of all modern LLMs. Introduced by Google in 'Attention Is All You Need' (2017)."
+        data-it="L'architettura di rete neurale al core di tutti gli LLM moderni. Introdotta da Google in 'Attention Is All You Need' (2017)."
+        data-fr="L'architecture de réseau de neurones au cœur de tous les LLM modernes. Introduite par Google (2017)."
+        data-es="La arquitectura de red neuronal en el núcleo de todos los LLMs modernos. Introducida por Google (2017).">Neural network architecture at the core of all modern LLMs. Introduced by Google (2017).</dd>
+      <dt style="font-family:var(--mono);color:var(--accent);font-size:.7rem;margin-top:10px;">Vector Database</dt>
+      <dd style="margin-left:0;color:var(--ink-mid);"
+        data-en="A database optimised for storing and searching high-dimensional vectors. Used for semantic search in RAG systems."
+        data-it="Un database ottimizzato per archiviare e ricercare vettori ad alta dimensione. Usato per la ricerca semantica nei sistemi RAG."
+        data-fr="Base de données optimisée pour stocker et rechercher des vecteurs de haute dimension. Utilisée pour la recherche sémantique RAG."
+        data-es="Base de datos optimizada para almacenar y buscar vectores de alta dimensión. Usada para búsqueda semántica en sistemas RAG.">Database optimised for high-dimensional vector search. Used for semantic search in RAG systems.</dd>
+    </dl>
+  </div>
+  <span class="chapter-tag">Annex · Glossary M–Z</span>
+</section>
+
+<!-- ══════════════════════ MODEL COMPARISON ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Model Landscape" data-it="Panorama Modelli" data-fr="Paysage des Modèles" data-es="Panorama de Modelos">Model Landscape</div>
+  <div class="rule"></div>
+  <h2 data-en="Model Comparison<br>(as of early 2026)"
+      data-it="Confronto Modelli<br>(inizio 2026)"
+      data-fr="Comparaison des Modèles<br>(début 2026)"
+      data-es="Comparación de Modelos<br>(principios 2026)">Model Comparison<br>(as of early 2026)</h2>
+
+  <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:.68rem;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--border);">
+          <th style="text-align:left;padding:8px 10px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);"
+            data-en="Model" data-it="Modello" data-fr="Modèle" data-es="Modelo">Model</th>
+          <th style="text-align:left;padding:8px 10px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);"
+            data-en="Creator" data-it="Creatore" data-fr="Créateur" data-es="Creador">Creator</th>
+          <th style="text-align:left;padding:8px 10px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);"
+            data-en="Context" data-it="Contesto" data-fr="Contexte" data-es="Contexto">Context</th>
+          <th style="text-align:left;padding:8px 10px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);"
+            data-en="Strengths" data-it="Punti di Forza" data-fr="Points Forts" data-es="Fortalezas">Strengths</th>
+          <th style="text-align:left;padding:8px 10px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);">Open?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 10px;font-family:var(--mono);font-weight:500;">GPT-4o</td>
+          <td style="padding:8px 10px;">OpenAI</td>
+          <td style="padding:8px 10px;font-family:var(--mono);">128k</td>
+          <td style="padding:8px 10px;" data-en="Coding, reasoning, multimodal" data-it="Codice, ragionamento, multimodale" data-fr="Codage, raisonnement, multimodal" data-es="Codificación, razonamiento, multimodal">Coding, reasoning, multimodal</td>
+          <td style="padding:8px 10px;color:var(--accent2);" data-en="No (API)" data-it="No (API)" data-fr="Non (API)" data-es="No (API)">No (API)</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 10px;font-family:var(--mono);font-weight:500;">o3 / o3-mini</td>
+          <td style="padding:8px 10px;">OpenAI</td>
+          <td style="padding:8px 10px;font-family:var(--mono);">200k</td>
+          <td style="padding:8px 10px;" data-en="Deep reasoning, math, science" data-it="Ragionamento profondo, matematica" data-fr="Raisonnement approfondi, maths" data-es="Razonamiento profundo, matemáticas">Deep reasoning, math, science</td>
+          <td style="padding:8px 10px;color:var(--accent2);" data-en="No (API)" data-it="No (API)" data-fr="Non (API)" data-es="No (API)">No (API)</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 10px;font-family:var(--mono);font-weight:500;">Claude 3.7</td>
+          <td style="padding:8px 10px;">Anthropic</td>
+          <td style="padding:8px 10px;font-family:var(--mono);">200k</td>
+          <td style="padding:8px 10px;" data-en="Long context, safety, writing" data-it="Contesto lungo, sicurezza, scrittura" data-fr="Long contexte, sécurité, écriture" data-es="Contexto largo, seguridad, escritura">Long context, safety, writing</td>
+          <td style="padding:8px 10px;color:var(--accent2);" data-en="No (API)" data-it="No (API)" data-fr="Non (API)" data-es="No (API)">No (API)</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 10px;font-family:var(--mono);font-weight:500;">Gemini 2.0</td>
+          <td style="padding:8px 10px;">Google</td>
+          <td style="padding:8px 10px;font-family:var(--mono);">1M</td>
+          <td style="padding:8px 10px;" data-en="Huge context, multimodal, Search" data-it="Contesto enorme, multimodale, Search" data-fr="Contexte immense, multimodal, Search" data-es="Contexto enorme, multimodal, Search">Huge context, multimodal, Search</td>
+          <td style="padding:8px 10px;color:var(--accent2);" data-en="No (API)" data-it="No (API)" data-fr="Non (API)" data-es="No (API)">No (API)</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 10px;font-family:var(--mono);font-weight:500;">Llama 3.3 70B</td>
+          <td style="padding:8px 10px;">Meta</td>
+          <td style="padding:8px 10px;font-family:var(--mono);">128k</td>
+          <td style="padding:8px 10px;" data-en="Open source, self-host, cost" data-it="Open source, self-host, costo" data-fr="Open source, auto-hébergement, coût" data-es="Open source, self-host, costo">Open source, self-host, cost</td>
+          <td style="padding:8px 10px;color:var(--green);" data-en="Yes (weights)" data-it="Sì (pesi)" data-fr="Oui (poids)" data-es="Sí (pesos)">Yes (weights)</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 10px;font-family:var(--mono);font-weight:500;">Mistral Large</td>
+          <td style="padding:8px 10px;">Mistral AI</td>
+          <td style="padding:8px 10px;font-family:var(--mono);">128k</td>
+          <td style="padding:8px 10px;" data-en="EU-based, efficient, multilingual" data-it="EU-based, efficiente, multilingue" data-fr="Basé EU, efficace, multilingue" data-es="Basado en EU, eficiente, multilingüe">EU-based, efficient, multilingual</td>
+          <td style="padding:8px 10px;color:var(--green);" data-en="Partial" data-it="Parziale" data-fr="Partiel" data-es="Parcial">Partial</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="chapter-tag">Annex · Model Landscape</span>
+</section>
+
+<!-- ══════════════════════ LEARNING RESOURCES ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Learning Resources" data-it="Risorse di Apprendimento" data-fr="Ressources d'Apprentissage" data-es="Recursos de Aprendizaje">Learning Resources</div>
+  <div class="rule"></div>
+  <h2 data-en="Where to Go Next"
+      data-it="Dove Continuare"
+      data-fr="Par Où Continuer"
+      data-es="Dónde Continuar">Where to Go Next</h2>
+
+  <div class="three-col">
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-det"
+        data-en="Foundational" data-it="Fondamentale" data-fr="Fondamental" data-es="Fundamental">Foundational</div>
+      <ul class="ref-list" style="margin-top:8px;">
+        <li><a href="https://www.deeplearning.ai/" target="_blank">deeplearning.ai</a> — <span style="font-size:.6rem;color:var(--ink-mute);"
+          data-en="Short courses on LLMs, RAG, agents"
+          data-it="Short courses su LLM, RAG, agenti"
+          data-fr="Cours courts sur LLM, RAG, agents"
+          data-es="Cursos sobre LLMs, RAG, agentes">Short courses on LLMs, RAG, agents</span></li>
+        <li><a href="https://karpathy.ai/" target="_blank">Karpathy.ai</a> — <span style="font-size:.6rem;color:var(--ink-mute);"
+          data-en="Neural network videos, 'Zero to Hero'"
+          data-it="Video reti neurali, 'Zero to Hero'"
+          data-fr="Vidéos réseaux de neurones"
+          data-es="Videos redes neuronales">Neural network videos, "Zero to Hero"</span></li>
+        <li><a href="https://huggingface.co/learn" target="_blank">Hugging Face Courses</a> — <span style="font-size:.6rem;color:var(--ink-mute);"
+          data-en="Transformers, NLP, fine-tuning"
+          data-it="Transformer, NLP, fine-tuning"
+          data-fr="Transformers, NLP, fine-tuning"
+          data-es="Transformers, NLP, fine-tuning">Transformers, NLP, fine-tuning</span></li>
+        <li><a href="https://arxiv.org/abs/1706.03762" target="_blank">"Attention Is All You Need"</a> — <span style="font-size:.6rem;color:var(--ink-mute);">Vaswani et al., 2017</span></li>
+      </ul>
+    </div>
+
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-green"
+        data-en="Practical" data-it="Pratico" data-fr="Pratique" data-es="Práctico">Practical</div>
+      <ul class="ref-list" style="margin-top:8px;">
+        <li><a href="https://www.promptingguide.ai/" target="_blank">promptingguide.ai</a> — <span style="font-size:.6rem;color:var(--ink-mute);"
+          data-en="Comprehensive prompt engineering guide"
+          data-it="Guida completa al prompt engineering"
+          data-fr="Guide complet d'ingénierie de prompts"
+          data-es="Guía completa de ingeniería de prompts">Comprehensive prompt engineering guide</span></li>
+        <li><a href="https://docs.llamaindex.ai/" target="_blank">LlamaIndex docs</a> — <span style="font-size:.6rem;color:var(--ink-mute);"
+          data-en="Build RAG pipelines"
+          data-it="Costruisci pipeline RAG"
+          data-fr="Construire des pipelines RAG"
+          data-es="Construir pipelines RAG">Build RAG pipelines</span></li>
+        <li><a href="https://langchain-ai.github.io/langgraph/" target="_blank">LangGraph</a> — <span style="font-size:.6rem;color:var(--ink-mute);"
+          data-en="Build AI agents"
+          data-it="Costruisci agenti AI"
+          data-fr="Créer des agents IA"
+          data-es="Construir agentes IA">Build AI agents</span></li>
+        <li><a href="https://modelcontextprotocol.io/" target="_blank">modelcontextprotocol.io</a> — <span style="font-size:.6rem;color:var(--ink-mute);">MCP docs & servers</span></li>
+      </ul>
+    </div>
+
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-purple"
+        data-en="Stay Current" data-it="Rimani Aggiornato" data-fr="Rester à Jour" data-es="Mantenerse Actualizado">Stay Current</div>
+      <ul class="ref-list" style="margin-top:8px;">
+        <li><a href="https://www.therundown.ai/" target="_blank">The Rundown AI</a> — <span style="font-size:.6rem;color:var(--ink-mute);"
+          data-en="Daily AI news digest"
+          data-it="Digest giornaliero di notizie AI"
+          data-fr="Résumé quotidien des actualités IA"
+          data-es="Resumen diario de noticias IA">Daily AI news digest</span></li>
+        <li><a href="https://www.latent.space/" target="_blank">Latent Space Podcast</a> — <span style="font-size:.6rem;color:var(--ink-mute);"
+          data-en="Technical AI podcast"
+          data-it="Podcast tecnico sull'AI"
+          data-fr="Podcast technique sur l'IA"
+          data-es="Podcast técnico de IA">Technical AI podcast</span></li>
+        <li><a href="https://huggingface.co/papers" target="_blank">HuggingFace Papers</a> — <span style="font-size:.6rem;color:var(--ink-mute);"
+          data-en="Daily paper summaries"
+          data-it="Riassunti giornalieri di paper"
+          data-fr="Résumés quotidiens de papiers"
+          data-es="Resúmenes diarios de papers">Daily paper summaries</span></li>
+        <li><a href="https://x.com/karpathy" target="_blank">@karpathy</a> — <span style="font-size:.6rem;color:var(--ink-mute);"
+          data-en="Andrej Karpathy's insights"
+          data-it="Insight di Andrej Karpathy"
+          data-fr="Aperçus d'Andrej Karpathy"
+          data-es="Perspectivas de Andrej Karpathy">Andrej Karpathy's insights on X</span></li>
+      </ul>
+    </div>
+  </div>
+  <span class="chapter-tag">Annex · Resources</span>
+</section>
+
+<!-- ══════════════════════ CLOSING ══════════════════════ -->
+<section class="cover-slide">
+  <div class="cover-dot" style="right:-80px;bottom:-140px;width:500px;height:500px;"></div>
+  <div class="cover-dot" style="left:-100px;top:-100px;width:300px;height:300px;opacity:.12;"></div>
+
+  <div class="eyebrow" style="color:var(--ink-mute);text-align:center;"
+    data-en="Thank you" data-it="Grazie" data-fr="Merci" data-es="Gracias">Thank you</div>
+  <div class="rule" style="margin:0 auto 32px;width:64px;"></div>
+
+  <h2 style="text-align:center;font-size:clamp(1.8rem,3.5vw,3rem);"
+    data-en="Questions?" data-it="Domande?" data-fr="Questions ?" data-es="¿Preguntas?">Questions?</h2>
+
+  <p style="color:var(--ink-mid);max-width:500px;font-size:.85rem;text-align:center;margin:0 auto 32px;"
+    data-en="AI is a tool. The intent and judgment behind the tool is yours."
+    data-it="L'AI è uno strumento. L'intenzione e il giudizio dietro lo strumento sono tuoi."
+    data-fr="L'IA est un outil. L'intention et le jugement derrière l'outil vous appartiennent."
+    data-es="La IA es una herramienta. La intención y el juicio detrás de la herramienta son tuyos.">AI is a tool. The intent and judgment behind the tool is yours.</p>
+
+  <div style="text-align:center;">
+    <p style="color:var(--ink-mid);font-family:var(--sans);font-size:.85rem;font-weight:500;margin:0;">
+      Vincenzo MARAFIOTI
+    </p>
+    <a href="https://www.linkedin.com/in/vincenzo-marafioti/" target="_blank"
+       style="color:var(--accent);font-family:var(--mono);font-size:.7rem;text-decoration:none;letter-spacing:.05em;">
+       linkedin.com/in/vincenzo-marafioti
+    </a>
+  </div>
+
+  <div style="margin-top:32px;text-align:center;">
+    <a href="index.html" style="font-family:var(--mono);font-size:.7rem;color:var(--ink-mute);text-decoration:none;border:1px solid var(--border);border-radius:8px;padding:8px 16px;"
+      data-en="← Back to Agenda" data-it="← Torna all'Agenda" data-fr="← Retour au Sommaire" data-es="← Volver al Índice">← Back to Agenda</a>
+  </div>
+</section>
+
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js-menu/menu.js"></script>
+<script src="js/slides.js"></script>
+<script>initSlides();</script>
+</body>
+</html>

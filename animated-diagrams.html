@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Animated AI Diagrams | AI Slides</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reset.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css"/>
+<link rel="stylesheet" href="css/theme.css"/>
+<link rel="stylesheet" href="css/animations.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-menu/menu.css"/>
+</head>
+<body>
+
+<div class="nav-bar">
+  <a href="index.html">☰</a>
+</div>
+
+<div class="lang-bar">
+  <span class="lang-btn active" onclick="setLang('en')">EN</span>
+  <span class="lang-btn" onclick="setLang('it')">IT</span>
+  <span class="lang-btn" onclick="setLang('fr')">FR</span>
+  <span class="lang-btn" onclick="setLang('es')">ES</span>
+  <span class="font-controls"><span class="font-btn" onclick="changeFontSize(-2)" title="Decrease font">A−</span><span class="font-btn" onclick="resetFontSize()" title="Reset font">A</span><span class="font-btn" onclick="changeFontSize(2)" title="Increase font">A+</span></span>
+</div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 1: TOKEN PREDICTION
+     Press → or Space to advance each animation step
+     ══════════════════════════════════════════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Interactive · How LLMs Generate Text"
+    data-it="Interattivo · Come gli LLM Generano Testo"
+    data-fr="Interactif · Comment les LLM Génèrent du Texte"
+    data-es="Interactivo · Cómo los LLM Generan Texto">Interactive · How LLMs Generate Text</div>
+  <h2 data-en="Next-Token Prediction"
+      data-it="Predizione del Token Successivo"
+      data-fr="Prédiction du Token Suivant"
+      data-es="Predicción del Siguiente Token">Next-Token Prediction</h2>
+
+  <!-- The animated diagram container -->
+  <div id="tokenPred" data-anim="token-prediction"></div>
+
+  <!-- Invisible fragments that drive the animation steps via → key -->
+  <span class="fragment" data-anim-target="tokenPred"></span><!-- "The" -->
+  <span class="fragment" data-anim-target="tokenPred"></span><!-- "capital" -->
+  <span class="fragment" data-anim-target="tokenPred"></span><!-- "of" -->
+  <span class="fragment" data-anim-target="tokenPred"></span><!-- "France" -->
+  <span class="fragment" data-anim-target="tokenPred"></span><!-- "is" -->
+  <span class="fragment" data-anim-target="tokenPred"></span><!-- cursor -->
+  <span class="fragment" data-anim-target="tokenPred"></span><!-- prob bars -->
+  <span class="fragment" data-anim-target="tokenPred"></span><!-- "Paris" lands -->
+
+  <div class="key-insight" style="margin-top:16px;">
+    <strong data-en="How it works:" data-it="Come funziona:" data-fr="Comment ça marche :" data-es="Cómo funciona:">How it works:</strong>
+    <span data-en=" The model reads all previous tokens, computes probabilities for every word in its vocabulary, then samples the next one. Repeat thousands of times → a full response."
+          data-it=" Il modello legge tutti i token precedenti, calcola le probabilità per ogni parola, poi campiona la successiva. Ripeti migliaia di volte → una risposta completa."
+          data-fr=" Le modèle lit tous les tokens précédents, calcule les probabilités, puis échantillonne le suivant. Répéter des milliers de fois → une réponse complète."
+          data-es=" El modelo lee todos los tokens anteriores, calcula probabilidades para cada palabra, luego muestrea la siguiente. Repetir miles de veces → una respuesta completa."> The model reads all previous tokens, computes probabilities for every word in its vocabulary, then samples the next one. Repeat thousands of times → a full response.</span>
+  </div>
+
+  <span class="chapter-tag">Token Prediction</span>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 2: ATTENTION HEATMAP
+     ══════════════════════════════════════════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Interactive · The Heart of Transformers"
+    data-it="Interattivo · Il Cuore dei Transformer"
+    data-fr="Interactif · Le Cœur des Transformers"
+    data-es="Interactivo · El Corazón de los Transformers">Interactive · The Heart of Transformers</div>
+  <h2 data-en="Self-Attention in Action"
+      data-it="Self-Attention in Azione"
+      data-fr="Self-Attention en Action"
+      data-es="Self-Attention en Acción">Self-Attention in Action</h2>
+
+  <div id="attnHeatmap" data-anim="attention-heatmap"></div>
+
+  <!-- 7 fragments: init + 6 rows + final -->
+  <span class="fragment" data-anim-target="attnHeatmap"></span><!-- desc + row 0 -->
+  <span class="fragment" data-anim-target="attnHeatmap"></span><!-- row 1 -->
+  <span class="fragment" data-anim-target="attnHeatmap"></span><!-- row 2 -->
+  <span class="fragment" data-anim-target="attnHeatmap"></span><!-- row 3 -->
+  <span class="fragment" data-anim-target="attnHeatmap"></span><!-- row 4 -->
+  <span class="fragment" data-anim-target="attnHeatmap"></span><!-- row 5 -->
+  <span class="fragment" data-anim-target="attnHeatmap"></span><!-- final -->
+
+  <div class="key-insight" style="margin-top:16px;">
+    <strong data-en="Insight:" data-it="Concetto:" data-fr="Concept :" data-es="Concepto:">Insight:</strong>
+    <span data-en=" Each row shows which words a given token 'pays attention to'. Brighter = stronger connection. This is how the model understands that 'it' refers to 'cat', not 'mat'."
+          data-it=" Ogni riga mostra a quali parole un token 'presta attenzione'. Più luminoso = connessione più forte. Così il modello capisce che 'esso' si riferisce a 'gatto', non a 'tappeto'."
+          data-fr=" Chaque ligne montre à quels mots un token 'fait attention'. Plus lumineux = connexion plus forte. C'est ainsi que le modèle comprend le contexte."
+          data-es=" Cada fila muestra a qué palabras un token 'presta atención'. Más brillante = conexión más fuerte. Así el modelo entiende el contexto."> Each row shows which words a given token "pays attention to." Brighter = stronger connection. This is how the model understands context and references.</span>
+  </div>
+
+  <span class="chapter-tag">Attention Mechanism</span>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 3: RAG FLOW
+     ══════════════════════════════════════════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Interactive · Retrieval-Augmented Generation"
+    data-it="Interattivo · Generazione Aumentata da Retrieval"
+    data-fr="Interactif · Génération Augmentée par Recherche"
+    data-es="Interactivo · Generación Aumentada por Recuperación">Interactive · Retrieval-Augmented Generation</div>
+  <h2 data-en="RAG: The Full Pipeline"
+      data-it="RAG: La Pipeline Completa"
+      data-fr="RAG : Le Pipeline Complet"
+      data-es="RAG: La Pipeline Completa">RAG: The Full Pipeline</h2>
+
+  <div id="ragFlow" data-anim="rag-flow"></div>
+
+  <!-- 15 fragments for the full pipeline build -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- label 1 -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- docs -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- arrow -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- chunking -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- arrow -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- embedding -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- arrow -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- vector db -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- down arrow -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- label 2 -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- query -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- arrow -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- retrieve -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- arrow -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- llm -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- arrow -->
+  <span class="fragment" data-anim-target="ragFlow"></span><!-- answer -->
+
+  <div class="key-insight" style="margin-top:12px;">
+    <strong data-en="Why RAG:" data-it="Perché RAG:" data-fr="Pourquoi RAG :" data-es="Por qué RAG:">Why RAG:</strong>
+    <span data-en=" LLMs have a knowledge cutoff and can hallucinate. RAG grounds them in your actual data — no fine-tuning needed. It's the #1 pattern for enterprise AI."
+          data-it=" Gli LLM hanno un limite di conoscenza e possono allucinare. RAG li àncora ai tuoi dati — nessun fine-tuning necessario. È il pattern #1 per l'AI aziendale."
+          data-fr=" Les LLM ont une date limite de connaissances et peuvent halluciner. RAG les ancre dans vos données — sans fine-tuning. C'est le pattern #1 en entreprise."
+          data-es=" Los LLM tienen un límite de conocimiento y pueden alucinar. RAG los ancla en tus datos — sin fine-tuning. Es el patrón #1 para IA empresarial."> LLMs have a knowledge cutoff and can hallucinate. RAG grounds them in your actual data — no fine-tuning needed. The #1 pattern for enterprise AI.</span>
+  </div>
+
+  <span class="chapter-tag">RAG Architecture</span>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 4: AGENT LOOP
+     ══════════════════════════════════════════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Interactive · Autonomous AI Agents"
+    data-it="Interattivo · Agenti AI Autonomi"
+    data-fr="Interactif · Agents IA Autonomes"
+    data-es="Interactivo · Agentes IA Autónomos">Interactive · Autonomous AI Agents</div>
+  <h2 data-en="The Agent Loop"
+      data-it="Il Ciclo dell'Agente"
+      data-fr="La Boucle Agent"
+      data-es="El Ciclo del Agente">The Agent Loop</h2>
+
+  <div id="agentLoop" data-anim="agent-loop" style="min-height:420px;"></div>
+
+  <!-- 7 fragments: brain, ring, think, act, observe, arcs, tools -->
+  <span class="fragment" data-anim-target="agentLoop"></span><!-- brain -->
+  <span class="fragment" data-anim-target="agentLoop"></span><!-- orbit ring -->
+  <span class="fragment" data-anim-target="agentLoop"></span><!-- Think -->
+  <span class="fragment" data-anim-target="agentLoop"></span><!-- Act -->
+  <span class="fragment" data-anim-target="agentLoop"></span><!-- Observe -->
+  <span class="fragment" data-anim-target="agentLoop"></span><!-- arcs -->
+  <span class="fragment" data-anim-target="agentLoop"></span><!-- tools -->
+
+  <div class="key-insight" style="margin-top:12px;">
+    <strong data-en="ReAct pattern:" data-it="Pattern ReAct:" data-fr="Pattern ReAct :" data-es="Patrón ReAct:">ReAct pattern:</strong>
+    <span data-en=" Think → Act → Observe. The LLM plans which tool to use, executes it, reads the result, then decides the next step. This loop continues until the task is complete."
+          data-it=" Pensa → Agisci → Osserva. L'LLM pianifica quale strumento usare, lo esegue, legge il risultato, poi decide il passo successivo. Il ciclo continua fino al completamento."
+          data-fr=" Penser → Agir → Observer. Le LLM planifie l'outil, l'exécute, lit le résultat, puis décide l'étape suivante. La boucle continue jusqu'à la fin de la tâche."
+          data-es=" Pensar → Actuar → Observar. El LLM planifica qué herramienta usar, la ejecuta, lee el resultado y decide el siguiente paso. El ciclo continúa hasta completar la tarea."> Think → Act → Observe. The LLM plans which tool to use, executes it, reads the result, then decides the next step. This loop continues until the task is complete.</span>
+  </div>
+
+  <span class="chapter-tag">AI Agents</span>
+</section>
+
+</div><!-- /slides -->
+</div><!-- /reveal -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js-menu/menu.js"></script>
+<script src="js/slides.js"></script>
+<script src="js/animations.js"></script>
+<script>
+  initSlides();
+  // Initialize animated diagrams after Reveal is ready
+  Reveal.on('ready', () => {
+    initAnimatedDiagrams();
+  });
+</script>
+</body>
+</html>

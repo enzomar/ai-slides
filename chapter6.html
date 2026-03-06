@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chapter 6 — Ethics & Future | AI Slides</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reset.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css"/>
+<link rel="stylesheet" href="css/theme.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-menu/menu.css"/>
+</head>
+<body>
+
+<div class="nav-bar">
+  <a href="index.html">☰</a>
+  <a href="chapter5.html">← Ch.5</a>
+  <a href="annex.html">Annex →</a>
+</div>
+
+<div class="lang-bar">
+  <span class="lang-btn active" onclick="setLang('en')">EN</span>
+  <span class="lang-btn" onclick="setLang('it')">IT</span>
+  <span class="lang-btn" onclick="setLang('fr')">FR</span>
+  <span class="lang-btn" onclick="setLang('es')">ES</span>
+  <span class="font-controls"><span class="font-btn" onclick="changeFontSize(-2)" title="Decrease font">A−</span><span class="font-btn" onclick="resetFontSize()" title="Reset font">A</span><span class="font-btn" onclick="changeFontSize(2)" title="Increase font">A+</span></span>
+</div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ══════════════════════ CHAPTER COVER ══════════════════════ -->
+<section class="chapter-divider">
+  <div class="cover-dot"></div>
+  <div class="eyebrow" style="color:var(--ink-mute);"
+    data-en="Chapter 06" data-it="Capitolo 06" data-fr="Chapitre 06" data-es="Capítulo 06">Chapter 06</div>
+  <div class="rule" style="margin:0 auto 28px;"></div>
+  <h1 style="text-align:center;"
+    data-en="Ethics &<br>Future" data-it="Etica e<br>Futuro" data-fr="Éthique &<br>Futur" data-es="Ética y<br>Futuro">Ethics &<br>Future</h1>
+  <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
+    data-en="Power without guardrails is a risk. Understanding AI's limits and responsibilities is everyone's job."
+    data-it="La potenza senza guardrail è un rischio. Comprendere i limiti e le responsabilità dell'AI è un compito di tutti."
+    data-fr="La puissance sans garde-fous est un risque. Comprendre les limites et responsabilités de l'IA est l'affaire de tous."
+    data-es="El poder sin guardarraíles es un riesgo. Comprender los límites y responsabilidades de la IA es tarea de todos.">Power without guardrails is a risk. Understanding AI's limits and responsibilities is everyone's job.</p>
+  <span class="chapter-tag" style="color:rgba(255,255,255,.25);">Ethics & Future</span>
+  <aside class="notes">
+    Chapter 6 is the conscience of the course. After five chapters showing what AI can do, this chapter asks what AI should do. We'll cover real-world failures (Amazon hiring bias, COMPAS, deepfakes), the EU AI Act's risk framework, governance standards (NIST AI RMF, ISO 42001), and practical deployment checklists. End with the Road Ahead — not to predict, but to prepare. The message: responsible AI is not a brake on innovation, it is a steering wheel.
+  </aside>
+</section>
+
+<!-- ══════════════════════ SLIDE 1: BIAS & HALLUCINATION ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 01 · Known Risks" data-it="Diapositiva 01 · Rischi Noti" data-fr="Diapo 01 · Risques Connus" data-es="Diapositiva 01 · Riesgos Conocidos">Slide 01 · Known Risks</div>
+  <h2 data-en="Bias & Hallucination"
+      data-it="Bias e Allucinazioni"
+      data-fr="Biais & Hallucinations"
+      data-es="Sesgo y Alucinaciones">Bias & Hallucination</h2>
+
+  <div class="two-col">
+    <div class="model-card" style="border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob"
+        data-en="Bias" data-it="Bias" data-fr="Biais" data-es="Sesgo">Bias</div>
+      <p style="font-size:.75rem;margin:8px 0 10px;"
+        data-en="Models learn patterns from human-generated data — including human prejudices."
+        data-it="I modelli imparano pattern dai dati generati dagli umani — inclusi i pregiudizi umani."
+        data-fr="Les modèles apprennent les schémas des données humaines — y compris les préjugés."
+        data-es="Los modelos aprenden patrones de datos generados por humanos — incluidos los prejuicios.">Models learn patterns from human-generated data — including human prejudices.</p>
+      <ul class="example-list">
+        <li data-en="Gender stereotypes in job descriptions"
+            data-it="Stereotipi di genere nelle offerte di lavoro"
+            data-fr="Stéréotypes de genre dans les offres d'emploi"
+            data-es="Estereotipos de género en descripciones de trabajo">Gender stereotypes in job descriptions</li>
+        <li data-en="Under-representation of minorities"
+            data-it="Sotto-rappresentazione delle minoranze"
+            data-fr="Sous-représentation des minorités"
+            data-es="Subrepresentación de minorías">Under-representation of minorities</li>
+        <li data-en="Geographic & cultural bias (Western-centric data)"
+            data-it="Bias geografico e culturale (dati euro-centrici)"
+            data-fr="Biais géographique et culturel (données euro-centriques)"
+            data-es="Sesgo geográfico y cultural (datos euro-céntricos)">Geographic & cultural bias (Western-centric data)</li>
+        <li data-en="Recency bias from training window"
+            data-it="Recency bias dalla finestra di training"
+            data-fr="Biais de récence de la fenêtre d'entraînement"
+            data-es="Sesgo de recencia de la ventana de entrenamiento">Recency bias from training window</li>
+      </ul>
+    </div>
+
+    <div class="model-card" style="border-left:3px solid var(--accent);">
+      <div class="badge badge-det"
+        data-en="Hallucination" data-it="Allucinazione" data-fr="Hallucination" data-es="Alucinación">Hallucination</div>
+      <p style="font-size:.75rem;margin:8px 0 10px;"
+        data-en="Models generate plausible-sounding but false content with full confidence."
+        data-it="I modelli generano contenuti plausibili ma falsi con piena fiducia."
+        data-fr="Les modèles génèrent des contenus plausibles mais faux avec pleine confiance."
+        data-es="Los modelos generan contenido plausible pero falso con plena confianza.">Models generate plausible-sounding but false content with full confidence.</p>
+      <ul class="example-list">
+        <li data-en="Invented citations and papers"
+            data-it="Citazioni e articoli inventati"
+            data-fr="Citations et articles inventés"
+            data-es="Citas y artículos inventados">Invented citations and papers</li>
+        <li data-en="Wrong legal / medical / technical facts"
+            data-it="Fatti legali / medici / tecnici errati"
+            data-fr="Faits juridiques / médicaux / techniques erronés"
+            data-es="Hechos legales / médicos / técnicos incorrectos">Wrong legal / medical / technical facts</li>
+        <li data-en="Confident errors in code logic"
+            data-it="Errori confidenti nella logica del codice"
+            data-fr="Erreurs confiantes dans la logique du code"
+            data-es="Errores confiados en la lógica del código">Confident errors in code logic</li>
+        <li data-en="Mitigated by: RAG, grounding, verification"
+            data-it="Mitigato da: RAG, grounding, verifica"
+            data-fr="Atténué par : RAG, ancrage, vérification"
+            data-es="Mitigado por: RAG, fundamentación, verificación">Mitigated by: RAG, grounding, verification</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:14px;">
+    <strong data-en="Rule:" data-it="Regola:" data-fr="Règle :" data-es="Regla:">Rule:</strong>
+    <span data-en=" Never use AI output without human review in high-stakes decisions (hiring, medicine, law, finance)."
+          data-it=" Non usare mai l'output AI senza revisione umana in decisioni ad alto rischio (assunzioni, medicina, legge, finanza)."
+          data-fr=" Ne jamais utiliser l'output IA sans révision humaine pour des décisions à enjeux élevés (embauche, médicine, droit, finance)."
+          data-es=" Nunca usar output de IA sin revisión humana en decisiones de alto riesgo (contratación, medicina, ley, finanzas)."> Never use AI output without human review in high-stakes decisions (hiring, medicine, law, finance).</span>
+  </div>
+
+  <aside class="notes">
+    Hallucination rate: GPT-4 hallucinates ~3-5% on factual queries (lower with RAG); older models up to 20%. The dangerous case: confident, fluent, plausible-sounding errors on specialised topics the model rarely saw in training. Solution stack: RAG for facts, chain-of-thought for reasoning, constitutional AI for behaviour constraints, human review for high-stakes decisions. Bias: test your AI outputs with diverse user personas before deployment.
+  </aside>
+  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
+  <span class="slide-tag">01 / 06</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 2: EU AI ACT ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 02 · Governance" data-it="Diapositiva 02 · Governance" data-fr="Diapo 02 · Gouvernance" data-es="Diapositiva 02 · Gobernanza">Slide 02 · Governance</div>
+  <h2 data-en="EU AI Act &<br>Governance"
+      data-it="EU AI Act e<br>Governance"
+      data-fr="AI Act UE &<br>Gouvernance"
+      data-es="EU AI Act y<br>Gobernanza">EU AI Act &<br>Governance</h2>
+
+  <div class="two-col">
+    <div>
+      <div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;"
+          data-en="EU AI Act — In force Aug 2024" data-it="EU AI Act — In vigore Ago 2024" data-fr="AI Act UE — En vigueur Août 2024" data-es="EU AI Act — En vigor Ago 2024">EU AI Act — In force Aug 2024</div>
+        <p style="font-size:.75rem;margin:0;"
+          data-en="The world's first comprehensive AI law. Risk-based approach with four tiers."
+          data-it="La prima legge completa sull'AI al mondo. Approccio basato sul rischio con quattro livelli."
+          data-fr="La première loi complète sur l'IA au monde. Approche basée sur le risque avec quatre niveaux."
+          data-es="La primera ley integral sobre IA en el mundo. Enfoque basado en riesgos con cuatro niveles.">The world's first comprehensive AI law. Risk-based approach with four tiers.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="background:rgba(239,68,68,.15);border-left:3px solid #ef4444;padding:8px 12px;border-radius:6px;font-size:.72rem;">
+          <strong data-en="🔴 Unacceptable" data-it="🔴 Inaccettabile" data-fr="🔴 Inacceptable" data-es="🔴 Inaceptable">🔴 Unacceptable</strong>
+          <span data-en=" — Prohibited. Social scoring, subliminal manipulation."
+                data-it=" — Vietato. Punteggio sociale, manipolazione subliminale."
+                data-fr=" — Interdit. Score social, manipulation subliminale."
+                data-es=" — Prohibido. Puntuación social, manipulación subliminal."> — Prohibited. Social scoring, subliminal manipulation.</span>
+        </div>
+        <div style="background:rgba(239,68,68,.08);border-left:3px solid #f97316;padding:8px 12px;border-radius:6px;font-size:.72rem;">
+          <strong data-en="🟠 High Risk" data-it="🟠 Alto Rischio" data-fr="🟠 Risque Élevé" data-es="🟠 Alto Riesgo">🟠 High Risk</strong>
+          <span data-en=" — Heavy regulation. Healthcare, employment, education, law enforcement."
+                data-it=" — Regolamentazione pesante. Sanità, lavoro, istruzione, polizia."
+                data-fr=" — Réglementation stricte. Santé, emploi, éducation, forces de l'ordre."
+                data-es=" — Regulación estricta. Sanidad, empleo, educación, fuerzas del orden."> — Heavy regulation. Healthcare, employment, education, law enforcement.</span>
+        </div>
+        <div style="background:rgba(250,204,21,.08);border-left:3px solid #facc15;padding:8px 12px;border-radius:6px;font-size:.72rem;">
+          <strong data-en="🟡 Limited Risk" data-it="🟡 Rischio Limitato" data-fr="🟡 Risque Limité" data-es="🟡 Riesgo Limitado">🟡 Limited Risk</strong>
+          <span data-en=" — Transparency required. Chatbots must disclose they are AI."
+                data-it=" — Trasparenza richiesta. I chatbot devono dichiarare di essere AI."
+                data-fr=" — Transparence requise. Les chatbots doivent se déclarer IA."
+                data-es=" — Transparencia requerida. Los chatbots deben revelar que son IA."> — Transparency required. Chatbots must disclose they are AI.</span>
+        </div>
+        <div style="background:rgba(34,197,94,.08);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.72rem;">
+          <strong data-en="🟢 Minimal Risk" data-it="🟢 Rischio Minimo" data-fr="🟢 Risque Minimal" data-es="🟢 Riesgo Mínimo">🟢 Minimal Risk</strong>
+          <span data-en=" — Free to use. Games, spam filters, AI-generated content."
+                data-it=" — Libero da utilizzare. Giochi, filtri spam, contenuti AI."
+                data-fr=" — Libre d'utilisation. Jeux, filtres anti-spam, contenu IA."
+                data-es=" — Libre de usar. Juegos, filtros de spam, contenido IA."> — Free to use. Games, spam filters, AI-generated content.</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="badge badge-det" style="margin-bottom:10px;"
+        data-en="Global Landscape" data-it="Panorama Globale" data-fr="Panorama Mondial" data-es="Panorama Global">Global Landscape</div>
+      <ul class="example-list">
+        <li data-en="🇺🇸 <strong>USA</strong> — Executive Order on AI Safety (Oct 2023). Voluntary commitments by major labs."
+            data-it="🇺🇸 <strong>USA</strong> — Executive Order on AI Safety (Ott 2023). Impegni volontari dei principali lab."
+            data-fr="🇺🇸 <strong>USA</strong> — Décret sur la sécurité IA (Oct 2023). Engagements volontaires des grands labs."
+            data-es="🇺🇸 <strong>USA</strong> — Executive Order on AI Safety (Oct 2023). Compromisos voluntarios de los principales labs.">🇺🇸 <strong>USA</strong> — Executive Order on AI Safety (Oct 2023). Voluntary commitments.</li>
+        <li data-en="🇨🇳 <strong>China</strong> — Generative AI Regulations since 2023. Strong state oversight."
+            data-it="🇨🇳 <strong>Cina</strong> — Regolamenti AI generativa dal 2023. Forte supervisione statale."
+            data-fr="🇨🇳 <strong>Chine</strong> — Réglementations IA générative depuis 2023. Surveillance étroite."
+            data-es="🇨🇳 <strong>China</strong> — Regulaciones IA generativa desde 2023. Fuerte supervisión estatal.">🇨🇳 <strong>China</strong> — Generative AI Regulations since 2023.</li>
+        <li data-en="🇬🇧 <strong>UK</strong> — Principles-based approach. Sector-specific regulators lead."
+            data-it="🇬🇧 <strong>UK</strong> — Approccio basato su principi. Regolatori settoriali in testa."
+            data-fr="🇬🇧 <strong>UK</strong> — Approche basée sur des principes. Régulateurs sectoriels."
+            data-es="🇬🇧 <strong>UK</strong> — Enfoque basado en principios. Reguladores sectoriales.">🇬🇧 <strong>UK</strong> — Principles-based approach. Sector-specific regulators.</li>
+      </ul>
+    </div>
+  </div>
+
+  <aside class="notes">
+    EU AI Act timeline: General-purpose AI rules apply Feb 2025. High-risk AI requirements by Aug 2026. Companies deploying AI in the EU must comply or face fines up to €35M or 7% of global turnover. Key for architects: any AI touching HR, credit scoring, access to essential services, or law enforcement triggers High Risk classification. Documentation, human oversight, and transparency are not optional — they are legal requirements.
+  </aside>
+  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
+  <span class="slide-tag">02 / 06</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 3: REAL-WORLD AI FAILURES ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 03 · Case Studies" data-it="Diapositiva 03 · Casi Studio" data-fr="Diapo 03 · Études de Cas" data-es="Diapositiva 03 · Casos de Estudio">Slide 03 · Case Studies</div>
+  <h2 data-en="Real-World<br>AI Failures"
+      data-it="Fallimenti AI<br>nel Mondo Reale"
+      data-fr="Échecs de l'IA<br>dans le Monde Réel"
+      data-es="Fallos de IA<br>en el Mundo Real">Real-World<br>AI Failures</h2>
+
+  <div class="two-col">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="model-card" style="border-left:3px solid var(--accent2);padding:14px 16px;">
+        <div class="badge badge-prob" style="margin-bottom:6px;"
+          data-en="Amazon Hiring Tool (2018)" data-it="Tool Assunzioni Amazon (2018)" data-fr="Outil de Recrutement Amazon (2018)" data-es="Herramienta de Contratación Amazon (2018)">Amazon Hiring Tool (2018)</div>
+        <p style="font-size:.7rem;margin:0;"
+          data-en="CV screening model penalised female candidates. Trained on 10 years of male-dominated hiring data — learned gender was a negative signal."
+          data-it="Il modello di screening CV penalizzava le candidate donne. Addestrato su 10 anni di dati di assunzione a dominanza maschile."
+          data-fr="Le modèle de tri de CV pénalisait les candidates. Entraîné sur 10 ans de données d'embauche à dominance masculine."
+          data-es="El modelo de selección de CV penalizaba a las candidatas. Entrenado con 10 años de datos de contratación dominados por hombres.">CV screening model penalised female candidates. Trained on 10 years of male-dominated hiring data — learned gender was a negative signal.</p>
+      </div>
+
+      <div class="model-card" style="border-left:3px solid var(--accent);padding:14px 16px;">
+        <div class="badge badge-det" style="margin-bottom:6px;"
+          data-en="COMPAS Recidivism (2016)" data-it="Recidiva COMPAS (2016)" data-fr="Récidive COMPAS (2016)" data-es="Reincidencia COMPAS (2016)">COMPAS Recidivism (2016)</div>
+        <p style="font-size:.7rem;margin:0;"
+          data-en="Criminal risk scoring system was twice as likely to falsely flag Black defendants as high-risk compared to white defendants."
+          data-it="Il sistema di punteggio del rischio criminale aveva il doppio di probabilità di segnalare falsamente i defendant neri come ad alto rischio."
+          data-fr="Le système de score de risque criminel avait deux fois plus de chances de signaler faussement les accusés noirs comme à haut risque."
+          data-es="El sistema de puntuación de riesgo criminal tenía el doble de probabilidades de señalar falsamente a los acusados negros como de alto riesgo.">Criminal risk scoring system was twice as likely to falsely flag Black defendants as high-risk compared to white defendants.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="model-card" style="border-left:3px solid var(--amber);padding:14px 16px;">
+        <div class="badge badge-green" style="background:rgba(251,191,36,.1);color:var(--amber);margin-bottom:6px;"
+          data-en="Lawyer Cites Fake Cases (2023)" data-it="Avvocato Cita Casi Falsi (2023)" data-fr="Avocat Cite des Cas Fictifs (2023)" data-es="Abogado Cita Casos Falsos (2023)">Lawyer Cites Fake Cases (2023)</div>
+        <p style="font-size:.7rem;margin:0;"
+          data-en="A New York attorney used ChatGPT for legal research. The AI invented six fake case citations — complete with made-up judges and rulings. Sanctions followed."
+          data-it="Un avvocato di New York ha usato ChatGPT per la ricerca giuridica. L'AI ha inventato sei citazioni di casi falsi — con giudici e sentenze inventati."
+          data-fr="Un avocat new-yorkais a utilisé ChatGPT pour ses recherches juridiques. L'IA a inventé six fausses citations de jurisprudence."
+          data-es="Un abogado de Nueva York usó ChatGPT para investigación legal. La IA inventó seis citas de casos falsos — con jueces y sentencias inventados.">A New York attorney used ChatGPT for legal research. The AI invented six fake case citations — complete with made-up judges and rulings. Sanctions followed.</p>
+      </div>
+
+      <div class="model-card" style="border-left:3px solid var(--purple);padding:14px 16px;">
+        <div class="badge badge-purple" style="margin-bottom:6px;"
+          data-en="Deepfake Fraud ($25M, 2024)" data-it="Frode Deepfake ($25M, 2024)" data-fr="Fraude Deepfake (25M$, 2024)" data-es="Fraude Deepfake ($25M, 2024)">Deepfake Fraud ($25M, 2024)</div>
+        <p style="font-size:.7rem;margin:0;"
+          data-en="Hong Kong firm employee tricked by AI-generated video call impersonating the CFO. Result: $25 million wire transfer to scammers."
+          data-it="Dipendente di un'azienda di Hong Kong ingannato da una videochiamata AI che impersonava il CFO. Risultato: bonifico di $25M ai truffatori."
+          data-fr="Un employé d'une entreprise de Hong Kong trompé par un appel vidéo IA usurpant l'identité du directeur financier. Résultat : virement de 25M$."
+          data-es="Empleado de una empresa de Hong Kong engañado por videollamada IA que suplantaba al CFO. Resultado: transferencia de $25M a estafadores.">Hong Kong firm employee tricked by AI-generated video call impersonating the CFO. Result: $25 million wire transfer to scammers.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <strong data-en="Lesson:" data-it="Lezione:" data-fr="Leçon :" data-es="Lección:">Lesson:</strong>
+    <span data-en=" Every failure above was preventable with proper governance: bias audits, human oversight, output verification, and authentication protocols."
+          data-it=" Ogni fallimento sopra era prevenibile con una governance adeguata: audit dei bias, supervisione umana, verifica degli output e protocolli di autenticazione."
+          data-fr=" Chaque échec ci-dessus était évitable avec une gouvernance adéquate : audits de biais, supervision humaine, vérification des sorties et protocoles d'authentification."
+          data-es=" Cada fallo anterior era prevenible con una gobernanza adecuada: auditorías de sesgo, supervisión humana, verificación de salidas y protocolos de autenticación."> Every failure above was preventable with proper governance: bias audits, human oversight, output verification, and authentication protocols.</span>
+  </div>
+
+  <aside class="notes">
+    Amazon scrapped the tool after discovering gender bias. COMPAS study by ProPublica sparked national debate on algorithmic fairness. The lawyer case (Mata v. Avianca) became a landmark warning — always verify AI-generated citations. The Hong Kong deepfake: attackers cloned voices and faces from public videos. Takeaway: AI failures are rarely technical surprises — they're governance failures. The technology worked exactly as trained; the problem was what it was trained on and how it was deployed without safeguards.
+  </aside>
+  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
+  <span class="slide-tag">03 / 06</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 4: AI GOVERNANCE FRAMEWORKS ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 04 · Frameworks" data-it="Diapositiva 04 · Framework" data-fr="Diapo 04 · Cadres" data-es="Diapositiva 04 · Marcos">Slide 04 · Frameworks</div>
+  <h2 data-en="AI Governance<br>Frameworks"
+      data-it="Framework di<br>Governance AI"
+      data-fr="Cadres de<br>Gouvernance IA"
+      data-es="Marcos de<br>Gobernanza IA">AI Governance<br>Frameworks</h2>
+
+  <div class="two-col">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:12px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;"
+          data-en="NIST AI RMF 1.0 (2023)" data-it="NIST AI RMF 1.0 (2023)" data-fr="NIST AI RMF 1.0 (2023)" data-es="NIST AI RMF 1.0 (2023)">NIST AI RMF 1.0 (2023)</div>
+        <ul class="example-list" style="font-size:.7rem;">
+          <li data-en="<strong>Govern</strong> — Policies, roles, culture of risk awareness"
+              data-it="<strong>Govern</strong> — Politiche, ruoli, cultura della gestione del rischio"
+              data-fr="<strong>Govern</strong> — Politiques, rôles, culture du risque"
+              data-es="<strong>Govern</strong> — Políticas, roles, cultura de gestión de riesgos"><strong>Govern</strong> — Policies, roles, culture of risk awareness</li>
+          <li data-en="<strong>Map</strong> — Identify context, stakeholders, potential harms"
+              data-it="<strong>Map</strong> — Identificare contesto, stakeholder, danni potenziali"
+              data-fr="<strong>Map</strong> — Identifier le contexte, les parties prenantes, les préjudices"
+              data-es="<strong>Map</strong> — Identificar contexto, partes interesadas, daños potenciales"><strong>Map</strong> — Identify context, stakeholders, potential harms</li>
+          <li data-en="<strong>Measure</strong> — Quantify risks with metrics and benchmarks"
+              data-it="<strong>Measure</strong> — Quantificare i rischi con metriche e benchmark"
+              data-fr="<strong>Measure</strong> — Quantifier les risques avec métriques et benchmarks"
+              data-es="<strong>Measure</strong> — Cuantificar riesgos con métricas y benchmarks"><strong>Measure</strong> — Quantify risks with metrics and benchmarks</li>
+          <li data-en="<strong>Manage</strong> — Prioritise, respond, monitor, improve"
+              data-it="<strong>Manage</strong> — Prioritizzare, rispondere, monitorare, migliorare"
+              data-fr="<strong>Manage</strong> — Prioriser, répondre, surveiller, améliorer"
+              data-es="<strong>Manage</strong> — Priorizar, responder, monitorear, mejorar"><strong>Manage</strong> — Prioritise, respond, monitor, improve</li>
+        </ul>
+      </div>
+
+      <div style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.15);border-radius:12px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;"
+          data-en="ISO/IEC 42001 (2023)" data-it="ISO/IEC 42001 (2023)" data-fr="ISO/IEC 42001 (2023)" data-es="ISO/IEC 42001 (2023)">ISO/IEC 42001 (2023)</div>
+        <ul class="example-list" style="font-size:.7rem;">
+          <li data-en="First international standard for AI Management Systems"
+              data-it="Primo standard internazionale per Sistemi di Gestione AI"
+              data-fr="Premier standard international pour les systèmes de gestion IA"
+              data-es="Primer estándar internacional para Sistemas de Gestión de IA">First international standard for AI Management Systems</li>
+          <li data-en="Certifiable — aligns with ISO 27001 (InfoSec)"
+              data-it="Certificabile — allineato con ISO 27001 (InfoSec)"
+              data-fr="Certifiable — aligné avec ISO 27001 (InfoSec)"
+              data-es="Certificable — alineado con ISO 27001 (InfoSec)">Certifiable — aligns with ISO 27001 (InfoSec)</li>
+          <li data-en="Covers full AI lifecycle: design → deploy → retire"
+              data-it="Copre l'intero ciclo di vita AI: design → deploy → ritiro"
+              data-fr="Couvre tout le cycle de vie IA : design → déploiement → retrait"
+              data-es="Cubre todo el ciclo de vida IA: diseño → despliegue → retiro">Covers full AI lifecycle: design → deploy → retire</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="badge badge-green" style="margin-bottom:10px;"
+        data-en="🛡️ Pre-Deployment Checklist" data-it="🛡️ Checklist Pre-Deployment" data-fr="🛡️ Checklist Pré-Déploiement" data-es="🛡️ Checklist Pre-Despliegue">🛡️ Pre-Deployment Checklist</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="☑ <strong>Data audit</strong> — Training data reviewed for bias, IP, privacy"
+          data-it="☑ <strong>Audit dati</strong> — Dati di training revisionati per bias, IP, privacy"
+          data-fr="☑ <strong>Audit données</strong> — Données d'entraînement vérifiées pour biais, PI, vie privée"
+          data-es="☑ <strong>Auditoría datos</strong> — Datos de entrenamiento revisados para sesgo, PI, privacidad">☑ <strong>Data audit</strong> — Training data reviewed for bias, IP, privacy</div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="☑ <strong>Eval suite</strong> — Accuracy, fairness metrics, adversarial tests"
+          data-it="☑ <strong>Suite eval</strong> — Metriche di accuratezza, equità, test adversariali"
+          data-fr="☑ <strong>Suite d'éval</strong> — Métriques de précision, d'équité, tests adversariaux"
+          data-es="☑ <strong>Suite eval</strong> — Métricas de precisión, equidad, pruebas adversariales">☑ <strong>Eval suite</strong> — Accuracy, fairness metrics, adversarial tests</div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="☑ <strong>Human oversight</strong> — Escalation paths, override controls"
+          data-it="☑ <strong>Supervisione umana</strong> — Percorsi di escalation, controlli override"
+          data-fr="☑ <strong>Supervision humaine</strong> — Parcours d'escalade, contrôles de remplacement"
+          data-es="☑ <strong>Supervisión humana</strong> — Rutas de escalación, controles de anulación">☑ <strong>Human oversight</strong> — Escalation paths, override controls</div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="☑ <strong>Incident plan</strong> — Response playbook for AI failures"
+          data-it="☑ <strong>Piano incidenti</strong> — Playbook di risposta per fallimenti AI"
+          data-fr="☑ <strong>Plan d'incident</strong> — Playbook de réponse aux défaillances IA"
+          data-es="☑ <strong>Plan de incidentes</strong> — Playbook de respuesta para fallos de IA">☑ <strong>Incident plan</strong> — Response playbook for AI failures</div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="☑ <strong>Documentation</strong> — Model card, data sheet, risk assessment"
+          data-it="☑ <strong>Documentazione</strong> — Model card, data sheet, valutazione del rischio"
+          data-fr="☑ <strong>Documentation</strong> — Fiche modèle, fiche données, évaluation des risques"
+          data-es="☑ <strong>Documentación</strong> — Model card, data sheet, evaluación de riesgos">☑ <strong>Documentation</strong> — Model card, data sheet, risk assessment</div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:8px 12px;border-radius:6px;font-size:.7rem;"
+          data-en="☑ <strong>Monitoring</strong> — Drift detection, feedback loops, re-training triggers"
+          data-it="☑ <strong>Monitoraggio</strong> — Rilevamento drift, cicli di feedback, trigger di re-training"
+          data-fr="☑ <strong>Surveillance</strong> — Détection de dérive, boucles de feedback, déclencheurs de ré-entraînement"
+          data-es="☑ <strong>Monitoreo</strong> — Detección de deriva, ciclos de feedback, disparadores de re-entrenamiento">☑ <strong>Monitoring</strong> — Drift detection, feedback loops, re-training triggers</div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes">
+    NIST AI RMF: voluntary but often used as the baseline for US federal agencies and becoming the de facto standard for enterprise AI governance. The four functions (Govern, Map, Measure, Manage) mirror the NIST Cybersecurity Framework structure — familiar territory for InfoSec teams. ISO 42001: published Dec 2023, first certifiable AI standard. Companies pursuing this demonstrate to regulators and customers that they have systematic AI governance. The pre-deployment checklist is a simplified version of what large tech companies already do internally — the key is making it standard practice for every organization deploying AI, not just Big Tech.
+  </aside>
+  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
+  <span class="slide-tag">04 / 06</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 5: RESPONSIBLE AI ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 05 · Responsible AI" data-it="Diapositiva 05 · AI Responsabile" data-fr="Diapo 05 · IA Responsable" data-es="Diapositiva 05 · IA Responsable">Slide 05 · Responsible AI</div>
+  <h2 data-en="Responsible AI<br>in Practice"
+      data-it="AI Responsabile<br>in Pratica"
+      data-fr="IA Responsable<br>en Pratique"
+      data-es="IA Responsable<br>en la Práctica">Responsible AI<br>in Practice</h2>
+
+  <div class="three-col">
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-det"
+        data-en="Transparency" data-it="Trasparenza" data-fr="Transparence" data-es="Transparencia">Transparency</div>
+      <ul class="example-list">
+        <li data-en="Disclose when AI is in use"
+            data-it="Dichiarare quando l'AI è in uso"
+            data-fr="Signaler l'utilisation de l'IA"
+            data-es="Revelar cuando se usa IA">Disclose when AI is in use</li>
+        <li data-en="Explain model decisions (XAI)"
+            data-it="Spiegare le decisioni del modello (XAI)"
+            data-fr="Expliquer les décisions du modèle (XAI)"
+            data-es="Explicar decisiones del modelo (XAI)">Explain model decisions (XAI)</li>
+        <li data-en="Document training data sources"
+            data-it="Documentare le fonti dei dati di training"
+            data-fr="Documenter les sources des données d'entraînement"
+            data-es="Documentar fuentes de datos de entrenamiento">Document training data sources</li>
+      </ul>
+    </div>
+
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-green"
+        data-en="Fairness" data-it="Equità" data-fr="Équité" data-es="Equidad">Fairness</div>
+      <ul class="example-list">
+        <li data-en="Audit for demographic bias"
+            data-it="Audit per bias demografico"
+            data-fr="Audit des biais démographiques"
+            data-es="Auditar el sesgo demográfico">Audit for demographic bias</li>
+        <li data-en="Diverse training data and teams"
+            data-it="Dati di training e team diversi"
+            data-fr="Données d'entraînement et équipes diversifiées"
+            data-es="Datos de entrenamiento y equipos diversos">Diverse training data and teams</li>
+        <li data-en="Measure disparate impact"
+            data-it="Misurare l'impatto disparato"
+            data-fr="Mesurer l'impact disproportionné"
+            data-es="Medir el impacto desigual">Measure disparate impact</li>
+      </ul>
+    </div>
+
+    <div class="model-card" style="padding:18px 16px;">
+      <div class="badge badge-purple"
+        data-en="Safety & Control" data-it="Sicurezza e Controllo" data-fr="Sécurité & Contrôle" data-es="Seguridad y Control">Safety & Control</div>
+      <ul class="example-list">
+        <li data-en="Human-in-the-loop for high stakes"
+            data-it="Human-in-the-loop per le decisioni ad alto rischio"
+            data-fr="Humain dans la boucle pour les décisions importantes"
+            data-es="Humano en el bucle para decisiones importantes">Human-in-the-loop for high stakes</li>
+        <li data-en="Kill switch & rollback plan"
+            data-it="Kill switch e piano di rollback"
+            data-fr="Interrupteur d'urgence et plan de rollback"
+            data-es="Interruptor de apagado y plan de reversión">Kill switch & rollback plan</li>
+        <li data-en="Red-team before deployment"
+            data-it="Red-team prima del deployment"
+            data-fr="Red-team avant le déploiement"
+            data-es="Red-team antes del despliegue">Red-team before deployment</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:14px;">
+    <strong data-en="Principle:" data-it="Principio:" data-fr="Principe :" data-es="Principio:">Principle:</strong>
+    <span data-en=" Responsible AI is not a compliance checkbox — it is a product quality standard. Users deserve to know when and how AI affects them."
+          data-it=" L'AI responsabile non è una casella da spuntare — è uno standard di qualità del prodotto. Gli utenti meritano di sapere quando e come l'AI li riguarda."
+          data-fr=" L'IA responsable n'est pas une simple case à cocher — c'est un standard de qualité. Les utilisateurs méritent de savoir quand et comment l'IA les affecte."
+          data-es=" La IA responsable no es una casilla de verificación — es un estándar de calidad del producto. Los usuarios merecen saber cuándo y cómo les afecta la IA."> Responsible AI is not a compliance checkbox — it is a product quality standard.</span>
+  </div>
+
+  <aside class="notes">
+    Responsible AI frameworks: Google's PAIR, Microsoft's Responsible AI Standard, IBM's AI Fairness 360. Red-teaming: deliberately trying to break your AI system before attackers do. Prompt injection, jailbreaks, data poisoning. For product managers: every AI feature needs a 'what if this goes wrong' decision tree. For architects: design for explainability from day one — retrofitting XAI is expensive.
+  </aside>
+  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
+  <span class="slide-tag">05 / 06</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 6: THE ROAD AHEAD ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 06 · Future" data-it="Diapositiva 06 · Futuro" data-fr="Diapo 06 · Futur" data-es="Diapositiva 06 · Futuro">Slide 06 · Future</div>
+  <h2 data-en="The Road Ahead"
+      data-it="La Strada Avanti"
+      data-fr="La Route à Venir"
+      data-es="El Camino por Delante">The Road Ahead</h2>
+
+  <div class="two-col">
+    <div>
+      <div class="badge badge-green" style="margin-bottom:12px;"
+        data-en="Near-term (2025–2027)" data-it="Breve termine (2025–2027)" data-fr="Court terme (2025–2027)" data-es="Corto plazo (2025–2027)">Near-term (2025–2027)</div>
+      <ul class="example-list">
+        <li data-en="🤖 Autonomous AI agents become mainstream in enterprise"
+            data-it="🤖 Gli agenti AI autonomi diventano mainstream in azienda"
+            data-fr="🤖 Les agents IA autonomes deviennent courants en entreprise"
+            data-es="🤖 Los agentes IA autónomos se vuelven comunes en empresas">🤖 Autonomous AI agents become mainstream in enterprise</li>
+        <li data-en="🔊 Multi-modal AI: text, voice, image, video in one model"
+            data-it="🔊 AI Multi-modale: testo, voce, immagine, video in un modello"
+            data-fr="🔊 IA multi-modale : texte, voix, image, vidéo dans un modèle"
+            data-es="🔊 IA multimodal: texto, voz, imagen, video en un modelo">🔊 Multi-modal AI: text, voice, image, video in one model</li>
+        <li data-en="📉 Smaller, faster, on-device models (edge AI)"
+            data-it="📉 Modelli più piccoli, veloci, on-device (edge AI)"
+            data-fr="📉 Modèles plus petits, rapides, sur l'appareil (IA sur le bord)"
+            data-es="📉 Modelos más pequeños, rápidos, en dispositivo (IA en el borde)">📉 Smaller, faster, on-device models (edge AI)</li>
+        <li data-en="⚖️ AI regulation expands globally (post-EU AI Act)"
+            data-it="⚖️ La regolamentazione AI si espande globalmente"
+            data-fr="⚖️ La réglementation IA s'étend mondialement"
+            data-es="⚖️ La regulación IA se expande globalmente">⚖️ AI regulation expands globally (post-EU AI Act)</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="badge badge-purple" style="margin-bottom:12px;"
+        data-en="Medium-term (2027–2030)" data-it="Medio termine (2027–2030)" data-fr="Moyen terme (2027–2030)" data-es="Mediano plazo (2027–2030)">Medium-term (2027–2030)</div>
+      <ul class="example-list">
+        <li data-en="🧠 Reasoning AI: models that genuinely plan and verify (o3-class)"
+            data-it="🧠 AI ragionante: modelli che pianificano e verificano davvero (o3-class)"
+            data-fr="🧠 IA raisonnante : modèles qui planifient vraiment (classe o3)"
+            data-es="🧠 IA razonante: modelos que planifican y verifican (clase o3)">🧠 Reasoning AI: models that genuinely plan and verify (o3-class)</li>
+        <li data-en="💊 AI in drug discovery, materials, climate simulation"
+            data-it="💊 AI nella scoperta di farmaci, materiali, simulazione climatica"
+            data-fr="💊 IA dans la découverte de médicaments, matériaux, simulation climatique"
+            data-es="💊 IA en descubrimiento de fármacos, materiales, simulación climática">💊 AI in drug discovery, materials, climate simulation</li>
+        <li data-en="🎓 Personalised education at scale"
+            data-it="🎓 Istruzione personalizzata su larga scala"
+            data-fr="🎓 Éducation personnalisée à grande échelle"
+            data-es="🎓 Educación personalizada a escala">🎓 Personalised education at scale</li>
+        <li data-en="🤝 Human-AI collaboration as default work mode"
+            data-it="🤝 Collaborazione uomo-AI come modalità di lavoro predefinita"
+            data-fr="🤝 Collaboration humain-IA comme mode de travail par défaut"
+            data-es="🤝 Colaboración humano-IA como modo de trabajo predeterminado">🤝 Human-AI collaboration as the default work mode</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:14px;">
+    <strong data-en="The constant:" data-it="La costante:" data-fr="La constante :" data-es="La constante:">The constant:</strong>
+    <span data-en=" Technology will keep accelerating. The skill that endures is knowing how to work with AI — critically, creatively, and responsibly."
+          data-it=" La tecnologia continuerà ad accelerare. La competenza che dura è sapere come lavorare con l'AI — in modo critico, creativo e responsabile."
+          data-fr=" La technologie continuera d'accélérer. La compétence qui dure est de savoir travailler avec l'IA — de façon critique, créative et responsable."
+          data-es=" La tecnología seguirá acelerando. La habilidad que perdura es saber trabajar con IA — de forma crítica, creativa y responsable."> Technology will keep accelerating. The skill that endures is knowing how to work with AI — critically, creatively, and responsibly.</span>
+  </div>
+
+  <aside class="notes">
+    Key message to close on: don't be afraid of AI, but don't be naive. The jobs that will be displaced are the ones that can be fully described as a repeatable pattern. The jobs that grow are those requiring judgment, empathy, creativity, and ethical reasoning — things that are hard to automate. The best preparation: stay curious, experiment, build things, and develop a critical relationship with AI tools.
+  </aside>
+  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
+  <span class="slide-tag">06 / 06</span>
+</section>
+
+<!-- ══════════════════════ REFERENCES ══════════════════════ -->
+<section>
+  <div class="eyebrow" data-en="References" data-it="Riferimenti" data-fr="Références" data-es="Referencias">References</div>
+  <div class="rule"></div>
+  <h2 data-en="Sources & Further Reading" data-it="Fonti e Approfondimenti" data-fr="Sources & Lectures" data-es="Fuentes y Lecturas">Sources & Further Reading</h2>
+  <ul class="ref-list">
+    <li><a href="https://www.europarl.europa.eu/topics/en/article/20230601STO93804/eu-ai-act-first-regulation-on-artificial-intelligence" target="_blank">EU Parliament — EU AI Act Overview</a></li>
+    <li><a href="https://artificialintelligenceact.eu/" target="_blank">EU AI Act — Full text & implementation tracker</a></li>
+    <li>Bender et al., <a href="https://dl.acm.org/doi/10.1145/3442188.3445922" target="_blank">"On the Dangers of Stochastic Parrots"</a>, FAccT 2021</li>
+    <li><a href="https://www.nist.gov/artificial-intelligence" target="_blank">NIST AI Risk Management Framework</a></li>
+    <li><a href="https://www.iso.org/standard/81230.html" target="_blank">ISO/IEC 42001:2023 — AI Management Systems</a></li>
+    <li><a href="https://pair.withgoogle.com/" target="_blank">Google PAIR — People + AI Research</a></li>
+    <li>Bender et al., <a href="https://dl.acm.org/doi/10.1145/3442188.3445922" target="_blank">"On the Dangers of Stochastic Parrots"</a>, FAccT 2021</li>
+    <li>ProPublica, <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing" target="_blank">"Machine Bias"</a> — COMPAS investigation, 2016</li>
+    <li>Reuters, <a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight-idUSKCN1MK08G" target="_blank">"Amazon scraps secret AI recruiting tool"</a>, 2018</li>
+    <li>OpenAI, <a href="https://openai.com/safety" target="_blank">"Safety & Alignment Research"</a></li>
+    <li>Anthropic, <a href="https://www.anthropic.com/research/core-views-on-ai-safety" target="_blank">"Core Views on AI Safety"</a></li>
+  </ul>
+  <span class="chapter-tag">Chapter 6 · Ethics & Future</span>
+</section>
+
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js-menu/menu.js"></script>
+<script src="js/slides.js"></script>
+<script>initSlides();</script>
+</body>
+</html>

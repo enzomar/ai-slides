@@ -1,0 +1,486 @@
+/* ═══════════════════════════════════════════════════════════
+   AI SLIDES — Animated Diagrams
+   Self-building WOW-effect diagrams for presentations
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── SHARED ANIMATION TOKENS ─────────────────────────────── */
+:root {
+  --anim-fast: .4s;
+  --anim-med:  .7s;
+  --anim-slow: 1.2s;
+  --ease-out-expo: cubic-bezier(.16,1,.3,1);
+  --ease-spring:   cubic-bezier(.34,1.56,.64,1);
+  --glow-blue:   0 0 20px rgba(27,94,255,.5), 0 0 60px rgba(27,94,255,.2);
+  --glow-orange: 0 0 20px rgba(255,75,31,.5), 0 0 60px rgba(255,75,31,.2);
+  --glow-green:  0 0 20px rgba(14,122,80,.5), 0 0 60px rgba(14,122,80,.2);
+  --glow-purple: 0 0 20px rgba(107,53,204,.5), 0 0 60px rgba(107,53,204,.2);
+}
+
+/* ──────────────────────────────────────────────────────────
+   1. TOKEN PREDICTION ANIMATION
+   ────────────────────────────────────────────────────────── */
+.anim-token-prediction {
+  width: 100%; display: flex; flex-direction: column;
+  align-items: center; gap: 24px; position: relative;
+}
+
+/* Sentence row */
+.anim-sentence {
+  display: flex; gap: 10px; align-items: center;
+  flex-wrap: wrap; justify-content: center;
+}
+.anim-word {
+  font-family: var(--mono); font-size: 1.1rem; font-weight: 500;
+  padding: 8px 18px; border-radius: 10px;
+  background: var(--bg-card); border: 2px solid var(--rule);
+  color: var(--ink); opacity: 0; transform: translateY(20px);
+  transition: all var(--anim-med) var(--ease-out-expo);
+}
+.anim-word.visible {
+  opacity: 1; transform: translateY(0);
+}
+.anim-word.context {
+  border-color: var(--accent); background: rgba(59,130,246,.2);
+  box-shadow: 0 2px 12px rgba(27,94,255,.15);
+}
+.anim-word.cursor {
+  border-color: var(--accent); background: var(--accent);
+  color: white; animation: pulse-cursor 1.2s ease-in-out infinite;
+}
+.anim-word.predicted {
+  border-color: var(--accent2); background: var(--accent2);
+  color: white; box-shadow: var(--glow-orange);
+  animation: bounce-in .6s var(--ease-spring) forwards;
+}
+
+@keyframes pulse-cursor {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(27,94,255,.4); }
+  50%      { box-shadow: 0 0 0 12px rgba(27,94,255,0); }
+}
+
+@keyframes bounce-in {
+  0%   { transform: scale(0) translateY(-30px); opacity: 0; }
+  60%  { transform: scale(1.15) translateY(0); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Probability bars */
+.anim-prob-chart {
+  display: flex; gap: 12px; align-items: flex-end;
+  justify-content: center; height: 160px; padding: 0 20px;
+  opacity: 0; transform: translateY(20px);
+  transition: all var(--anim-med) var(--ease-out-expo);
+}
+.anim-prob-chart.visible { opacity: 1; transform: translateY(0); }
+
+.anim-prob-bar {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; width: 80px;
+}
+.anim-prob-bar-fill {
+  width: 100%; border-radius: 8px 8px 0 0;
+  transition: height 1s var(--ease-out-expo), box-shadow .5s;
+  height: 0; position: relative;
+}
+.anim-prob-bar-fill.grow { /* height set via JS */ }
+.anim-prob-bar-fill.winner {
+  box-shadow: var(--glow-blue);
+}
+.anim-prob-bar-fill .bar-pct {
+  position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+  font-family: var(--mono); font-size: .7rem; font-weight: 500;
+  opacity: 0; transition: opacity .4s .8s;
+}
+.anim-prob-bar-fill.grow .bar-pct { opacity: 1; }
+
+.anim-prob-bar-label {
+  font-family: var(--mono); font-size: .7rem; color: var(--ink-mute);
+  text-align: center; white-space: nowrap;
+}
+
+/* Connection line */
+.anim-connector {
+  width: 2px; height: 30px; background: var(--accent);
+  opacity: 0; transition: opacity .4s, height .6s var(--ease-out-expo);
+  margin: -8px auto;
+}
+.anim-connector.visible { opacity: .4; }
+
+/* ──────────────────────────────────────────────────────────
+   2. ATTENTION HEATMAP ANIMATION
+   ────────────────────────────────────────────────────────── */
+.anim-attention {
+  width: 100%; display: flex; flex-direction: column;
+  align-items: center; gap: 16px;
+}
+
+.anim-attn-grid {
+  display: grid; gap: 3px; position: relative;
+  /* grid-template-columns set via JS */
+}
+
+.anim-attn-cell {
+  width: 56px; height: 56px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: .65rem; font-weight: 500;
+  background: rgba(27,94,255,.03); color: transparent;
+  border: 1px solid rgba(27,94,255,.08);
+  transition: background .6s, color .5s .3s, box-shadow .6s, border-color .6s;
+  cursor: default;
+}
+.anim-attn-cell.lit {
+  color: white; border-color: transparent;
+}
+.anim-attn-cell.lit-high {
+  background: rgba(27,94,255,.9);
+  box-shadow: 0 0 16px rgba(27,94,255,.4);
+}
+.anim-attn-cell.lit-med {
+  background: rgba(27,94,255,.5);
+  box-shadow: 0 0 8px rgba(27,94,255,.2);
+}
+.anim-attn-cell.lit-low {
+  background: rgba(27,94,255,.2);
+  color: rgba(27,94,255,.8);
+}
+
+.anim-attn-header {
+  font-family: var(--mono); font-size: .72rem; font-weight: 500;
+  color: var(--ink); text-align: center; padding: 8px 4px;
+  min-width: 56px;
+}
+.anim-attn-header.row-header {
+  text-align: right; padding-right: 12px;
+  color: var(--accent);
+}
+
+.anim-attn-desc {
+  font-family: var(--sans); font-size: .82rem; color: var(--ink-mid);
+  text-align: center; max-width: 600px; opacity: 0;
+  transform: translateY(10px);
+  transition: all .5s var(--ease-out-expo);
+}
+.anim-attn-desc.visible { opacity: 1; transform: translateY(0); }
+
+/* Scan line effect */
+.anim-attn-scanline {
+  position: absolute; height: 56px; left: 0; right: 0;
+  background: linear-gradient(90deg, transparent, rgba(27,94,255,.08), transparent);
+  border-radius: 8px; pointer-events: none; opacity: 0;
+  transition: top .4s var(--ease-out-expo), opacity .3s;
+}
+.anim-attn-scanline.active { opacity: 1; }
+
+/* ──────────────────────────────────────────────────────────
+   3. RAG FLOW ANIMATION
+   ────────────────────────────────────────────────────────── */
+.anim-rag-flow {
+  width: 100%; display: flex; flex-direction: column;
+  align-items: center; gap: 0; position: relative;
+}
+
+.anim-rag-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; width: 100%; position: relative;
+}
+
+.anim-rag-node {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; opacity: 0; transform: scale(.7);
+  transition: all var(--anim-med) var(--ease-spring);
+  position: relative; z-index: 2;
+}
+.anim-rag-node.visible {
+  opacity: 1; transform: scale(1);
+}
+
+.anim-rag-box {
+  border-radius: 14px; padding: 16px 22px;
+  text-align: center; font-family: var(--sans);
+  font-size: .8rem; font-weight: 500;
+  position: relative; overflow: hidden;
+  min-width: 110px;
+}
+.anim-rag-box::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.3), transparent);
+  opacity: 0; transition: opacity .5s;
+}
+.anim-rag-node.visible .anim-rag-box::after { opacity: 1; }
+
+.anim-rag-box.docs    { background: #EDF2FF; color: var(--accent); border: 2px solid #BDD0FF; }
+.anim-rag-box.chunk   { background: #E8F8F2; color: var(--green); border: 2px solid #A8DFCA; }
+.anim-rag-box.embed   { background: #F3EEFF; color: var(--purple); border: 2px solid #C8A8F8; }
+.anim-rag-box.vectordb { background: linear-gradient(135deg, #1B1B2F, #162447); color: #4FD1C5;
+                          border: 2px solid #4FD1C5; min-width: 140px; }
+.anim-rag-box.query   { background: #FFF7E6; color: var(--amber); border: 2px solid #FFD88C; }
+.anim-rag-box.retrieve { background: #FFF0EB; color: var(--accent2); border: 2px solid #FFB89E; }
+.anim-rag-box.llm     { background: linear-gradient(135deg, var(--accent), #4F8AFF);
+                          color: white; border: 2px solid var(--accent);
+                          min-width: 140px; }
+.anim-rag-box.answer  { background: var(--ink); color: var(--bg); border: 2px solid var(--ink); }
+
+.anim-rag-box.vectordb.visible-node,
+.anim-rag-box.llm.visible-node {
+  box-shadow: var(--glow-blue);
+}
+
+.anim-rag-icon {
+  font-size: 1.6rem; margin-bottom: 2px;
+}
+.anim-rag-label {
+  font-family: var(--mono); font-size: .6rem; color: var(--ink-mute);
+  text-transform: uppercase; letter-spacing: .08em;
+}
+
+/* Animated connector arrows */
+.anim-rag-arrow {
+  width: 50px; height: 2px; position: relative;
+  opacity: 0; margin: 0 -4px;
+  transition: opacity .4s;
+}
+.anim-rag-arrow.visible { opacity: 1; }
+.anim-rag-arrow::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 0; height: 100%; background: var(--accent);
+  transition: width .6s var(--ease-out-expo);
+}
+.anim-rag-arrow.visible::before { width: 100%; }
+.anim-rag-arrow::after {
+  content: ''; position: absolute; top: -4px; right: -2px;
+  width: 0; height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid var(--accent);
+  opacity: 0; transition: opacity .3s .5s;
+}
+.anim-rag-arrow.visible::after { opacity: 1; }
+.anim-rag-arrow.down {
+  width: 2px; height: 30px; margin: -4px auto;
+}
+.anim-rag-arrow.down::before {
+  width: 100%; height: 0;
+  transition: height .5s var(--ease-out-expo);
+}
+.anim-rag-arrow.down.visible::before { height: 100%; }
+.anim-rag-arrow.down::after {
+  top: auto; bottom: -2px; left: -4px; right: auto;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 8px solid var(--accent);
+  border-bottom: none;
+}
+
+/* Data particles flowing */
+.anim-particle {
+  position: absolute; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  opacity: 0; pointer-events: none; z-index: 3;
+}
+
+@keyframes particle-flow-right {
+  0%   { left: 0; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { left: calc(100% - 6px); opacity: 0; }
+}
+@keyframes particle-flow-down {
+  0%   { top: 0; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: calc(100% - 6px); opacity: 0; }
+}
+
+/* ──────────────────────────────────────────────────────────
+   4. AGENT LOOP ANIMATION
+   ────────────────────────────────────────────────────────── */
+.anim-agent-loop {
+  width: 100%; display: flex; align-items: center;
+  justify-content: center; position: relative;
+  min-height: 420px;
+}
+
+.anim-agent-brain {
+  width: 130px; height: 130px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #4F8AFF);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 4px;
+  color: white; font-family: var(--sans); font-weight: 500;
+  font-size: .85rem; z-index: 10;
+  opacity: 0; transform: scale(0);
+  transition: all .8s var(--ease-spring);
+  box-shadow: 0 0 0 0 rgba(27,94,255,.3);
+  position: relative;
+}
+.anim-agent-brain.visible {
+  opacity: 1; transform: scale(1);
+  box-shadow: 0 0 40px rgba(27,94,255,.3), 0 0 80px rgba(27,94,255,.1);
+}
+.anim-agent-brain .brain-icon { font-size: 2rem; }
+.anim-agent-brain .brain-label { font-size: .65rem; opacity: .8; }
+
+/* Orbit ring */
+.anim-orbit-ring {
+  position: absolute; width: 320px; height: 320px;
+  border-radius: 50%; border: 2px dashed rgba(27,94,255,.15);
+  opacity: 0; transition: opacity .8s;
+}
+.anim-orbit-ring.visible { opacity: 1; }
+
+/* Loop steps positioned around the brain */
+.anim-loop-step {
+  position: absolute; opacity: 0; transform: scale(.5);
+  transition: all var(--anim-med) var(--ease-spring);
+  z-index: 5;
+}
+.anim-loop-step.visible {
+  opacity: 1; transform: scale(1);
+}
+
+.anim-loop-box {
+  border-radius: 14px; padding: 14px 20px;
+  text-align: center; font-family: var(--sans);
+  font-size: .78rem; font-weight: 500;
+  min-width: 100px; position: relative;
+  backdrop-filter: blur(8px);
+}
+.anim-loop-box.think  {
+  background: rgba(255,247,230,.95); color: var(--amber);
+  border: 2px solid #FFD88C;
+}
+.anim-loop-box.act    {
+  background: rgba(237,242,255,.95); color: var(--accent);
+  border: 2px solid #BDD0FF;
+}
+.anim-loop-box.observe {
+  background: rgba(232,248,242,.95); color: var(--green);
+  border: 2px solid #A8DFCA;
+}
+.anim-loop-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+
+/* Tool nodes */
+.anim-tool-node {
+  position: absolute; opacity: 0; transform: scale(0);
+  transition: all .5s var(--ease-spring);
+  z-index: 4;
+}
+.anim-tool-node.visible {
+  opacity: 1; transform: scale(1);
+}
+.anim-tool-pill {
+  border-radius: 20px; padding: 8px 16px;
+  font-family: var(--mono); font-size: .65rem;
+  font-weight: 500; white-space: nowrap;
+  background: rgba(243,238,255,.95); color: var(--purple);
+  border: 1.5px solid #C8A8F8;
+  backdrop-filter: blur(8px);
+}
+
+/* Animated arc paths between steps */
+.anim-arc {
+  position: absolute; z-index: 3;
+  opacity: 0; transition: opacity .5s;
+}
+.anim-arc.visible { opacity: 1; }
+.anim-arc svg { overflow: visible; }
+.anim-arc path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  transition: stroke-dashoffset 1s var(--ease-out-expo);
+}
+.anim-arc.visible path {
+  stroke-dashoffset: 0;
+}
+
+/* Tool connection lines */
+.anim-tool-line {
+  position: absolute; z-index: 3;
+  width: 1px; height: 0;
+  background: linear-gradient(to bottom, var(--purple), transparent);
+  transition: height .5s var(--ease-out-expo);
+  opacity: 0;
+}
+.anim-tool-line.visible {
+  opacity: .5; height: 40px;
+}
+
+/* Rotating orbit dot */
+@keyframes orbit-dot {
+  0%   { transform: rotate(0deg) translateX(160px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(160px) rotate(-360deg); }
+}
+.anim-orbit-dot {
+  position: absolute; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  opacity: 0; transition: opacity .5s;
+  animation: orbit-dot 4s linear infinite;
+  top: calc(50% - 4px); left: calc(50% - 4px);
+}
+.anim-orbit-dot.visible { opacity: .6; }
+
+/* ──────────────────────────────────────────────────────────
+   5. SHARED ANIMATION UTILITIES
+   ────────────────────────────────────────────────────────── */
+
+/* Staggered entrance */
+.anim-stagger > * {
+  opacity: 0; transform: translateY(16px);
+  transition: all var(--anim-med) var(--ease-out-expo);
+}
+.anim-stagger.visible > *:nth-child(1) { transition-delay: 0s; }
+.anim-stagger.visible > *:nth-child(2) { transition-delay: .12s; }
+.anim-stagger.visible > *:nth-child(3) { transition-delay: .24s; }
+.anim-stagger.visible > *:nth-child(4) { transition-delay: .36s; }
+.anim-stagger.visible > *:nth-child(5) { transition-delay: .48s; }
+.anim-stagger.visible > *:nth-child(6) { transition-delay: .6s; }
+.anim-stagger.visible > *:nth-child(7) { transition-delay: .72s; }
+.anim-stagger.visible > *:nth-child(8) { transition-delay: .84s; }
+.anim-stagger.visible > * { opacity: 1; transform: translateY(0); }
+
+/* Glow pulse for emphasis */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(27,94,255,.3); }
+  50%      { box-shadow: 0 0 40px rgba(27,94,255,.6), 0 0 80px rgba(27,94,255,.2); }
+}
+.glow-active { animation: glow-pulse 2s ease-in-out infinite; }
+
+/* Typewriter cursor */
+@keyframes type-blink {
+  0%, 100% { border-right-color: var(--accent); }
+  50%      { border-right-color: transparent; }
+}
+
+/* Breathing effect for brain nodes */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+.breathe { animation: breathe 3s ease-in-out infinite; }
+
+/* Draw-in for SVG */
+@keyframes draw-line {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Number counter animation */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Floating dots background */
+.anim-bg-dots {
+  position: absolute; inset: 0; overflow: hidden;
+  pointer-events: none; z-index: 0;
+}
+.anim-bg-dot {
+  position: absolute; width: 4px; height: 4px;
+  border-radius: 50%; background: var(--accent);
+  opacity: .08; animation: float-dot 6s ease-in-out infinite;
+}
+@keyframes float-dot {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-20px); }
+}

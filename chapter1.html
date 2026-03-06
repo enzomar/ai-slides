@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chapter 1 — Introduction | AI Slides</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reset.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css"/>
+<link rel="stylesheet" href="css/theme.css"/>
+<link rel="stylesheet" href="css/animations.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-menu/menu.css"/>
+</head>
+<body>
+
+<!-- Navigation -->
+<div class="nav-bar">
+  <a href="index.html">☰</a>
+  <a href="chapter2.html">Ch.2 →</a>
+</div>
+
+<!-- Language selector -->
+<div class="lang-bar">
+  <span class="lang-btn active" onclick="setLang('en')">EN</span>
+  <span class="lang-btn" onclick="setLang('it')">IT</span>
+  <span class="lang-btn" onclick="setLang('fr')">FR</span>
+  <span class="lang-btn" onclick="setLang('es')">ES</span>
+  <span class="font-controls"><span class="font-btn" onclick="changeFontSize(-2)" title="Decrease font">A−</span><span class="font-btn" onclick="resetFontSize()" title="Reset font">A</span><span class="font-btn" onclick="changeFontSize(2)" title="Increase font">A+</span></span>
+</div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ══════════════════════ CHAPTER COVER ══════════════════════ -->
+<section class="chapter-divider">
+  <div class="cover-dot"></div>
+  <div class="eyebrow" style="color:var(--ink-mute);"
+    data-en="Chapter 01"
+    data-it="Capitolo 01"
+    data-fr="Chapitre 01"
+    data-es="Capítulo 01">Chapter 01</div>
+  <div class="rule" style="margin:0 auto 28px;"></div>
+  <h1 style="text-align:center;"
+    data-en="Introduction"
+    data-it="Introduzione"
+    data-fr="Introduction"
+    data-es="Introducción">Introduction</h1>
+  <p style="color:var(--ink-mid);max-width:520px;font-size:.88rem;text-align:center;margin:0 auto;"
+    data-en="From binary logic to probabilistic reasoning — how machines learned to think in shades of grey."
+    data-it="Dalla logica binaria al ragionamento probabilistico — come le macchine hanno imparato a pensare in sfumature."
+    data-fr="De la logique binaire au raisonnement probabiliste — comment les machines ont appris à penser en nuances."
+    data-es="De la lógica binaria al razonamiento probabilístico — cómo las máquinas aprendieron a pensar en matices.">From binary logic to probabilistic reasoning — how machines learned to think in shades of grey.</p>
+  <span class="chapter-tag" style="color:rgba(255,255,255,.25);">AI Fundamentals</span>
+  <span class="slide-tag" style="color:rgba(255,255,255,.25);">01 / 06</span>
+  <aside class="notes">
+    Chapter 1 sets the foundation. Key message: AI is not magic — it is mathematics + massive data. We'll go from deterministic (if/then) to probabilistic (neural nets), cover the Transformer architecture that powers GPT/Claude/Gemini, and explain how tokens, attention, and parameters work together. Audience check: who has used ChatGPT? Who has built something with an LLM API? Adjust depth accordingly.
+  </aside>
+</section>
+
+<!-- ══════════════════════ SLIDE 1: DETERMINISTIC vs PROBABILISTIC ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 01 · Two Paradigms"
+    data-it="Diapositiva 01 · Due Paradigmi"
+    data-fr="Diapo 01 · Deux Paradigmes"
+    data-es="Diapositiva 01 · Dos Paradigmas">Slide 01 · Two Paradigms</div>
+  <h2 data-en="Deterministic<br>vs Probabilistic"
+      data-it="Deterministico<br>vs Probabilistico"
+      data-fr="Déterministe<br>vs Probabiliste"
+      data-es="Determinista<br>vs Probabilístico">Deterministic<br>vs Probabilistic</h2>
+
+  <div class="two-col" style="margin-top:0;">
+    <!-- DETERMINISTIC -->
+    <div class="model-card">
+      <div class="badge badge-det"
+        data-en="Deterministic"
+        data-it="Deterministico"
+        data-fr="Déterministe"
+        data-es="Determinista">Deterministic</div>
+      <div class="label"
+        data-en="Same input → Same output. Always."
+        data-it="Stesso input → Stesso output. Sempre."
+        data-fr="Même entrée → Même sortie. Toujours."
+        data-es="Mismo input → Mismo output. Siempre.">Same input → Same output. Always.</div>
+      <div class="bit-display"><span class="zero">0</span> <span class="one">1</span></div>
+      <ul class="example-list">
+        <li data-en="SQL query → always same rows"
+            data-it="Query SQL → sempre le stesse righe"
+            data-fr="Requête SQL → toujours les mêmes lignes"
+            data-es="Consulta SQL → siempre las mismas filas">SQL query → always same rows</li>
+        <li data-en="SHA-256 hash function"
+            data-it="Funzione hash SHA-256"
+            data-fr="Fonction de hachage SHA-256"
+            data-es="Función hash SHA-256">SHA-256 hash function</li>
+        <li data-en="2 + 2 = 4 (every time)"
+            data-it="2 + 2 = 4 (ogni volta)"
+            data-fr="2 + 2 = 4 (à chaque fois)"
+            data-es="2 + 2 = 4 (cada vez)">2 + 2 = 4 (every time)</li>
+        <li data-en="Sorting algorithm"
+            data-it="Algoritmo di ordinamento"
+            data-fr="Algorithme de tri"
+            data-es="Algoritmo de ordenación">Sorting algorithm</li>
+      </ul>
+    </div>
+
+    <!-- PROBABILISTIC -->
+    <div class="model-card">
+      <div class="badge badge-prob"
+        data-en="Probabilistic"
+        data-it="Probabilistico"
+        data-fr="Probabiliste"
+        data-es="Probabilístico">Probabilistic</div>
+      <div class="label"
+        data-en="Same input → Different possible outputs."
+        data-it="Stesso input → Diversi output possibili."
+        data-fr="Même entrée → Résultats possibles différents."
+        data-es="Mismo input → Diferentes resultados posibles.">Same input → Different possible outputs.</div>
+      <div class="prob-display">
+        <span class="prob-token" style="--op:.95">Paris 92%</span>
+        <span class="prob-token" style="--op:.55">Lyon 5%</span>
+        <span class="prob-token" style="--op:.30">Rome 2%</span>
+        <span class="prob-token" style="--op:.15">… 1%</span>
+      </div>
+      <ul class="example-list">
+        <li data-en="ChatGPT answering a question"
+            data-it="ChatGPT risponde a una domanda"
+            data-fr="ChatGPT répondant à une question"
+            data-es="ChatGPT respondiendo una pregunta">ChatGPT answering a question</li>
+        <li data-en="Weather forecast (70% rain)"
+            data-it="Previsioni meteo (70% pioggia)"
+            data-fr="Prévision météo (70% de pluie)"
+            data-es="Pronóstico del tiempo (70% lluvia)">Weather forecast (70% rain)</li>
+        <li data-en="Image generation (DALL·E)"
+            data-it="Generazione immagini (DALL·E)"
+            data-fr="Génération d'images (DALL·E)"
+            data-es="Generación de imágenes (DALL·E)">Image generation (DALL·E)</li>
+        <li data-en="Recommendation engine"
+            data-it="Motore di raccomandazione"
+            data-fr="Moteur de recommandation"
+            data-es="Motor de recomendación">Recommendation engine</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key-insight fragment">
+    <strong data-en="Key takeaway:"
+            data-it="Concetto chiave:"
+            data-fr="Point clé :"
+            data-es="Punto clave:">Key takeaway:</strong>
+    <span data-en=" LLMs are probabilistic — the same question can produce different, valid answers. This is a feature, not a bug."
+          data-it=" Gli LLM sono probabilistici — la stessa domanda può produrre risposte diverse e valide. È una feature, non un bug."
+          data-fr=" Les LLM sont probabilistes — la même question peut produire différentes réponses valides. C'est une fonctionnalité, pas un bug."
+          data-es=" Los LLM son probabilísticos — la misma pregunta puede producir diferentes respuestas válidas. Es una característica, no un defecto."> LLMs are probabilistic — the same question can produce different, valid answers. This is a feature, not a bug.</span>
+  </div>
+
+  <aside class="notes">
+    Ask the audience: "Who was surprised when the same question to ChatGPT gave a different answer each time?" This is the key mental model shift. Engineers from SQL/API backgrounds struggle most with this — 'non-determinism is a feature, not a bug.' Temperature controls randomness — preview that for Slide 4. Deterministic = guaranteed; probabilistic = optimized for the likely best answer.
+  </aside>
+  <span class="chapter-tag">Chapter 1 · Introduction</span>
+  <span class="slide-tag">01 / 08</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 2: TIMELINE ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 02 · Evolution"
+    data-it="Diapositiva 02 · Evoluzione"
+    data-fr="Diapo 02 · Évolution"
+    data-es="Diapositiva 02 · Evolución">Slide 02 · Evolution</div>
+  <h2 data-en="A Brief History of<br>Probabilistic Models"
+      data-it="Breve Storia dei<br>Modelli Probabilistici"
+      data-fr="Brève Histoire des<br>Modèles Probabilistes"
+      data-es="Breve Historia de los<br>Modelos Probabilísticos">A Brief History of<br>Probabilistic Models</h2>
+
+  <div class="timeline-wrap">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot filled"></div>
+        <div class="tl-year">1950s</div>
+        <div class="tl-card">
+          <h4 data-en="Markov Chains" data-it="Catene di Markov" data-fr="Chaînes de Markov" data-es="Cadenas de Markov">Markov Chains</h4>
+          <p data-en="Predict next state from current. Foundation of probabilistic models."
+             data-it="Prevedere il prossimo stato. Base dei modelli probabilistici."
+             data-fr="Prédire l'état suivant. Base des modèles probabilistes."
+             data-es="Predecir el siguiente estado. Base de los modelos probabilísticos.">Predict next state from current. Foundation of probabilistic models.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">1980s</div>
+        <div class="tl-card">
+          <h4 data-en="Hidden Markov Models" data-it="Modelli di Markov Nascosti" data-fr="Modèles de Markov Cachés" data-es="Modelos de Markov Ocultos">Hidden Markov Models</h4>
+          <p data-en="Speech recognition & NLP. First voice assistants."
+             data-it="Riconoscimento vocale e NLP. Primi assistenti vocali."
+             data-fr="Reconnaissance vocale & NLP. Premiers assistants vocaux."
+             data-es="Reconocimiento de voz y NLP. Primeros asistentes de voz.">Speech recognition & NLP. First voice assistants.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot accent2"></div>
+        <div class="tl-year y2">1990s</div>
+        <div class="tl-card">
+          <h4 data-en="Neural Networks" data-it="Reti Neurali" data-fr="Réseaux de Neurones" data-es="Redes Neuronales">Neural Networks</h4>
+          <p data-en="Brain-inspired. Backpropagation enables learning from data."
+             data-it="Ispirati al cervello. Backpropagation permette di imparare dai dati."
+             data-fr="Inspirés du cerveau. La rétropropagation permet d'apprendre."
+             data-es="Inspirados en el cerebro. Backpropagation permite aprender de datos.">Brain-inspired. Backpropagation enables learning from data.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot accent2"></div>
+        <div class="tl-year y2">2012</div>
+        <div class="tl-card">
+          <h4 data-en="Deep Learning" data-it="Deep Learning" data-fr="Apprentissage Profond" data-es="Aprendizaje Profundo">Deep Learning</h4>
+          <p data-en="AlexNet wins ImageNet. GPU revolution begins."
+             data-it="AlexNet vince ImageNet. Inizia la rivoluzione GPU."
+             data-fr="AlexNet gagne ImageNet. Révolution GPU."
+             data-es="AlexNet gana ImageNet. Revolución GPU.">AlexNet wins ImageNet. GPU revolution begins.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot filled2"></div>
+        <div class="tl-year y2">2017</div>
+        <div class="tl-card">
+          <h4 data-en="Transformers" data-it="Transformer" data-fr="Transformers" data-es="Transformers">Transformers</h4>
+          <p data-en="'Attention is All You Need' — Google Brain."
+             data-it="'Attention is All You Need' — Google Brain."
+             data-fr="'Attention is All You Need' — Google Brain."
+             data-es="'Attention is All You Need' — Google Brain.">"Attention is All You Need" — Google Brain.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot filled2"></div>
+        <div class="tl-year y2">2020+</div>
+        <div class="tl-card">
+          <h4 data-en="Large Language Models" data-it="Grandi Modelli Linguistici" data-fr="Grands Modèles de Langage" data-es="Grandes Modelos de Lenguaje">Large Language Models</h4>
+          <p data-en="GPT-3/4, Claude, Gemini. Billions of parameters."
+             data-it="GPT-3/4, Claude, Gemini. Miliardi di parametri."
+             data-fr="GPT-3/4, Claude, Gemini. Milliards de paramètres."
+             data-es="GPT-3/4, Claude, Gemini. Miles de millones de parámetros.">GPT-3/4, Claude, Gemini. Billions of parameters.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:14px;">
+    <strong data-en="Key idea:" data-it="Idea chiave:" data-fr="Idée clé :" data-es="Idea clave:">Key idea:</strong>
+    <span data-en=" Each era solved a limitation of the previous one. Transformers unlocked long-range context understanding — the key to human-like language."
+          data-it=" Ogni era ha risolto un limite della precedente. I Transformer hanno sbloccato la comprensione del contesto a lungo raggio."
+          data-fr=" Chaque ère a résolu une limitation de la précédente. Les Transformers ont débloqué la compréhension du contexte long."
+          data-es=" Cada era resolvió una limitación de la anterior. Los Transformers desbloquearon la comprensión del contexto a largo plazo."> Each era solved a limitation of the previous one. Transformers unlocked long-range context understanding — the key to human-like language.</span>
+  </div>
+
+  <aside class="notes">
+    The 2017 Transformer paper ('Attention Is All You Need') is the inflection point. Before: RNNs forgot distant context. After: every token sees every other token simultaneously. GPT-3 (2020) proved that scale alone unlocks in-context learning — no fine-tuning needed. Ask: 'What changed most between 2017 and today?' Answer: scale and data volume, not the core architecture.
+  </aside>
+  <span class="chapter-tag">Chapter 1 · Introduction</span>
+  <span class="slide-tag">02 / 08</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 3: TRANSFORMER ARCHITECTURE ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 03 · Architecture"
+    data-it="Diapositiva 03 · Architettura"
+    data-fr="Diapo 03 · Architecture"
+    data-es="Diapositiva 03 · Arquitectura">Slide 03 · Architecture</div>
+  <h2 data-en="The Transformer"
+      data-it="Il Transformer"
+      data-fr="Le Transformer"
+      data-es="El Transformer">The Transformer</h2>
+
+  <!-- Transformer: architecture + inline example -->
+  <div style="display:flex;gap:24px;align-items:flex-start;width:100%;">
+
+    <!-- LEFT: Core capability -->
+    <div style="flex:0 0 280px;">
+      <div style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);color:var(--ink);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;"
+          data-en="Core capability" data-it="Capacità principale" data-fr="Capacité centrale" data-es="Capacidad central">Core capability</div>
+        <div style="font-family:var(--serif);font-size:1.4rem;line-height:1.2;"
+          data-en="Predict the<br>next token" data-it="Predire il<br>prossimo token" data-fr="Prédire le<br>prochain token" data-es="Predecir el<br>siguiente token">Predict the<br>next token</div>
+        <div style="font-family:var(--mono);font-size:.65rem;color:var(--ink-mute);margin-top:8px;"
+          data-en="…with context-aware attention"
+          data-it="…con attenzione contestuale"
+          data-fr="…avec attention contextuelle"
+          data-es="…con atención contextual">…with context-aware attention</div>
+      </div>
+
+      <p style="font-size:.75rem;color:var(--ink-mute);margin:0 0 16px;"
+        data-en="Modern AI is essentially this exact pipeline, scaled up to trillions of parameters."
+        data-it="L'AI moderna è essenzialmente questa pipeline, scalata a trilioni di parametri."
+        data-fr="L'IA moderne est essentiellement ce pipeline, mis à l'échelle à des billions de paramètres."
+        data-es="La IA moderna es esta misma tubería, escalada a billones de parámetros.">Modern AI is essentially this exact pipeline, scaled up to trillions of parameters.</p>
+
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(59,130,246,.15);color:var(--accent);padding:3px 8px;border-radius:5px;">GPT-2 · 1.5B</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(52,211,153,.15);color:var(--green);padding:3px 8px;border-radius:5px;">LLaMA 3 · 70B</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(251,191,36,.15);color:var(--amber);padding:3px 8px;border-radius:5px;">GPT-4 · ~1.8T</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(255,107,61,.15);color:var(--accent2);padding:3px 8px;border-radius:5px;">Claude · ?</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: Standard Architecture Flow -->
+    <div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;">
+      <div class="arch-diagram" style="flex-direction:column;gap:8px;">
+        <div class="arch-block">
+          <div class="arch-box output"
+            data-en="Output Token" data-it="Token di Output" data-fr="Token de Sortie" data-es="Token de Salida">Output Token</div>
+        </div>
+        <div class="arch-arrow">↑</div>
+        <div class="arch-block">
+          <div class="arch-box norm">Softmax (Probabilities)</div>
+        </div>
+        <div class="arch-arrow">↑</div>
+        <div class="arch-block">
+          <div class="arch-box ffn"
+            data-en="Feed-Forward Network" data-it="Rete Feed-Forward" data-fr="Réseau Feed-Forward" data-es="Red Feed-Forward">Feed-Forward Network</div>
+        </div>
+        <div class="arch-arrow">↑</div>
+        <div class="arch-block">
+          <div class="arch-box attn" style="height:auto;padding:12px;font-size:.7rem;"
+            data-en="⚡ Multi-Head<br>Self-Attention" data-it="⚡ Multi-Head<br>Self-Attention" data-fr="⚡ Multi-Head<br>Self-Attention" data-es="⚡ Multi-Head<br>Self-Attention">⚡ Multi-Head<br>Self-Attention</div>
+        </div>
+        <div class="arch-arrow">↑</div>
+        <div class="arch-block">
+          <div class="arch-box embed"
+             data-en="Text Embedding" data-it="Embedding del Testo" data-fr="Plongement de Texte" data-es="Incrustación de Texto">Text Embedding</div>
+        </div>
+        <div class="arch-arrow">↑</div>
+        <div class="arch-block">
+          <div class="arch-box input"
+            data-en="Input Tokens" data-it="Token di Input" data-fr="Tokens d'Entrée" data-es="Tokens de Entrada">Input Tokens</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes">
+    Walk left to right: text → tokens → embeddings → self-attention (the core magic) → feedforward → output probabilities. Key insight: 'attention' lets every token directly reference every other token — unlike RNNs that lost distant context. 'Multi-head' = multiple parallel attention perspectives (syntax, semantics, coreference). The architecture hasn't changed much since 2017 — scale and data have.
+  </aside>
+  <span class="chapter-tag">Chapter 1 · Introduction</span>
+  <span class="slide-tag">03 / 08</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 3b: ANIMATED TOKEN PREDICTION ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Interactive · How LLMs Generate Text"
+    data-it="Interattivo · Come gli LLM Generano Testo"
+    data-fr="Interactif · Comment les LLM Génèrent du Texte"
+    data-es="Interactivo · Cómo los LLM Generan Texto">Interactive · How LLMs Generate Text</div>
+  <h2 data-en="Next-Token Prediction"
+      data-it="Predizione del Token Successivo"
+      data-fr="Prédiction du Token Suivant"
+      data-es="Predicción del Siguiente Token">Next-Token Prediction</h2>
+
+  <div id="ch1TokenPred" data-anim="token-prediction"></div>
+
+  <span class="fragment" data-anim-target="ch1TokenPred"></span>
+  <span class="fragment" data-anim-target="ch1TokenPred"></span>
+  <span class="fragment" data-anim-target="ch1TokenPred"></span>
+  <span class="fragment" data-anim-target="ch1TokenPred"></span>
+  <span class="fragment" data-anim-target="ch1TokenPred"></span>
+  <span class="fragment" data-anim-target="ch1TokenPred"></span>
+  <span class="fragment" data-anim-target="ch1TokenPred"></span>
+  <span class="fragment" data-anim-target="ch1TokenPred"></span>
+
+  <div class="key-insight" style="margin-top:20px;display:flex;gap:16px;align-items:center;">
+    <div style="flex:1;">
+      <strong data-en="How it works:" data-it="Come funziona:" data-fr="Comment ça marche :" data-es="Cómo funciona:">How it works:</strong>
+      <span data-en=" The model reads &quot;The capital of France is&quot;, computes probabilities based on patterns learned, and samples &quot;Paris&quot;."
+            data-it=" Il modello legge &quot;La capitale della Francia è&quot;, calcola le probabilità in base ai pattern, e campiona &quot;Parigi&quot;."
+            data-fr=" Le modèle lit &quot;La capitale de la France est&quot;, calcule les probabilités et échantillonne &quot;Paris&quot;."
+            data-es=" El modelo lee &quot;La capital de Francia es&quot;, calcula probabilidades y muestrea &quot;París&quot;."> The model reads "The capital of France is", computes probabilities based on patterns learned, and samples "Paris".</span>
+    </div>
+    <div style="flex:0 0 45%;background:var(--bg-card);border:1px solid var(--rule);padding:10px 14px;border-radius:10px;">
+      <div style="font-family:var(--mono);font-size:.6rem;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px;">Internal Pipeline</div>
+      <div style="font-size:.65rem;display:flex;flex-direction:column;gap:4px;">
+        <div><span style="color:var(--green)">1. Embed:</span> Convert words to numbers</div>
+        <div><span style="color:var(--accent)">2. Attend:</span> "is" links to "France" + "capital"</div>
+        <div><span style="color:var(--accent2)">3. Predict:</span> Paris (92%) · Lyon (4%)</div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Press → to advance step by step. Each press = one token generated. Watch the probability bars — the model is uncertain, sampling from a distribution. Temperature > 0 means it doesn't always pick the top token (good for creativity). The cursor blink = model 'thinking'. This one slide explains why ChatGPT streams token-by-token rather than returning the full answer at once.
+  </aside>
+  <span class="chapter-tag">Chapter 1 · Introduction</span>
+  <span class="slide-tag">03b / 08</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 3c: ANIMATED ATTENTION HEATMAP ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Interactive · The Heart of Transformers"
+    data-it="Interattivo · Il Cuore dei Transformer"
+    data-fr="Interactif · Le Cœur des Transformers"
+    data-es="Interactivo · El Corazón de los Transformers">Interactive · The Heart of Transformers</div>
+  <h2 data-en="Self-Attention in Action"
+      data-it="Self-Attention in Azione"
+      data-fr="Self-Attention en Action"
+      data-es="Self-Attention en Acción">Self-Attention in Action</h2>
+
+  <div id="ch1AttnHeatmap" data-anim="attention-heatmap"></div>
+
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+  <span class="fragment" data-anim-target="ch1AttnHeatmap"></span>
+
+  <div class="key-insight" style="margin-top:16px;">
+    <strong data-en="Insight:" data-it="Concetto:" data-fr="Concept :" data-es="Concepto:">Insight:</strong>
+    <span data-en=" Each row shows which words a token 'pays attention to'. Brighter = stronger connection. This is how 'it' resolves to 'cat', not 'mat'."
+          data-it=" Ogni riga mostra a quali parole un token presta attenzione. Più luminoso = più forte. Così 'esso' si riferisce a 'gatto', non 'tappeto'."
+          data-fr=" Chaque ligne montre les mots auxquels un token fait attention. Plus lumineux = plus fort. C'est ainsi que le modèle comprend les références."
+          data-es=" Cada fila muestra a qué palabras un token presta atención. Más brillante = más fuerte. Así el modelo entiende las referencias."> Each row shows which words a token "pays attention to." Brighter = stronger connection. This is how "it" resolves to "cat", not "mat".</span>
+  </div>
+  <aside class="notes">
+    Each row = one token querying all others. Brighter = stronger attention. Notice: 'it' attends strongly to 'cat' — the model resolves pronoun references without explicit programming. This is emergent from training on billions of sentences. Multiple heads run in parallel — each learns different linguistic patterns (subject-verb, adjective-noun, long-range coreference). This is why Transformers beat RNNs on understanding.
+  </aside>
+  <span class="chapter-tag">Chapter 1 · Introduction</span>
+  <span class="slide-tag">03c / 08</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 4: KEY PARAMETERS ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 04 · Configuration"
+    data-it="Diapositiva 04 · Configurazione"
+    data-fr="Diapo 04 · Configuration"
+    data-es="Diapositiva 04 · Configuración">Slide 04 · Configuration</div>
+  <h2 data-en="Key Parameters"
+      data-it="Parametri Chiave"
+      data-fr="Paramètres Clés"
+      data-es="Parámetros Clave">Key Parameters</h2>
+
+  <div class="param-grid">
+    <!-- TEMPERATURE -->
+    <div class="param-card">
+      <div class="param-name">Temperature</div>
+      <div class="param-desc"
+        data-en="Controls randomness. Low = focused. High = creative."
+        data-it="Controlla la casualità. Bassa = focalizzato. Alta = creativo."
+        data-fr="Contrôle le hasard. Basse = focalisé. Haute = créatif."
+        data-es="Controla la aleatoriedad. Baja = enfocado. Alta = creativo.">Controls randomness. Low = focused. High = creative.</div>
+      <div class="temp-bar"><div class="temp-marker" style="left:28%"></div></div>
+      <div class="temp-labels"><span>0.0</span><span
+        data-en="balanced" data-it="bilanciato" data-fr="équilibré" data-es="equilibrado">balanced</span><span>2.0</span></div>
+      <div class="param-range"
+        data-en="0.2 (code) → 0.7 (chat) → 1.0 (creative writing)"
+        data-it="0.2 (codice) → 0.7 (chat) → 1.0 (scrittura creativa)"
+        data-fr="0.2 (code) → 0.7 (chat) → 1.0 (écriture créative)"
+        data-es="0.2 (código) → 0.7 (chat) → 1.0 (escritura creativa)">0.2 (code) → 0.7 (chat) → 1.0 (creative writing)</div>
+    </div>
+
+    <!-- MAX TOKENS -->
+    <div class="param-card">
+      <div class="param-name">Max Tokens</div>
+      <div class="param-desc"
+        data-en="Max response length. 1 token ≈ ¾ word."
+        data-it="Lunghezza massima risposta. 1 token ≈ ¾ parola."
+        data-fr="Longueur max de la réponse. 1 token ≈ ¾ mot."
+        data-es="Longitud máx. de respuesta. 1 token ≈ ¾ palabra.">Max response length. 1 token ≈ ¾ word.</div>
+      <div style="display:flex;gap:5px;margin:8px 0;flex-wrap:wrap;">
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(59,130,246,.15);color:var(--accent);padding:2px 7px;border-radius:5px;">256 short</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(52,211,153,.15);color:var(--green);padding:2px 7px;border-radius:5px;">1k medium</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(255,107,61,.15);color:var(--accent2);padding:2px 7px;border-radius:5px;">4k long</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(167,139,250,.15);color:var(--purple);padding:2px 7px;border-radius:5px;">128k full doc</span>
+      </div>
+      <div class="param-range"
+        data-en="More tokens = more cost. Balance wisely."
+        data-it="Più token = più costo. Bilanciare con saggezza."
+        data-fr="Plus de tokens = plus de coût. Équilibrer."
+        data-es="Más tokens = más coste. Equilibrar.">More tokens = more cost. Balance wisely.</div>
+    </div>
+
+    <!-- TOP-K -->
+    <div class="param-card">
+      <div class="param-name">Top-K</div>
+      <div class="param-desc"
+        data-en="Consider only K most likely next words."
+        data-it="Considera solo le K parole successive più probabili."
+        data-fr="Ne considère que les K mots les plus probables."
+        data-es="Considera solo las K palabras más probables.">Consider only K most likely next words.</div>
+      <div style="display:flex;gap:3px;align-items:flex-end;margin:8px 0;height:36px;">
+        <div style="width:18px;background:var(--accent);height:100%;border-radius:3px 3px 0 0;opacity:.9;"></div>
+        <div style="width:18px;background:var(--accent);height:75%;border-radius:3px 3px 0 0;opacity:.7;"></div>
+        <div style="width:18px;background:var(--accent);height:50%;border-radius:3px 3px 0 0;opacity:.5;"></div>
+        <div style="width:18px;background:var(--accent);height:28%;border-radius:3px 3px 0 0;opacity:.3;"></div>
+        <div style="width:18px;background:var(--accent);height:12%;border-radius:3px 3px 0 0;opacity:.15;"></div>
+        <span style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);margin-left:6px;align-self:center;"
+          data-en="K=5 kept" data-it="K=5 mantenuti" data-fr="K=5 conservés" data-es="K=5 mantenidos">K=5 kept</span>
+      </div>
+      <div class="param-range"
+        data-en="Range: 1 – vocab size · Typical: 40 – 100"
+        data-it="Range: 1 – dimensione vocab · Tipico: 40 – 100"
+        data-fr="Plage : 1 – taille vocab · Typique : 40 – 100"
+        data-es="Rango: 1 – tamaño vocab · Típico: 40 – 100">Range: 1 – vocab size · Typical: 40 – 100</div>
+    </div>
+
+    <!-- TOP-P -->
+    <div class="param-card">
+      <div class="param-name">Top-P <span style="font-size:.6rem;color:var(--ink-mute);font-family:var(--sans);">(nucleus)</span></div>
+      <div class="param-desc"
+        data-en="Pick tokens whose cumulative probability ≤ P."
+        data-it="Seleziona token la cui probabilità cumulativa ≤ P."
+        data-fr="Sélectionne les tokens dont la probabilité cumulée ≤ P."
+        data-es="Selecciona tokens cuya probabilidad acumulada ≤ P.">Pick tokens whose cumulative probability ≤ P.</div>
+      <div style="margin:8px 0;font-family:var(--mono);font-size:.68rem;">
+        <span style="color:var(--accent)">P=0.1</span> <span style="color:var(--ink-mute)">→ very focused</span><br>
+        <span style="color:var(--green)">P=0.5</span> <span style="color:var(--ink-mute)">→ balanced</span><br>
+        <span style="color:var(--accent2)">P=0.95</span> <span style="color:var(--ink-mute)">→ creative</span>
+      </div>
+      <div class="param-range"
+        data-en="Range: 0.0 – 1.0 · Default: 0.9"
+        data-it="Range: 0.0 – 1.0 · Default: 0.9"
+        data-fr="Plage : 0.0 – 1.0 · Défaut : 0.9"
+        data-es="Rango: 0.0 – 1.0 · Por defecto: 0.9">Range: 0.0 – 1.0 · Default: 0.9</div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment">
+    <strong data-en="Pro tip:" data-it="Consiglio:" data-fr="Conseil :" data-es="Consejo:">Pro tip:</strong>
+    <span data-en=" For code/extraction → Temperature 0.2. For brainstorming → Temperature 0.8–1.0. Avoid changing Top-K and Top-P at the same time."
+          data-it=" Per codice/estrazione → Temperature 0.2. Per brainstorming → Temperature 0.8–1.0. Evitare di cambiare Top-K e Top-P contemporaneamente."
+          data-fr=" Pour le code/extraction → Temperature 0.2. Pour le brainstorming → Temperature 0.8–1.0. Éviter de changer Top-K et Top-P en même temps."
+          data-es=" Para código/extracción → Temperature 0.2. Para brainstorming → Temperature 0.8–1.0. Evita cambiar Top-K y Top-P al mismo tiempo."> For code/extraction → Temperature 0.2. For brainstorming → Temperature 0.8–1.0. Avoid changing Top-K and Top-P at the same time.</span>
+  </div>
+
+  <aside class="notes">
+    Temperature is the most important parameter to understand. 0 = deterministic (always picks the highest-probability token), 1 = creative/varied. For production use cases: code/extraction → 0.1–0.3; brainstorming → 0.8–1.0. Tokens ≠ words: ~1.3 tokens per word in English. Max Tokens = your cost + response-length budget. Avoid changing Top-K and Top-P simultaneously — they interact.
+  </aside>
+  <span class="chapter-tag">Chapter 1 · Introduction</span>
+  <span class="slide-tag">04 / 08</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 5: HARDWARE ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 05 · Infrastructure"
+    data-it="Diapositiva 05 · Infrastruttura"
+    data-fr="Diapo 05 · Infrastructure"
+    data-es="Diapositiva 05 · Infraestructura">Slide 05 · Infrastructure</div>
+  <h2 data-en="Hardware for AI"
+      data-it="Hardware per l'AI"
+      data-fr="Matériel pour l'IA"
+      data-es="Hardware para IA">Hardware for AI</h2>
+
+  <div class="hw-grid">
+    <!-- CPU -->
+    <div class="hw-card">
+      <div class="hw-icon">🖥️</div>
+      <h4 data-en="CPU — Central Processing Unit" data-it="CPU — Unità di Elaborazione Centrale" data-fr="CPU — Processeur Central" data-es="CPU — Unidad Central de Procesamiento">CPU — Central Processing Unit</h4>
+      <p data-en="Good for inference on small models (≤7B params). Sequential tasks, low throughput."
+         data-it="Buono per inferenza su modelli piccoli (≤7B param). Task sequenziali, throughput basso."
+         data-fr="Bien pour l'inférence de petits modèles (≤7B). Tâches séquentielles, faible débit."
+         data-es="Bueno para inferencia en modelos pequeños (≤7B). Tareas secuenciales, bajo rendimiento.">Good for inference on small models (≤7B params). Sequential tasks, low throughput.</p>
+      <div>
+        <span class="hw-tag"
+          data-en="✓ Run: Phi-3, Mistral 7B" data-it="✓ Eseguire: Phi-3, Mistral 7B" data-fr="✓ Exécuter: Phi-3, Mistral 7B" data-es="✓ Ejecutar: Phi-3, Mistral 7B">✓ Run: Phi-3, Mistral 7B</span>
+        <span class="hw-tag"
+          data-en="✓ Run: LLaMA 3 8B (slow)" data-it="✓ Eseguire: LLaMA 3 8B (lento)" data-fr="✓ Exécuter: LLaMA 3 8B (lent)" data-es="✓ Ejecutar: LLaMA 3 8B (lento)">✓ Run: LLaMA 3 8B (slow)</span>
+        <span class="hw-tag" style="background:rgba(255,107,61,.15);color:var(--accent2);"
+          data-en="✗ Train: not practical" data-it="✗ Addestrare: non pratico" data-fr="✗ Entraîner: pas pratique" data-es="✗ Entrenar: no práctico">✗ Train: not practical</span>
+      </div>
+    </div>
+
+    <!-- CONSUMER GPU -->
+    <div class="hw-card">
+      <div class="hw-icon">🎮</div>
+      <h4 data-en="Consumer GPU (RTX 4090)" data-it="GPU Consumer (RTX 4090)" data-fr="GPU Grand Public (RTX 4090)" data-es="GPU Consumer (RTX 4090)">Consumer GPU (RTX 4090)</h4>
+      <p data-en="24 GB VRAM. Fast inference on medium models. Light fine-tuning with LoRA/QLoRA."
+         data-it="24 GB VRAM. Inferenza rapida su modelli medi. Fine-tuning leggero con LoRA/QLoRA."
+         data-fr="24 Go VRAM. Inférence rapide sur modèles moyens. Fine-tuning léger avec LoRA/QLoRA."
+         data-es="24 GB VRAM. Inferencia rápida en modelos medianos. Fine-tuning ligero con LoRA/QLoRA.">24 GB VRAM. Fast inference on medium models. Light fine-tuning with LoRA/QLoRA.</p>
+      <div>
+        <span class="hw-tag"
+          data-en="✓ Run: up to 13B (quantized)" data-it="✓ Eseguire: fino a 13B (quantizzato)" data-fr="✓ Exécuter: jusqu'à 13B" data-es="✓ Ejecutar: hasta 13B (cuantizado)">✓ Run: up to 13B (quantized)</span>
+        <span class="hw-tag" style="background:rgba(251,191,36,.15);color:var(--amber);"
+          data-en="~ Fine-tune: LoRA only" data-it="~ Fine-tune: solo LoRA" data-fr="~ Fine-tuner: LoRA seulement" data-es="~ Fine-tune: solo LoRA">~ Fine-tune: LoRA only</span>
+      </div>
+    </div>
+
+    <!-- DATA CENTER GPU -->
+    <div class="hw-card">
+      <div class="hw-icon">⚡</div>
+      <h4 data-en="Data Center GPU (A100 / H100)" data-it="GPU Data Center (A100 / H100)" data-fr="GPU Data Center (A100 / H100)" data-es="GPU Data Center (A100 / H100)">Data Center GPU (A100 / H100)</h4>
+      <p data-en="80 GB VRAM. Run & fine-tune large models. Multi-GPU clusters for training."
+         data-it="80 GB VRAM. Eseguire e fine-tuning modelli grandi. Cluster multi-GPU per addestramento."
+         data-fr="80 Go VRAM. Exécuter et fine-tuner de grands modèles. Clusters multi-GPU."
+         data-es="80 GB VRAM. Ejecutar y fine-tune modelos grandes. Clusters multi-GPU para entrenamiento.">80 GB VRAM. Run & fine-tune large models. Multi-GPU clusters for training.</p>
+      <div>
+        <span class="hw-tag"
+          data-en="✓ Run: 70B+ models" data-it="✓ Eseguire: modelli 70B+" data-fr="✓ Exécuter: modèles 70B+" data-es="✓ Ejecutar: modelos 70B+">✓ Run: 70B+ models</span>
+        <span class="hw-tag" style="background:rgba(52,211,153,.15);color:var(--green);"
+          data-en="✓ Train: full fine-tuning" data-it="✓ Addestrare: fine-tuning completo" data-fr="✓ Entraîner: fine-tuning complet" data-es="✓ Entrenar: fine-tuning completo">✓ Train: full fine-tuning</span>
+      </div>
+    </div>
+
+    <!-- CLOUD / TPU -->
+    <div class="hw-card">
+      <div class="hw-icon">☁️</div>
+      <h4 data-en="Cloud TPU / GPU Clusters" data-it="Cloud TPU / Cluster GPU" data-fr="Cloud TPU / Clusters GPU" data-es="Cloud TPU / Clusters GPU">Cloud TPU / GPU Clusters</h4>
+      <p data-en="Thousands of chips. Pre-training frontier models (GPT-4, Claude, Gemini). $10M–$100M+ runs."
+         data-it="Migliaia di chip. Pre-training modelli frontier (GPT-4, Claude, Gemini). Costi $10M–$100M+."
+         data-fr="Des milliers de puces. Pré-entraînement des modèles (GPT-4, Claude, Gemini). $10M–$100M+."
+         data-es="Miles de chips. Pre-entrenamiento de modelos (GPT-4, Claude, Gemini). $10M–$100M+.">Thousands of chips. Pre-training frontier models (GPT-4, Claude, Gemini). $10M–$100M+ runs.</p>
+      <div>
+        <span class="hw-tag" style="background:rgba(52,211,153,.15);color:var(--green);"
+          data-en="✓ Train: frontier models" data-it="✓ Addestrare: modelli frontier" data-fr="✓ Entraîner: modèles frontier" data-es="✓ Entrenar: modelos frontier">✓ Train: frontier models</span>
+        <span class="hw-tag"
+          data-en="✓ Run: any model at scale" data-it="✓ Eseguire: qualsiasi modello su scala" data-fr="✓ Exécuter: tout modèle à l'échelle" data-es="✓ Ejecutar: cualquier modelo a escala">✓ Run: any model at scale</span>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes">
+    GPUs are essential because neural net layers are giant matrix multiplications — GPUs run thousands of these in parallel. H100 = 80GB VRAM, enough for 70B parameter models at fp16. Cloud (Azure OpenAI, AWS Bedrock, Google Vertex) removes CapEx — pay per token. Edge/MacBook inference is now viable for 7B–13B models via quantization (llama.cpp, Ollama). The cost curve is dropping ~10× per year.
+  </aside>
+  <span class="chapter-tag">Chapter 1 · Introduction</span>
+  <span class="slide-tag">05 / 08</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 6: TASKS WORD CLOUD ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 06 · Capabilities"
+    data-it="Diapositiva 06 · Capacità"
+    data-fr="Diapo 06 · Capacités"
+    data-es="Diapositiva 06 · Capacidades">Slide 06 · Capabilities</div>
+  <h2 data-en="AI Tasks & Capabilities"
+      data-it="Task e Capacità dell'AI"
+      data-fr="Tâches & Capacités de l'IA"
+      data-es="Tareas y Capacidades de la IA">AI Tasks & Capabilities</h2>
+  <p style="font-size:.78rem;color:var(--ink-mute);margin:0 0 6px;"
+    data-en="From the HuggingFace task taxonomy — every capability built on top of language models."
+    data-it="Dalla tassonomia dei task di HuggingFace — ogni capacità costruibile su modelli linguistici."
+    data-fr="De la taxonomie HuggingFace — toutes les capacités des modèles de langage."
+    data-es="De la taxonomía de tareas de HuggingFace — cada capacidad construida sobre modelos de lenguaje.">From the HuggingFace task taxonomy — every capability built on top of language models.</p>
+
+  <div class="cloud-wrap" id="wordCloud"></div>
+
+  <div class="key-insight fragment" style="margin-top:6px;">
+    <strong data-en="Key insight:" data-it="Idea chiave:" data-fr="Point clé :" data-es="Punto clave:">Key insight:</strong>
+    <span data-en=" One model, many capabilities. These are the building blocks that power every AI application."
+          data-it=" Un modello, molte capacità. Questi sono i mattoni che alimentano ogni applicazione AI."
+          data-fr=" Un modèle, de nombreuses capacités. Ce sont les briques qui alimentent chaque application IA."
+          data-es=" Un modelo, muchas capacidades. Estos son los bloques que alimentan cada aplicación de IA."> One model, many capabilities. These are the building blocks that power every AI application.</span>
+  </div>
+
+  <aside class="notes">
+    Hover over any word — the cloud is interactive. Key point: one LLM model handles all ~30 task categories shown here. This disrupted specialized NLP pipelines (sentiment model, NER model, translation model) — now one foundation model does all. Ask: 'Which of these tasks are you already using AI for? Which haven't you tried yet?'
+  </aside>
+  <span class="chapter-tag">Chapter 1 · Introduction</span>
+  <span class="slide-tag">06 / 08</span>
+</section>
+
+<!-- ══════════════════════ SLIDE 7: MODEL COMPARISON TABLE ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="Slide 07 · Comparison"
+    data-it="Diapositiva 07 · Confronto"
+    data-fr="Diapo 07 · Comparaison"
+    data-es="Diapositiva 07 · Comparación">Slide 07 · Comparison</div>
+  <h2 data-en="Frontier LLMs at a Glance"
+      data-it="LLM Frontier a Colpo d'Occhio"
+      data-fr="LLM de Pointe en un Coup d'Œil"
+      data-es="LLMs de Frontera de un Vistazo">Frontier LLMs at a Glance</h2>
+
+  <div style="width:100%;overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:.68rem;color:var(--ink-mid);">
+      <thead>
+        <tr style="border-bottom:2px solid var(--accent);text-align:left;">
+          <th style="padding:8px 10px;color:var(--ink);font-weight:600;"
+            data-en="Model" data-it="Modello" data-fr="Modèle" data-es="Modelo">Model</th>
+          <th style="padding:8px 10px;color:var(--ink);font-weight:600;"
+            data-en="Provider" data-it="Provider" data-fr="Fournisseur" data-es="Proveedor">Provider</th>
+          <th style="padding:8px 10px;color:var(--ink);font-weight:600;"
+            data-en="Context Window" data-it="Context Window" data-fr="Fenêtre Contexte" data-es="Ventana Contexto">Context Window</th>
+          <th style="padding:8px 10px;color:var(--ink);font-weight:600;"
+            data-en="Strengths" data-it="Punti di Forza" data-fr="Forces" data-es="Fortalezas">Strengths</th>
+          <th style="padding:8px 10px;color:var(--ink);font-weight:600;"
+            data-en="Best For" data-it="Ideale Per" data-fr="Idéal Pour" data-es="Ideal Para">Best For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:7px 10px;font-family:var(--mono);color:var(--accent);">GPT-4o</td>
+          <td style="padding:7px 10px;">OpenAI</td>
+          <td style="padding:7px 10px;">128k</td>
+          <td style="padding:7px 10px;"
+            data-en="Fast, multimodal, strong code" data-it="Veloce, multimodale, ottimo codice" data-fr="Rapide, multimodal, bon code" data-es="Rápido, multimodal, buen código">Fast, multimodal, strong code</td>
+          <td style="padding:7px 10px;"
+            data-en="General purpose, apps" data-it="Uso generale, app" data-fr="Usage général, apps" data-es="Uso general, apps">General purpose, apps</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:7px 10px;font-family:var(--mono);color:var(--accent);">Claude Sonnet 4</td>
+          <td style="padding:7px 10px;">Anthropic</td>
+          <td style="padding:7px 10px;">200k</td>
+          <td style="padding:7px 10px;"
+            data-en="Long context, safety, reasoning" data-it="Contesto lungo, sicurezza, ragionamento" data-fr="Long contexte, sûreté, raisonnement" data-es="Contexto largo, seguridad, razonamiento">Long context, safety, reasoning</td>
+          <td style="padding:7px 10px;"
+            data-en="Code, analysis, enterprise" data-it="Codice, analisi, enterprise" data-fr="Code, analyse, entreprise" data-es="Código, análisis, empresa">Code, analysis, enterprise</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:7px 10px;font-family:var(--mono);color:var(--accent);">Gemini 2.5 Pro</td>
+          <td style="padding:7px 10px;">Google</td>
+          <td style="padding:7px 10px;">1M</td>
+          <td style="padding:7px 10px;"
+            data-en="Huge context, multimodal, reasoning" data-it="Contesto enorme, multimodale, ragionamento" data-fr="Contexte immense, multimodal, raisonnement" data-es="Contexto enorme, multimodal, razonamiento">Huge context, multimodal, reasoning</td>
+          <td style="padding:7px 10px;"
+            data-en="Long docs, video, research" data-it="Doc lunghi, video, ricerca" data-fr="Longs docs, vidéo, recherche" data-es="Docs largos, video, investigación">Long docs, video, research</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:7px 10px;font-family:var(--mono);color:var(--accent);">LLaMA 3 70B</td>
+          <td style="padding:7px 10px;">Meta (open)</td>
+          <td style="padding:7px 10px;">128k</td>
+          <td style="padding:7px 10px;"
+            data-en="Open weights, self-hostable" data-it="Pesi aperti, auto-ospitabile" data-fr="Poids ouverts, auto-hébergeable" data-es="Pesos abiertos, auto-alojable">Open weights, self-hostable</td>
+          <td style="padding:7px 10px;"
+            data-en="On-prem, privacy, fine-tuning" data-it="On-prem, privacy, fine-tuning" data-fr="On-prem, confidentialité, fine-tuning" data-es="On-prem, privacidad, fine-tuning">On-prem, privacy, fine-tuning</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--rule);">
+          <td style="padding:7px 10px;font-family:var(--mono);color:var(--accent);">Mistral Large</td>
+          <td style="padding:7px 10px;">Mistral (EU)</td>
+          <td style="padding:7px 10px;">128k</td>
+          <td style="padding:7px 10px;"
+            data-en="Multilingual, EU sovereign" data-it="Multilingue, sovranità UE" data-fr="Multilingue, souveraineté UE" data-es="Multilingüe, soberanía UE">Multilingual, EU sovereign</td>
+          <td style="padding:7px 10px;"
+            data-en="European enterprises, GDPR" data-it="Aziende europee, GDPR" data-fr="Entreprises européennes, RGPD" data-es="Empresas europeas, GDPR">European enterprises, GDPR</td>
+        </tr>
+        <tr>
+          <td style="padding:7px 10px;font-family:var(--mono);color:var(--accent);">GPT-4o mini</td>
+          <td style="padding:7px 10px;">OpenAI</td>
+          <td style="padding:7px 10px;">128k</td>
+          <td style="padding:7px 10px;"
+            data-en="Very fast, cheap, good enough" data-it="Molto veloce, economico, abbastanza buono" data-fr="Très rapide, pas cher, suffisant" data-es="Muy rápido, barato, suficiente">Very fast, cheap, good enough</td>
+          <td style="padding:7px 10px;"
+            data-en="High-volume, prototyping" data-it="Alto volume, prototipazione" data-fr="Haut volume, prototypage" data-es="Alto volumen, prototipado">High-volume, prototyping</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <strong data-en="Tip:" data-it="Consiglio:" data-fr="Conseil :" data-es="Consejo:">Tip:</strong>
+    <span data-en=" There is no single 'best' model. Choose based on your use case: cost, latency, context length, privacy requirements, and task complexity."
+          data-it=" Non esiste un singolo modello 'migliore'. Scegli in base al caso d'uso: costo, latenza, lunghezza del contesto, requisiti di privacy e complessità del task."
+          data-fr=" Il n'y a pas de 'meilleur' modèle unique. Choisissez selon votre cas : coût, latence, contexte, confidentialité et complexité."
+          data-es=" No hay un único modelo 'mejor'. Elige según tu caso de uso: coste, latencia, longitud del contexto, requisitos de privacidad y complejidad."> There is no single "best" model. Choose based on your use case: cost, latency, context length, privacy requirements, and task complexity.</span>
+  </div>
+
+  <aside class="notes">
+    This landscape changes every 3-6 months. Key decision factors: (1) closed vs open — closed models are more capable but data leaves your infra; (2) context window — Gemini 1M is great for ingesting entire codebases; (3) cost — GPT-4o mini is 20x cheaper than GPT-4o for 80% of tasks; (4) EU sovereignty — Mistral for GDPR-sensitive deployments. Recommend: start with GPT-4o or Claude for quality, then optimize down to smaller/cheaper models.
+  </aside>
+  <span class="chapter-tag">Chapter 1 · Introduction</span>
+  <span class="slide-tag">07 / 08</span>
+</section>
+
+<!-- ══════════════════════ REFERENCES ══════════════════════ -->
+<section>
+  <div class="eyebrow"
+    data-en="References"
+    data-it="Riferimenti"
+    data-fr="Références"
+    data-es="Referencias">References</div>
+  <div class="rule"></div>
+  <h2 data-en="Sources & Further Reading"
+      data-it="Fonti e Approfondimenti"
+      data-fr="Sources & Lectures"
+      data-es="Fuentes y Lecturas">Sources & Further Reading</h2>
+  <ul class="ref-list">
+    <li>Vaswani et al., <a href="https://arxiv.org/abs/1706.03762" target="_blank">"Attention Is All You Need"</a>, 2017</li>
+    <li>Brown et al., <a href="https://arxiv.org/abs/2005.14165" target="_blank">"Language Models are Few-Shot Learners"</a> (GPT-3), 2020</li>
+    <li><a href="https://huggingface.co/tasks" target="_blank">HuggingFace Tasks Taxonomy</a></li>
+    <li>Jay Alammar, <a href="https://jalammar.github.io/illustrated-transformer/" target="_blank">"The Illustrated Transformer"</a></li>
+    <li><a href="https://platform.openai.com/docs/guides/text-generation" target="_blank">OpenAI API — Text Generation Guide</a></li>
+    <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Anthropic — Prompt Engineering</a></li>
+    <li>Krizhevsky et al., <a href="https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html" target="_blank">"ImageNet Classification with Deep CNNs"</a> (AlexNet), 2012</li>
+  </ul>
+  <span class="chapter-tag">Chapter 1 · Introduction</span>
+</section>
+
+</div><!-- /slides -->
+</div><!-- /reveal -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/notes/notes.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js-menu/menu.js"></script>
+<script src="js/slides.js"></script>
+<script src="js/animations.js"></script>
+<script>
+initSlides();
+Reveal.on('ready', () => initAnimatedDiagrams());
+
+const tasks = [
+  {text:'Text Generation',size:2.0,cat:'gen'},{text:'Summarization',size:1.7,cat:'gen'},
+  {text:'Translation',size:1.6,cat:'nlp'},{text:'Question Answering',size:1.8,cat:'nlp'},
+  {text:'Sentiment Analysis',size:1.5,cat:'class'},{text:'NER',size:1.3,cat:'class'},
+  {text:'Text Classification',size:1.5,cat:'class'},{text:'Code Generation',size:1.9,cat:'gen'},
+  {text:'Chat / Dialogue',size:2.1,cat:'gen'},{text:'Instruction Following',size:1.7,cat:'gen'},
+  {text:'Reasoning',size:1.6,cat:'reason'},{text:'Math Solving',size:1.3,cat:'reason'},
+  {text:'Logical Inference',size:1.2,cat:'reason'},{text:'Zero-Shot Classification',size:1.2,cat:'class'},
+  {text:'Few-Shot Learning',size:1.4,cat:'reason'},{text:'RAG / Retrieval',size:1.6,cat:'nlp'},
+  {text:'Embedding',size:1.3,cat:'nlp'},{text:'Reranking',size:1.0,cat:'nlp'},
+  {text:'Extraction',size:1.4,cat:'nlp'},{text:'Function Calling',size:1.7,cat:'gen'},
+  {text:'Image Captioning',size:1.4,cat:'multi'},{text:'Visual Q&A',size:1.2,cat:'multi'},
+  {text:'Speech-to-Text',size:1.4,cat:'multi'},{text:'Text-to-Speech',size:1.2,cat:'multi'},
+  {text:'Fill-Mask',size:1.0,cat:'nlp'},{text:'Token Classification',size:1.1,cat:'class'},
+];
+const colors = {gen:'#1B5EFF',nlp:'#0E7A50',class:'#B06000',reason:'#6B35CC',multi:'#FF4B1F'};
+
+Reveal.addEventListener('ready', () => setTimeout(() => buildCloud('wordCloud',tasks,colors), 200));
+Reveal.addEventListener('slidechanged', e => {
+  if (e.currentSlide.querySelector('#wordCloud')) setTimeout(() => buildCloud('wordCloud',tasks,colors), 100);
+});
+</script>
+</body>
+</html>
