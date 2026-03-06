@@ -111,9 +111,18 @@ function initSlides(opts) {
       }
       if ((evt.key === 'ArrowLeft' || evt.key === 'Left') && currentSlide === 0) {
         const prev = getPrevChapter();
-        if (prev) { evt.preventDefault(); window.location.href = prev; }
+        if (prev) { evt.preventDefault(); window.location.href = prev + '?last=1'; }
       }
     });
+
+    // If we arrived via "prev" navigation, jump to last slide
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('last') === '1') {
+      const total = Reveal.getTotalSlides();
+      Reveal.slide(total - 1);
+      // Clean up the URL without reloading
+      history.replaceState(null, '', window.location.pathname + window.location.hash);
+    }
   });
 
   // Restore saved language
@@ -124,36 +133,11 @@ function initSlides(opts) {
     }
   } catch(e) {}
 
-  // Restore saved font size
-  try {
-    const savedSize = localStorage.getItem('ai-slides-fontsize');
-    if (savedSize) {
-      document.querySelector('.reveal').style.fontSize = savedSize + 'px';
-    }
-  } catch(e) {}
+
 
 }
 
-/* ── FONT SIZE CONTROLS ──────────────────────────────────── */
-const FONT_DEFAULT = 16;
-const FONT_MIN = 12;
-const FONT_MAX = 24;
-const FONT_STEP = 2;
 
-function changeFontSize(delta) {
-  const revealEl = document.querySelector('.reveal');
-  if (!revealEl) return;
-  const current = parseFloat(getComputedStyle(revealEl).fontSize) || FONT_DEFAULT;
-  const next = Math.min(FONT_MAX, Math.max(FONT_MIN, current + delta));
-  revealEl.style.fontSize = next + 'px';
-  try { localStorage.setItem('ai-slides-fontsize', next); } catch(e) {}
-}
-function resetFontSize() {
-  const revealEl = document.querySelector('.reveal');
-  if (!revealEl) return;
-  revealEl.style.fontSize = FONT_DEFAULT + 'px';
-  try { localStorage.removeItem('ai-slides-fontsize'); } catch(e) {}
-}
 
 /* ── WORD CLOUD BUILDER ─────────────────────────────────── */
 function buildCloud(containerId, tasks, colors) {

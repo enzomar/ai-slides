@@ -25,7 +25,7 @@
   <span class="lang-btn" onclick="setLang('it')">IT</span>
   <span class="lang-btn" onclick="setLang('fr')">FR</span>
   <span class="lang-btn" onclick="setLang('es')">ES</span>
-  <span class="font-controls"><span class="font-btn" onclick="changeFontSize(-2)" title="Decrease font">A−</span><span class="font-btn" onclick="resetFontSize()" title="Reset font">A</span><span class="font-btn" onclick="changeFontSize(2)" title="Increase font">A+</span></span>
+
 </div>
 
 <div class="reveal">
@@ -520,10 +520,15 @@
           data-en="Adjust Parameters" data-it="Regola i Parametri" data-fr="Ajuster les Paramètres" data-es="Ajustar Parámetros">Adjust Parameters</div>
 
         <div style="margin-bottom:18px;">
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
             <span style="font-family:var(--mono);font-size:.7rem;color:var(--accent);">Temperature</span>
             <span id="tempValue" style="font-family:var(--mono);font-size:.7rem;color:var(--ink);">0.7</span>
           </div>
+          <p style="font-size:.58rem;color:var(--ink-mute);margin:0 0 6px;line-height:1.4;"
+            data-en="Controls randomness: at 0 the model always picks the most likely token (deterministic); higher values let less probable tokens through, producing more creative but less predictable output."
+            data-it="Controlla la casualità: a 0 il modello sceglie sempre il token più probabile (deterministico); valori più alti lasciano passare token meno probabili, producendo output più creativo ma meno prevedibile."
+            data-fr="Contrôle le hasard : à 0 le modèle choisit toujours le token le plus probable (déterministe) ; des valeurs plus élevées laissent passer des tokens moins probables, produisant un résultat plus créatif mais moins prévisible."
+            data-es="Controla la aleatoriedad: en 0 el modelo siempre elige el token más probable (determinista); valores más altos permiten tokens menos probables, produciendo salidas más creativas pero menos predecibles.">Controls randomness: at 0 the model always picks the most likely token (deterministic); higher values let less probable tokens through, producing more creative but less predictable output.</p>
           <input type="range" id="tempSlider" min="0" max="20" value="7" style="width:100%;accent-color:var(--accent);"
             oninput="updateParamDemo()">
           <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.55rem;color:var(--ink-mute);">
@@ -532,10 +537,15 @@
         </div>
 
         <div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
             <span style="font-family:var(--mono);font-size:.7rem;color:var(--green);">Top-P</span>
             <span id="toppValue" style="font-family:var(--mono);font-size:.7rem;color:var(--ink);">0.9</span>
           </div>
+          <p style="font-size:.58rem;color:var(--ink-mute);margin:0 0 6px;line-height:1.4;"
+            data-en="Nucleus sampling: only tokens whose cumulative probability reaches P are considered. A low value (e.g. 0.1) restricts output to the safest words; 1.0 considers the full vocabulary."
+            data-it="Campionamento nucleus: vengono considerati solo i token la cui probabilità cumulativa raggiunge P. Un valore basso (es. 0.1) limita l'output alle parole più sicure; 1.0 considera l'intero vocabolario."
+            data-fr="Échantillonnage nucleus : seuls les tokens dont la probabilité cumulée atteint P sont considérés. Une valeur basse (ex. 0.1) restreint la sortie aux mots les plus sûrs ; 1.0 considère tout le vocabulaire."
+            data-es="Muestreo nucleus: solo se consideran los tokens cuya probabilidad acumulada alcanza P. Un valor bajo (ej. 0.1) restringe la salida a las palabras más seguras; 1.0 considera todo el vocabulario.">Nucleus sampling: only tokens whose cumulative probability reaches P are considered. A low value (e.g. 0.1) restricts output to the safest words; 1.0 considers the full vocabulary.</p>
           <input type="range" id="toppSlider" min="1" max="10" value="9" style="width:100%;accent-color:var(--green);"
             oninput="updateParamDemo()">
           <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.55rem;color:var(--ink-mute);">

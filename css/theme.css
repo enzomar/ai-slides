@@ -443,6 +443,32 @@ strong { color: var(--ink); font-weight: 500; }
 }
 .reveal-menu-button:hover { color: var(--ink) !important; }
 
+/* ── NATIVE REVEAL.JS MENU OVERRIDES ─────────────────────── */
+.slide-menu-panel {
+  background: var(--bg) !important;
+  color: var(--ink) !important;
+}
+.slide-menu-panel .slide-menu-items li.slide-menu-item {
+  color: var(--ink-mid) !important;
+  border-bottom: 1px solid var(--rule) !important;
+}
+.slide-menu-panel .slide-menu-items li.slide-menu-item.active,
+.slide-menu-panel .slide-menu-items li.slide-menu-item:hover {
+  color: var(--accent) !important;
+  background: rgba(59,130,246,.08) !important;
+}
+.slide-menu-panel .slide-menu-toolbar {
+  background: rgba(28,28,30,.95) !important;
+  border-bottom: 1px solid var(--rule) !important;
+}
+.slide-menu-panel .slide-menu-toolbar li a {
+  color: var(--ink-mute) !important;
+}
+.slide-menu-panel .slide-menu-toolbar li.active a,
+.slide-menu-panel .slide-menu-toolbar li a:hover {
+  color: var(--accent) !important;
+}
+
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 900px) {
   .agenda-grid { grid-template-columns: 1fr; }
@@ -452,20 +478,4 @@ strong { color: var(--ink); font-weight: 500; }
   .hw-grid     { grid-template-columns: 1fr; }
 }
 
-/* ── FONT SIZE CONTROLS ──────────────────────────────────── */
-.font-controls {
-  display: flex; gap: 4px; margin-left: 12px; align-items: center;
-  border-left: 1px solid rgba(255,255,255,.15); padding-left: 10px;
-}
-.font-btn {
-  cursor: pointer; color: var(--ink-mute);
-  font-family: var(--mono); font-size: 11px;
-  padding: 2px 6px; border-radius: 4px;
-  background: none; border: 1px solid transparent;
-  transition: color .2s, background .2s, border-color .2s;
-  line-height: 1;
-}
-.font-btn:hover {
-  color: var(--ink); background: rgba(255,255,255,.08);
-  border-color: rgba(255,255,255,.15);
-}
+
