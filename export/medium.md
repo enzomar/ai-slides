@@ -131,6 +131,10 @@ A model may generate perfectly formatted code using functions that don't exist. 
 
 > **Takeaway:** Never trust LLM output blindly — always add verification layers: RAG for facts, code linters for code, human review for critical decisions.
 
+### Modern AI System — Architecture Overview
+
+*This diagram shows the full architecture of a modern production AI system. At the top, three actors interact with the system: end users who send requests and receive responses, developers who build and maintain the system, and external services that integrate as data sources or consumers. Requests flow down through the application layer — web/mobile front-ends and API backends — into the AI orchestration layer. The orchestration layer is the brain: an agent or planner coordinates everything, calling tools, building prompts, managing context, and routing memory. Below orchestration, three pillars operate in parallel: the model layer (foundation LLM plus an embedding model for similarity search), the tools layer (external APIs, databases, search engines, code execution), and the data and knowledge layer (vector stores, documents, RAG retrieval). A dedicated memory subsystem provides short-term conversation history, long-term per-user memory, and semantic vector-based memory. Underpinning the entire stack is the infrastructure and LLMOps layer: model serving, monitoring, evaluation, logging, safety guardrails, caching, and cost control. Every AI product you use today is some variation of this architecture.*
+
 ### Key Takeaways
 
 **Probabilistic, not deterministic**

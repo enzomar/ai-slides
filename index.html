@@ -67,7 +67,15 @@
   <span class="lang-divider"></span>
   <button class="lang-pdf-btn" onclick="(function(){var url=window.location.href.split('?')[0].split('#')[0];if(window.location.search.indexOf('print-pdf')!==-1){window.print();}else{window.location.href=url+'?print-pdf';}})()" title="Switch to print layout, then use browser Print → Save as PDF">⬇PDF</button>
   <span class="lang-divider"></span>
-  <span class="lang-btn" id="fs-btn" onclick="toggleFS()" title="Toggle fullscreen (F)">[F]</span>
+  <span class="lang-btn" id="fullscreen-btn" onclick="toggleFS()" title="Toggle fullscreen (F)" aria-label="Fullscreen">
+    <svg id="fs-icon-expand" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+    <svg id="fs-icon-shrink" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/></svg>
+  </span>
+  <span class="lang-divider"></span>
+  <a href="https://www.paypal.com/ncp/payment/K4KBVYD5QRHMS" target="_blank" rel="noopener" class="lang-donate-btn" title="Support this project ❤️">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block;vertical-align:text-top;"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.59 3.025-2.566 6.441-8.288 6.441H10.07c-.622 0-1.148.452-1.244 1.066L7.374 22.29a.64.64 0 0 0 .633.74h4.267c.524 0 .968-.382 1.05-.9l.867-5.498c.082-.518.527-.9 1.05-.9h1.38c4.298 0 7.664-1.748 8.647-6.797a5.89 5.89 0 0 0-.046-2.017z"/></svg>
+    Support
+  </a>
 
 </div>
 
@@ -4767,7 +4775,7 @@
   };
 
   /* ── Fullscreen toggle ─────────────────────────────────── */
-  const fsBtn = document.getElementById('fs-btn');
+  const fsBtn = document.getElementById('fullscreen-btn');
   window.toggleFS = function() {
     if (!document.fullscreenElement && !document.webkitFullscreenElement) {
       var el = document.documentElement;
