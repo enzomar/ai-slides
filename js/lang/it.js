@@ -364,7 +364,7 @@ window.LANG_IT = {
   "auto.02-course-summary.15": " L'AI è uno strumento potente, non magia. Comprendere i suoi meccanismi, limiti e rischi ti rende un migliore costruttore, utente e decisore.",
   "auto.02-course-summary.16": "Chiusura · Sinossi del Corso",
   "auto.01-cover.1": "Comprendere<br>l'Intelligenza Artificiale",
-  "auto.01-cover.2": "Dalla logica deterministica ai modelli neurali — un viaggio visivo per tutti.",
+  "auto.01-cover.2": "Il mio percorso pratico nell'AI moderna — dai fondamenti agli agenti autonomi.",
   "auto.01-cover.3": "Questo materiale può essere condiviso a scopo didattico citando i rispettivi autori.",
   "conclusion.cover.h1": "Conclusioni",
   "conclusion.cover.p": "Sei capitoli, un solo viaggio. Rivisitiamo le idee fondamentali, ribadiamo le intuizioni chiave e ti indichiamo le risorse giuste per continuare ad apprendere.",

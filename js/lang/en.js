@@ -394,7 +394,7 @@ window.LANG_EN = {
   "auto.02-course-summary.15": " AI is a powerful tool, not magic. Understanding its mechanics, limitations, and risks makes you a better builder, user, and decision-maker.",
   "auto.02-course-summary.16": "Conclusion · Course Summary",
   "auto.01-cover.1": "Understanding<br>Artificial Intelligence",
-  "auto.01-cover.2": "From deterministic logic to neural language models — a visual journey for everyone.",
+  "auto.01-cover.2": "My hands-on journey through modern AI — from fundamentals to autonomous agents.",
   "auto.01-cover.3": "This material may be shared for educational purposes with proper attribution to the respective authors.",
   "conclusion.cover.h1": "Wrapping Up",
   "conclusion.cover.p": "Six chapters, one journey. Let&#39;s revisit the core ideas, restate the key insights, and send you off with the right resources to keep learning.",

@@ -5,6 +5,9 @@
     "dev": "vite",
     "build:index": "node scripts/build-slides.mjs compile",
     "check:index": "node scripts/build-slides.mjs check",
+    "export:medium": "node scripts/export-to-medium.js > export/medium.md",
+    "export:pdf": "npx --yes decktape reveal http://localhost:5173 export/ai-slides.pdf --size=1920x1080",
+    "gen:puml": "python3 scripts/text-to-puml.py",
     "bootstrap:slides": "node scripts/build-slides.mjs bootstrap",
     "prepare": "node scripts/setup-git-hooks.mjs"
   },

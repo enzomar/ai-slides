@@ -40,5 +40,51 @@ compile_index() {
   git add "$REPO_ROOT/index.html"
 }
 
+generate_exports() {
+  EXPORT_DIR="$REPO_ROOT/export"
+  mkdir -p "$EXPORT_DIR"
+
+  # ── Medium story ─────────────────────────────────────────────
+  echo "pre-commit: generating export/medium-story.md"
+  (
+    cd "$REPO_ROOT"
+    npm run --silent export:medium > "$EXPORT_DIR/medium-story.md"
+  )
+  git add "$EXPORT_DIR/medium-story.md"
+  echo "pre-commit: export/medium-story.md staged"
+
+  # ── PDF via decktape ──────────────────────────────────────────
+  if command -v npx >/dev/null 2>&1; then
+    echo "pre-commit: generating export/ai-slides.pdf (starting temporary server)"
+    (
+      cd "$REPO_ROOT"
+      # Start Vite on a fixed port in the background
+      npx --no vite --port 3797 --strictPort > /tmp/vite-export.log 2>&1 &
+      VITE_PID=$!
+      # Wait until the server responds
+      for i in $(seq 1 12); do
+        sleep 1
+        curl -sf http://localhost:3797 > /dev/null 2>&1 && break
+      done
+      # Export PDF
+      npx --no decktape reveal \
+        http://localhost:3797 \
+        "$EXPORT_DIR/ai-slides.pdf" \
+        --size=1920x1080 \
+        --pdf-author="Vincenzo Marafioti" \
+        2>/tmp/decktape-export.log || true
+      # Stop the server
+      kill "$VITE_PID" 2>/dev/null || true
+    )
+    if [ -f "$EXPORT_DIR/ai-slides.pdf" ]; then
+      git add "$EXPORT_DIR/ai-slides.pdf"
+      echo "pre-commit: export/ai-slides.pdf staged"
+    else
+      echo "pre-commit: PDF export skipped (decktape not available or failed)"
+    fi
+  fi
+}
+
 update_version
 compile_index
+generate_exports

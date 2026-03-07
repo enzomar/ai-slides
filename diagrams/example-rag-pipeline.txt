@@ -1,0 +1,11 @@
+A RAG (Retrieval-Augmented Generation) pipeline with the following components:
+
+1. User sends a query to the API Gateway.
+2. The query is converted to an embedding vector by an Embedding Model.
+3. The vector is used to query a Vector Database (Pinecone / Weaviate), returning the top-K relevant document chunks.
+4. The original query + retrieved chunks are assembled into a prompt by the Context Builder.
+5. The enriched prompt is sent to the LLM (e.g. GPT-4o or Claude).
+6. The LLM generates a grounded response.
+7. The response is returned to the user via the API Gateway.
+
+Include a Document Ingestion pipeline on the side showing: Raw Documents → Chunker → Embedding Model → Vector Database.

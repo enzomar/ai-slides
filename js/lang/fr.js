@@ -339,7 +339,7 @@ window.LANG_FR = {
   "auto.02-course-summary.15": " L'IA est un outil puissant, pas de la magie. Comprendre ses mécanismes, limites et risques fait de vous un meilleur développeur et décideur.",
   "auto.02-course-summary.16": "Conclusion · Synthèse du Cours",
   "auto.01-cover.1": "Comprendre<br>l'Intelligence Artificielle",
-  "auto.01-cover.2": "De la logique déterministe aux modèles de langage — un voyage visuel pour tous.",
+  "auto.01-cover.2": "Mon parcours pratique dans l'IA moderne — des fondamentaux aux agents autonomes.",
   "auto.01-cover.3": "Ce matériel peut être partagé à des fins éducatives en citant les auteurs respectifs.",
   "conclusion.cover.h1": "En Conclusion",
   "conclusion.cover.p": "Six chapitres, un seul voyage. Revisitons les idées essentielles, reformulons les points clés et repartons avec les bonnes ressources pour continuer à apprendre.",

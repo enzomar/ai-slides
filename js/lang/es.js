@@ -339,7 +339,7 @@ window.LANG_ES = {
   "auto.02-course-summary.15": " La IA es una herramienta poderosa, no magia. Comprender sus mecanismos, limitaciones y riesgos te convierte en un mejor creador y tomador de decisiones.",
   "auto.02-course-summary.16": "Cierre · Resumen del Curso",
   "auto.01-cover.1": "Comprender la<br>Inteligencia Artificial",
-  "auto.01-cover.2": "De la lógica determinista a los modelos de lenguaje — un viaje visual para todos.",
+  "auto.01-cover.2": "Mi experiencia práctica con la IA moderna — de los fundamentos a los agentes autónomos.",
   "auto.01-cover.3": "Este material puede compartirse con fines educativos citando a los respectivos autores.",
   "conclusion.cover.h1": "Cerrando el Viaje",
   "conclusion.cover.p": "Seis capítulos, un solo viaje. Revisemos las ideas centrales, reiteremos las conclusiones clave y emprendamos el camino con los recursos adecuados para seguir aprendiendo.",
