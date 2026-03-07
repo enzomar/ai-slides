@@ -231,26 +231,13 @@ Rewrite this prompt to be clearer, more specific, and get better results…
 - Trust output blindly (always verify!)
 - Share sensitive data in prompts
 
-### Bad Prompt vs Good Prompt — Side by Side
+### Bad Prompt vs Good Prompt
 
-**❌ Bad prompt**
-```
-Write something about our product launch.
-```
-**Output:** A generic, meandering paragraph covering nothing useful — no audience, no format, no constraints.
+**✅ Structured Prompt**
 
-**✅ Good prompt**
-```
-You are a B2B marketing copywriter.
-Context: We are launching an AI-powered invoice processor that cuts AP team workload by 60%.
-Task: Write a 3-sentence LinkedIn post announcing the launch. 
-Format: Hook sentence → key benefit → call to action.
-Constraints: No jargon. No exclamation marks. Under 80 words.
-```
-**Output:**
-> *Finance teams are drowning in manual invoices — we built a way out. Our new AI invoice processor cuts accounts payable workload by 60%, integrating directly with SAP and NetSuite in under a day. See it live at booth 14B, or request a demo at [link].*
+"We are happy to announce our new product. It is a great solution that helps users. We hope you enjoy it. Please let us know what you think…"
 
-> **What changed:** Role → Context → Task → Format → Constraints. Five ingredients, dramatically different result.
+"Finance teams are drowning in manual invoices — we built a way out. Our AI invoice processor cuts accounts payable workload by 60%, integrating with SAP and NetSuite in under a day. See it live at booth 14B, or request a demo at [link]."
 
 ### Real-World Examples
 
@@ -494,26 +481,9 @@ Large parent chunks for context + small child chunks for precision.
 
 ### Chunking in Action — Before & After
 
-Imagine a 50-page HR handbook. The user asks: *"What is our parental leave policy for adoptive parents?"*
+**✅ Chunk 512 tok + vector retrieval**
 
-**❌ Without chunking (full document stuffed into context)**
-
-The model receives 40,000 tokens. It retrieves the entire document. The relevant paragraph is buried on page 31. The model hallucinates a generic policy because the signal is lost in the noise. Token cost: ~$0.04 per query.
-
-**✅ With chunking (512 tokens, 64 overlap) + vector retrieval**
-
-```
-Query embedding: [0.82, -0.14, 0.37, …]  ← "parental leave adoptive"
-
-Top-3 retrieved chunks:
-  chunk_031_p4  score: 0.94  "Adoptive parents are entitled to 16 weeks…"
-  chunk_031_p5  score: 0.89  "…same entitlement applies regardless of adoption type…"
-  chunk_032_p1  score: 0.81  "To apply, submit Form HR-22 within 30 days…"
-```
-
-The model receives only 1,536 tokens of highly relevant context. Answer is precise, citable, and costs ~$0.001.
-
-> **The lesson:** Retrieval quality determines answer quality. The LLM is only as good as what you hand it.
+Query: "What is our parental leave policy for adoptive parents?"
 
 ### RAG in Production
 
@@ -583,36 +553,9 @@ An AI agent is an LLM that can observe its environment, reason, decide, and take
 
 ### Reason + Act: The ReAct Loop
 
-Here is an actual LangGraph-style agent trace for the task: *"What is the weather in Paris next Tuesday, and should I pack an umbrella?"*
-
 ```
-[Thought]  I need next Tuesday's weather forecast for Paris.
-           I have a weather API tool available.
-
-[Action]   weather_api(city="Paris", date="2026-03-10")
-
-[Observation] {
-  "date": "2026-03-10",
-  "condition": "Rain showers",
-  "temp_high": 12,
-  "precip_prob": 85
-}
-
-[Thought]  85% precipitation probability — umbrella recommended.
-           I have enough information to answer the user.
-
-[Answer]   Next Tuesday in Paris: rain showers, high of 12°C,
-           85% chance of rain. Yes, pack an umbrella.
+Example: Book me Paris flights for next Tuesday
 ```
-
-Key properties of this trace:
-- **Transparent reasoning** — every decision is auditable (Thought → Action → Observation)
-- **Tool use is targeted** — the agent calls exactly one tool, not everything available
-- **Early termination** — once sufficient information is gathered, it stops and answers
-
-In a multi-step task (e.g. *"Book the cheapest flight and email me the confirmation"*), this loop repeats: search flights → compare prices → book → send email — each step observable and stoppable.
-
-> **Why this matters:** Unlike a single LLM call, the ReAct loop gives you an audit trail you can inspect, debug, and interrupt before irreversible actions happen.
 
 ### Tool Use & Function Calling
 
