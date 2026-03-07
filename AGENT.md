@@ -3,7 +3,7 @@
 ## 1. Project Overview
 
 A **Reveal.js 4.6.1** slide deck: *Understanding Artificial Intelligence* by Vincenzo Marafioti.
-Six chapters + back matter + annex, four languages (EN / IT / FR / ES), dark theme.
+Six chapters + conclusion + annex, four languages (EN / IT / FR / ES), dark theme.
 
 **Stack:** Reveal.js · Vite · CSS custom properties · `data-i18n` key-based translations via `js/lang/*.js`
 
@@ -48,7 +48,7 @@ Six chapters + back matter + annex, four languages (EN / IT / FR / ES), dark the
     ├── chapter4/       (01-chapter-cover … 09-references)
     ├── chapter5/       (01-chapter-cover … 09-references)
     ├── chapter6/       (01-chapter-cover … 12-ai-use-cases-by-industry)
-    ├── backmatter/     (01-cover … 05-closing)
+    ├── conclusion/     (01-cover … 05-closing)
     └── annex/          (01-annex-cover … 09-local-llms)
 ```
 
@@ -167,7 +167,7 @@ Files are numbered `NN-slug.html` and sorted alphabetically by the build system.
 | `chapter-4` | RAG Architecture |
 | `chapter-5` | AI Agents & MCP |
 | `chapter-6` | Ethics & Future |
-| `back-matter` | Back Matter (Wrapping Up) |
+| `conclusion` | Conclusion (Wrapping Up) |
 | `annex` | Annex / Additional Materials |
 
 ---
@@ -229,7 +229,7 @@ File name: `NN-references.html` (last number in the chapter).
 - They must be the **last two slides** in the chapter folder (highest two sort numbers).
 - Add all `data-i18n` keys to all four lang files (`en.js`, `it.js`, `fr.js`, `es.js`).
 - Update `.slide-tag` numbers across the chapter after adding or removing slides.
-- `back-matter` and `annex` sections are exempt from this requirement.
+- `conclusion` and `annex` sections are exempt from this requirement.
 
 ---
 
@@ -294,7 +294,7 @@ The build script `scripts/build-slides.mjs` concatenates all slide partials (sor
 
 The chapter order is defined in `SLIDE_SOURCE_GROUPS` inside `build-slides.mjs`:
 
-> preface → chapter1 → chapter2 → chapter3 → chapter4 → chapter5 → chapter6 → backmatter → annex
+> preface → chapter1 → chapter2 → chapter3 → chapter4 → chapter5 → chapter6 → conclusion → annex
 
 ### After any edit to slide files
 
@@ -329,7 +329,7 @@ Hamburger button (☰ Menu) bottom-left opens a collapsible panel with chapter h
 
 The menu configuration lives in `js/slide-menu.js` in two structures:
 
-1. **`MENU_I18N`** — chapter/section labels in all 4 languages (EN / IT / FR / ES). Each language has a `chapters` object mapping section IDs to display labels. **Every top-level section** — including `preface`, `chapter-1` through `chapter-6`, `back-matter`, and `annex` — must have an entry here in all four languages.
+1. **`MENU_I18N`** — chapter/section labels in all 4 languages (EN / IT / FR / ES). Each language has a `chapters` object mapping section IDs to display labels. **Every top-level section** — including `preface`, `chapter-1` through `chapter-6`, `conclusion`, and `annex` — must have an entry here in all four languages.
 2. **`CHAPTERS`** — ordered array of `{ id, tag }` objects that defines which sections appear in the menu and in what order. The order must match `SLIDE_SOURCE_GROUPS` in `build-slides.mjs`. **Every section present in `SLIDE_SOURCE_GROUPS` must have a matching entry in `CHAPTERS`.**
 
 #### Required menu actions
@@ -347,7 +347,7 @@ Whenever you make **any** structural change to the deck, update the menu accordi
 
 #### Completeness rules
 
-- The menu must list **all** sections in the same order as `SLIDE_SOURCE_GROUPS`: preface → chapter1 → chapter2 → chapter3 → chapter4 → chapter5 → chapter6 → backmatter → annex.
+- The menu must list **all** sections in the same order as `SLIDE_SOURCE_GROUPS`: preface → chapter1 → chapter2 → chapter3 → chapter4 → chapter5 → chapter6 → conclusion → annex.
 - Every slide inside a section must be reachable by navigating to that section's group in the menu. Slide titles are read live from the rendered `h1`/`h2` — ensure every slide has a non-empty heading.
 - Chapter-divider slides (`.chapter-divider`) count as the first navigable slide of their chapter and must be included in the slide count shown in the menu.
 - There must be **no orphan slides** (slides that exist in `slides/` but whose chapter has no `CHAPTERS` entry) and **no ghost entries** (entries in `CHAPTERS` that reference a section ID with no slides on disk).
@@ -481,7 +481,7 @@ Defined in `:root` in `css/theme.css`:
 ### Not allowed
 
 - Hand-edit `index.html` (it is generated)
-- Remove or rename chapter IDs (`chapter-1` through `chapter-6`, `annex`, `back-matter`)
+- Remove or rename chapter IDs (`chapter-1` through `chapter-6`, `conclusion`, `annex`)
 - Remove `<aside class="notes"></aside>` from any slide
 - Use curly/smart quotes in HTML or lang file values
 - Add a `data-i18n` key without adding it to **all four** lang files

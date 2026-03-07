@@ -155,11 +155,11 @@ function initSlides(opts) {
         fr: 'Chapitre 06 · Ethics & Future',
         es: 'Capítulo 06 · Ethics & Future'
       },
-      'back-matter': {
-        en: 'Back Matter',
-        it: 'Materiale Finale',
-        fr: 'Matériel Final',
-        es: 'Material Final'
+      'conclusion': {
+        en: 'Conclusion',
+        it: 'Conclusione',
+        fr: 'Conclusion',
+        es: 'Conclusión'
       },
       'annex': {
         en: 'Annex',

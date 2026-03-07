@@ -30,8 +30,8 @@
         'chapter-4': '04 — RAG Architecture',
         'chapter-5': '05 — AI Agents & MCP',
         'chapter-6': '06 — Ethics & Governance',
-        'backmatter': 'Conclusion',
-        'annex':     'Annex',
+        'conclusion': 'Conclusion',
+        'annex':      'Annex',
       },
     },
     it: {
@@ -48,8 +48,8 @@
         'chapter-4': '04 — Architettura RAG',
         'chapter-5': '05 — Agenti AI & MCP',
         'chapter-6': '06 — Etica & Governance',
-        'backmatter': 'Conclusione',
-        'annex':     'Allegato',
+        'conclusion': 'Conclusione',
+        'annex':      'Allegato',
       },
     },
     fr: {
@@ -66,8 +66,8 @@
         'chapter-4': '04 — Architecture RAG',
         'chapter-5': '05 — Agents IA & MCP',
         'chapter-6': '06 — Éthique & Gouvernance',
-        'backmatter': 'Conclusion',
-        'annex':     'Annexe',
+        'conclusion': 'Conclusion',
+        'annex':      'Annexe',
       },
     },
     es: {
@@ -84,8 +84,8 @@
         'chapter-4': '04 — Arquitectura RAG',
         'chapter-5': '05 — Agentes IA & MCP',
         'chapter-6': '06 — Ética & Gobernanza',
-        'backmatter': 'Conclusión',
-        'annex':     'Anexo',
+        'conclusion': 'Conclusión',
+        'annex':      'Anexo',
       },
     },
   };
@@ -122,8 +122,8 @@
     { id: 'chapter-4', tag: 'Chapter 4 · RAG Architecture' },
     { id: 'chapter-5', tag: 'Chapter 5 · AI Agents & MCP' },
     { id: 'chapter-6', tag: 'Chapter 6 · Ethics & Governance' },
-    { id: 'backmatter', tag: 'Back Matter' },
-    { id: 'annex',     tag: 'Annex' },
+    { id: 'conclusion', tag: 'Conclusion' },
+    { id: 'annex',      tag: 'Annex' },
   ];
 
   function getChapterForSlide(section) {

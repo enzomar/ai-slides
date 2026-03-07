@@ -15,8 +15,8 @@ export const SLIDE_SOURCE_GROUPS = [
   { id: 'chapter3', folder: 'slides/chapter3', legacyFile: 'slides/chapter3.html', startMarker: '<!-- chapter3.html -->', endMarker: '<!-- chapter4.html -->' },
   { id: 'chapter4', folder: 'slides/chapter4', legacyFile: 'slides/chapter4.html', startMarker: '<!-- chapter4.html -->', endMarker: '<!-- chapter5.html -->' },
   { id: 'chapter5', folder: 'slides/chapter5', legacyFile: 'slides/chapter5.html', startMarker: '<!-- chapter5.html -->', endMarker: '<!-- chapter6.html -->' },
-  { id: 'chapter6', folder: 'slides/chapter6', legacyFile: 'slides/chapter6.html', startMarker: '<!-- chapter6.html -->', endMarker: '<!-- backmatter.html -->' },
-  { id: 'backmatter', folder: 'slides/backmatter', legacyFile: 'slides/backmatter.html', startMarker: '<!-- backmatter.html -->', endMarker: '<!-- annex.html -->' },
+  { id: 'chapter6', folder: 'slides/chapter6', legacyFile: 'slides/chapter6.html', startMarker: '<!-- chapter6.html -->', endMarker: '<!-- conclusion.html -->' },
+  { id: 'conclusion', folder: 'slides/conclusion', legacyFile: 'slides/conclusion.html', startMarker: '<!-- conclusion.html -->', endMarker: '<!-- annex.html -->' },
   { id: 'annex', folder: 'slides/annex', legacyFile: 'slides/annex.html', startMarker: '<!-- annex.html -->' },
 ];
 
