@@ -144,7 +144,7 @@ function shouldSkip(sec) {
 // ─── Chapter display names ───────────────────────────────────────────────────
 
 const CHAPTER_NAMES = {
-  'chapter-1':  'Chapter 01 · Introductionals',
+  'chapter-1':  'Chapter 01 · Introduction',
   'chapter-2':  'Chapter 02 · Prompt Engineering',
   'chapter-3':  'Chapter 03 · AI-Assisted Coding',
   'chapter-4':  'Chapter 04 · RAG Architecture',

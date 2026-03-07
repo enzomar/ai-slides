@@ -1,7 +1,7 @@
 # Understanding Artificial Intelligence
 ### My hands-on journey through modern AI — from fundamentals to autonomous agents
 
-An interactive slide presentation built with [Reveal.js](https://revealjs.com/), covering Introductionals through to ethics and future trends — available in four languages.
+An interactive slide presentation built with [Reveal.js](https://revealjs.com/), covering Introduction through to ethics and future trends — available in four languages.
 
 **Author:** Vincenzo Marafioti · [LinkedIn](https://www.linkedin.com/in/vincenzo-marafioti/)
 
@@ -11,7 +11,7 @@ An interactive slide presentation built with [Reveal.js](https://revealjs.com/),
 
 | Section | Topics |
 |---------|--------|
-| **Chapter 01 · Introductionals** | What is AI, history, key concepts |
+| **Chapter 01 · Introduction** | What is AI, history, key concepts |
 | **Chapter 02 · Prompt Engineering** | Anatomy of a prompt, patterns, best practices |
 | **Chapter 03 · AI-Assisted Coding** | Vibe coding, tools, workflows |
 | **Chapter 04 · RAG Architecture** | Retrieval-Augmented Generation, embeddings, pipelines |

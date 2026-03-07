@@ -8,7 +8,7 @@ My hands-on journey through modern AI — from fundamentals to autonomous agents
 
 ---
 
-## Chapter 01 · Introductionals
+## Chapter 01 · Introduction
 
 Imagine teaching a machine to predict the next word in a sentence — then scaling that up 100 billion times. Suddenly it writes code, translates poetry, and reasons about the world. This chapter unpacks how that miracle works.
 

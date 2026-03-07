@@ -120,10 +120,10 @@ function initSlides(opts) {
         es: 'Un Viaje Visual para Todos'
       },
       'chapter-1': {
-        en: 'Chapter 01 · Introductionals',
-        it: 'Capitolo 01 · Introductionals',
-        fr: 'Chapitre 01 · Introductionals',
-        es: 'Capítulo 01 · Introductionals'
+        en: 'Chapter 01 · Introduction',
+        it: 'Capitolo 01 · Introduction',
+        fr: 'Chapitre 01 · Introduction',
+        es: 'Capítulo 01 · Introduction'
       },
       'chapter-2': {
         en: 'Chapter 02 · Prompt Engineering',
