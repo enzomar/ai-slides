@@ -1,0 +1,59 @@
+<!-- ══════════════════════ SLIDE 4b: BAD VS GOOD PROMPT ══════════════════════ -->
+<section>
+  <h2>Bad Prompt vs Good Prompt</h2>
+
+  <div class="two-col" style="gap:14px;align-items:start;">
+
+    <!-- BAD -->
+    <div>
+      <div class="badge badge-prob" style="margin-bottom:8px;">❌ Vague Prompt</div>
+      <div class="prompt-block" style="font-size:.65rem;padding:14px;line-height:1.6;border-left:3px solid var(--accent2);">
+        <span class="role">Prompt:</span><br>
+        Write something about our product launch.
+      </div>
+      <div class="model-card" style="padding:12px 14px;margin-top:8px;border-left:3px solid var(--accent2);gap:0;">
+        <div style="font-family:var(--mono);font-size:.5rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-mute);margin-bottom:5px;">LLM Output →</div>
+        <p style="font-size:.63rem;color:var(--ink-mid);line-height:1.55;margin:0;font-style:italic;">
+          "We are happy to announce our new product. It is a great solution that helps users. We hope you enjoy it. Please let us know what you think…"
+        </p>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-family:var(--mono);font-size:.52rem;background:rgba(255,75,31,.08);color:var(--accent2);padding:2px 7px;border-radius:4px;">No audience</span>
+          <span style="font-family:var(--mono);font-size:.52rem;background:rgba(255,75,31,.08);color:var(--accent2);padding:2px 7px;border-radius:4px;">No format</span>
+          <span style="font-family:var(--mono);font-size:.52rem;background:rgba(255,75,31,.08);color:var(--accent2);padding:2px 7px;border-radius:4px;">Generic filler</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOOD -->
+    <div>
+      <div class="badge badge-green" style="margin-bottom:8px;">✅ Structured Prompt</div>
+      <div class="prompt-block" style="font-size:.62rem;padding:14px;line-height:1.65;border-left:3px solid var(--green);">
+        <span class="role">Role:</span> You are a B2B marketing copywriter.<br>
+        <span class="role">Context:</span> We're launching an AI invoice processor that cuts AP workload by 60%.<br>
+        <span class="role">Task:</span> Write a 3-sentence LinkedIn post announcing the launch.<br>
+        <span class="role">Format:</span> Hook → key benefit → call to action.<br>
+        <span class="role">Constraints:</span> No jargon. No exclamation marks. Under 80 words.
+      </div>
+      <div class="model-card" style="padding:12px 14px;margin-top:8px;border-left:3px solid var(--green);gap:0;">
+        <div style="font-family:var(--mono);font-size:.5rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-mute);margin-bottom:5px;">LLM Output →</div>
+        <p style="font-size:.63rem;color:var(--ink-mid);line-height:1.55;margin:0;font-style:italic;">
+          "Finance teams are drowning in manual invoices — we built a way out. Our AI invoice processor cuts accounts payable workload by 60%, integrating with SAP and NetSuite in under a day. See it live at booth 14B, or request a demo at [link]."
+        </p>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-family:var(--mono);font-size:.52rem;background:rgba(14,122,80,.08);color:var(--green);padding:2px 7px;border-radius:4px;">Role ✓</span>
+          <span style="font-family:var(--mono);font-size:.52rem;background:rgba(14,122,80,.08);color:var(--green);padding:2px 7px;border-radius:4px;">Context ✓</span>
+          <span style="font-family:var(--mono);font-size:.52rem;background:rgba(14,122,80,.08);color:var(--green);padding:2px 7px;border-radius:4px;">Format ✓</span>
+          <span style="font-family:var(--mono);font-size:.52rem;background:rgba(14,122,80,.08);color:var(--green);padding:2px 7px;border-radius:4px;">Constraints ✓</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:10px;">
+    <strong>5 ingredients:</strong>
+    <span> Role → Context → Task → Format → Constraints. Each one cuts ambiguity and narrows the output space toward what you actually need.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

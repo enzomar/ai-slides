@@ -1,0 +1,63 @@
+<!-- ══════════════════════ SLIDE 4b: RETRIEVAL COMPARISON ══════════════════════ -->
+<section>
+  <h2>Chunking in Action — Before &amp; After</h2>
+
+  <p style="font-size:.72rem;color:var(--ink-mute);margin:0 0 10px;text-align:center;">
+    Query: <em>"What is our parental leave policy for adoptive parents?"</em> — 50-page HR handbook
+  </p>
+
+  <div class="two-col" style="gap:14px;align-items:start;">
+
+    <!-- WITHOUT CHUNKING -->
+    <div>
+      <div class="badge badge-prob" style="margin-bottom:8px;">❌ Full document in context</div>
+      <div class="model-card" style="padding:12px 14px;gap:8px;border-left:3px solid var(--accent2);">
+        <div class="prompt-block" style="font-size:.58rem;padding:10px;line-height:1.6;">
+          <span style="color:var(--ink-mute);"># context sent to LLM</span><br>
+          <span style="color:var(--accent2);">tokens: ~40,000</span> — entire handbook<br>
+          <span style="color:var(--ink-mute);">relevant paragraph: buried p.31/50</span>
+        </div>
+        <div style="font-size:.62rem;color:var(--ink-mid);line-height:1.55;font-style:italic;padding:8px 10px;background:rgba(255,75,31,.04);border-radius:6px;">
+          "Parental leave is provided to all eligible employees according to company policy and applicable law, which may vary by region…"
+        </div>
+        <div style="margin-top:6px;display:flex;flex-direction:column;gap:4px;">
+          <span style="font-size:.6rem;color:var(--accent2);">✗ Signal lost in 40k tokens of noise</span>
+          <span style="font-size:.6rem;color:var(--accent2);">✗ Hallucinated generic policy (no adoption details)</span>
+          <span style="font-size:.6rem;color:var(--accent2);">✗ Cost: ~$0.04 per query</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WITH CHUNKING -->
+    <div>
+      <div class="badge badge-green" style="margin-bottom:8px;">✅ Chunk 512 tok + vector retrieval</div>
+      <div class="model-card" style="padding:12px 14px;gap:8px;border-left:3px solid var(--green);">
+        <div class="prompt-block" style="font-size:.57rem;padding:10px;line-height:1.65;">
+          <span style="color:var(--ink-mute);"># top-3 chunks retrieved</span><br>
+          <span style="color:var(--green);">chunk_031_p4</span> <span style="color:var(--ink-mute);">score: 0.94</span><br>
+          <span style="color:var(--ink-mid);">"Adoptive parents are entitled to 16 weeks…"</span><br><br>
+          <span style="color:var(--green);">chunk_031_p5</span> <span style="color:var(--ink-mute);">score: 0.89</span><br>
+          <span style="color:var(--ink-mid);">"…same entitlement regardless of adoption type…"</span><br><br>
+          <span style="color:var(--green);">chunk_032_p1</span> <span style="color:var(--ink-mute);">score: 0.81</span><br>
+          <span style="color:var(--ink-mid);">"To apply, submit Form HR-22 within 30 days…"</span>
+        </div>
+        <div style="font-size:.62rem;color:var(--ink-mid);line-height:1.55;font-style:italic;padding:8px 10px;background:rgba(14,122,80,.04);border-radius:6px;">
+          "Adoptive parents are entitled to 16 weeks of parental leave under the same terms as biological parents. Submit Form HR-22 within 30 days of adoption."
+        </div>
+        <div style="margin-top:6px;display:flex;flex-direction:column;gap:4px;">
+          <span style="font-size:.6rem;color:var(--green);">✓ 1,536 tokens — precise, citable answer</span>
+          <span style="font-size:.6rem;color:var(--green);">✓ References actual policy sections</span>
+          <span style="font-size:.6rem;color:var(--green);">✓ Cost: ~$0.001 per query (40× cheaper)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:10px;">
+    <strong>The lesson:</strong>
+    <span> Retrieval quality determines answer quality. The LLM is only as good as what you hand it — garbage in, garbage out, even with GPT-4.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>
