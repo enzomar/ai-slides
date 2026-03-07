@@ -8,9 +8,9 @@ My hands-on journey through modern AI — from fundamentals to autonomous agents
 
 ---
 
-## Chapter 01 · AI Fundamentals
+## Chapter 01 · Introductionals
 
-ChatGPT knows everything that was on the internet before its training cutoff — but nothing about your internal docs, last week's meeting notes, or your proprietary data. RAG is the bridge that changes that.
+Imagine teaching a machine to predict the next word in a sentence — then scaling that up 100 billion times. Suddenly it writes code, translates poetry, and reasons about the world. This chapter unpacks how that miracle works.
 
 ### Deterministic vs Probabilistic
 
@@ -156,7 +156,7 @@ Choose based on your use case: cost, latency, context length, privacy, and task 
 
 ## Chapter 02 · Prompt Engineering
 
-ChatGPT knows everything that was on the internet before its training cutoff — but nothing about your internal docs, last week's meeting notes, or your proprietary data. RAG is the bridge that changes that.
+The best AI in the world gives mediocre results with poor instructions. Master the 4-part anatomy of a prompt and you'll get dramatically better outputs from the same model — starting today.
 
 ### Anatomy of a Prompt
 
@@ -308,7 +308,7 @@ Your first prompt is never your best. Write → test → analyse the failure mod
 
 ## Chapter 03 · AI-Assisted Coding
 
-ChatGPT knows everything that was on the internet before its training cutoff — but nothing about your internal docs, last week's meeting notes, or your proprietary data. RAG is the bridge that changes that.
+In 2022, writing a REST API from scratch took hours. In 2025, it takes minutes. This chapter shows you exactly how — and how to stay the human who directs the machine, not the one replaced by it.
 
 ### What is AI-Assisted Coding?
 
@@ -536,7 +536,7 @@ Fine-tuning teaches the model new skills (style, domain vocabulary). RAG gives i
 
 ## Chapter 05 · AI Agents & MCP
 
-ChatGPT knows everything that was on the internet before its training cutoff — but nothing about your internal docs, last week's meeting notes, or your proprietary data. RAG is the bridge that changes that.
+An LLM answers questions. An AI agent actually does things. This chapter shows how models evolve from passive responders into autonomous workers that plan, use tools, and complete multi-step tasks on your behalf.
 
 ### What is an AI Agent?
 
@@ -614,7 +614,7 @@ LLM failures: bad text output, easy to spot. Agent failures: runaway actions, co
 
 ## Chapter 06 · Ethics & Future
 
-ChatGPT knows everything that was on the internet before its training cutoff — but nothing about your internal docs, last week's meeting notes, or your proprietary data. RAG is the bridge that changes that.
+The same technology that summarises medical records can reinforce a doctor's biases. The same agent that books flights can be manipulated to leak your data. Power demands wisdom — this chapter shows how to wield it responsibly.
 
 ### Bias & Hallucination
 

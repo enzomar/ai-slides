@@ -120,10 +120,10 @@ function initSlides(opts) {
         es: 'Un Viaje Visual para Todos'
       },
       'chapter-1': {
-        en: 'Chapter 01 · AI Fundamentals',
-        it: 'Capitolo 01 · AI Fundamentals',
-        fr: 'Chapitre 01 · AI Fundamentals',
-        es: 'Capítulo 01 · AI Fundamentals'
+        en: 'Chapter 01 · Introductionals',
+        it: 'Capitolo 01 · Introductionals',
+        fr: 'Chapitre 01 · Introductionals',
+        es: 'Capítulo 01 · Introductionals'
       },
       'chapter-2': {
         en: 'Chapter 02 · Prompt Engineering',

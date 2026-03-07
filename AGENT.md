@@ -161,7 +161,7 @@ Files are numbered `NN-slug.html` and sorted alphabetically by the build system.
 
 | ID | Section |
 |----|---------|
-| `chapter-1` | Introduction / AI Fundamentals |
+| `chapter-1` | Introduction |
 | `chapter-2` | Prompt Engineering |
 | `chapter-3` | AI-Assisted Coding |
 | `chapter-4` | RAG Architecture |
