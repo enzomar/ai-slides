@@ -1,0 +1,69 @@
+<!-- ══════════════════════ SLIDE 6: INTERACTIVE PARAMETER PLAYGROUND ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.07-slide-6-interactive-parameter-playground.1">Parameter Playground</h2>
+
+  <div class="two-col" style="gap:32px;align-items:start;">
+    <!-- LEFT: Controls -->
+    <div>
+      <div class="model-card" style="padding:20px 24px;">
+        <div class="badge badge-det" data-i18n="auto.07-slide-6-interactive-parameter-playground.2">Adjust Parameters</div>
+
+        <div style="margin-bottom:18px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+            <span style="font-family:var(--mono);font-size:.7rem;color:var(--accent);">Temperature</span>
+            <span id="tempValue" style="font-family:var(--mono);font-size:.7rem;color:var(--ink);">0.7</span>
+          </div>
+          <p style="font-size:.58rem;color:var(--ink-mute);margin:0 0 6px;line-height:1.4;" data-i18n="auto.07-slide-6-interactive-parameter-playground.3">Controls randomness: at 0 the model always picks the most likely token (deterministic); higher values let less probable tokens through, producing more creative but less predictable output.</p>
+          <input type="range" id="tempSlider" min="0" max="20" value="7" style="width:100%;accent-color:var(--accent);"
+            oninput="updateParamDemo()">
+          <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.55rem;color:var(--ink-mute);">
+            <span>0.0 Precise</span><span>1.0 Balanced</span><span>2.0 Creative</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+            <span style="font-family:var(--mono);font-size:.7rem;color:var(--green);">Top-P</span>
+            <span id="toppValue" style="font-family:var(--mono);font-size:.7rem;color:var(--ink);">0.9</span>
+          </div>
+          <p style="font-size:.58rem;color:var(--ink-mute);margin:0 0 6px;line-height:1.4;" data-i18n="auto.07-slide-6-interactive-parameter-playground.4">Nucleus sampling: only tokens whose cumulative probability reaches P are considered. A low value (e.g. 0.1) restricts output to the safest words; 1.0 considers the full vocabulary.</p>
+          <input type="range" id="toppSlider" min="1" max="10" value="9" style="width:100%;accent-color:var(--green);"
+            oninput="updateParamDemo()">
+          <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.55rem;color:var(--ink-mute);">
+            <span>0.1 Narrow</span><span>0.5 Balanced</span><span>1.0 Wide</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="model-card" style="padding:14px 20px;margin-top:12px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;" data-i18n="auto.07-slide-6-interactive-parameter-playground.5">Prompt</div>
+        <div class="prompt-block" style="font-size:.62rem;padding:10px;">
+          <span class="role">USER:</span> Write a one-sentence description of the ocean.
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Output preview -->
+    <div>
+      <div class="model-card" style="padding:20px 24px;min-height:280px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <div class="badge badge-green" style="margin-bottom:0;" data-i18n="auto.07-slide-6-interactive-parameter-playground.6">Model Output</div>
+          <span id="paramBehavior" style="font-family:var(--mono);font-size:.6rem;color:var(--accent);"></span>
+        </div>
+        <div id="paramOutput" style="font-size:.78rem;color:var(--ink-mid);line-height:1.7;min-height:80px;"></div>
+
+        <div style="margin-top:16px;border-top:1px solid var(--rule);padding-top:12px;">
+          <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;" data-i18n="auto.07-slide-6-interactive-parameter-playground.7">Token probabilities</div>
+          <div id="paramBars" style="display:flex;gap:6px;align-items:flex-end;height:60px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment">
+    <strong data-i18n="auto.07-slide-6-interactive-parameter-playground.8">Experiment:</strong>
+    <span data-i18n="auto.07-slide-6-interactive-parameter-playground.9"> Move the Temperature slider from 0 to 2 and watch how the output changes from precise and repetitive to wildly creative.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

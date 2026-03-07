@@ -1,0 +1,55 @@
+<!-- ══════════════════════ SLIDE 5: MULTI-AGENT ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.07-slide-5-multi-agent.1">Multi-Agent<br>Systems</h2>
+
+  <div class="two-col">
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <p style="font-size:.76rem;margin:0;" data-i18n="auto.07-slide-5-multi-agent.2">Complex tasks split across specialised agents that collaborate, verify each other, and hand off work. A <em>supervisor</em> agent orchestrates the flow.</p>
+
+      <!-- LangGraph highlight -->
+      <div style="background:rgba(27,94,255,.06);border:1px solid rgba(27,94,255,.18);border-radius:10px;padding:11px 14px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+          <span style="font-family:var(--mono);font-size:.65rem;color:var(--accent);font-weight:600;">LangGraph</span>
+          <span style="font-family:var(--mono);font-size:.53rem;background:rgba(27,94,255,.12);color:var(--accent);padding:1px 6px;border-radius:4px;">LangChain ecosystem</span>
+          <span style="font-family:var(--mono);font-size:.53rem;background:rgba(52,211,153,.1);color:var(--green);padding:1px 6px;border-radius:4px;">production-ready</span>
+        </div>
+        <p style="font-size:.67rem;margin:0 0 7px;" data-i18n="auto.07-slide-5-multi-agent.3">Models agent workflows as a <strong>state machine graph</strong>: nodes are LLM calls or tool invocations; edges are conditional transitions. A <code style="font-family:var(--mono);font-size:.85em;">supervisor</code> node routes tasks to specialist worker nodes.</p>
+        <div style="font-family:var(--mono);font-size:.57rem;line-height:1.6;color:var(--ink-mid);background:rgba(0,0,0,.12);border-radius:6px;padding:7px 10px;">
+          <span style="color:var(--ink-mute);"># Supervisor → Workers pattern</span><br>
+          Supervisor&nbsp;──▶&nbsp;ResearchAgent<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;──▶&nbsp;CodeAgent<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;──▶&nbsp;CriticAgent&nbsp;──▶&nbsp;END
+        </div>
+        <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;font-size:.6rem;color:var(--ink-mute);">
+          <span>✓ Checkpointing &amp; resumability</span>
+          <span>✓ Human-in-the-loop nodes</span>
+          <span>✓ Streaming</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:9px;">
+      <!-- Framework comparison -->
+      <div style="font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;">Orchestration frameworks</div>
+      <div class="model-card" style="padding:9px 12px;flex-direction:row;align-items:flex-start;gap:10px;">
+        <div style="flex:0 0 76px;font-family:var(--mono);font-size:.68rem;color:var(--accent);font-weight:600;">LangGraph</div>
+        <div style="font-size:.63rem;color:var(--ink-mid);" data-i18n="auto.07-slide-5-multi-agent.4">State-machine graphs. Best for deterministic, inspectable pipelines. Production standard.</div>
+      </div>
+      <div class="model-card" style="padding:9px 12px;flex-direction:row;align-items:flex-start;gap:10px;">
+        <div style="flex:0 0 76px;font-family:var(--mono);font-size:.68rem;color:var(--purple);font-weight:600;">AutoGen</div>
+        <div style="font-size:.63rem;color:var(--ink-mid);" data-i18n="auto.07-slide-5-multi-agent.5">Conversation-based multi-agent chat (Microsoft). Great for debate / review loops.</div>
+      </div>
+      <div class="model-card" style="padding:9px 12px;flex-direction:row;align-items:flex-start;gap:10px;">
+        <div style="flex:0 0 76px;font-family:var(--mono);font-size:.68rem;color:var(--green);font-weight:600;">CrewAI</div>
+        <div style="font-size:.63rem;color:var(--ink-mid);" data-i18n="auto.07-slide-5-multi-agent.6">Role-based crews with YAML config. Fast prototyping but less control at scale.</div>
+      </div>
+
+      <div class="key-insight" style="padding:9px 13px;margin-top:2px;">
+        <strong data-i18n="auto.07-slide-5-multi-agent.7">Recommendation:</strong>
+        <span data-i18n="auto.07-slide-5-multi-agent.8"> Start with LangGraph for anything going to production. Use CrewAI for fast demos. AutoGen for peer-review agent patterns.</span>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

@@ -1,0 +1,68 @@
+@startuml
+skinparam shadowing false
+skinparam roundcorner 14
+skinparam ArrowColor #64748B
+skinparam defaultTextAlignment center
+top to bottom direction
+
+title Modern AI Stack (2025-2026)
+
+rectangle "Application Layer\nChat UI · Web app · IDE plugin · Mobile · API gateway" as app #D6E8FF
+
+rectangle "Auth & Identity\nOAuth2 · API keys · RBAC · rate limiting" as auth #F0E6FF
+
+package "Orchestration" {
+  rectangle "Agent / Planner\nTask decomposition · routing · reflection\nLangGraph · CrewAI · AutoGen · Agno" as agents #E9E0FF
+  rectangle "Prompt Construction\nSystem prompts · few-shot · CoT\nContext assembly · template rendering" as prompt #F0F4FF
+  rectangle "Memory Manager\nShort-term (context window)\nLong-term (vector store · KV cache)" as memory #EAF7FF
+}
+
+package "LLM Core" {
+  rectangle "Foundation Model\nGPT-4.1 · Claude · Gemini · Llama · Mistral" as llm #D9F7E8
+  rectangle "Semantic Cache\nRedis · GPTCache\nAvoids redundant inference calls" as cache #E8FFEF
+}
+
+package "Knowledge & Tools" {
+  rectangle "Embedding Model\ntext-embedding-3 · BGE · E5\nConverts text → dense vectors" as embed #FFF9E6
+  rectangle "Vector DB\nPinecone · pgvector · Weaviate · Chroma" as vdb #FFF1C9
+  rectangle "Document Corpus\nPDFs · wikis · code · structured data\n(chunked & indexed)" as docs #FFE0D6
+  rectangle "External Tool Servers\nWeb search · calendar · CRM\nCustom APIs · MCP servers" as tools #FFF9C9
+}
+
+package "Infrastructure" {
+  rectangle "GPU / Inference Serving\nvLLM · TGI · Triton · cloud endpoints\nQuantised & batched inference" as gpu #D8F5DD
+  rectangle "Observability & Evals\nLatency · token cost · error rate\ntracing · LLM-as-judge evals" as obs #E8F5E9
+  rectangle "Security & Guardrails\nPII masking · content policy\ninput/output filtering · audit logs" as sec #FFD6D6
+}
+
+app --> auth
+auth --> agents
+agents --> prompt
+agents --> memory
+prompt --> llm
+agents --> embed : query embedding\nfor retrieval
+embed --> vdb : vector search
+vdb --> docs : indexed from
+agents --> tools : function / tool calls
+llm --> cache : check / store response
+
+note right of agents
+  Orchestration frameworks:
+  LangChain · LangGraph
+  CrewAI · AutoGen · Agno
+  Semantic Kernel · smolagents
+end note
+
+note right of gpu
+  LLM runs on GPU infrastructure.
+  Observability wraps all layers.
+  Security filters inputs & outputs.
+end note
+
+note bottom of embed
+  Embedding model converts the user query
+  to a vector; nearest-neighbour search
+  retrieves relevant chunks from the corpus,
+  which are injected into the prompt context.
+end note
+@enduml

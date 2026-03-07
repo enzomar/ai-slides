@@ -1,0 +1,55 @@
+<!-- ══════════════════════ HUGGINGFACE + GGUF ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.08-huggingface-gguf.1">HuggingFace &amp;<br>GGUF Format</h2>
+
+  <div class="two-col">
+    <!-- HuggingFace -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:rgba(255,166,0,.06);border:1px solid rgba(255,166,0,.2);border-radius:12px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--amber);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;" data-i18n="auto.08-huggingface-gguf.2">🤗 HuggingFace Hub</div>
+        <ul class="example-list" style="font-size:.7rem;">
+          <li data-i18n="auto.08-huggingface-gguf.3"><strong>Models</strong> — 900k+ pretrained model checkpoints</li>
+          <li data-i18n="auto.08-huggingface-gguf.4"><strong>Datasets</strong> — curated training &amp; benchmark data</li>
+          <li data-i18n="auto.08-huggingface-gguf.5"><strong>Spaces</strong> — hosted Gradio / Streamlit demos</li>
+          <li data-i18n="auto.08-huggingface-gguf.6"><strong>Transformers library</strong> — unified API for 100+ architectures</li>
+          <li data-i18n="auto.08-huggingface-gguf.7"><strong>Inference API</strong> — run models via HTTP without GPU</li>
+        </ul>
+        <a href="https://huggingface.co" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--amber);text-decoration:none;opacity:.8;">→ huggingface.co</a>
+      </div>
+    </div>
+
+    <!-- GGUF -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:12px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;">GGUF Format Anatomy</div>
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);margin-bottom:8px;" data-i18n="auto.08-huggingface-gguf.8">Filename: Llama-3.2-3B-Instruct-Q4_K_M.gguf</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(59,130,246,.15);color:var(--accent);padding:3px 8px;border-radius:5px;">Llama-3.2</span>
+          <span style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);padding:3px 2px;">·</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(52,211,153,.12);color:var(--green);padding:3px 8px;border-radius:5px;">3B</span>
+          <span style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);padding:3px 2px;">·</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(167,139,250,.12);color:var(--purple);padding:3px 8px;border-radius:5px;">Instruct</span>
+          <span style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);padding:3px 2px;">·</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(255,107,61,.12);color:var(--accent2);padding:3px 8px;border-radius:5px;">Q4_K_M</span>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:.65rem;">
+          <thead>
+            <tr style="border-bottom:1px solid rgba(27,94,255,.15);">
+              <th style="text-align:left;padding:4px 6px;font-family:var(--mono);color:var(--accent);font-weight:500;" data-i18n="auto.08-huggingface-gguf.9">Quant</th>
+              <th style="text-align:left;padding:4px 6px;font-family:var(--mono);color:var(--accent);font-weight:500;" data-i18n="auto.08-huggingface-gguf.10">Size (7B)</th>
+              <th style="text-align:left;padding:4px 6px;font-family:var(--mono);color:var(--accent);font-weight:500;" data-i18n="auto.08-huggingface-gguf.11">Quality</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:3px 6px;font-family:var(--mono);">Q2_K</td><td style="padding:3px 6px;">~2.8 GB</td><td style="padding:3px 6px;color:var(--accent2);">★★☆☆☆</td></tr>
+            <tr><td style="padding:3px 6px;font-family:var(--mono);">Q4_K_M</td><td style="padding:3px 6px;">~4.1 GB</td><td style="padding:3px 6px;color:var(--amber);">★★★★☆ recommended</td></tr>
+            <tr><td style="padding:3px 6px;font-family:var(--mono);">Q5_K_M</td><td style="padding:3px 6px;">~5.0 GB</td><td style="padding:3px 6px;color:var(--green);">★★★★★</td></tr>
+            <tr><td style="padding:3px 6px;font-family:var(--mono);">Q8_0</td><td style="padding:3px 6px;">~7.7 GB</td><td style="padding:3px 6px;color:var(--green);">≈ full precision</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

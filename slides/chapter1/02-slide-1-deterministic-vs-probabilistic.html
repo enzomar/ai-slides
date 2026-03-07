@@ -1,0 +1,71 @@
+<!-- ══════════════════════ SLIDE 1: DETERMINISTIC vs PROBABILISTIC ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.1">Deterministic<br>vs Probabilistic</h2>
+
+  <div class="two-col" style="margin-top:0;">
+    <!-- DETERMINISTIC -->
+    <div class="model-card">
+      <div class="badge badge-det" data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.2">Deterministic</div>
+      <div class="label" data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.3">Same input → Same output. Always.</div>
+      <div class="bit-display"><span class="zero">0</span> <span class="one">1</span></div>
+      <ul class="example-list">
+        <li data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.4">SQL query → always same rows</li>
+        <li data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.5">SHA-256 hash function</li>
+        <li data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.6">2 + 2 = 4 (every time)</li>
+        <li data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.7">Sorting algorithm</li>
+      </ul>
+    </div>
+
+    <!-- PROBABILISTIC -->
+    <div class="model-card">
+      <div class="badge badge-prob" data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.8">Probabilistic</div>
+      <div class="label" data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.9">Same input → Different possible outputs.</div>
+      <!-- SVG probability distribution curve -->
+      <div style="position:relative;width:100%;height:110px;margin:6px 0 4px;">
+        <svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg"
+             style="width:100%;height:100%;overflow:visible;">
+          <!-- Bell curve fill -->
+          <defs>
+            <linearGradient id="bellGrad" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.04"/>
+            </linearGradient>
+          </defs>
+          <path d="M 0 90 C 20 90 40 88 60 80 C 80 72 95 40 100 20 C 105 8 115 2 130 2 C 145 2 155 8 160 20 C 165 32 175 72 195 80 C 215 88 240 90 260 90 C 280 90 300 90 320 90" fill="url(#bellGrad)" stroke="none"/>
+          <path d="M 0 90 C 20 90 40 88 60 80 C 80 72 95 40 100 20 C 105 8 115 2 130 2 C 145 2 155 8 160 20 C 165 32 175 72 195 80 C 215 88 240 90 260 90 C 280 90 300 90 320 90" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <!-- baseline -->
+          <line x1="0" y1="90" x2="320" y2="90" stroke="rgba(27,94,255,.15)" stroke-width="1"/>
+          <!-- peak label -->
+          <line x1="130" y1="2" x2="130" y2="90" stroke="rgba(27,94,255,.3)" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="130" y="98" text-anchor="middle" font-family="var(--mono)" font-size="8" fill="var(--accent)" data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.10">most likely</text>
+          <!-- sample points -->
+          <circle cx="100" cy="20" r="3" fill="var(--accent)"/>
+          <text x="74" y="18" font-family="var(--mono)" font-size="9" fill="var(--ink)">Heads</text>
+          <text x="74" y="28" font-family="var(--mono)" font-size="9" fill="var(--accent)">50%</text>
+          <circle cx="160" cy="20" r="3" fill="var(--accent2)"/>
+          <text x="162" y="18" font-family="var(--mono)" font-size="9" fill="var(--ink)">Tails</text>
+          <text x="162" y="28" font-family="var(--mono)" font-size="9" fill="var(--accent2)">50%</text>
+          <circle cx="58" cy="80" r="3" fill="var(--green)"/>
+          <text x="28" y="72" font-family="var(--mono)" font-size="9" fill="var(--ink)">Rain</text>
+          <text x="28" y="82" font-family="var(--mono)" font-size="9" fill="var(--green)">30%</text>
+          <circle cx="220" cy="82" r="3" fill="var(--amber)"/>
+          <text x="206" y="72" font-family="var(--mono)" font-size="9" fill="var(--ink)">Sun</text>
+          <text x="206" y="82" font-family="var(--mono)" font-size="9" fill="var(--amber)">60%</text>
+        </svg>
+      </div>
+      <ul class="example-list">
+        <li data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.11">Coin flip — Heads 50% · Tails 50%</li>
+        <li data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.12">Dice roll — each face ~16.7% probability</li>
+        <li data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.13">Weather forecast — 70% chance of rain</li>
+        <li data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.14">Stock price tomorrow — distribution of possible moves</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key-insight fragment">
+    <strong data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.15">Key takeaway:</strong>
+    <span data-i18n="auto.02-slide-1-deterministic-vs-probabilistic.16"> LLMs are probabilistic — the same question can produce different, valid answers. This is a feature, not a bug.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

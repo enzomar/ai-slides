@@ -1,0 +1,72 @@
+<!-- ══════════════════════ SLIDE 2: RAG FLOW ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.03-slide-2-rag-flow.1">The RAG Pipeline</h2>
+
+  <!-- RAG ACRONYM STRIP -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:4px 0 14px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:5px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);border-radius:8px;padding:5px 12px;">
+      <span style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--accent);">R</span>
+      <span style="font-size:.65rem;color:var(--ink-mid);" data-i18n="auto.03-slide-2-rag-flow.2">etrieval — fetch relevant chunks from your knowledge base</span>
+    </div>
+    <span style="color:var(--ink-mute);font-size:.8rem;">+</span>
+    <div style="display:flex;align-items:center;gap:5px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:8px;padding:5px 12px;">
+      <span style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--green);">A</span>
+      <span style="font-size:.65rem;color:var(--ink-mid);" data-i18n="auto.03-slide-2-rag-flow.3">ugmented — inject those chunks into the prompt</span>
+    </div>
+    <span style="color:var(--ink-mute);font-size:.8rem;">+</span>
+    <div style="display:flex;align-items:center;gap:5px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);border-radius:8px;padding:5px 12px;">
+      <span style="font-family:var(--mono);font-size:1rem;font-weight:700;color:var(--purple);">G</span>
+      <span style="font-size:.65rem;color:var(--ink-mid);" data-i18n="auto.03-slide-2-rag-flow.4">eneration — LLM answers using that context</span>
+    </div>
+  </div>
+
+  <!-- TWO PHASES SIDE BY SIDE -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+
+    <!-- PHASE 1: INDEXING -->
+    <div style="background:rgba(59,130,246,.04);border:1px solid rgba(59,130,246,.15);border-radius:12px;padding:12px 14px;">
+      <div style="font-family:var(--mono);font-size:.55rem;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;" data-i18n="auto.03-slide-2-rag-flow.5">⏱ Phase 1 · Indexing (one-time, offline)</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;min-width:110px;text-align:center;" data-i18n="auto.03-slide-2-rag-flow.6">📄 Source Documents<br><small style="font-weight:400;color:var(--ink-mute)">PDF · DOCX · MD · DB</small></div>
+        </div>
+        <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+        <div style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;min-width:110px;text-align:center;" data-i18n="auto.03-slide-2-rag-flow.7">✂️ Chunking<br><small style="font-weight:400;color:var(--ink-mute)">256–512 tokens, 10% overlap</small></div>
+        <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+        <div style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;min-width:110px;text-align:center;" data-i18n="auto.03-slide-2-rag-flow.8">🔢 Embedding Model<br><small style="font-weight:400;color:var(--ink-mute)">text → [0.21, -0.84, …]</small></div>
+        <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+        <div style="background:rgba(15,23,42,.5);border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;min-width:110px;text-align:center;" data-i18n="auto.03-slide-2-rag-flow.9">🗄️ Vector Database<br><small style="font-weight:400;color:var(--ink-mute)">Pinecone · pgvector · Chroma</small></div>
+      </div>
+    </div>
+
+    <!-- PHASE 2: QUERY + R·A·G labelled -->
+    <div style="background:rgba(52,211,153,.03);border:1px solid rgba(52,211,153,.15);border-radius:12px;padding:12px 14px;">
+      <div style="font-family:var(--mono);font-size:.55rem;color:var(--green);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;" data-i18n="auto.03-slide-2-rag-flow.10">⚡ Phase 2 · Query (every request, real-time)</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;text-align:center;" data-i18n="auto.03-slide-2-rag-flow.11">❓ User Question<br><small style="font-weight:400;color:var(--ink-mute)">“What is our refund policy?”</small></div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+          <span style="font-family:var(--mono);font-size:.55rem;font-weight:700;color:var(--accent);background:rgba(59,130,246,.12);border-radius:5px;padding:2px 6px;">R</span>
+        </div>
+        <div style="background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;text-align:center;" data-i18n="auto.03-slide-2-rag-flow.12">🔍 Retrieve Top-k Chunks<br><small style="font-weight:400;color:var(--ink-mute)">Vector similarity search in DB ←</small></div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+          <span style="font-family:var(--mono);font-size:.55rem;font-weight:700;color:var(--green);background:rgba(52,211,153,.12);border-radius:5px;padding:2px 6px;">A</span>
+        </div>
+        <div style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;text-align:center;" data-i18n="auto.03-slide-2-rag-flow.13">📋 Augment the Prompt<br><small style="font-weight:400;color:var(--ink-mute)">Chunks + question → enriched prompt</small></div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="padding-left:20px;color:var(--ink-mute);font-size:.75rem;">↓</div>
+          <span style="font-family:var(--mono);font-size:.55rem;font-weight:700;color:var(--purple);background:rgba(167,139,250,.12);border-radius:5px;padding:2px 6px;">G</span>
+        </div>
+        <div style="background:rgba(15,23,42,.5);border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:7px 10px;font-size:.62rem;font-weight:600;text-align:center;" data-i18n="auto.03-slide-2-rag-flow.14">🤖 LLM Generates Answer<br><small style="font-weight:400;color:var(--green)">Grounded · Accurate · Citable</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:10px;">
+    <strong data-i18n="auto.03-slide-2-rag-flow.15">Why it works:</strong>
+    <span data-i18n="auto.03-slide-2-rag-flow.16"> The model never memorises your data — it reads it fresh each time. Update your knowledge base without retraining.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

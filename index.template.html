@@ -46,16 +46,29 @@
 </div>
 <script>if(window.location.search.indexOf('print-pdf')!==-1){document.addEventListener('DOMContentLoaded',function(){var b=document.getElementById('print-banner');if(b)b.style.display='block';});}</script>
 
-<!-- Language selector -->
+<!-- Presentation tools ──────────────────────────────────── -->
+<!-- Global tag bar (fixed left, same row as lang-bar) -->
+<div id="global-tag-bar">
+  <span class="gtb-ch-num"></span>
+  <span class="gtb-sep name-sep">·</span>
+  <span class="gtb-ch-name"></span>
+  <span class="gtb-sep">·</span>
+  <span class="gtb-ch-count"></span>
+  <span class="gtb-sep">·</span>
+  <span class="gtb-abs-count"></span>
+</div>
 <div class="lang-bar">
-  <span class="lang-btn active" onclick="setLang('en')" title="English (complete)">EN</span>
-  <span class="lang-btn" onclick="setLang('it')" title="Italiano ()">IT</span>
-  <span class="lang-btn" onclick="setLang('fr')" title="Français ()">FR</span>
-  <span class="lang-btn" onclick="setLang('es')" title="Español ()">ES</span>
-  <span class="lang-divider"></span>
-  <button class="lang-btn" id="pdf-btn" onclick="(function(){var url=window.location.href.split('?')[0].split('#')[0];if(window.location.search.indexOf('print-pdf')!==-1){window.print();}else{window.location.href=url+'?print-pdf';}})()" title="Switch to print layout, then use browser Print → Save as PDF" style="font-size:.65rem;padding:2px 8px;border:1px solid rgba(255,255,255,.15);border-radius:5px;background:rgba(27,94,255,.15);color:var(--accent);cursor:pointer;">⬇ PDF</button>
-  <span class="lang-divider"></span>
   <span class="lang-btn" id="laser-btn" onclick="toggleLaser()" title="Toggle laser pointer (L)">⊹</span>
+  <span class="lang-divider"></span>
+  <span class="lang-btn active" onclick="setLang('en')" title="English">EN</span>
+  <span class="lang-btn" onclick="setLang('it')" title="Italiano">IT</span>
+  <span class="lang-btn" onclick="setLang('fr')" title="Français">FR</span>
+  <span class="lang-btn" onclick="setLang('es')" title="Español">ES</span>
+  <span class="lang-divider"></span>
+  <button class="lang-pdf-btn" onclick="(function(){var url=window.location.href.split('?')[0].split('#')[0];if(window.location.search.indexOf('print-pdf')!==-1){window.print();}else{window.location.href=url+'?print-pdf';}})()" title="Switch to print layout, then use browser Print → Save as PDF">⬇PDF</button>
+  <span class="lang-divider"></span>
+  <span class="lang-btn" id="fs-btn" onclick="toggleFS()" title="Toggle fullscreen (F)">[F]</span>
+
 </div>
 
 <div class="reveal">
@@ -93,6 +106,23 @@
     dot.style.display = active ? 'block' : 'none';
   };
 
+  /* ── Fullscreen toggle ─────────────────────────────────── */
+  const fsBtn = document.getElementById('fs-btn');
+  window.toggleFS = function() {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+      var el = document.documentElement;
+      (el.requestFullscreen || el.webkitRequestFullscreen).call(el);
+    } else {
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    }
+  };
+  function syncFSBtn() {
+    var fs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    fsBtn.classList.toggle('active', fs);
+  }
+  document.addEventListener('fullscreenchange', syncFSBtn);
+  document.addEventListener('webkitfullscreenchange', syncFSBtn);
+
   document.addEventListener('mousemove', function(e) {
     if (!active) return;
     dot.style.left = e.clientX + 'px';
@@ -102,6 +132,7 @@
   document.addEventListener('keydown', function(e) {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     if (e.code === 'KeyL' && !e.ctrlKey && !e.metaKey) { toggleLaser(); e.preventDefault(); }
+    if (e.code === 'KeyF' && !e.ctrlKey && !e.metaKey) { toggleFS(); e.preventDefault(); }
   });
 })();
 </script>
@@ -248,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => setTimeout(updateParamDemo, 
      ═══════════════════════════════════════════════════════════ -->
 
 <!-- Toggle button -->
-<button id="sm-toggle" title="Slide navigator (/)">☰ Slides</button>
+<button id="sm-toggle" title="Menu (/)">☰ Menu</button>
 
 <!-- Overlay -->
 <div id="slide-menu-overlay"></div>
@@ -257,9 +288,10 @@ document.addEventListener('DOMContentLoaded', () => setTimeout(updateParamDemo, 
 <div id="slide-menu">
   <div id="sm-header">
     <div id="sm-header-row">
-      <span id="sm-title">SLIDE NAVIGATOR</span>
+      <span id="sm-title">MENU</span>
       <button id="sm-close" title="Close">✕</button>
     </div>
+
     <input id="sm-search" type="text" placeholder="Search slides…" autocomplete="off" />
   </div>
   <div id="sm-list"></div>

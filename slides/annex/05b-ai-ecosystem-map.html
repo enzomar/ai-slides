@@ -1,0 +1,152 @@
+<!-- ══════════════════════ FULL AI ECOSYSTEM MAP ══════════════════════ -->
+<section>
+<h2 data-i18n="auto.05b-ai-ecosystem-map.1">The Full AI Ecosystem</h2>
+
+<div class="eco-map">
+
+  <!-- ─── ROW 1: Users ─── -->
+  <div class="eco-row">
+    <div class="eco-card eco-wide eco-c-blue">
+      <span class="eco-icon">👤</span>
+      <div>
+        <div class="eco-label" data-i18n="auto.05b-ai-ecosystem-map.2">Users &amp; Interfaces</div>
+        <div class="eco-desc" data-i18n="auto.05b-ai-ecosystem-map.3">Chat UIs · IDE plugins · API consumers · Mobile apps</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eco-arrow-down">▼</div>
+
+  <!-- ─── ROW 2: Application Layer ─── -->
+  <div class="eco-row">
+    <div class="eco-card eco-wide eco-c-green">
+      <span class="eco-icon">📱</span>
+      <div>
+        <div class="eco-label" data-i18n="auto.05b-ai-ecosystem-map.4">Application Layer</div>
+        <div class="eco-desc" data-i18n="auto.05b-ai-ecosystem-map.5">Prompt routing · Orchestration · Caching · Rate limiting · Auth</div>
+        <div class="eco-tech" data-i18n="auto.05b-ai-ecosystem-map.6">LangChain · LlamaIndex · Semantic Kernel · Spring AI</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eco-arrow-down">▼</div>
+
+  <!-- ─── ROW 3: Agent + Model + Memory ─── -->
+  <div class="eco-row eco-row-3col">
+
+    <!-- Agent / Reasoning -->
+    <div class="eco-card eco-c-purple eco-card-tall">
+      <span class="eco-icon">🤖</span>
+      <div class="eco-label" data-i18n="auto.05b-ai-ecosystem-map.7">Agent / Reasoning</div>
+      <div class="eco-steps">
+        <div class="eco-step">
+          <div class="eco-step-title" data-i18n="auto.05b-ai-ecosystem-map.8">Plan</div>
+          <div class="eco-step-body" data-i18n="auto.05b-ai-ecosystem-map.9">Decompose task into sub-goals</div>
+        </div>
+        <div class="eco-step">
+          <div class="eco-step-title" data-i18n="auto.05b-ai-ecosystem-map.10">Act</div>
+          <div class="eco-step-body" data-i18n="auto.05b-ai-ecosystem-map.11">Call tools via MCP / function calling</div>
+        </div>
+        <div class="eco-step">
+          <div class="eco-step-title" data-i18n="auto.05b-ai-ecosystem-map.12">Observe</div>
+          <div class="eco-step-body" data-i18n="auto.05b-ai-ecosystem-map.13">Evaluate result, iterate or stop</div>
+        </div>
+      </div>
+      <div class="eco-tech" data-i18n="auto.05b-ai-ecosystem-map.14">LangGraph · CrewAI · AutoGen</div>
+    </div>
+
+    <!-- LLM / Model -->
+    <div class="eco-card eco-c-purple eco-card-tall">
+      <span class="eco-icon">🧠</span>
+      <div class="eco-label" data-i18n="auto.05b-ai-ecosystem-map.15">LLM / Model</div>
+      <div class="eco-model-grid">
+        <div class="eco-step">
+          <div class="eco-step-title" data-i18n="auto.05b-ai-ecosystem-map.16">Proprietary</div>
+          <div class="eco-step-body">GPT-4o · Claude · Gemini</div>
+        </div>
+        <div class="eco-step">
+          <div class="eco-step-title" data-i18n="auto.05b-ai-ecosystem-map.17">Open-Weight</div>
+          <div class="eco-step-body">Llama · Mistral · Qwen</div>
+        </div>
+        <div class="eco-step">
+          <div class="eco-step-title" data-i18n="auto.05b-ai-ecosystem-map.18">Specialised</div>
+          <div class="eco-step-body" data-i18n="auto.05b-ai-ecosystem-map.19">Code · Vision · Embed</div>
+        </div>
+      </div>
+      <div class="eco-desc" style="margin-top:4px;" data-i18n="auto.05b-ai-ecosystem-map.20">Tokenisation → Embedding → Attention → Generation</div>
+    </div>
+
+    <!-- Memory + Tools Stack -->
+    <div class="eco-stack">
+      <div class="eco-card eco-c-amber">
+        <span class="eco-icon">💾</span>
+        <div>
+          <div class="eco-label" data-i18n="auto.05b-ai-ecosystem-map.21">Memory</div>
+          <div class="eco-desc" data-i18n="auto.05b-ai-ecosystem-map.22">Short-term (context) · Long-term (vector DB)</div>
+        </div>
+      </div>
+      <div class="eco-card eco-c-amber">
+        <span class="eco-icon">🔧</span>
+        <div>
+          <div class="eco-label" data-i18n="auto.05b-ai-ecosystem-map.23">Tools &amp; MCP</div>
+          <div class="eco-desc" data-i18n="auto.05b-ai-ecosystem-map.24">APIs · DBs · File I/O · Web search · Code exec</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="eco-arrow-down">▼</div>
+
+  <!-- ─── ROW 4: Knowledge + RAG + Safety ─── -->
+  <div class="eco-row eco-row-3col">
+
+    <!-- Knowledge Base -->
+    <div class="eco-card eco-c-red">
+      <span class="eco-icon">📂</span>
+      <div>
+        <div class="eco-label" data-i18n="auto.05b-ai-ecosystem-map.25">Knowledge Base</div>
+        <div class="eco-desc" data-i18n="auto.05b-ai-ecosystem-map.26">Documents · Code repos · Wikis · APIs</div>
+        <div class="eco-tech" data-i18n="auto.05b-ai-ecosystem-map.27">Chunk → Embed → Index</div>
+      </div>
+    </div>
+
+    <!-- RAG Pipeline -->
+    <div class="eco-card eco-c-red">
+      <span class="eco-icon">🔍</span>
+      <div>
+        <div class="eco-label" data-i18n="auto.05b-ai-ecosystem-map.28">RAG Pipeline</div>
+        <div class="eco-desc" data-i18n="auto.05b-ai-ecosystem-map.29">Query → Retrieve → Rerank → Augment prompt → Generate</div>
+        <div class="eco-tech" data-i18n="auto.05b-ai-ecosystem-map.30">Pinecone · Weaviate · Chroma · pgvector</div>
+      </div>
+    </div>
+
+    <!-- Safety & Guardrails -->
+    <div class="eco-card eco-c-red">
+      <span class="eco-icon">🛡️</span>
+      <div>
+        <div class="eco-label" data-i18n="auto.05b-ai-ecosystem-map.31">Safety &amp; Guardrails</div>
+        <div class="eco-desc" data-i18n="auto.05b-ai-ecosystem-map.32">Content filters · PII masking · Bias audits · RLHF</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="eco-arrow-down">▼</div>
+
+  <!-- ─── ROW 5: Training & Infrastructure ─── -->
+  <div class="eco-row">
+    <div class="eco-card eco-wide eco-c-green">
+      <span class="eco-icon">⚙️</span>
+      <div>
+        <div class="eco-label" data-i18n="auto.05b-ai-ecosystem-map.33">Training &amp; Infrastructure</div>
+        <div class="eco-desc" data-i18n="auto.05b-ai-ecosystem-map.34">Pre-training · Fine-tuning (LoRA/QLoRA) · RLHF · Distillation · GPU clusters · Cloud inference</div>
+        <div class="eco-tech" data-i18n="auto.05b-ai-ecosystem-map.35">PyTorch · HuggingFace · vLLM · NVIDIA NIM · AWS Bedrock · Azure OpenAI</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  <aside class="notes"></aside>
+</section>

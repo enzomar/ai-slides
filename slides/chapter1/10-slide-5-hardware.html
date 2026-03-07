@@ -1,0 +1,53 @@
+<!-- ══════════════════════ SLIDE 5: HARDWARE ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.10-slide-5-hardware.1">Hardware for AI</h2>
+
+  <div class="hw-grid">
+    <!-- CPU -->
+    <div class="hw-card">
+      <div class="hw-icon">🖥️</div>
+      <h4 data-i18n="auto.10-slide-5-hardware.2">CPU — Central Processing Unit</h4>
+      <p data-i18n="auto.10-slide-5-hardware.3">Good for inference on small models (≤7B params). Sequential tasks, low throughput.</p>
+      <div>
+        <span class="hw-tag" data-i18n="auto.10-slide-5-hardware.4">✓ Run: Phi-3, Mistral 7B</span>
+        <span class="hw-tag" data-i18n="auto.10-slide-5-hardware.5">✓ Run: LLaMA 3 8B (slow)</span>
+        <span class="hw-tag" style="background:rgba(255,107,61,.15);color:var(--accent2);" data-i18n="auto.10-slide-5-hardware.6">✗ Train: not practical</span>
+      </div>
+    </div>
+
+    <!-- CONSUMER GPU -->
+    <div class="hw-card">
+      <div class="hw-icon">🎮</div>
+      <h4 data-i18n="auto.10-slide-5-hardware.7">Consumer GPU (RTX 4090)</h4>
+      <p data-i18n="auto.10-slide-5-hardware.8">24 GB VRAM. Fast inference on medium models. Light fine-tuning with <abbr class="jargon" title="Low-Rank Adaptation — efficient fine-tuning that trains only small rank-decomposition matrices">LoRA</abbr>/<abbr class="jargon" title="Quantized LoRA — combines 4-bit quantization with LoRA for even lower memory">QLoRA</abbr>.</p>
+      <div>
+        <span class="hw-tag" data-i18n="auto.10-slide-5-hardware.9">✓ Run: up to 13B (quantized)</span>
+        <span class="hw-tag" style="background:rgba(251,191,36,.15);color:var(--amber);" data-i18n="auto.10-slide-5-hardware.10">~ Fine-tune: LoRA only</span>
+      </div>
+    </div>
+
+    <!-- DATA CENTER GPU -->
+    <div class="hw-card">
+      <div class="hw-icon">⚡</div>
+      <h4 data-i18n="auto.10-slide-5-hardware.11">Data Center GPU (A100 / H100)</h4>
+      <p data-i18n="auto.10-slide-5-hardware.12">80 GB VRAM. Run & fine-tune large models. Multi-GPU clusters for training.</p>
+      <div>
+        <span class="hw-tag" data-i18n="auto.10-slide-5-hardware.13">✓ Run: 70B+ models</span>
+        <span class="hw-tag" style="background:rgba(52,211,153,.15);color:var(--green);" data-i18n="auto.10-slide-5-hardware.14">✓ Train: full fine-tuning</span>
+      </div>
+    </div>
+
+    <!-- CLOUD / TPU -->
+    <div class="hw-card">
+      <div class="hw-icon">☁️</div>
+      <h4 data-i18n="auto.10-slide-5-hardware.15">Cloud TPU / GPU Clusters</h4>
+      <p data-i18n="auto.10-slide-5-hardware.16">Thousands of chips. Pre-training frontier models (GPT-4, Claude, Gemini). $10M–$100M+ runs.</p>
+      <div>
+        <span class="hw-tag" style="background:rgba(52,211,153,.15);color:var(--green);" data-i18n="auto.10-slide-5-hardware.17">✓ Train: frontier models</span>
+        <span class="hw-tag" data-i18n="auto.10-slide-5-hardware.18">✓ Run: any model at scale</span>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

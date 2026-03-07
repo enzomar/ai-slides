@@ -1,0 +1,69 @@
+@startuml
+skinparam shadowing false
+skinparam roundcorner 14
+skinparam ArrowColor #64748B
+skinparam defaultTextAlignment center
+top to bottom direction
+
+title RAG Pipeline — Retrieval-Augmented Generation
+
+actor User as user
+
+package "Indexing Phase (offline / batch)" {
+  rectangle "Enterprise Sources\nPDFs · wikis · DBs · APIs · code repos" as sources #D6E8FF
+  rectangle "Parse & Clean\nExtract text, strip formatting,\nOCR scanned docs, normalise encoding" as parse #F0F4FF
+  rectangle "Chunking\nSplit into meaningful segments\n(sentences, paragraphs, fixed-size + overlap)" as chunk #D9F7E8
+  rectangle "Embedding Model\nConvert chunks to dense vectors\n(OpenAI, BGE, E5, Cohere)" as embed #E9E0FF
+  database "Vector Database\nPinecone · pgvector · Weaviate · Chroma" as vdb #FFF1C9
+  rectangle "Metadata Store\nSource URL · date · author · tags · chunk ID" as meta #F5F5F5
+
+  sources --> parse
+  parse --> chunk
+  parse --> meta
+  chunk --> embed
+  embed --> vdb
+}
+
+package "Query Phase (online / real-time)" {
+  rectangle "User Question" as question #D6E8FF
+  rectangle "Query Embedding\nSame model used at indexing time" as qembed #E9E0FF
+  rectangle "Retriever\nHybrid search: dense (ANN) + sparse (BM25)\nTop-K results + optional cross-encoder rerank" as retriever #D9F7E8
+  rectangle "Prompt Augmentation\nSystem prompt + retrieved chunks\n+ metadata + user question" as augment #FFF1C9
+  rectangle "LLM\nGenerates a grounded answer\nconditioned on retrieved context" as llm #FFE0D6
+  rectangle "Output Filtering\nGuardrails · PII check · citation formatting" as filter #FDEBD0
+  rectangle "Grounded Answer\nWith source citations (requires\nexplicit prompting or post-processing)" as answer #D8F5DD
+
+  user --> question
+  question --> qembed
+  qembed --> retriever
+  retriever --> augment
+  augment --> llm
+  llm --> filter
+  filter --> answer
+  answer --> user
+}
+
+vdb --> retriever : top-K nearest-neighbour chunks
+meta --> augment : source attribution per chunk
+
+note right of retriever
+  Hybrid search combines:
+  - Dense: semantic similarity (ANN)
+  - Sparse: keyword match (BM25)
+  Cross-encoder reranking improves
+  precision before passing to LLM.
+end note
+
+note right of augment
+  Context window limits how many chunks fit.
+  Lowest-relevance chunks are dropped first.
+  Chunk size vs. count is a key design trade-off.
+end note
+
+note right of embed
+  Indexing runs offline; re-index
+  needed when source docs change.
+  Embedding model must match
+  at index time and query time.
+end note
+@enduml

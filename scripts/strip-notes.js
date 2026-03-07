@@ -10,11 +10,12 @@ const path = require('path');
 const rootDir = path.join(__dirname, '..');
 
 (async () => {
-  const { PARTIAL_FILES, compileSlides } = await import('./build-slides.mjs');
+  const { getSlideSourceFiles, compileSlides } = await import('./build-slides.mjs');
+  const partialFiles = await getSlideSourceFiles(rootDir);
   let totalCount = 0;
   let totalSaved = 0;
 
-  for (const relativePath of PARTIAL_FILES) {
+  for (const relativePath of partialFiles) {
     const filePath = path.join(rootDir, relativePath);
     let html = fs.readFileSync(filePath, 'utf8');
     const before = html.length;

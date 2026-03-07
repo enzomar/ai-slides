@@ -45,11 +45,6 @@
 }
 
 /* ── TYPOGRAPHY ──────────────────────────────────────────── */
-.eyebrow {
-  font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--ink-mute);
-  margin-bottom: 10px;
-}
 h1 { font-family: var(--serif); font-size: clamp(1.9rem,3.8vw,3.2rem);
      font-weight: 400; line-height: 1.1; margin: 0 0 20px; color: var(--ink); }
 h2 { font-family: var(--serif); font-size: clamp(1.4rem,2.8vw,2.2rem);
@@ -70,26 +65,36 @@ strong { color: var(--ink); font-weight: 500; }
   letter-spacing: .12em; text-transform: uppercase;
   position: absolute; top: 24px; left: 72px;
 }
-/* tag-bar: chapter + slide tags side-by-side */
-.tag-bar {
-  position: absolute; top: 24px; left: 72px;
-  display: flex; align-items: center; gap: 6px;
-  font-family: var(--mono); font-size: 9px; color: var(--ink-mute);
-  letter-spacing: .12em; text-transform: uppercase;
-  z-index: 5;
+/* ── GLOBAL TAG BAR (fixed left, same row as lang-bar) ─────── */
+#global-tag-bar {
+  position: fixed; top: 20px; left: 200px; z-index: 9999;
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-mute);
+  background: rgba(28,28,30,.75); backdrop-filter: blur(8px);
+  padding: 4px 10px; border-radius: 6px;
+  max-width: 52vw; overflow: hidden;
 }
-.tag-bar .chapter-tag,
-.tag-bar .slide-tag { position: static; }
-.tag-bar .slide-tag::before { content: '·'; margin-right: 6px; }
+.gtb-ch-num   { color: var(--ink-mute); white-space: nowrap; flex-shrink: 0; }
+.gtb-ch-name  { color: var(--ink-mid);  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gtb-ch-count { color: var(--ink-mute); white-space: nowrap; flex-shrink: 0; }
+.gtb-abs-count{ color: var(--accent);   white-space: nowrap; flex-shrink: 0; }
+.gtb-sep      { color: var(--accent); opacity: .4; flex-shrink: 0; }
 
+/* Hide per-slide tag-bar (data still readable by JS) */
+.tag-bar { display: none !important; }
 
-/* ── DIVIDER ─────────────────────────────────────────────── */
-.rule { width: 40px; height: 2px; background: var(--accent); margin-bottom: 18px; }
+/* ── SLIDE NUMBER (Reveal.js injected) ───────────────────── */
+.reveal .slide-number {
+  font-family: var(--mono); font-size: 9px; color: var(--ink-mute);
+  letter-spacing: .08em;
+  background: none;
+  left: 24px; bottom: 18px;
+}
 
 /* ── COVER ───────────────────────────────────────────────── */
 .cover-slide { background: #0D0D0F !important; color: var(--ink); }
-.cover-slide h1, .cover-slide .eyebrow, .cover-slide p { color: var(--ink); }
-.cover-slide .rule { background: var(--accent); }
+.cover-slide h1, .cover-slide p { color: var(--ink); }
 .cover-slide .slide-tag, .cover-slide .chapter-tag { color: rgba(255,255,255,.35); }
 .cover-slide .tag-bar { color: rgba(255,255,255,.35); }
 .cover-dot {
@@ -101,8 +106,7 @@ strong { color: var(--ink); font-weight: 500; }
 
 /* ── CHAPTER DIVIDER SLIDE ───────────────────────────────── */
 .chapter-divider { background: #0D0D0F !important; color: var(--ink); }
-.chapter-divider h1, .chapter-divider h2, .chapter-divider .eyebrow, .chapter-divider p { color: var(--ink); }
-.chapter-divider .rule { background: var(--accent); }
+.chapter-divider h1, .chapter-divider h2, .chapter-divider p { color: var(--ink); }
 .chapter-divider .slide-tag, .chapter-divider .chapter-tag { color: rgba(255,255,255,.35); }
 .chapter-divider .tag-bar { color: rgba(255,255,255,.35); }
 
@@ -356,6 +360,22 @@ strong { color: var(--ink); font-weight: 500; }
 .lang-bar { background: rgba(28,28,30,.75); backdrop-filter: blur(8px); padding: 4px 10px; border-radius: 6px; }
 .lang-divider { width: 1px; height: 14px; background: rgba(255,255,255,.15); align-self: center; }
 
+/* ── FULLSCREEN TOGGLE ────────────────────────────────────── */
+#fs-btn { font-size: 12px; line-height: 1; }
+#fs-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── PDF BUTTON (in lang-bar) ─────────────────────────────── */
+.lang-pdf-btn {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .06em;
+  padding: 2px 7px; border-radius: 4px;
+  border: 1px solid rgba(78,127,255,.3);
+  background: rgba(78,127,255,.12);
+  color: #6ea7ff;
+  cursor: pointer;
+  line-height: 1.2;
+}
+.lang-pdf-btn:hover { background: rgba(78,127,255,.22); color: #fff; }
+
 /* ── LASER POINTER ───────────────────────────────────────── */
 #laser-btn { font-size: 13px; line-height: 1; }
 #laser-btn.active { color: #ff4040; text-shadow: 0 0 6px rgba(255,40,40,.6); border-bottom-color: #ff4040; }
@@ -497,7 +517,181 @@ strong { color: var(--ink); font-weight: 500; }
   color: var(--accent) !important;
 }
 
-/* ── RESPONSIVE ──────────────────────────────────────────── */
+/* ── AI ECOSYSTEM MAP (grid layout) ─────────────────────── */
+.eco-map {
+  width: 100%;
+  max-width: 1050px;
+  margin: 6px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.eco-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.eco-row-center { justify-content: center; }
+.eco-row-3col { display: grid; grid-template-columns: 1fr 1.3fr .82fr; gap: 8px; }
+
+.eco-arrow-down {
+  text-align: center;
+  font-size: .6rem;
+  color: rgba(255,255,255,.25);
+  line-height: 1;
+  padding: 1px 0;
+}
+
+/* ── Cards ── */
+.eco-card {
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: rgba(44,44,46,.92);
+  border: 1px solid var(--rule);
+  backdrop-filter: blur(8px);
+  display: flex;
+  gap: 7px;
+  align-items: flex-start;
+}
+.eco-card.eco-wide { flex: 1; max-width: 720px; }
+.eco-card.eco-card-tall { flex-direction: column; }
+
+.eco-icon { font-size: .72rem; line-height: 1; flex-shrink: 0; margin-top: 1px; }
+
+/* ── Card colour variants ── */
+.eco-c-blue   { background: rgba(59,130,246,.09);  border-color: rgba(59,130,246,.26); }
+.eco-c-green  { background: rgba(52,211,153,.08);  border-color: rgba(52,211,153,.22); }
+.eco-c-purple { background: rgba(167,139,250,.08); border-color: rgba(167,139,250,.24); }
+.eco-c-red    { background: rgba(255,107,61,.08);  border-color: rgba(255,107,61,.24); }
+.eco-c-amber  { background: rgba(251,191,36,.08);  border-color: rgba(251,191,36,.24); }
+
+/* ── Text elements ── */
+.eco-label {
+  font-family: var(--mono);
+  font-size: .50rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.eco-desc {
+  font-size: .50rem;
+  line-height: 1.35;
+  color: var(--ink-mid);
+}
+.eco-tech {
+  margin-top: 2px;
+  font-family: var(--mono);
+  font-size: .42rem;
+  letter-spacing: .04em;
+  color: var(--ink-mute);
+  line-height: 1.35;
+}
+
+/* ── Steps (inside Agent / Model cards) ── */
+.eco-steps { display: flex; flex-direction: column; gap: 4px; }
+.eco-step {
+  border-radius: 7px;
+  padding: 4px 7px;
+  background: rgba(0,0,0,.16);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.eco-step-title {
+  font-family: var(--mono);
+  font-size: .42rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 1px;
+}
+.eco-step-body {
+  font-size: .44rem;
+  line-height: 1.3;
+  color: var(--ink-mid);
+}
+
+/* ── Model sub-grid ── */
+.eco-model-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+/* ── Memory + Tools stack ── */
+.eco-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── RAG flow ── */
+.eco-rag-flow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.eco-rag-step {
+  flex: 1;
+  border-radius: 7px;
+  padding: 3px 6px;
+  background: rgba(0,0,0,.16);
+  border: 1px solid rgba(255,255,255,.06);
+  font-family: var(--mono);
+  font-size: .42rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.35;
+}
+.eco-rag-step span {
+  font-family: var(--body);
+  font-size: .40rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-mid);
+}
+.eco-rag-arrow {
+  color: var(--ink-mute);
+  font-size: .50rem;
+  flex-shrink: 0;
+}
+
+/* ── Training flow ── */
+.eco-train-flow {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.eco-train-step {
+  flex: 1;
+  border-radius: 7px;
+  padding: 3px 5px;
+  background: rgba(255,107,61,.10);
+  border: 1px solid rgba(255,107,61,.18);
+  font-family: var(--mono);
+  font-size: .42rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1.35;
+}
+.eco-train-step span {
+  font-family: var(--body);
+  font-size: .38rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-mid);
+}
+.eco-train-arrow {
+  color: var(--ink-mute);
+  font-size: .46rem;
+  flex-shrink: 0;
+}
+
+/* ── RESPONSIVE — TABLET ─────────────────────────────────── */
 @media (max-width: 900px) {
   .agenda-grid { grid-template-columns: 1fr; }
   .three-col   { grid-template-columns: 1fr; }
@@ -506,26 +700,97 @@ strong { color: var(--ink); font-weight: 500; }
   .hw-grid     { grid-template-columns: 1fr; }
 }
 
+/* ── RESPONSIVE — MOBILE ─────────────────────────────────── */
+@media (max-width: 600px) {
+
+  /* ── Lang-bar → bottom-center, larger touch targets ─────── */
+  #global-tag-bar { display: none; } /* no room on small screens */
+  .lang-bar {
+    top: auto !important; bottom: 10px; left: 50%; right: auto;
+    transform: translateX(-50%);
+    gap: 12px; font-size: 11px;
+    padding: 7px 14px; border-radius: 10px;
+  }
+  .lang-btn   { padding: 6px 4px; min-width: 26px; text-align: center; }
+  .lang-divider { height: 16px; }
+  #laser-btn, #fs-btn { font-size: 14px; }
+
+  /* Slide-number sits above the relocated lang-bar */
+  .reveal .slide-number {
+    bottom: 52px; right: 14px; font-size: 8px;
+  }
+
+  /* Slide padding: tighter on small screens */
+  .reveal .slides section {
+    padding: 40px 28px 36px !important;
+  }
+
+  /* Typography: bump sizes for readability on small canvases */
+  h1 { font-size: clamp(1.5rem, 5vw, 2.4rem); }
+  h2 { font-size: clamp(1.1rem, 4vw, 1.8rem); }
+  p, li { font-size: .78rem; }
+
+  /* Key insight box: full-width with smaller text */
+  .key-insight { font-size: .72rem; padding: 8px 12px; }
+
+  /* Prompt block: smaller text */
+  .prompt-block { font-size: .65rem; padding: 14px 16px; }
+
+  /* Timeline: enable horizontal scroll and shrink */
+  .timeline { min-width: 600px; padding-top: 40px; }
+  .tl-card h4 { font-size: .6rem; }
+  .tl-card p  { font-size: .52rem; }
+
+  /* Ecosystem map: tighter sizing */
+  .eco-map { max-width: 100%; }
+  .eco-label { font-size: .44rem; }
+  .eco-desc  { font-size: .44rem; }
+
+  /* Cards: tighter padding */
+  .model-card { padding: 14px 12px; }
+  .param-card { padding: 14px 16px; }
+  .hw-card    { padding: 14px 16px; }
+
+  /* Flow diagrams */
+  .flow-row { gap: 8px; }
+  .flow-box { padding: 10px 12px; font-size: .7rem; min-width: 80px; }
+}
+
+/* Portrait hint — auto-fades after 4 s */
+@media (max-width: 600px) and (orientation: portrait) {
+  body::after {
+    content: '↻  Rotate for best experience';
+    position: fixed; bottom: 54px; left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--sans); font-size: 12px;
+    color: var(--ink-mute); background: rgba(28,28,30,.92);
+    padding: 8px 18px; border-radius: 8px;
+    z-index: 99998; pointer-events: none;
+    animation: hintFade 5s ease-in forwards;
+  }
+}
+@keyframes hintFade { 0%,55% { opacity: .85; } 100% { opacity: 0; } }
+
 /* ── PRINT / PDF EXPORT ───────────────────────────────────── */
 /*
- * Reveal.js ?print-pdf mode: append ?print-pdf to the URL, then
+ * Reveal.js ?print-pdf mode: append ?print-pdf to URL, then
  * Ctrl+P / Cmd+P → Save as PDF.
  *
- * How it works in Reveal.js 4.x:
- *   1. Body gets class "print-pdf"
- *   2. Each slide is wrapped in a .pdf-page div (1280×720)
- *   3. pdf.min.css lays them out vertically
- *   4. This @media print block adds our theme tweaks on top
+ * Layout maths (at 96 CSS px per inch):
+ *   A4 landscape = 297 mm × 210 mm ≈ 1122.5 × 793.7 px
+ *   Slide canvas  = 1280 × 720 px  (16 : 9)
+ *   Uniform scale = min(1122.5/1280, 793.7/720) = 0.877
+ *   Scaled slide  ≈ 1122.5 × 631.4 px
+ *   Vertical pad  = (793.7 − 631.4) / 2 ≈ 81 px → centred
  *
- * The @page rule MUST match the Reveal.js slide dimensions
- * (width=1280, height=720) with zero margin so slides fill
- * pages edge-to-edge.
+ * The slide is scaled to fill the A4 width edge-to-edge and
+ * centred vertically with equal dark bands top & bottom.
  */
 @media print {
 
-  /* ── Page size ──────────────────────────────────────────── */
+  /* ── A4 landscape page ──────────────────────────────────── */
   @page {
-    size: 1280px 720px;
+    size: 297mm 210mm;   /* A4 landscape */
     margin: 0;
   }
 
@@ -533,12 +798,10 @@ strong { color: var(--ink); font-weight: 500; }
   html {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    color-adjust: exact !important;
   }
 
-  /* ── Hide all chrome that must not appear in the PDF ─────── */
-  #print-banner,
-  .lang-bar,
+  /* ── Hide all UI chrome ─────────────────────────────────── */
+  #print-banner,  #global-tag-bar,  .lang-bar,
   #narr-player,
   .slide-menu,
   .slide-menu-overlay,
@@ -552,7 +815,7 @@ strong { color: var(--ink); font-weight: 500; }
     display: none !important;
   }
 
-  /* ── Kill any body/html margins the browser might add ──── */
+  /* ── Kill body/html margins the browser might add ──────── */
   html, body {
     margin: 0 !important;
     padding: 0 !important;
@@ -572,10 +835,9 @@ strong { color: var(--ink); font-weight: 500; }
   }
 
   .reveal .slides {
-    /* Strip transforms Reveal uses for presentation mode */
     transform: none !important;
     position: relative !important;
-    width: 1280px !important;
+    width: auto !important;
     height: auto !important;
     left: 0 !important;
     top: 0 !important;
@@ -586,13 +848,16 @@ strong { color: var(--ink); font-weight: 500; }
   }
 
   /* ── PDF-page wrapper (created by Reveal 4.x) ──────────── */
+  /*   Each .pdf-page becomes one printed page.  We size it to
+       A4 landscape and let the slide scale inside it.          */
   .pdf-page {
-    width: 1280px !important;
-    height: 720px !important;
+    width: 297mm !important;
+    height: 210mm !important;
     overflow: hidden !important;
     position: relative !important;
     page-break-after: always !important;
     break-after: page !important;
+    background: var(--bg, #1C1C1E) !important;
   }
 
   .pdf-page:last-child {
@@ -601,22 +866,25 @@ strong { color: var(--ink); font-weight: 500; }
   }
 
   /* ── Individual slides ──────────────────────────────────── */
+  /*   Keep original 1280×720, scale 0.877× and centre inside
+       the A4 page.  transform-origin: top left  +  absolute
+       positioning handles centring without flex interference.  */
   .reveal .slides section {
     box-sizing: border-box !important;
     width: 1280px !important;
     height: 720px !important;
     overflow: hidden !important;
-    /* If no .pdf-page wrapper, break pages on sections */
-    page-break-after: always !important;
-    break-after: page !important;
-    /* Reset any transforms Reveal applies to individual slides */
-    transform: none !important;
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    /* translate centres the 1280×720 box, then scale shrinks */
+    transform: translate(-50%, -50%) scale(0.877) !important;
+    transform-origin: center center !important;
     margin: 0 !important;
     opacity: 1 !important;
     visibility: visible !important;
+    page-break-after: always !important;
+    break-after: page !important;
   }
 
   .reveal .slides section:last-child {
@@ -624,7 +892,7 @@ strong { color: var(--ink); font-weight: 500; }
     break-after: avoid !important;
   }
 
-  /* Inside a .pdf-page, the section shouldn't add its own break */
+  /* Inside a .pdf-page the section shouldn't add its own break */
   .pdf-page .reveal .slides section,
   .pdf-page > section,
   .reveal .slides .pdf-page section {
@@ -638,6 +906,10 @@ strong { color: var(--ink); font-weight: 500; }
     position: absolute !important;
     width: 1280px !important;
     height: 720px !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0.877) !important;
+    transform-origin: center center !important;
   }
 
   /* ── Make all fragments visible in the PDF ──────────────── */
@@ -659,9 +931,29 @@ strong { color: var(--ink); font-weight: 500; }
     color: rgba(255,255,255,.30);
     letter-spacing: .03em;
     pointer-events: none;
-    /* Don't let the pseudo-element affect flex layout */
     flex-shrink: 0;
   }
+}
+
+/* ── JARGON TOOLTIPS ─────────────────────────────────────── */
+abbr.jargon {
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255,255,255,.45);
+  cursor: help;
+}
+
+/* JS-driven tooltip (see slides.js → setupJargonTooltips) */
+#jargon-tip {
+  position: fixed; z-index: 99999; pointer-events: none;
+  background: var(--bg-card); color: var(--ink);
+  font-family: var(--sans); font-size: .62rem; font-weight: 400;
+  line-height: 1.4; white-space: normal; max-width: 300px;
+  padding: 6px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.45);
+  opacity: 0; transition: opacity .15s;
+  text-transform: none; letter-spacing: 0;
 }
 
 

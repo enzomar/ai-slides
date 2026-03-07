@@ -1,0 +1,977 @@
+<!-- ══════════════════════ SLIDE 3a: SAMPLING PIPELINE ══════════════════════ -->
+<section id="slide-03a">
+  <h2 data-i18n="auto.07-slide-3a-sampling-pipeline.1">How the Next Word is Chosen</h2>
+
+  <div style="display:flex;gap:18px;align-items:flex-start;width:100%;margin-top:4px;">
+
+    <!-- LEFT: Mini Transformer diagram — click any box to see its interactive demo -->
+    <div style="flex:0 0 148px;display:flex;flex-direction:column;gap:0;align-items:stretch;">
+      <!-- Input -->
+      <div style="background:rgba(59,130,246,.18);border:1px solid rgba(59,130,246,.4);border-radius:6px;padding:6px 8px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:.52rem;color:var(--accent);">INPUT TOKENS</div>
+        <div style="font-family:var(--serif);font-size:.68rem;color:var(--ink);margin-top:2px;">"The cat sat on the"</div>
+      </div>
+      <div style="text-align:center;color:var(--ink-mute);font-size:.8rem;line-height:1.2;">↓</div>
+      <!-- Embedding -->
+      <div id="s03a-box-embed" class="s03a-box s03a-box-active" data-panel="embed" style="cursor:pointer;background:rgba(52,211,153,.1);border:2px solid rgba(52,211,153,.25);border-radius:6px;padding:5px 8px;text-align:center;transition:box-shadow .3s,border-color .3s;box-shadow:0 0 10px rgba(52,211,153,.35);">
+        <div style="font-family:var(--mono);font-size:.5rem;color:var(--green);">EMBEDDING</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-top:2px;">tokens → vectors</div>
+      </div>
+      <div style="text-align:center;color:var(--ink-mute);font-size:.8rem;line-height:1.2;">↓</div>
+      <!-- Self-Attention -->
+      <div id="s03a-box-attn" class="s03a-box" data-panel="attn" style="cursor:pointer;background:rgba(167,139,250,.12);border:2px solid rgba(167,139,250,.3);border-radius:6px;padding:5px 8px;text-align:center;transition:box-shadow .3s,border-color .3s;">
+        <div style="font-family:var(--mono);font-size:.5rem;color:#a78bfa;">SELF-ATTENTION</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-top:2px;">who attends to whom</div>
+      </div>
+      <div style="text-align:center;color:var(--ink-mute);font-size:.8rem;line-height:1.2;">↓</div>
+      <!-- FFN -->
+      <div id="s03a-box-ffn" class="s03a-box" data-panel="ffn" style="cursor:pointer;background:rgba(251,191,36,.1);border:2px solid rgba(251,191,36,.25);border-radius:6px;padding:5px 8px;text-align:center;transition:box-shadow .3s,border-color .3s;">
+        <div style="font-family:var(--mono);font-size:.5rem;color:var(--amber);">FEED-FORWARD</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-top:2px;">transform features</div>
+      </div>
+      <div style="text-align:center;color:var(--ink-mute);font-size:.8rem;line-height:1.2;">↓</div>
+      <!-- Softmax -->
+      <div id="s03a-box-softmax" class="s03a-box" data-panel="softmax" style="cursor:pointer;background:rgba(255,107,61,.15);border:2px solid rgba(255,107,61,.5);border-radius:6px;padding:6px 8px;text-align:center;transition:box-shadow .3s,border-color .3s;">
+        <div style="font-family:var(--mono);font-size:.5rem;color:var(--accent2);">SOFTMAX</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-top:2px;">→ probabilities</div>
+      </div>
+      <div style="text-align:center;color:var(--ink-mute);font-size:.8rem;line-height:1.2;">↓</div>
+      <!-- Sampling box -->
+      <div id="s03a-box-sampling" class="s03a-box" data-panel="sampling" style="cursor:pointer;background:rgba(59,130,246,.08);border:2px dashed rgba(59,130,246,.3);border-radius:6px;padding:5px 8px;text-align:center;transition:box-shadow .3s,border-color .3s;">
+        <div style="font-family:var(--mono);font-size:.5rem;color:var(--accent);">SAMPLING</div>
+        <div style="font-size:.56rem;color:var(--ink-mute);margin-top:2px;">T · Top-K · Top-P</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);text-align:center;margin-top:4px;opacity:.7;">→ next key advances · click to replay</div>
+    </div>
+
+    <!-- RIGHT: switchable interactive demo panels -->
+    <div style="flex:1;min-width:0;position:relative;">
+
+      <!-- ═══ PANEL: EMBEDDING ═══ -->
+      <div id="s03a-panel-embed" class="s03a-panel" style="display:block;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--green);margin-bottom:6px;">EMBEDDING — tokens → high-dimensional vectors</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-bottom:10px;">Each token is mapped to a dense vector. Similar meanings → nearby vectors.</div>
+        <!-- Token-to-vector rows -->
+        <div id="s03a-embed-rows" style="display:flex;flex-direction:column;gap:8px;">
+          <div class="s03a-embed-row" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 42px;font-family:var(--mono);font-size:.65rem;text-align:right;color:var(--green);font-weight:600;">The</div>
+            <div style="flex:1;display:flex;gap:2px;height:18px;" class="s03a-vec" data-vals="0.12,-0.44,0.91,0.03,-0.67,0.55,0.28,-0.11">
+            </div>
+            <div style="flex:0 0 62px;font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);">[0.12, −0.44…]</div>
+          </div>
+          <div class="s03a-embed-row" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 42px;font-family:var(--mono);font-size:.65rem;text-align:right;color:var(--green);font-weight:600;">cat</div>
+            <div style="flex:1;display:flex;gap:2px;height:18px;" class="s03a-vec" data-vals="0.85,0.62,-0.33,0.71,0.14,-0.52,0.93,0.07">
+            </div>
+            <div style="flex:0 0 62px;font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);">[0.85, 0.62…]</div>
+          </div>
+          <div class="s03a-embed-row" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 42px;font-family:var(--mono);font-size:.65rem;text-align:right;color:var(--green);font-weight:600;">sat</div>
+            <div style="flex:1;display:flex;gap:2px;height:18px;" class="s03a-vec" data-vals="-0.21,0.38,0.77,-0.55,0.44,0.19,-0.82,0.61">
+            </div>
+            <div style="flex:0 0 62px;font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);">[−0.21, 0.38…]</div>
+          </div>
+          <div class="s03a-embed-row" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 42px;font-family:var(--mono);font-size:.65rem;text-align:right;color:var(--green);font-weight:600;">on</div>
+            <div style="flex:1;display:flex;gap:2px;height:18px;" class="s03a-vec" data-vals="0.05,-0.18,0.66,0.22,-0.51,0.43,0.11,-0.74">
+            </div>
+            <div style="flex:0 0 62px;font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);">[0.05, −0.18…]</div>
+          </div>
+          <div class="s03a-embed-row" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 42px;font-family:var(--mono);font-size:.65rem;text-align:right;color:var(--green);font-weight:600;">the</div>
+            <div style="flex:1;display:flex;gap:2px;height:18px;" class="s03a-vec" data-vals="0.11,-0.42,0.89,0.05,-0.65,0.53,0.30,-0.13">
+            </div>
+            <div style="flex:0 0 62px;font-family:var(--mono);font-size:.42rem;color:var(--ink-mute);">[0.11, −0.42…]</div>
+          </div>
+        </div>
+        <!-- Similarity callout -->
+        <div style="margin-top:12px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:6px;padding:8px 10px;">
+          <div style="font-family:var(--mono);font-size:.52rem;color:var(--green);margin-bottom:4px;">Cosine similarity</div>
+          <div style="display:flex;gap:12px;font-size:.56rem;">
+            <div><span style="color:var(--green);font-weight:600;">"The" ↔ "the"</span> <span style="color:var(--ink);">= 0.98</span> <span style="color:var(--ink-mute);">· nearly identical</span></div>
+            <div><span style="color:var(--green);font-weight:600;">"cat" ↔ "sat"</span> <span style="color:var(--ink);">= 0.31</span> <span style="color:var(--ink-mute);">· different meaning</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PANEL: SELF-ATTENTION ═══ -->
+      <div id="s03a-panel-attn" class="s03a-panel" style="display:none;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:#a78bfa;margin-bottom:6px;">SELF-ATTENTION — each token looks at every other token</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-bottom:8px;">Click a row to see which tokens that word attends to. Brighter = stronger connection.</div>
+        <!-- Heatmap grid -->
+        <div style="display:flex;gap:0;">
+          <!-- Row labels -->
+          <div style="display:flex;flex-direction:column;gap:3px;padding-top:19px;">
+            <div class="s03a-attn-row-lbl" data-row="0" style="cursor:pointer;height:28px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--mono);font-size:.58rem;color:var(--ink-mute);border-radius:4px;transition:background .2s;">The</div>
+            <div class="s03a-attn-row-lbl" data-row="1" style="cursor:pointer;height:28px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--mono);font-size:.58rem;color:var(--ink-mute);border-radius:4px;transition:background .2s;">cat</div>
+            <div class="s03a-attn-row-lbl" data-row="2" style="cursor:pointer;height:28px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--mono);font-size:.58rem;color:#a78bfa;font-weight:700;border-radius:4px;transition:background .2s;">sat</div>
+            <div class="s03a-attn-row-lbl" data-row="3" style="cursor:pointer;height:28px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--mono);font-size:.58rem;color:var(--ink-mute);border-radius:4px;transition:background .2s;">on</div>
+            <div class="s03a-attn-row-lbl" data-row="4" style="cursor:pointer;height:28px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-family:var(--mono);font-size:.58rem;color:var(--ink-mute);border-radius:4px;transition:background .2s;">the</div>
+          </div>
+          <!-- Grid body -->
+          <div>
+            <!-- Column headers -->
+            <div style="display:grid;grid-template-columns:repeat(5,42px);gap:3px;height:16px;line-height:16px;margin-bottom:3px;">
+              <div style="font-family:var(--mono);font-size:.52rem;color:var(--ink-mute);text-align:center;">The</div>
+              <div style="font-family:var(--mono);font-size:.52rem;color:var(--ink-mute);text-align:center;">cat</div>
+              <div style="font-family:var(--mono);font-size:.52rem;color:#a78bfa;text-align:center;font-weight:700;">sat</div>
+              <div style="font-family:var(--mono);font-size:.52rem;color:var(--ink-mute);text-align:center;">on</div>
+              <div style="font-family:var(--mono);font-size:.52rem;color:var(--ink-mute);text-align:center;">the</div>
+            </div>
+            <!-- Heat cells -->
+            <div id="s03a-attn-grid" style="display:grid;grid-template-columns:repeat(5,42px);gap:3px;">
+              <!-- row 0: The -->
+              <div class="s03a-attn-cell" data-r="0" data-w=".80" style="height:28px;border-radius:4px;background:rgba(167,139,250,.80);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">80</div>
+              <div class="s03a-attn-cell" data-r="0" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <div class="s03a-attn-cell" data-r="0" data-w=".02" style="height:28px;border-radius:4px;background:rgba(167,139,250,.02);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">2</div>
+              <div class="s03a-attn-cell" data-r="0" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <div class="s03a-attn-cell" data-r="0" data-w=".08" style="height:28px;border-radius:4px;background:rgba(167,139,250,.08);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">8</div>
+              <!-- row 1: cat -->
+              <div class="s03a-attn-cell" data-r="1" data-w=".10" style="height:28px;border-radius:4px;background:rgba(167,139,250,.10);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">10</div>
+              <div class="s03a-attn-cell" data-r="1" data-w=".65" style="height:28px;border-radius:4px;background:rgba(167,139,250,.65);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">65</div>
+              <div class="s03a-attn-cell" data-r="1" data-w=".08" style="height:28px;border-radius:4px;background:rgba(167,139,250,.08);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">8</div>
+              <div class="s03a-attn-cell" data-r="1" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <div class="s03a-attn-cell" data-r="1" data-w=".12" style="height:28px;border-radius:4px;background:rgba(167,139,250,.12);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">12</div>
+              <!-- row 2: sat (key row) -->
+              <div class="s03a-attn-cell" data-r="2" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <div class="s03a-attn-cell" data-r="2" data-w=".42" style="height:28px;border-radius:4px;background:rgba(167,139,250,.42);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">42</div>
+              <div class="s03a-attn-cell" data-r="2" data-w=".18" style="height:28px;border-radius:4px;background:rgba(167,139,250,.18);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">18</div>
+              <div class="s03a-attn-cell" data-r="2" data-w=".30" style="height:28px;border-radius:4px;background:rgba(167,139,250,.30);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">30</div>
+              <div class="s03a-attn-cell" data-r="2" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <!-- row 3: on -->
+              <div class="s03a-attn-cell" data-r="3" data-w=".03" style="height:28px;border-radius:4px;background:rgba(167,139,250,.03);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">3</div>
+              <div class="s03a-attn-cell" data-r="3" data-w=".08" style="height:28px;border-radius:4px;background:rgba(167,139,250,.08);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">8</div>
+              <div class="s03a-attn-cell" data-r="3" data-w=".20" style="height:28px;border-radius:4px;background:rgba(167,139,250,.20);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">20</div>
+              <div class="s03a-attn-cell" data-r="3" data-w=".55" style="height:28px;border-radius:4px;background:rgba(167,139,250,.55);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">55</div>
+              <div class="s03a-attn-cell" data-r="3" data-w=".14" style="height:28px;border-radius:4px;background:rgba(167,139,250,.14);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">14</div>
+              <!-- row 4: the -->
+              <div class="s03a-attn-cell" data-r="4" data-w=".25" style="height:28px;border-radius:4px;background:rgba(167,139,250,.25);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">25</div>
+              <div class="s03a-attn-cell" data-r="4" data-w=".05" style="height:28px;border-radius:4px;background:rgba(167,139,250,.05);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">5</div>
+              <div class="s03a-attn-cell" data-r="4" data-w=".08" style="height:28px;border-radius:4px;background:rgba(167,139,250,.08);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">8</div>
+              <div class="s03a-attn-cell" data-r="4" data-w=".22" style="height:28px;border-radius:4px;background:rgba(167,139,250,.22);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);transition:opacity .3s;">22</div>
+              <div class="s03a-attn-cell" data-r="4" data-w=".40" style="height:28px;border-radius:4px;background:rgba(167,139,250,.40);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.48rem;color:#fff;transition:opacity .3s;">40</div>
+            </div>
+          </div>
+        </div>
+        <div id="s03a-attn-info" style="margin-top:8px;font-size:.54rem;color:var(--ink-mute);min-height:20px;font-family:var(--mono);">← click a row to highlight</div>
+      </div>
+
+      <!-- ═══ PANEL: FEED-FORWARD ═══ -->
+      <div id="s03a-panel-ffn" class="s03a-panel" style="display:none;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--amber);margin-bottom:6px;">FEED-FORWARD — non-linear feature transformation</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-bottom:10px;">Each token's vector passes independently through two dense layers with a ReLU activation. This adds the model's "knowledge".</div>
+        <!-- FFN diagram: input vector → hidden → output -->
+        <div style="display:flex;align-items:center;gap:10px;justify-content:center;">
+          <!-- Input vector -->
+          <div>
+            <div style="font-family:var(--mono);font-size:.46rem;color:var(--ink-mute);text-align:center;margin-bottom:4px;">Input (d=8)</div>
+            <div id="s03a-ffn-input" style="display:flex;flex-direction:column;gap:2px;"></div>
+          </div>
+          <div style="font-size:.7rem;color:var(--amber);">→</div>
+          <!-- Hidden layer -->
+          <div>
+            <div style="font-family:var(--mono);font-size:.46rem;color:var(--amber);text-align:center;margin-bottom:4px;">Hidden (4×d)</div>
+            <div id="s03a-ffn-hidden" style="display:flex;flex-direction:column;gap:2px;"></div>
+            <div style="font-family:var(--mono);font-size:.42rem;color:var(--amber);text-align:center;margin-top:4px;">ReLU: max(0, x)</div>
+          </div>
+          <div style="font-size:.7rem;color:var(--amber);">→</div>
+          <!-- Output vector -->
+          <div>
+            <div style="font-family:var(--mono);font-size:.46rem;color:var(--ink-mute);text-align:center;margin-bottom:4px;">Output (d=8)</div>
+            <div id="s03a-ffn-output" style="display:flex;flex-direction:column;gap:2px;"></div>
+          </div>
+        </div>
+        <!-- insight -->
+        <div style="margin-top:14px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:6px;padding:8px 10px;">
+          <div style="font-size:.54rem;color:var(--ink);">
+            <span style="color:var(--amber);font-weight:600;">Key idea:</span> The FFN acts like a "knowledge store" — attention figures out <em>what</em> to look at; the FFN transforms <em>what it means</em>.
+            In GPT-4 class models, FFN parameters are ~⅔ of total weights.
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PANEL: SOFTMAX (existing bar chart) ═══ -->
+      <div id="s03a-panel-softmax" class="s03a-panel" style="display:none;">
+        <div style="font-family:var(--mono);font-size:.58rem;color:var(--ink-mute);margin-bottom:8px;" data-i18n="auto.07-slide-3a-sampling-pipeline.2">Softmax output — full vocabulary (50 000+ tokens), showing top 8:</div>
+        <div id="s03a-bars" style="display:flex;flex-direction:column;gap:5px;">
+          <div class="s03a-bar-row" data-rank="1" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink);">mat</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:40%;background:var(--accent);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--accent);">40%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="2" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink);">floor</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:28%;background:var(--green);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--green);">28%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="3" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink);">chair</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:15%;background:#a78bfa;border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:#a78bfa;">15%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="4" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink);">sofa</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:9%;background:var(--amber);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--amber);">9%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="5" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink);">ground</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:5%;background:#34d399;border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:#34d399;">5%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="6" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink-mute);">carpet</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:2%;background:rgba(255,255,255,.25);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);">2%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="7" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink-mute);">table</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:0.8%;background:rgba(255,255,255,.2);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);">0.8%</div>
+          </div>
+          <div class="s03a-bar-row" data-rank="8" style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:0 0 52px;font-family:var(--mono);font-size:.62rem;text-align:right;color:var(--ink-mute);">…49993</div>
+            <div style="flex:1;height:14px;background:var(--bg-card);border-radius:3px;overflow:hidden;position:relative;">
+              <div class="s03a-fill" style="position:absolute;left:0;top:0;bottom:0;width:0.2%;background:rgba(255,255,255,.1);border-radius:3px;transition:width .5s,opacity .4s;"></div>
+            </div>
+            <div class="s03a-pct" style="flex:0 0 34px;font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);">≈0%</div>
+          </div>
+        </div>
+        <div id="s03a-step-label" style="margin-top:10px;min-height:48px;"></div>
+      </div>
+
+      <!-- ═══ PANEL: SAMPLING ═══ -->
+      <div id="s03a-panel-sampling" class="s03a-panel" style="display:none;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);margin-bottom:6px;">SAMPLING — picking the next token</div>
+        <div style="font-size:.58rem;color:var(--ink-mute);margin-bottom:10px;">After softmax, three knobs control which token is selected. Click <strong>Spin</strong> to sample!</div>
+        <!-- Probability wheel -->
+        <div style="display:flex;align-items:flex-start;gap:16px;">
+          <div style="position:relative;width:180px;height:180px;flex:0 0 180px;">
+            <canvas id="s03a-wheel" width="360" height="360" style="width:180px;height:180px;"></canvas>
+            <div id="s03a-wheel-result" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--mono);font-size:1.1rem;color:var(--ink);font-weight:700;opacity:0;transition:opacity .3s;"></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
+            <!-- T slider -->
+            <div>
+              <div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);">Temperature <span id="s03a-t-val" style="color:var(--accent);">0.7</span></div>
+              <input id="s03a-t-slider" type="range" min="1" max="20" value="7" style="width:100%;accent-color:var(--accent);height:4px;">
+            </div>
+            <!-- Top-K slider -->
+            <div>
+              <div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);">Top-K <span id="s03a-k-val" style="color:var(--green);">5</span></div>
+              <input id="s03a-k-slider" type="range" min="1" max="8" value="5" style="width:100%;accent-color:var(--green);height:4px;">
+            </div>
+            <!-- Top-P slider -->
+            <div>
+              <div style="font-family:var(--mono);font-size:.48rem;color:var(--ink-mute);">Top-P <span id="s03a-p-val" style="color:#a78bfa;">0.9</span></div>
+              <input id="s03a-p-slider" type="range" min="1" max="10" value="9" style="width:100%;accent-color:#a78bfa;height:4px;">
+            </div>
+            <!-- Spin button -->
+            <button id="s03a-spin-btn" style="margin-top:4px;padding:6px 16px;border:none;border-radius:6px;background:var(--accent);color:#fff;font-family:var(--mono);font-size:.6rem;cursor:pointer;transition:transform .15s;">🎲 Spin</button>
+            <!-- Result log -->
+            <div id="s03a-sample-log" style="font-family:var(--mono);font-size:.5rem;color:var(--ink-mute);min-height:32px;margin-top:2px;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end right panel -->
+  </div>
+
+  <!-- Fragment triggers: each fires the JS step function -->
+  <span class="fragment" data-s03a-panel="attn"></span>
+  <span class="fragment" data-s03a-panel="ffn"></span>
+  <span class="fragment" data-s03a-panel="softmax"></span>
+  <span class="fragment" data-s03a-step="1"></span>
+  <span class="fragment" data-s03a-step="2"></span>
+  <span class="fragment" data-s03a-step="3"></span>
+  <span class="fragment" data-s03a-step="4"></span>
+  <span class="fragment" data-s03a-panel="sampling"></span>
+
+  <script>
+  (function(){
+    /* ═══ PANEL SWITCHING ═══ */
+    var panels = ['embed','attn','ffn','softmax','sampling'];
+    var boxes = document.querySelectorAll('.s03a-box');
+    var glowMap = {
+      embed:   'rgba(52,211,153,.35)',
+      attn:    'rgba(167,139,250,.35)',
+      ffn:     'rgba(251,191,36,.35)',
+      softmax: 'rgba(255,107,61,.35)',
+      sampling:'rgba(59,130,246,.35)'
+    };
+
+    var currentPanel = 'embed';
+    var activeSoftmaxStep = 0;
+    var queuedAnimations = [];
+    var highlightAttnRow = null;
+    var resetAttnInteractive = null;
+    var updateSamplingWheel = null;
+    var spinSamplingWheel = null;
+    var baseSoftmaxState = null;
+
+    function queueAnimation(fn, delay){
+      var id = window.setTimeout(fn, delay);
+      queuedAnimations.push(id);
+      return id;
+    }
+
+    function clearQueuedAnimations(){
+      while(queuedAnimations.length){
+        window.clearTimeout(queuedAnimations.pop());
+      }
+    }
+
+    function pulseActiveBox(name){
+      var box = document.querySelector('.s03a-box[data-panel="'+name+'"]');
+      if(!box) return;
+      if(typeof box.animate === 'function'){
+        box.animate(
+          [
+            { transform:'scale(1)' },
+            { transform:'scale(1.05)' },
+            { transform:'scale(1)' }
+          ],
+          { duration:420, easing:'ease-out' }
+        );
+      } else {
+        box.style.transform = 'scale(1.05)';
+        queueAnimation(function(){ box.style.transform = 'scale(1)'; }, 220);
+      }
+    }
+
+    function getVisibleSoftmaxStep(){
+      return Array.from(document.querySelectorAll('#slide-03a .fragment.visible[data-s03a-step]'))
+        .map(function(fragment){ return parseInt(fragment.getAttribute('data-s03a-step'), 10) || 0; })
+        .reduce(function(max, step){ return Math.max(max, step); }, 0);
+    }
+
+    function getVisibleSlideState(){
+      var state = { panel:'embed', step:0 };
+      document.querySelectorAll('#slide-03a .fragment').forEach(function(fragment){
+        if(!fragment.classList.contains('visible')) return;
+        var panel = fragment.getAttribute('data-s03a-panel');
+        var step = fragment.getAttribute('data-s03a-step');
+        if(panel){
+          state.panel = panel;
+          if(panel !== 'softmax') state.step = 0;
+        }
+        if(step){
+          state.panel = 'softmax';
+          state.step = parseInt(step, 10) || 0;
+        }
+      });
+      return state;
+    }
+
+    function resetEmbedPanel(){
+      var rows = document.querySelectorAll('.s03a-embed-row');
+      rows.forEach(function(row){
+        row.style.background = 'transparent';
+        row.style.opacity = '0.55';
+        var token = row.children[0];
+        if(token){
+          token.style.opacity = '0.55';
+          token.style.transform = 'translateX(-6px)';
+          token.style.transition = 'opacity .25s, transform .25s';
+        }
+        row.querySelectorAll('.s03a-vec > div').forEach(function(cell){
+          cell.style.opacity = '0.12';
+          cell.style.transform = 'scaleY(.18)';
+          cell.style.filter = 'blur(.5px)';
+        });
+      });
+      var callout = document.querySelector('#s03a-panel-embed > div:last-child');
+      if(callout){
+        callout.style.opacity = '0';
+        callout.style.transform = 'translateY(6px)';
+        callout.style.transition = 'opacity .35s, transform .35s';
+      }
+    }
+
+    function animateEmbedPanel(){
+      resetEmbedPanel();
+      var rows = Array.from(document.querySelectorAll('.s03a-embed-row'));
+      rows.forEach(function(row, rowIdx){
+        queueAnimation(function(){
+          row.style.opacity = '1';
+          row.style.background = 'rgba(52,211,153,.08)';
+          var token = row.children[0];
+          if(token){
+            token.style.opacity = '1';
+            token.style.transform = 'translateX(0)';
+          }
+          row.querySelectorAll('.s03a-vec > div').forEach(function(cell, cellIdx){
+            queueAnimation(function(){
+              cell.style.opacity = '1';
+              cell.style.transform = 'scaleY(1)';
+              cell.style.filter = 'none';
+            }, cellIdx * 40);
+          });
+          queueAnimation(function(){
+            row.style.background = 'transparent';
+          }, 420);
+        }, rowIdx * 150);
+      });
+      var callout = document.querySelector('#s03a-panel-embed > div:last-child');
+      if(callout){
+        queueAnimation(function(){
+          callout.style.opacity = '1';
+          callout.style.transform = 'translateY(0)';
+        }, rows.length * 150 + 120);
+      }
+    }
+
+    function animateAttnPanel(){
+      if(resetAttnInteractive) resetAttnInteractive();
+      var panel = document.getElementById('s03a-panel-attn');
+      if(!panel || !highlightAttnRow) return;
+
+      panel.querySelectorAll('.s03a-attn-cell').forEach(function(cell){
+        cell.style.opacity = '0.16';
+        cell.style.transform = 'scale(.96)';
+      });
+      panel.querySelectorAll('.s03a-attn-row-lbl').forEach(function(label){
+        label.style.opacity = '0.55';
+        label.style.transition = 'opacity .2s, background .2s';
+      });
+
+      [0,1,2,3,4,2].forEach(function(rowIdx, idx){
+        queueAnimation(function(){
+          highlightAttnRow(rowIdx);
+          panel.querySelectorAll('.s03a-attn-row-lbl').forEach(function(label){
+            label.style.opacity = (parseInt(label.getAttribute('data-row'), 10) === rowIdx) ? '1' : '0.65';
+          });
+        }, 80 + idx * 360);
+      });
+    }
+
+    function animateBarCollection(bars, startDelay, stepDelay){
+      bars.forEach(function(bar){
+        bar.style.height = '2px';
+        bar.style.opacity = '0.16';
+        bar.style.transform = 'scaleX(.7)';
+      });
+
+      bars.forEach(function(bar, idx){
+        queueAnimation(function(){
+          bar.style.height = bar.dataset.targetHeight || bar.style.height;
+          bar.style.opacity = '1';
+          bar.style.transform = 'scaleX(1)';
+        }, startDelay + idx * stepDelay);
+      });
+    }
+
+    function animateFFNPanel(){
+      var inputBars = Array.from(document.querySelectorAll('#s03a-ffn-input > div'));
+      var hiddenBars = Array.from(document.querySelectorAll('#s03a-ffn-hidden > div'));
+      var outputBars = Array.from(document.querySelectorAll('#s03a-ffn-output > div'));
+      var insight = document.querySelector('#s03a-panel-ffn > div:last-child');
+
+      animateBarCollection(inputBars, 40, 35);
+      animateBarCollection(hiddenBars, 360, 28);
+      animateBarCollection(outputBars, 820, 40);
+
+      if(insight){
+        insight.style.opacity = '0';
+        insight.style.transform = 'translateY(6px)';
+        insight.style.transition = 'opacity .35s, transform .35s';
+        queueAnimation(function(){
+          insight.style.opacity = '1';
+          insight.style.transform = 'translateY(0)';
+        }, 1180);
+      }
+    }
+
+    function ensureSoftmaxBaseState(){
+      if(baseSoftmaxState) return baseSoftmaxState;
+      baseSoftmaxState = {
+        label: '<span style="color:var(--accent2);font-family:var(--mono);">Softmax</span><br><span style="font-size:.62rem;color:var(--ink-mute);">Logits are normalized into a probability distribution over the whole vocabulary.</span>',
+        bars: Array.from(document.querySelectorAll('.s03a-bar-row')).map(function(row){
+          var fill = row.querySelector('.s03a-fill');
+          return {
+            w: fill ? (fill.style.width || '0%') : '0%',
+            op: 1,
+            glow: false
+          };
+        })
+      };
+      return baseSoftmaxState;
+    }
+
+    function animateSoftmaxPanel(stepIndex){
+      var state = stepIndex > 0 ? steps[stepIndex] : ensureSoftmaxBaseState();
+      var rows = Array.from(document.querySelectorAll('.s03a-bar-row'));
+      var label = document.getElementById('s03a-step-label');
+
+      rows.forEach(function(row){
+        var fill = row.querySelector('.s03a-fill');
+        if(fill){
+          fill.style.width = '0%';
+          fill.style.opacity = '0.12';
+          fill.style.boxShadow = 'none';
+        }
+        row.style.opacity = '0.35';
+      });
+
+      if(label) label.innerHTML = state.label || '';
+
+      rows.forEach(function(row, idx){
+        var barState = state.bars[idx];
+        if(!barState) return;
+        queueAnimation(function(){
+          var fill = row.querySelector('.s03a-fill');
+          if(fill){
+            fill.style.width = barState.w;
+            fill.style.opacity = barState.op;
+            fill.style.boxShadow = barState.glow ? '0 0 8px 2px rgba(59,130,246,.6)' : 'none';
+          }
+          row.style.opacity = barState.op < 0.15 ? '0.25' : '1';
+        }, 80 + idx * 70);
+      });
+    }
+
+    function animateSamplingPanel(){
+      var result = document.getElementById('s03a-wheel-result');
+      var log = document.getElementById('s03a-sample-log');
+      var button = document.getElementById('s03a-spin-btn');
+
+      if(result) result.style.opacity = '0';
+      if(log) log.innerHTML = '';
+      if(updateSamplingWheel) updateSamplingWheel();
+      if(button && typeof button.animate === 'function'){
+        button.animate(
+          [
+            { transform:'scale(1)' },
+            { transform:'scale(1.04)' },
+            { transform:'scale(1)' }
+          ],
+          { duration:520, easing:'ease-out' }
+        );
+      }
+      queueAnimation(function(){
+        if(spinSamplingWheel) spinSamplingWheel();
+      }, 260);
+    }
+
+    function runPanelAnimation(name){
+      clearQueuedAnimations();
+      pulseActiveBox(name);
+      if(name === 'embed') animateEmbedPanel();
+      else if(name === 'attn') animateAttnPanel();
+      else if(name === 'ffn') animateFFNPanel();
+      else if(name === 'softmax') animateSoftmaxPanel(activeSoftmaxStep);
+      else if(name === 'sampling') animateSamplingPanel();
+    }
+
+    function showPanel(name, options){
+      options = options || {};
+      currentPanel = name;
+      panels.forEach(function(p){
+        var el = document.getElementById('s03a-panel-'+p);
+        if(el) el.style.display = (p===name)?'block':'none';
+      });
+      boxes.forEach(function(b){
+        var pn = b.getAttribute('data-panel');
+        if(pn===name){
+          b.classList.add('s03a-box-active');
+          b.style.boxShadow = '0 0 10px '+glowMap[pn];
+        } else {
+          b.classList.remove('s03a-box-active');
+          b.style.boxShadow = 'none';
+        }
+      });
+      if(options.animate !== false){
+        runPanelAnimation(name);
+      }
+    }
+
+    function syncSlideState(options){
+      options = options || {};
+      var state = getVisibleSlideState();
+      currentPanel = state.panel;
+      activeSoftmaxStep = state.step;
+
+      if(state.panel === 'softmax' && state.step > 0){
+        showPanel('softmax', { animate:false });
+        applyStep(state.step);
+        return;
+      }
+
+      showPanel(state.panel, { animate: options.animate !== false });
+    }
+
+    boxes.forEach(function(b){
+      b.style.transition = 'box-shadow .3s, border-color .3s, transform .25s';
+      b.addEventListener('click', function(e){
+        e.stopPropagation();
+        showPanel(b.getAttribute('data-panel'));
+      });
+    });
+
+    /* ═══ EMBEDDING VISUALIZATION ═══ */
+    (function initEmbedPanel(){
+      var vecs = document.querySelectorAll('.s03a-vec');
+      vecs.forEach(function(v){
+        var vals = v.getAttribute('data-vals').split(',').map(Number);
+        v.innerHTML = '';
+        vals.forEach(function(val){
+          var cell = document.createElement('div');
+          var abs = Math.abs(val);
+          var hue = val >= 0 ? '152' : '340';
+          cell.style.cssText = 'flex:1;border-radius:2px;background:hsla('+hue+',70%,55%,'+abs+');transition:transform .2s;';
+          cell.style.transition = 'transform .25s, opacity .25s, filter .25s';
+          cell.style.transformOrigin = 'center bottom';
+          cell.title = val.toFixed(2);
+          v.appendChild(cell);
+        });
+      });
+      /* Hover highlight row */
+      var rows = document.querySelectorAll('.s03a-embed-row');
+      rows.forEach(function(r){
+        r.style.cursor = 'pointer';
+        r.style.borderRadius = '4px';
+        r.style.padding = '2px 4px';
+        r.style.transition = 'background .2s';
+        r.addEventListener('mouseenter', function(){
+          r.style.background = 'rgba(52,211,153,.08)';
+          var cells = r.querySelectorAll('.s03a-vec > div');
+          cells.forEach(function(c){ c.style.transform='scaleY(1.6)'; });
+        });
+        r.addEventListener('mouseleave', function(){
+          r.style.background = 'transparent';
+          var cells = r.querySelectorAll('.s03a-vec > div');
+          cells.forEach(function(c){ c.style.transform='scaleY(1)'; });
+        });
+      });
+    })();
+
+    /* ═══ SELF-ATTENTION INTERACTION ═══ */
+    (function initAttnPanel(){
+      var cells = document.querySelectorAll('.s03a-attn-cell');
+      var labels = document.querySelectorAll('.s03a-attn-row-lbl');
+      var info = document.getElementById('s03a-attn-info');
+      var tokenNames = ['The','cat','sat','on','the'];
+
+      function highlightRow(rowIdx){
+        cells.forEach(function(c){
+          var r = parseInt(c.getAttribute('data-r'));
+          c.style.opacity = (r===rowIdx) ? '1' : '0.2';
+          if(r===rowIdx) c.style.transform='scale(1.08)';
+          else c.style.transform='scale(1)';
+        });
+        labels.forEach(function(l){
+          var r = parseInt(l.getAttribute('data-row'));
+          l.style.background = (r===rowIdx) ? 'rgba(167,139,250,.15)' : 'transparent';
+        });
+        /* find top-2 attended */
+        var rowCells = [];
+        cells.forEach(function(c){
+          if(parseInt(c.getAttribute('data-r'))===rowIdx){
+            rowCells.push({col: rowCells.length, w: parseFloat(c.getAttribute('data-w'))});
+          }
+        });
+        rowCells.sort(function(a,b){ return b.w-a.w; });
+        if(info){
+          info.innerHTML = '<span style="color:#a78bfa;">'+tokenNames[rowIdx]+'</span> attends most to <strong>'+tokenNames[rowCells[0].col]+'</strong> ('+Math.round(rowCells[0].w*100)+'%) and <strong>'+tokenNames[rowCells[1].col]+'</strong> ('+Math.round(rowCells[1].w*100)+'%)';
+        }
+      }
+
+      function resetAttn(){
+        cells.forEach(function(c){ c.style.opacity='1'; c.style.transform='scale(1)'; });
+        labels.forEach(function(l){ l.style.background='transparent'; });
+        if(info) info.innerHTML='← click a row to highlight';
+      }
+
+      highlightAttnRow = highlightRow;
+      resetAttnInteractive = resetAttn;
+
+      labels.forEach(function(l){
+        l.addEventListener('click', function(){ highlightRow(parseInt(l.getAttribute('data-row'))); });
+      });
+      /* click outside to reset */
+      var panel = document.getElementById('s03a-panel-attn');
+      if(panel) panel.addEventListener('click', function(e){
+        if(!e.target.closest('.s03a-attn-row-lbl') && !e.target.closest('.s03a-attn-cell')) resetAttn();
+      });
+    })();
+
+    /* ═══ FEED-FORWARD VISUALIZATION ═══ */
+    (function initFFNPanel(){
+      var inputVals  = [0.85,0.62,-0.33,0.71,0.14,-0.52,0.93,0.07];
+      var hiddenVals = [0,0,0,0,0,0,0,0, 0.92,0.18,0,0.55,0,0.34,0.71,0, 0,0.41,0,0,0.67,0,0,0.22, 0.33,0,0.88,0,0.12,0,0,0.45];
+      var outputVals = [0.71,0.48,-0.11,0.63,0.29,-0.38,0.82,0.15];
+
+      function makeBar(containerId, vals, hue){
+        var el = document.getElementById(containerId);
+        if(!el) return;
+        el.innerHTML = '';
+        vals.forEach(function(v){
+          var abs = Math.min(Math.abs(v),1);
+          var targetHeight = (abs*18+2)+'px';
+          var bar = document.createElement('div');
+          bar.dataset.targetHeight = targetHeight;
+          bar.style.cssText = 'width:22px;height:'+targetHeight+';border-radius:2px;background:hsla('+hue+',70%,55%,'+Math.max(abs,0.08)+');transition:height .35s,opacity .35s,transform .35s;';
+          bar.style.transformOrigin = 'left center';
+          bar.title = v.toFixed(2);
+          el.appendChild(bar);
+        });
+      }
+      makeBar('s03a-ffn-input', inputVals, '152');
+      makeBar('s03a-ffn-hidden', hiddenVals.slice(0,16), '45');
+      makeBar('s03a-ffn-output', outputVals, '210');
+    })();
+
+    /* ═══ SAMPLING WHEEL ═══ */
+    (function initSamplingPanel(){
+      var baseProbs = [
+        {word:'mat',   p:.40, color:'#3b82f6'},
+        {word:'floor', p:.28, color:'#34d399'},
+        {word:'chair', p:.15, color:'#a78bfa'},
+        {word:'sofa',  p:.09, color:'#fbbf24'},
+        {word:'ground',p:.05, color:'#22d3ee'},
+        {word:'carpet',p:.02, color:'#f97316'},
+        {word:'table', p:.008,color:'#94a3b8'},
+        {word:'other', p:.002,color:'#64748b'}
+      ];
+
+      var canvas = document.getElementById('s03a-wheel');
+      if(!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var resultEl = document.getElementById('s03a-wheel-result');
+      var logEl = document.getElementById('s03a-sample-log');
+      var spinBtn = document.getElementById('s03a-spin-btn');
+      var tSlider = document.getElementById('s03a-t-slider');
+      var kSlider = document.getElementById('s03a-k-slider');
+      var pSlider = document.getElementById('s03a-p-slider');
+      var tVal = document.getElementById('s03a-t-val');
+      var kVal = document.getElementById('s03a-k-val');
+      var pVal = document.getElementById('s03a-p-val');
+
+      function getParams(){
+        return {
+          T: parseFloat(tSlider.value)/10,
+          K: parseInt(kSlider.value),
+          P: parseFloat(pSlider.value)/10
+        };
+      }
+
+      function applyParams(probs, params){
+        /* Temperature */
+        var logits = probs.map(function(p){ return Math.log(Math.max(p.p,1e-10)); });
+        var scaled = logits.map(function(l){ return l/params.T; });
+        var maxL = Math.max.apply(null, scaled);
+        var exps = scaled.map(function(l){ return Math.exp(l-maxL); });
+        var sum = exps.reduce(function(a,b){return a+b;},0);
+        var newProbs = exps.map(function(e){ return e/sum; });
+        /* Top-K */
+        var indexed = newProbs.map(function(p,i){ return {i:i,p:p}; });
+        indexed.sort(function(a,b){ return b.p-a.p; });
+        for(var i=params.K;i<indexed.length;i++) indexed[i].p=0;
+        /* Top-P */
+        var cum=0;
+        for(var i=0;i<indexed.length;i++){
+          cum+=indexed[i].p;
+          if(cum>params.P){ for(var j=i+1;j<indexed.length;j++) indexed[j].p=0; break; }
+        }
+        /* Re-normalize */
+        var s2=indexed.reduce(function(a,b){return a+b.p;},0);
+        var result=probs.map(function(p){ return {word:p.word, p:0, color:p.color}; });
+        indexed.forEach(function(x){ result[x.i].p = s2>0 ? x.p/s2 : 0; });
+        return result;
+      }
+
+      function drawWheel(probs, highlightIdx){
+        ctx.clearRect(0,0,360,360);
+        var cx=180, cy=180, r=165;
+        var angle=-Math.PI/2;
+        probs.forEach(function(p,i){
+          if(p.p<=0) return;
+          var slice=p.p*Math.PI*2;
+          ctx.beginPath();
+          ctx.moveTo(cx,cy);
+          ctx.arc(cx,cy,r,angle,angle+slice);
+          ctx.closePath();
+          ctx.fillStyle = (highlightIdx===i) ? '#fff' : p.color;
+          ctx.globalAlpha = (highlightIdx===i) ? 1 : 0.75;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          ctx.strokeStyle='rgba(0,0,0,.3)'; ctx.lineWidth=1.5; ctx.stroke();
+          /* Label */
+          if(p.p>0.03){
+            var mid=angle+slice/2;
+            var lx=cx+Math.cos(mid)*(r*0.6);
+            var ly=cy+Math.sin(mid)*(r*0.6);
+            ctx.fillStyle=(highlightIdx===i)?p.color:'#fff';
+            ctx.font='bold 18px monospace';
+            ctx.textAlign='center'; ctx.textBaseline='middle';
+            ctx.fillText(p.word,lx,ly);
+            ctx.font='13px monospace';
+            ctx.fillText(Math.round(p.p*100)+'%',lx,ly+16);
+          }
+          angle+=slice;
+        });
+        /* Center circle */
+        ctx.beginPath(); ctx.arc(cx,cy,28,0,Math.PI*2);
+        ctx.fillStyle='rgba(15,23,42,.85)'; ctx.fill();
+        ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=2; ctx.stroke();
+        /* Pointer triangle at top */
+        ctx.beginPath(); ctx.moveTo(180,8); ctx.lineTo(172,24); ctx.lineTo(188,24); ctx.closePath();
+        ctx.fillStyle='var(--accent2,#ff6b3d)'; ctx.fill();
+      }
+
+      function updateWheel(){
+        var params = getParams();
+        var probs = applyParams(baseProbs, params);
+        drawWheel(probs, -1);
+        if(resultEl) resultEl.style.opacity='0';
+      }
+
+      function spin(){
+        var params = getParams();
+        var probs = applyParams(baseProbs, params);
+        /* Sample */
+        var rand = Math.random(), cum=0, chosen=0;
+        for(var i=0;i<probs.length;i++){
+          cum+=probs[i].p;
+          if(rand<=cum){ chosen=i; break; }
+        }
+        /* Animate spin */
+        var frames=30, frame=0;
+        var tempIdx=0;
+        function tick(){
+          tempIdx = Math.floor(Math.random()*probs.filter(function(p){return p.p>0;}).length);
+          drawWheel(probs, frame<frames-5 ? tempIdx : chosen);
+          frame++;
+          if(frame<frames) requestAnimationFrame(tick);
+          else {
+            drawWheel(probs, chosen);
+            if(resultEl){ resultEl.textContent=probs[chosen].word; resultEl.style.opacity='1'; resultEl.style.color=probs[chosen].color; }
+            if(logEl) logEl.innerHTML='Sampled: <strong style="color:'+probs[chosen].color+';">'+probs[chosen].word+'</strong> ('+Math.round(probs[chosen].p*100)+'%)';
+            if(spinBtn){ spinBtn.style.transform='scale(1)'; }
+          }
+        }
+        if(spinBtn) spinBtn.style.transform='scale(0.95)';
+        tick();
+      }
+
+      if(tSlider){ tSlider.addEventListener('input', function(){ tVal.textContent=(parseFloat(this.value)/10).toFixed(1); updateWheel(); }); }
+      if(kSlider){ kSlider.addEventListener('input', function(){ kVal.textContent=this.value; updateWheel(); }); }
+      if(pSlider){ pSlider.addEventListener('input', function(){ pVal.textContent=(parseFloat(this.value)/10).toFixed(1); updateWheel(); }); }
+      if(spinBtn) spinBtn.addEventListener('click', spin);
+
+      updateSamplingWheel = updateWheel;
+      spinSamplingWheel = spin;
+
+      /* Draw initial wheel when panel becomes visible */
+      var observer = new MutationObserver(function(){
+        var panel = document.getElementById('s03a-panel-sampling');
+        if(panel && panel.style.display!=='none') updateWheel();
+      });
+      var samplingPanel = document.getElementById('s03a-panel-sampling');
+      if(samplingPanel) observer.observe(samplingPanel, {attributes:true, attributeFilter:['style']});
+    })();
+
+    /* ═══ SOFTMAX FRAGMENT STEPS (preserved) ═══ */
+    var steps = [
+      null,
+      {
+        label: '<span style="color:var(--accent);font-family:var(--mono);">Step 1 · Temperature (T = 0.7)</span><br><span style="font-size:.62rem;color:var(--ink-mute);">Scales logits before softmax. T&lt;1 sharpens peaks → top tokens dominate. T&gt;1 flattens → longer tail gets a chance.</span>',
+        bars: [ {w:'52%',op:1}, {w:'24%',op:.9}, {w:'12%',op:.8}, {w:'6%',op:.7}, {w:'3%',op:.6}, {w:'1.5%',op:.4}, {w:'0.5%',op:.25}, {w:'0.1%',op:.15} ]
+      },
+      {
+        label: '<span style="color:var(--green);font-family:var(--mono);">Step 2 · Top-K (K = 5)</span><br><span style="font-size:.62rem;color:var(--ink-mute);">Hard cap: keep only the 5 highest-probability tokens. Ranks 6-8 are discarded entirely.</span>',
+        bars: [ {w:'52%',op:1}, {w:'24%',op:.9}, {w:'12%',op:.8}, {w:'6%',op:.7}, {w:'3%',op:.6}, {w:'0%',op:.12}, {w:'0%',op:.08}, {w:'0%',op:.05} ]
+      },
+      {
+        label: '<span style="color:#a78bfa;font-family:var(--mono);">Step 3 · Top-P / Nucleus (P = 0.9)</span><br><span style="font-size:.62rem;color:var(--ink-mute);">Cumulative sum: mat 52% → floor 76% → chair 88% → sofa 94% ✂️ Nucleus stops here.</span>',
+        bars: [ {w:'52%',op:1}, {w:'24%',op:1}, {w:'12%',op:.9}, {w:'6%',op:.75}, {w:'0%',op:.1}, {w:'0%',op:.08}, {w:'0%',op:.05}, {w:'0%',op:.04} ]
+      },
+      {
+        label: '<span style="color:var(--accent2);font-family:var(--mono);">Step 4 · Sample → <span style="background:rgba(255,107,61,.2);padding:1px 8px;border-radius:4px;">mat</span></span><br><span style="font-size:.62rem;color:var(--ink-mute);">A token is randomly drawn from the nucleus. "mat" wins with the highest weight.</span>',
+        bars: [ {w:'52%',op:1,glow:true}, {w:'24%',op:.35}, {w:'12%',op:.25}, {w:'6%',op:.2}, {w:'0%',op:.08}, {w:'0%',op:.05}, {w:'0%',op:.04}, {w:'0%',op:.03} ]
+      }
+    ];
+
+    function applyStep(n){
+      activeSoftmaxStep = n;
+      /* Auto-switch to softmax panel when fragment steps fire */
+      showPanel('softmax', { animate:false });
+      var s = steps[n];
+      if(!s) return;
+      var rows = document.querySelectorAll('.s03a-bar-row');
+      rows.forEach(function(row, i){
+        var b = s.bars[i]; if(!b) return;
+        var fill = row.querySelector('.s03a-fill');
+        if(fill){
+          fill.style.width = b.w;
+          fill.style.opacity = b.op;
+          fill.style.boxShadow = b.glow ? '0 0 8px 2px rgba(59,130,246,.6)' : 'none';
+        }
+        row.style.opacity = b.op < 0.15 ? '0.25' : '1';
+      });
+      var lbl = document.getElementById('s03a-step-label');
+      if(lbl) lbl.innerHTML = s.label;
+    }
+
+    function initS03a(){
+      if(typeof Reveal === 'undefined'){ setTimeout(initS03a, 200); return; }
+
+      function handleActivation(){
+        var slide = document.getElementById('slide-03a');
+        if(!slide || !Reveal.getCurrentSlide || Reveal.getCurrentSlide() !== slide) return;
+        syncSlideState({ animate:true });
+      }
+
+      Reveal.on('fragmentshown', function(e){
+        var panel = e.fragment && e.fragment.getAttribute('data-s03a-panel');
+        var step = e.fragment && e.fragment.getAttribute('data-s03a-step');
+        if(panel){
+          activeSoftmaxStep = 0;
+          currentPanel = panel;
+          showPanel(panel, { animate:true });
+          return;
+        }
+        if(step) applyStep(parseInt(step, 10));
+      });
+      Reveal.on('fragmenthidden', function(e){
+        var panel = e.fragment && e.fragment.getAttribute('data-s03a-panel');
+        var step = e.fragment && e.fragment.getAttribute('data-s03a-step');
+        if(!panel && !step) return;
+        syncSlideState({ animate:false });
+      });
+
+      Reveal.on('ready', handleActivation);
+      Reveal.on('slidechanged', function(event){
+        var slide = document.getElementById('slide-03a');
+        if(event.previousSlide === slide){
+          clearQueuedAnimations();
+        }
+        if(event.currentSlide === slide){
+          handleActivation();
+        }
+      });
+
+      handleActivation();
+    }
+    document.addEventListener('DOMContentLoaded', initS03a);
+  })();
+  </script>
+
+  <aside class="notes"></aside>
+</section>
+
+<!-- OLD 03b PLACEHOLDER REMOVED -->

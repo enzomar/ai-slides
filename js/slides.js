@@ -40,8 +40,10 @@ function setLang(lang) {
   // Update speaker notes from external NOTES_XX files
   updateNotes(lang);
 
-  // Sync tag-bar slide-tags with eyebrow text
-  syncTagBars();
+  // Refresh tag bar (chapter name may change per language)
+  if (typeof Reveal !== 'undefined' && typeof Reveal.isReady === 'function' && Reveal.isReady()) {
+    updateGlobalTagBar();
+  }
 
   // Refresh slide menu translations
   if (typeof window.refreshSlideMenu === 'function') window.refreshSlideMenu();
@@ -75,26 +77,6 @@ function updateNotes(lang) {
   });
 }
 
-/* ── TAG-BAR SYNC ────────────────────────────────────────── */
-/**
- * Copies each slide's .eyebrow text into the .slide-tag inside
- * the .tag-bar, so the bar reads e.g.
- *   "Chapter 1 · Introduction · Slide 07 · Comparison"
- * Called on init and every language switch.
- */
-function syncTagBars() {
-  document.querySelectorAll('.tag-bar').forEach(bar => {
-    const section = bar.closest('section');
-    if (!section) return;
-    const eyebrow = section.querySelector('.eyebrow');
-    const slideTag = bar.querySelector('.slide-tag');
-    if (eyebrow && slideTag) {
-      slideTag.textContent = eyebrow.textContent;
-      eyebrow.style.display = 'none';  // avoid duplicate text
-    }
-  });
-}
-
 /* ── REVEAL.JS INIT ──────────────────────────────────────── */
 function initSlides(opts) {
   const plugins = [];
@@ -103,6 +85,7 @@ function initSlides(opts) {
   const defaults = {
     hash: true, progress: false, controls: true,
     transition: 'fade', transitionSpeed: 'slow',
+    slideNumber: false,
     width: 1280, height: 720,
     margin: 0, center: false,
     // PDF export: one page per slide, don't expand fragments into separate pages
@@ -122,8 +105,136 @@ function initSlides(opts) {
     // Populate notes from external file for the current language
     updateNotes(currentLang);
 
-    // Sync tag-bar slide-tags with eyebrow content
-    syncTagBars();
+    // ── Global tag bar ─────────────────────────────────────────────────────
+    const pad = n => String(n).padStart(2, '0');
+
+    // Authoritative chapter labels per language, keyed by the section's id.
+    // Using a static lookup avoids reading .chapter-tag textContent, which gets
+    // clobbered by setLang() because all chapter covers share the same auto-key
+    // ("auto.01-chapter-cover.3") and lang files can only store one value for it.
+    const CHAPTER_LABEL = {
+      '': { // preface — section has no id
+        en: 'A Visual Journey for Everyone',
+        it: 'Un Viaggio Visivo per Tutti',
+        fr: 'Un Voyage Visuel pour Tous',
+        es: 'Un Viaje Visual para Todos'
+      },
+      'chapter-1': {
+        en: 'Chapter 01 · AI Fundamentals',
+        it: 'Capitolo 01 · AI Fundamentals',
+        fr: 'Chapitre 01 · AI Fundamentals',
+        es: 'Capítulo 01 · AI Fundamentals'
+      },
+      'chapter-2': {
+        en: 'Chapter 02 · Prompt Engineering',
+        it: 'Capitolo 02 · Prompt Engineering',
+        fr: 'Chapitre 02 · Prompt Engineering',
+        es: 'Capítulo 02 · Prompt Engineering'
+      },
+      'chapter-3': {
+        en: 'Chapter 03 · AI-Assisted Coding',
+        it: 'Capitolo 03 · AI-Assisted Coding',
+        fr: 'Chapitre 03 · AI-Assisted Coding',
+        es: 'Capítulo 03 · AI-Assisted Coding'
+      },
+      'chapter-4': {
+        en: 'Chapter 04 · RAG Architecture',
+        it: 'Capitolo 04 · RAG Architecture',
+        fr: 'Chapitre 04 · RAG Architecture',
+        es: 'Capítulo 04 · RAG Architecture'
+      },
+      'chapter-5': {
+        en: 'Chapter 05 · AI Agents & MCP',
+        it: 'Capitolo 05 · AI Agents & MCP',
+        fr: 'Chapitre 05 · AI Agents & MCP',
+        es: 'Capítulo 05 · AI Agents & MCP'
+      },
+      'chapter-6': {
+        en: 'Chapter 06 · Ethics & Future',
+        it: 'Capitolo 06 · Ethics & Future',
+        fr: 'Chapitre 06 · Ethics & Future',
+        es: 'Capítulo 06 · Ethics & Future'
+      },
+      'back-matter': {
+        en: 'Back Matter',
+        it: 'Materiale Finale',
+        fr: 'Matériel Final',
+        es: 'Material Final'
+      },
+      'annex': {
+        en: 'Annex',
+        it: 'Allegato',
+        fr: 'Annexe',
+        es: 'Anexo'
+      }
+    };
+
+    window.updateGlobalTagBar = function updateGlobalTagBar() {
+      const bar = document.getElementById('global-tag-bar');
+      if (!bar) return;
+
+      // getHorizontalSlides() returns the same flat array that getSlidePastCount()
+      // iterates, so indices are guaranteed to match.
+      const allSlides = Reveal.getHorizontalSlides();
+      const total   = Reveal.getTotalSlides();
+      const pastIdx = Reveal.getSlidePastCount();   // 0-based absolute index
+      const absIdx  = pastIdx + 1;                  // 1-based
+
+      // Walk backwards from current slide to find the nearest chapter boundary
+      // (class "chapter-divider") or fall back to slide 0.
+      let chapterStartIdx = 0;
+      for (let i = pastIdx; i >= 0; i--) {
+        if (i === 0 || allSlides[i]?.classList.contains('chapter-divider')) {
+          chapterStartIdx = i;
+          break;
+        }
+      }
+
+      // Walk forwards to find the next chapter boundary (exclusive end).
+      let chapterEndIdx = allSlides.length;
+      for (let i = chapterStartIdx + 1; i < allSlides.length; i++) {
+        if (allSlides[i]?.classList.contains('chapter-divider')) {
+          chapterEndIdx = i;
+          break;
+        }
+      }
+
+      const chPos   = pastIdx - chapterStartIdx + 1;
+      const chTotal = chapterEndIdx - chapterStartIdx;
+
+      // Read chapter name from the static lookup table (keyed by section id).
+      // This avoids reading .chapter-tag textContent, which gets clobbered by
+      // setLang() because all chapter covers share the same auto-generated i18n
+      // key ("auto.01-chapter-cover.3") and lang files can only store one value.
+      const coverSlide  = allSlides[chapterStartIdx];
+      const sectionId   = coverSlide?.id || '';
+      const chapterText = CHAPTER_LABEL[sectionId]?.[currentLang]
+                       ?? CHAPTER_LABEL[sectionId]?.en
+                       ?? '';
+      const dotIdx = chapterText.indexOf('·');
+      let chNum, chName;
+      if (dotIdx > -1) {
+        chNum  = chapterText.slice(0, dotIdx).trim();
+        chName = chapterText.slice(dotIdx + 1).trim();
+      } else {
+        chNum  = chapterText;
+        chName = '';
+      }
+      // Zero-pad any number in the chapter prefix: "Chapter 2" → "Chapter 02"
+      chNum = chNum.replace(/(\d+)/, n => pad(parseInt(n, 10)));
+
+      bar.querySelector('.gtb-ch-num').textContent    = chNum;
+      bar.querySelector('.gtb-ch-name').textContent   = chName;
+      bar.querySelector('.gtb-ch-count').textContent  = `${pad(chPos)} / ${pad(chTotal)}`;
+      bar.querySelector('.gtb-abs-count').textContent = `(${pad(absIdx)} / ${pad(total)})`;
+
+      // Show/hide the name separator when chapter name is empty (preface, etc.)
+      const nameSep = bar.querySelector('.name-sep');
+      if (nameSep) nameSep.style.opacity = chName ? '' : '0';
+    };
+
+    Reveal.on('slidechanged', window.updateGlobalTagBar);
+    window.updateGlobalTagBar();
 
     // Restore saved language after Reveal is ready
     try {
@@ -134,6 +245,35 @@ function initSlides(opts) {
     } catch(e) {}
   });
 }
+
+/* ── JARGON TOOLTIPS (body-level, avoids Reveal.js overflow clipping) ──────── */
+(function setupJargonTooltips() {
+  const tip = document.createElement('div');
+  tip.id = 'jargon-tip';
+  document.body.appendChild(tip);
+
+  document.addEventListener('mouseover', e => {
+    const abbr = e.target.closest('abbr.jargon');
+    if (!abbr || !abbr.title) { tip.style.opacity = '0'; return; }
+    tip.textContent = abbr.title;
+    tip.style.opacity = '0'; // measure before showing
+    requestAnimationFrame(() => {
+      const r  = abbr.getBoundingClientRect();
+      const tw = tip.offsetWidth, th = tip.offsetHeight;
+      let x = r.left + r.width / 2 - tw / 2;
+      let y = r.top - th - 8;
+      if (y < 4) y = r.bottom + 8;
+      x = Math.max(4, Math.min(x, window.innerWidth - tw - 4));
+      tip.style.left = x + 'px';
+      tip.style.top  = y + 'px';
+      tip.style.opacity = '1';
+    });
+  });
+
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest('abbr.jargon')) tip.style.opacity = '0';
+  });
+}());
 
 /* ── WORD CLOUD BUILDER ─────────────────────────────────── */
 function buildCloud(containerId, tasks, colors) {

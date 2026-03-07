@@ -1,0 +1,75 @@
+<!-- ══════════════════════ PROMPT PATTERNS CHEAT SHEET ══════════════════════ -->
+<section>
+<h2 data-i18n="auto.03-prompt-patterns-cheat-sheet.1">Prompt Engineering<br>Patterns Cheat Sheet</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;">
+    <!-- ROLE -->
+    <div class="model-card" style="padding:14px 14px;">
+      <div class="badge badge-det" style="font-size:.58rem;margin-bottom:8px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.2">🎭 Role</div>
+      <p style="font-size:.65rem;margin:0 0 8px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.3">Assign an expert persona to improve depth and style.</p>
+      <div class="prompt-block" style="font-size:.57rem;padding:8px;">
+        <span class="role">Act as a senior security engineer…</span>
+      </div>
+      <p style="font-size:.6rem;color:var(--green);margin:6px 0 0;" data-i18n="auto.03-prompt-patterns-cheat-sheet.4">✓ Tone, expertise, vocabulary</p>
+    </div>
+
+    <!-- CoT -->
+    <div class="model-card" style="padding:14px 14px;">
+      <div class="badge badge-purple" style="font-size:.58rem;margin-bottom:8px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.5">🔗 Chain-of-Thought</div>
+      <p style="font-size:.65rem;margin:0 0 8px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.6">Force step-by-step reasoning before the final answer.</p>
+      <div class="prompt-block" style="font-size:.57rem;padding:8px;">
+        <span class="role">Think step by step.<br>First, identify…<br>Then, calculate…</span>
+      </div>
+      <p style="font-size:.6rem;color:var(--green);margin:6px 0 0;" data-i18n="auto.03-prompt-patterns-cheat-sheet.7">✓ Math, logic, complex analysis</p>
+    </div>
+
+    <!-- Few-Shot -->
+    <div class="model-card" style="padding:14px 14px;">
+      <div class="badge badge-green" style="font-size:.58rem;margin-bottom:8px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.8">📋 Few-Shot</div>
+      <p style="font-size:.65rem;margin:0 0 8px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.9">Show 2–5 examples to define the expected format and style.</p>
+      <div class="prompt-block" style="font-size:.57rem;padding:8px;">
+        "Great!" → Positive<br>
+        "Awful." → Negative<br>
+        <span class="role">"Decent." → ?</span>
+      </div>
+      <p style="font-size:.6rem;color:var(--green);margin:6px 0 0;" data-i18n="auto.03-prompt-patterns-cheat-sheet.10">✓ Custom formats, niche tasks</p>
+    </div>
+
+    <!-- Structured Output -->
+    <div class="model-card" style="padding:14px 14px;">
+      <div class="badge badge-det" style="font-size:.58rem;margin-bottom:8px;background:rgba(251,191,36,.15);color:var(--amber);border-color:rgba(251,191,36,.3);" data-i18n="auto.03-prompt-patterns-cheat-sheet.11">📐 Structured Output</div>
+      <p style="font-size:.65rem;margin:0 0 8px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.12">Specify exact format: JSON, table, YAML. Enables machine parsing.</p>
+      <div class="prompt-block" style="font-size:.57rem;padding:8px;">
+        <span class="highlight">Return JSON:<br>{"name":…,"score":…,"tags":[…]}</span>
+      </div>
+      <p style="font-size:.6rem;color:var(--green);margin:6px 0 0;" data-i18n="auto.03-prompt-patterns-cheat-sheet.13">✓ APIs, pipelines, automation</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px;">
+    <!-- ReAct -->
+    <div class="model-card" style="padding:12px 14px;">
+      <div class="badge badge-purple" style="font-size:.58rem;margin-bottom:6px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.14">⚡ ReAct</div>
+      <p style="font-size:.63rem;margin:0;" data-i18n="auto.03-prompt-patterns-cheat-sheet.15">Reason → Act → Observe → Repeat. Used in agents with tool access.</p>
+    </div>
+    <!-- Meta-Prompting -->
+    <div class="model-card" style="padding:12px 14px;">
+      <div class="badge badge-det" style="font-size:.58rem;margin-bottom:6px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.16">🔄 Meta-Prompting</div>
+      <p style="font-size:.63rem;margin:0;"
+        data-i18n="auto.03-prompt-patterns-cheat-sheet.20">"Improve this prompt…" — let the model optimise its own instructions.</p>
+    </div>
+    <!-- Negative Constraints -->
+    <div class="model-card" style="padding:12px 14px;">
+      <div class="badge badge-prob" style="font-size:.58rem;margin-bottom:6px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.17">🚫 Negative Constraints</div>
+      <p style="font-size:.63rem;margin:0;"
+        data-i18n="auto.03-prompt-patterns-cheat-sheet.21">"Do NOT use bullet points." Explicit guardrails improve reliability.</p>
+    </div>
+    <!-- Reference Grounding -->
+    <div class="model-card" style="padding:12px 14px;">
+      <div class="badge badge-green" style="font-size:.58rem;margin-bottom:6px;" data-i18n="auto.03-prompt-patterns-cheat-sheet.18">📌 Grounding</div>
+      <p style="font-size:.63rem;margin:0;" data-i18n="auto.03-prompt-patterns-cheat-sheet.22">&ldquo;Answer ONLY using the document below.&rdquo; Reduces hallucinations.</p>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

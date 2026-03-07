@@ -1,0 +1,76 @@
+<!-- ══════════════════════ SLIDE 3: TRANSFORMER ARCHITECTURE ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.06-slide-3-transformer-architecture.1">The Transformer Architecture</h2>
+
+  <!-- Transformer: architecture + inline example -->
+  <div style="display:flex;gap:24px;align-items:flex-start;width:100%;">
+
+    <!-- LEFT: Core capability -->
+    <div style="flex:0 0 280px;">
+      <div style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);color:var(--ink);border-radius:14px;padding:20px 24px;margin-bottom:20px;">
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;" data-i18n="auto.06-slide-3-transformer-architecture.2">Core capability</div>
+        <div style="font-family:var(--serif);font-size:1.4rem;line-height:1.2;" data-i18n="auto.06-slide-3-transformer-architecture.3">Predict the<br>next token</div>
+        <div style="font-family:var(--mono);font-size:.65rem;color:var(--ink-mute);margin-top:8px;" data-i18n="auto.06-slide-3-transformer-architecture.4">…with context-aware attention</div>
+      </div>
+
+      <p style="font-size:.75rem;color:var(--ink-mute);margin:0 0 16px;" data-i18n="auto.06-slide-3-transformer-architecture.5">Modern AI is essentially this exact pipeline, scaled up to trillions of parameters.</p>
+
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(59,130,246,.15);color:var(--accent);padding:3px 8px;border-radius:5px;">GPT-2 · 1.5B</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(52,211,153,.15);color:var(--green);padding:3px 8px;border-radius:5px;">LLaMA 3 · 70B</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(251,191,36,.15);color:var(--amber);padding:3px 8px;border-radius:5px;">GPT-4 · ~1.8T</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(255,107,61,.15);color:var(--accent2);padding:3px 8px;border-radius:5px;">Claude · ?</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: End-to-end token flow -->
+    <div style="flex:1;min-width:0;display:flex;align-items:flex-start;justify-content:center;">
+      <div style="width:100%;max-width:680px;background:rgba(255,255,255,.03);border:1px solid var(--rule);border-radius:16px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.55rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;" data-i18n="auto.06-slide-3-transformer-architecture.6">End-to-end token flow</div>
+
+        <div style="display:grid;grid-template-columns:180px 1fr;column-gap:14px;row-gap:6px;align-items:center;">
+          <div class="arch-box input" style="width:auto;display:flex;flex-direction:column;gap:3px;padding:10px 12px;">
+            <div style="font-size:.46rem;letter-spacing:.12em;" data-i18n="auto.06-slide-3-transformer-architecture.7">INPUT TOKENS</div>
+            <div style="font-family:var(--serif);font-size:.78rem;letter-spacing:0;color:var(--ink);">“The cat sat on the”</div>
+          </div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);" data-i18n="auto.06-slide-3-transformer-architecture.8">Context window: the model reads the tokens already present before predicting what comes next.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box embed" style="width:auto;padding:10px 12px;" data-i18n="auto.06-slide-3-transformer-architecture.9">Embedding</div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);" data-i18n="auto.06-slide-3-transformer-architecture.10">Converts token IDs into dense vectors so the model can operate on meaning and similarity, not raw text IDs.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box" style="width:auto;height:auto;padding:10px 12px;background:rgba(167,139,250,.12);color:var(--purple);border:1.5px solid rgba(167,139,250,.3);" data-i18n="auto.06-slide-3-transformer-architecture.11">Self-Attention</div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);" data-i18n="auto.06-slide-3-transformer-architecture.12">Each token looks at the others and assigns weights: this is where the model decides which past words matter most right now.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box" style="width:auto;padding:10px 12px;background:rgba(251,191,36,.1);color:var(--amber);border:1.5px solid rgba(251,191,36,.28);" data-i18n="auto.06-slide-3-transformer-architecture.13">Feed-Forward</div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);" data-i18n="auto.06-slide-3-transformer-architecture.14">Transforms each token representation independently with learned non-linear layers — much of the model's stored knowledge lives here.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box" style="width:auto;padding:10px 12px;background:rgba(255,107,61,.15);color:var(--accent2);border:1.5px solid rgba(255,107,61,.35);" data-i18n="auto.06-slide-3-transformer-architecture.15">Softmax</div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);" data-i18n="auto.06-slide-3-transformer-architecture.16">Turns the final scores (logits) into a probability distribution over the whole vocabulary.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box" style="width:auto;padding:10px 12px;background:rgba(59,130,246,.08);color:var(--accent);border:1.5px dashed rgba(59,130,246,.35);" data-i18n="auto.06-slide-3-transformer-architecture.17">Sampling</div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);" data-i18n="auto.06-slide-3-transformer-architecture.18">Applies temperature, top-k, or top-p rules and actually picks one candidate token from the probability distribution.</div>
+
+          <div class="arch-arrow" style="text-align:center;">↓</div><div></div>
+
+          <div class="arch-box" style="width:auto;display:flex;flex-direction:column;gap:3px;padding:10px 12px;background:rgba(59,130,246,.18);color:var(--accent);border:1.5px solid rgba(59,130,246,.4);">
+            <div style="font-size:.46rem;letter-spacing:.12em;" data-i18n="auto.06-slide-3-transformer-architecture.19">OUTPUT TOKEN</div>
+            <div style="font-family:var(--serif);font-size:.82rem;letter-spacing:0;color:var(--ink);">“mat”</div>
+          </div>
+          <div style="font-size:.58rem;line-height:1.35;color:var(--ink-mute);" data-i18n="auto.06-slide-3-transformer-architecture.20">The chosen token is appended to the sequence, becomes part of the new context, and the whole loop runs again.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

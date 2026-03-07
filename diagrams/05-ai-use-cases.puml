@@ -1,0 +1,41 @@
+@startmindmap
+* AI Use Cases\nby Industry
+** Finance
+*** Fraud detection
+*** Credit scoring
+*** Regulatory doc analysis
+*** Market sentiment
+** Healthcare
+*** Clinical summarisation
+*** Radiology support
+*** Trial matching
+*** Drug discovery
+** Software
+*** Code generation
+*** Test writing
+*** PR reviews
+*** Bug triage
+** Marketing
+*** Copy & image generation
+*** Personalisation
+*** Campaign analysis
+*** SEO assistants
+** Legal
+*** Contract review
+*** Clause extraction
+*** Due diligence summarisation
+** Education
+*** Personalised tutoring
+*** Quiz generation
+*** Essay feedback
+*** Curriculum planning
+** Manufacturing
+*** Predictive maintenance
+*** Supply chain optimisation
+*** Process documentation
+*** Quality inspection
+** HR & Operations
+*** Resume screening
+*** Onboarding assistants
+*** Policy Q&A bots
+@endmindmap

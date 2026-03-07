@@ -1,0 +1,37 @@
+<!-- ══════════════════════ SLIDE 3: TOOL USE & FUNCTION CALLING ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.05-slide-3-tool-use-and-function-calling.1">Tool Use &<br>Function Calling</h2>
+
+  <div class="two-col">
+    <div>
+      <p style="font-size:.8rem;margin:0 0 12px;" data-i18n="auto.05-slide-3-tool-use-and-function-calling.2">You describe tools as JSON schemas. The model decides when and how to call them.</p>
+      <div class="prompt-block" style="font-size:.58rem;padding:12px;line-height:1.6;">
+        <span class="comment">// Tool definition (schema)</span><br>
+        {<br>
+        &nbsp;&nbsp;<span class="role">"name"</span>: <span class="highlight">"get_weather"</span>,<br>
+        &nbsp;&nbsp;<span class="role">"description"</span>: <span class="highlight">"Get current weather"</span>,<br>
+        &nbsp;&nbsp;<span class="role">"parameters"</span>: {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="role">"city"</span>: { "type": "string" }<br>
+        &nbsp;&nbsp;}<br>
+        }<br><br>
+        <span class="comment">// Model output (function call)</span><br>
+        { <span class="role">"tool"</span>: <span class="highlight">"get_weather"</span>,<br>
+        &nbsp;&nbsp;<span class="role">"args"</span>: { "city": "Paris" } }
+      </div>
+    </div>
+
+    <div>
+      <div class="badge badge-green" style="margin-bottom:10px;" data-i18n="auto.05-slide-3-tool-use-and-function-calling.3">Common Tool Categories</div>
+      <ul class="example-list">
+        <li data-i18n="auto.05-slide-3-tool-use-and-function-calling.4">🔍 Search — web, vector DB, SQL queries</li>
+        <li data-i18n="auto.05-slide-3-tool-use-and-function-calling.5">💻 Code execution — Python sandbox, shell</li>
+        <li data-i18n="auto.05-slide-3-tool-use-and-function-calling.6">🌐 APIs — weather, maps, CRM, ERP, Slack</li>
+        <li data-i18n="auto.05-slide-3-tool-use-and-function-calling.7">📂 File system — read, write, create, delete</li>
+        <li data-i18n="auto.05-slide-3-tool-use-and-function-calling.8">📧 Communication — send email, calendar, Slack</li>
+        <li data-i18n="auto.05-slide-3-tool-use-and-function-calling.9">🧪 Testing — run tests, deploy, CI/CD triggers</li>
+      </ul>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

@@ -1,0 +1,36 @@
+<!-- ══════════════════════ SLIDE 2: THE REACT LOOP ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.04-slide-2-the-react-loop.1">Reason + Act:<br>The ReAct Loop</h2>
+
+  <div class="two-col">
+    <div class="prompt-block" style="font-size:.6rem;padding:14px;line-height:1.7;">
+      <div style="color:var(--accent);margin-bottom:4px;font-size:.55rem;text-transform:uppercase;letter-spacing:.1em;" data-i18n="auto.04-slide-2-the-react-loop.2">Example: "Book me Paris flights for next Tuesday"</div>
+      <br>
+      <span class="role">Thought:</span> <span data-i18n="auto.04-slide-2-the-react-loop.3">I need to find today's date first.</span><br>
+      <span class="role">Action:</span> get_current_date()<br>
+      <span class="highlight">Observation: 2026-03-06</span><br><br>
+      <span class="role">Thought:</span> <span data-i18n="auto.04-slide-2-the-react-loop.4">Next Tuesday is 2026-03-10. Search flights.</span><br>
+      <span class="role">Action:</span> search_flights("Paris", "2026-03-10")<br>
+      <span class="highlight">Observation: 3 results found, cheapest €189</span><br><br>
+      <span class="role">Thought:</span> <span data-i18n="auto.04-slide-2-the-react-loop.5">I should confirm before booking.</span><br>
+      <span class="role">Action:</span> ask_user("Confirm cheapest at €189?")<br>
+      <span class="highlight">Observation: "Yes, confirm."</span><br><br>
+      <span class="role">Action:</span> book_flight(flight_id="AF1234")<br>
+      <span class="highlight" style="color:var(--green);">✓ Booking confirmed. PNR: XK7291</span>
+    </div>
+
+    <div>
+      <div class="flow-row" style="flex-direction:column;gap:10px;align-items:stretch;">
+        <div class="flow-box blue" style="font-size:.7rem;text-align:left;padding:10px 14px;" data-i18n="auto.04-slide-2-the-react-loop.6">🧠 <strong>Thought</strong> — Internal reasoning step</div>
+        <div class="flow-arrow" style="transform:rotate(90deg);text-align:center;">→</div>
+        <div class="flow-box green" style="font-size:.7rem;text-align:left;padding:10px 14px;" data-i18n="auto.04-slide-2-the-react-loop.7">⚡ <strong>Action</strong> — Call a tool / function</div>
+        <div class="flow-arrow" style="transform:rotate(90deg);text-align:center;">→</div>
+        <div class="flow-box amber" style="font-size:.7rem;text-align:left;padding:10px 14px;" data-i18n="auto.04-slide-2-the-react-loop.8">👁️ <strong>Observation</strong> — Tool result returned</div>
+        <div class="flow-arrow" style="transform:rotate(90deg);text-align:center;">→</div>
+        <div class="flow-box dark" style="font-size:.7rem;text-align:left;padding:10px 14px;" data-i18n="auto.04-slide-2-the-react-loop.9">🔁 <strong>Repeat</strong> until goal reached or human asked</div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

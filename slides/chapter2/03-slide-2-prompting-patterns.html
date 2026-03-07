@@ -1,0 +1,49 @@
+<!-- ══════════════════════ SLIDE 2: PROMPTING PATTERNS ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.03-slide-2-prompting-patterns.1">Prompting Patterns</h2>
+
+  <div class="three-col">
+    <!-- ZERO-SHOT -->
+    <div class="model-card" style="padding:20px 18px;">
+      <div class="badge badge-det" data-i18n="auto.03-slide-2-prompting-patterns.2">Zero-Shot</div>
+      <p style="font-size:.75rem;margin:0 0 10px;" data-i18n="auto.03-slide-2-prompting-patterns.3">No examples given. Direct instruction.</p>
+      <div class="prompt-block" style="font-size:.6rem;padding:12px;">
+        <span class="role" data-i18n="auto.03-slide-2-prompting-patterns.4">Classify this review as positive or negative:</span><br>
+        "The food was amazing."
+      </div>
+      <p style="font-size:.65rem;color:var(--green);margin:8px 0 0;" data-i18n="auto.03-slide-2-prompting-patterns.5">✓ Best for: simple, well-known tasks</p>
+    </div>
+
+    <!-- FEW-SHOT -->
+    <div class="model-card" style="padding:20px 18px;">
+      <div class="badge badge-green" data-i18n="auto.03-slide-2-prompting-patterns.6">Few-Shot</div>
+      <p style="font-size:.75rem;margin:0 0 10px;" data-i18n="auto.03-slide-2-prompting-patterns.7">Provide 2-5 examples to guide the model.</p>
+      <div class="prompt-block" style="font-size:.6rem;padding:12px;">
+        "Great!" → Positive<br>
+        "Terrible." → Negative<br>
+        "OK." → Neutral<br><br>
+        <span class="role">"The food was amazing."</span> → <span class="highlight">?</span>
+      </div>
+      <p style="font-size:.65rem;color:var(--green);margin:8px 0 0;" data-i18n="auto.03-slide-2-prompting-patterns.8">✓ Best for: custom formats, niche tasks</p>
+    </div>
+
+    <!-- CHAIN OF THOUGHT -->
+    <div class="model-card" style="padding:20px 18px;">
+      <div class="badge badge-purple" data-i18n="auto.03-slide-2-prompting-patterns.9">Chain-of-Thought</div>
+      <p style="font-size:.75rem;margin:0 0 10px;" data-i18n="auto.03-slide-2-prompting-patterns.10">Ask the model to reason step by step.</p>
+      <div class="prompt-block" style="font-size:.6rem;padding:12px;">
+        <span class="role" data-i18n="auto.03-slide-2-prompting-patterns.11">Solve this. Think step by step.</span><br><br>
+        <span class="highlight" data-i18n="auto.03-slide-2-prompting-patterns.12">Step 1: identify the variables…</span><br>
+        <span class="highlight" data-i18n="auto.03-slide-2-prompting-patterns.13">Step 2: apply the formula…</span>
+      </div>
+      <p style="font-size:.65rem;color:var(--green);margin:8px 0 0;" data-i18n="auto.03-slide-2-prompting-patterns.14">✓ Best for: math, logic, complex reasoning</p>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <strong data-i18n="auto.03-slide-2-prompting-patterns.15">Rule of thumb:</strong>
+    <span data-i18n="auto.03-slide-2-prompting-patterns.16"> Start with zero-shot. If the output isn't right, add examples (few-shot). For reasoning tasks, always use chain-of-thought.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

@@ -1,0 +1,40 @@
+@startuml
+skinparam shadowing false
+skinparam roundcorner 14
+skinparam ArrowColor #64748B
+skinparam defaultTextAlignment center
+left to right direction
+
+title LLM: Evolution & Lifecycle
+
+package "Historical Evolution" {
+  rectangle "1950-1980\nSymbolic AI\nRules & expert systems" as symbolic #D6E8FF
+  rectangle "1980-2010\nStatistical ML\nSVMs, HMMs, Bayesian" as statistical #D9F7E8
+  rectangle "2012-2017\nDeep Learning\nAlexNet, GPUs, large datasets" as deep #FFF1C9
+  rectangle "2017-2020\nTransformers\nAttention is all you need" as transformers #E9E0FF
+  rectangle "2020 →\nFoundation Models\nGPT, Claude, Gemini, Llama" as fm #FFE0D6
+
+  symbolic --> statistical --> deep --> transformers --> fm
+}
+
+package "Modern LLM Lifecycle" {
+  rectangle "Data Collection\nWeb, docs, code, multimodal" as data #D6E8FF
+  rectangle "Pretraining\nNext-token prediction at scale\n(billions of tokens)" as pretrain #D9F7E8
+  rectangle "Alignment\nInstruction tuning + RLHF\n+ Constitutional AI" as align #E9E0FF
+  rectangle "Deployment\nModel serving, APIs\nsafety layers, rate limits" as deploy #FFF1C9
+  rectangle "Inference\nPrompt → tokens → response" as infer #FFE0D6
+  rectangle "Monitoring\nLatency, cost, quality, drift" as monitor #D8F5DD
+  rectangle "Fine-Tuning / RAG\nDomain adaptation\nor retrieval augmentation" as finetune #F8E1FF
+
+  data --> pretrain --> align --> deploy --> infer --> monitor
+  monitor --> finetune
+  finetune --> deploy
+}
+
+fm --> data : drives scale of
+
+note bottom of align
+  RLHF = Reinforcement Learning from Human Feedback.
+  Turns a next-token predictor into a useful assistant.
+end note
+@enduml

@@ -1,0 +1,32 @@
+<!-- ══════════════════════ SLIDE 3d: TECHNICAL LIMITATIONS ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.13-slide-3d-technical-limitations.1">What LLMs<br>Get Wrong</h2>
+
+  <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px;">
+
+    <div class="two-col" style="align-items:start;">
+      <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);font-weight:600;margin-bottom:6px;" data-i18n="auto.13-slide-3d-technical-limitations.2">🌀 Hallucinations</div>
+        <p style="font-size:.72rem;margin:0;" data-i18n="auto.13-slide-3d-technical-limitations.3">LLMs generate plausible-sounding text, not verified facts. They confidently fabricate citations, API names, and statistics.</p>
+        <p style="font-size:.65rem;font-family:var(--mono);color:var(--accent2);margin:6px 0 0;" data-i18n="auto.13-slide-3d-technical-limitations.4">Real case: a lawyer submitted briefs citing non-existent cases (US, 2023)</p>
+      </div>
+
+      <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);font-weight:600;margin-bottom:6px;" data-i18n="auto.13-slide-3d-technical-limitations.5">🔢 Weak Numerics &amp; Reasoning</div>
+        <p style="font-size:.72rem;margin:0;" data-i18n="auto.13-slide-3d-technical-limitations.6">LLMs struggle with multi-step arithmetic, logic puzzles, and spatial reasoning. They "feel" the answer rather than compute it.</p>
+      </div>
+    </div>
+
+    <div style="background:rgba(255,107,61,.07);border:1px solid rgba(255,107,61,.2);border-radius:10px;padding:14px 16px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent2);font-weight:600;margin-bottom:6px;" data-i18n="auto.13-slide-3d-technical-limitations.7">📦 Invented Libraries &amp; APIs</div>
+      <p style="font-size:.72rem;margin:0;" data-i18n="auto.13-slide-3d-technical-limitations.8">Models may generate perfectly formatted code using functions that don't exist. Always verify against official docs.</p>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <strong data-i18n="auto.13-slide-3d-technical-limitations.9">Takeaway:</strong>
+    <span data-i18n="auto.13-slide-3d-technical-limitations.10"> Never trust LLM output blindly — always add verification layers: RAG for facts, code linters for code, human review for critical decisions.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

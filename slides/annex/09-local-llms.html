@@ -1,0 +1,66 @@
+<!-- ══════════════════════ LOCAL LLMS ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.09-local-llms.1">Running LLMs<br>Locally</h2>
+
+  <div class="two-col">
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div class="key-insight" style="margin-bottom:4px;">
+        <strong data-i18n="auto.09-local-llms.2">Why run locally?</strong>
+        <ul class="example-list" style="margin-top:6px;font-size:.7rem;">
+          <li data-i18n="auto.09-local-llms.3">🔒 Privacy — data never leaves your machine</li>
+          <li data-i18n="auto.09-local-llms.4">📶 Offline — no internet connection required</li>
+          <li data-i18n="auto.09-local-llms.5">💰 Free — no API costs after setup</li>
+          <li data-i18n="auto.09-local-llms.6">🔧 Dev-friendly — custom fine-tunes, no rate limits</li>
+        </ul>
+      </div>
+      <div style="background:rgba(27,94,255,.04);border:1px solid rgba(27,94,255,.12);border-radius:10px;padding:10px 14px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);margin-bottom:6px;" data-i18n="auto.09-local-llms.7">Quick start — Ollama</div>
+        <code style="font-family:var(--mono);font-size:.65rem;color:var(--ink);line-height:1.7;display:block;">
+          <span style="color:var(--ink-mute)"># install (macOS / Linux)</span><br>
+          brew install ollama<br>
+          <span style="color:var(--ink-mute)"># pull &amp; run a model</span><br>
+          ollama run llama3.2<br>
+          ollama run mistral<br>
+          <span style="color:var(--ink-mute)"># OpenAI-compatible API</span><br>
+          ollama serve  <span style="color:var(--ink-mute)"># → localhost:11434</span>
+        </code>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;" data-i18n="auto.09-local-llms.8">Tools</div>
+      <div class="model-card" style="padding:10px 14px;flex-direction:row;align-items:center;gap:10px;">
+        <div style="flex:0 0 70px;font-family:var(--mono);font-size:.7rem;color:var(--accent);">Ollama</div>
+        <div style="font-size:.65rem;color:var(--ink-mid);" data-i18n="auto.09-local-llms.9">CLI + REST API. Runs GGUF models. Best for devs.</div>
+        <a href="https://ollama.com" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--accent);text-decoration:none;white-space:nowrap;">→ ollama.com</a>
+      </div>
+      <div class="model-card" style="padding:10px 14px;flex-direction:row;align-items:center;gap:10px;">
+        <div style="flex:0 0 70px;font-family:var(--mono);font-size:.7rem;color:var(--green);">GPT4All</div>
+        <div style="font-size:.65rem;color:var(--ink-mid);" data-i18n="auto.09-local-llms.10">Desktop GUI. No terminal needed. Great for non-devs.</div>
+        <a href="https://gpt4all.io" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--green);text-decoration:none;white-space:nowrap;">→ gpt4all.io</a>
+      </div>
+      <div class="model-card" style="padding:10px 14px;flex-direction:row;align-items:center;gap:10px;">
+        <div style="flex:0 0 70px;font-family:var(--mono);font-size:.7rem;color:var(--purple);">LM Studio</div>
+        <div style="font-size:.65rem;color:var(--ink-mid);" data-i18n="auto.09-local-llms.11">GUI + local server. HuggingFace browser built-in.</div>
+        <a href="https://lmstudio.ai" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--purple);text-decoration:none;white-space:nowrap;">→ lmstudio.ai</a>
+      </div>
+      <div class="model-card" style="padding:10px 14px;flex-direction:row;align-items:center;gap:10px;">
+        <div style="flex:0 0 70px;font-family:var(--mono);font-size:.7rem;color:var(--accent2);">llama.cpp</div>
+        <div style="font-size:.65rem;color:var(--ink-mid);" data-i18n="auto.09-local-llms.12">C++ engine powering Ollama/LM Studio. Max control.</div>
+        <a href="https://github.com/ggerganov/llama.cpp" target="_blank" style="font-family:var(--mono);font-size:.55rem;color:var(--accent2);text-decoration:none;white-space:nowrap;">→ GitHub</a>
+      </div>
+      <!-- Hardware guide -->
+      <div style="background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:8px 12px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--green);margin-bottom:5px;" data-i18n="auto.09-local-llms.13">RAM needed (Q4 quant)</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(52,211,153,.12);color:var(--green);padding:2px 8px;border-radius:5px;">3B → 2 GB</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(59,130,246,.12);color:var(--accent);padding:2px 8px;border-radius:5px;">7B → 4 GB</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(255,107,61,.12);color:var(--accent2);padding:2px 8px;border-radius:5px;">13B → 8 GB</span>
+          <span style="font-family:var(--mono);font-size:.6rem;background:rgba(167,139,250,.12);color:var(--purple);padding:2px 8px;border-radius:5px;">70B → 40 GB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

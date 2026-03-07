@@ -49,6 +49,39 @@
 }
 #sm-close:hover { background: rgba(255,255,255,.08); color: #fff; }
 
+/* ── Language + PDF toolbar ─────────────────────────────────── */
+#sm-toolbar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 2px;
+}
+#sm-toolbar .lang-btn {
+  cursor: pointer; color: rgba(255,255,255,.45);
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: .7rem;
+  letter-spacing: .1em;
+  padding: 3px 2px;
+  border: none; background: none;
+  border-bottom: 1.5px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+#sm-toolbar .lang-btn:hover { color: rgba(255,255,255,.8); }
+#sm-toolbar .lang-btn.active {
+  color: #6ea7ff;
+  border-bottom-color: #6ea7ff;
+}
+.sm-toolbar-spacer { flex: 1; }
+.sm-pdf-btn {
+  font-family: 'DM Mono', monospace; font-size: .62rem;
+  letter-spacing: .06em;
+  padding: 3px 10px; border-radius: 5px;
+  border: 1px solid rgba(78,127,255,.3);
+  background: rgba(78,127,255,.12);
+  color: #6ea7ff;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.sm-pdf-btn:hover { background: rgba(78,127,255,.22); color: #fff; }
+
 /* ── Search ─────────────────────────────────────────────────── */
 #sm-search {
   width: 100%; box-sizing: border-box;

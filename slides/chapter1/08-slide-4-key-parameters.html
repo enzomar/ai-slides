@@ -1,0 +1,93 @@
+<!-- ══════════════════════ SLIDE 4: KEY PARAMETERS ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.08-slide-4-key-parameters.1">Key Parameters</h2>
+
+  <div class="param-grid">
+    <!-- TEMPERATURE -->
+    <div class="param-card">
+      <div class="param-name">Temperature</div>
+      <div class="param-desc" data-i18n="auto.08-slide-4-key-parameters.2">Controls randomness. Low = focused. High = creative.</div>
+      <div class="temp-bar"><div class="temp-marker" style="left:28%"></div></div>
+      <div class="temp-labels">
+        <span data-i18n="auto.08-slide-4-key-parameters.3">0.0 · precise</span>
+        <span data-i18n="auto.08-slide-4-key-parameters.4">1.0 · sweet spot</span>
+        <span data-i18n="auto.08-slide-4-key-parameters.5">2.0 · chaotic</span>
+      </div>
+      <div class="param-range" data-i18n="auto.08-slide-4-key-parameters.6">0.2 (code) · 0.7 (chat) · 1.0 (creative) · &gt;1.5 ⚠ unstable</div>
+    </div>
+
+    <!-- MAX TOKENS -->
+    <div class="param-card">
+      <div class="param-name">Max Tokens</div>
+      <div class="param-desc" data-i18n="auto.08-slide-4-key-parameters.7">Max response length. 1 token ≈ ¾ word.</div>
+      <div style="display:flex;gap:5px;margin:8px 0;flex-wrap:wrap;">
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(59,130,246,.15);color:var(--accent);padding:2px 7px;border-radius:5px;">256 short</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(52,211,153,.15);color:var(--green);padding:2px 7px;border-radius:5px;">1k medium</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(255,107,61,.15);color:var(--accent2);padding:2px 7px;border-radius:5px;">4k long</span>
+        <span style="font-family:var(--mono);font-size:.6rem;background:rgba(167,139,250,.15);color:var(--purple);padding:2px 7px;border-radius:5px;">128k full doc</span>
+      </div>
+      <div class="param-range" data-i18n="auto.08-slide-4-key-parameters.8">More tokens = more cost. Balance wisely.</div>
+    </div>
+
+    <!-- TOP-K -->
+    <div class="param-card">
+      <div class="param-name">Top-K</div>
+      <div class="param-desc" data-i18n="auto.08-slide-4-key-parameters.9">Consider only K most likely next words.</div>
+      <div style="display:flex;gap:3px;align-items:flex-end;margin:8px 0;height:36px;">
+        <div style="width:18px;background:var(--accent);height:100%;border-radius:3px 3px 0 0;opacity:.9;"></div>
+        <div style="width:18px;background:var(--accent);height:75%;border-radius:3px 3px 0 0;opacity:.7;"></div>
+        <div style="width:18px;background:var(--accent);height:50%;border-radius:3px 3px 0 0;opacity:.5;"></div>
+        <div style="width:18px;background:var(--accent);height:28%;border-radius:3px 3px 0 0;opacity:.3;"></div>
+        <div style="width:18px;background:var(--accent);height:12%;border-radius:3px 3px 0 0;opacity:.15;"></div>
+        <span style="font-family:var(--mono);font-size:.6rem;color:var(--ink-mute);margin-left:6px;align-self:center;" data-i18n="auto.08-slide-4-key-parameters.10">K=5 kept</span>
+      </div>
+      <div class="param-range" data-i18n="auto.08-slide-4-key-parameters.11">Range: 1 – vocab size · Typical: 40 – 100</div>
+    </div>
+
+    <!-- TOP-P -->
+    <div class="param-card">
+      <div class="param-name">Top-P <span style="font-size:.6rem;color:var(--ink-mute);font-family:var(--sans);">(nucleus)</span></div>
+      <div class="param-desc" data-i18n="auto.08-slide-4-key-parameters.12">Pick tokens whose cumulative probability ≤ P.</div>
+      <!-- Cumulative probability bar for nucleus sampling -->
+      <div style="margin:8px 0;">
+        <!-- Stacked token bars -->
+        <div style="display:flex;height:20px;border-radius:4px;overflow:hidden;width:100%;gap:1px;margin-bottom:3px;">
+          <div style="flex:42;background:var(--accent);opacity:.9;" title="token 1: 42%"></div>
+          <div style="flex:26;background:var(--green);opacity:.85;" title="token 2: 26%"></div>
+          <div style="flex:17;background:#a78bfa;opacity:.8;" title="token 3: 17%"></div>
+          <div style="flex:9;background:#fbbf24;opacity:.75;" title="token 4: 9% — nucleus boundary at P=0.9"></div>
+          <div style="flex:4;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);" title="token 5: 4% (excluded)"></div>
+          <div style="flex:2;background:rgba(255,255,255,.05);" title="token 6: 2% (excluded)"></div>
+        </div>
+        <!-- Token probability labels -->
+        <div style="display:flex;font-family:var(--mono);font-size:.52rem;margin-bottom:4px;">
+          <div style="flex:42;color:var(--accent);">42%</div>
+          <div style="flex:26;color:var(--green);">26%</div>
+          <div style="flex:17;color:#a78bfa;">17%</div>
+          <div style="flex:9;color:#fbbf24;">9%</div>
+          <div style="flex:6;color:rgba(255,255,255,.25);">6%</div>
+        </div>
+        <!-- Cumulative sum annotation -->
+        <div style="font-family:var(--mono);font-size:.57rem;line-height:1.6;">
+          <span style="color:var(--ink-mute);">cumul: </span>
+          <span style="color:var(--accent);">42</span>
+          <span style="color:var(--ink-mute);">→</span>
+          <span style="color:var(--green);">68</span>
+          <span style="color:var(--ink-mute);">→</span>
+          <span style="color:#a78bfa;">85</span>
+          <span style="color:var(--ink-mute);">→</span>
+          <span style="color:#fbbf24;">94%</span>
+          <span style="color:var(--ink-mute);font-family:var(--sans);font-size:.55rem;"> ← nucleus stops here (P=0.9)</span>
+        </div>
+      </div>
+      <div class="param-range" data-i18n="auto.08-slide-4-key-parameters.13">Range: 0.0 – 1.0 · Default: 0.9</div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment">
+    <strong data-i18n="auto.08-slide-4-key-parameters.14">Pro tip:</strong>
+    <span data-i18n="auto.08-slide-4-key-parameters.15"> For code/extraction → Temperature 0.2. For brainstorming → Temperature 0.8–1.0. Avoid changing Top-K and Top-P at the same time.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

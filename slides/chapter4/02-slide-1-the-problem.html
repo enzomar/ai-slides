@@ -1,0 +1,33 @@
+<!-- ══════════════════════ SLIDE 1: THE PROBLEM ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.02-slide-1-the-problem.1">Why LLMs Need<br>External Knowledge</h2>
+
+  <div class="two-col">
+    <div class="model-card" style="border-left:3px solid var(--accent2);">
+      <div class="badge badge-prob" data-i18n="auto.02-slide-1-the-problem.2">LLM Limitations</div>
+      <ul class="example-list">
+        <li data-i18n="auto.02-slide-1-the-problem.3">Knowledge frozen at training cutoff</li>
+        <li data-i18n="auto.02-slide-1-the-problem.4">No access to private / enterprise data</li>
+        <li data-i18n="auto.02-slide-1-the-problem.5">Can hallucinate outdated facts</li>
+        <li data-i18n="auto.02-slide-1-the-problem.6">Context window limits large corpora</li>
+      </ul>
+    </div>
+
+    <div class="model-card" style="border-left:3px solid var(--green);">
+      <div class="badge badge-green" data-i18n="auto.02-slide-1-the-problem.7">RAG Solution</div>
+      <ul class="example-list">
+        <li data-i18n="auto.02-slide-1-the-problem.8">Retrieve relevant chunks at query time</li>
+        <li data-i18n="auto.02-slide-1-the-problem.9">Ground answers in real, citable sources</li>
+        <li data-i18n="auto.02-slide-1-the-problem.10">Works on proprietary documents</li>
+        <li data-i18n="auto.02-slide-1-the-problem.11">Always up-to-date (live index)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:16px;">
+    <strong data-i18n="auto.02-slide-1-the-problem.12">Core idea:</strong>
+    <span data-i18n="auto.02-slide-1-the-problem.13"> Instead of retraining the model, inject relevant documents into the prompt at runtime.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

@@ -1,0 +1,58 @@
+<!-- ══════════════════════ SLIDE 1: ANATOMY OF A PROMPT ══════════════════════ -->
+<section>
+  <h2 data-i18n="c2.s1.h2">Anatomy of a Prompt</h2>
+
+  <div class="two-col" style="align-items:start;">
+    <div>
+      <div class="prompt-block" style="font-size:.68rem;">
+        <div><span class="role">SYSTEM:</span> <span class="comment" data-i18n="c2.s1.prompt.role">You are a helpful travel planner. Be friendly and concise.</span>
+          <span style="display:inline-block;background:rgba(59,130,246,.25);color:var(--accent);font-size:.5rem;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;">① Role</span></div>
+        <br>
+        <div><span class="role">USER:</span></div>
+        <div><span class="highlight" data-i18n="c2.s1.ctx.label">[Context]</span> <span data-i18n="c2.s1.prompt.ctx">I'm planning a 5-day trip to Japan in April with my partner. Budget: ~€3,000 total.</span>
+          <span style="display:inline-block;background:rgba(52,211,153,.25);color:var(--green);font-size:.5rem;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;">② Context</span></div>
+        <div style="margin-top:4px;"><span class="highlight" data-i18n="c2.s1.task.label">[Task]</span> <span data-i18n="c2.s1.prompt.task">Create a day-by-day itinerary with must-see places, local food spots, and transport tips.</span>
+          <span style="display:inline-block;background:rgba(255,107,61,.25);color:var(--accent2);font-size:.5rem;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;">③ Task</span></div>
+        <div style="margin-top:4px;"><span class="highlight" data-i18n="c2.s1.fmt.label">[Format]</span> <span data-i18n="c2.s1.prompt.fmt">Use a table: Day | Morning | Afternoon | Evening | Est. Cost.</span>
+          <span style="display:inline-block;background:rgba(167,139,250,.25);color:var(--purple);font-size:.5rem;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;">④ Format</span></div>
+        <div style="margin-top:4px;"><span class="highlight" data-i18n="c2.s1.cst.label">[Constraints]</span> <span data-i18n="c2.s1.prompt.cst">Avoid tourist traps. Include at least one hidden gem per day.</span>
+          <span style="display:inline-block;background:rgba(167,139,250,.25);color:var(--purple);font-size:.5rem;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;">④</span></div>
+      </div>
+    </div>
+
+    <div>
+      <ol class="step-list">
+        <li>
+          <span class="step-num" style="background:rgba(59,130,246,.2);color:var(--accent);">1</span>
+          <div>
+            <strong data-i18n="c2.s1.role.term">Role / System</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);" data-i18n="c2.s1.role.desc">Who is the model? Sets tone, expertise, personality.</div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num" style="background:rgba(52,211,153,.2);color:var(--green);">2</span>
+          <div>
+            <strong data-i18n="c2.s1.ctx.term">Context</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);" data-i18n="c2.s1.ctx.desc">Background info: who, what, when, budget, constraints.</div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num" style="background:rgba(255,107,61,.2);color:var(--accent2);">3</span>
+          <div>
+            <strong data-i18n="c2.s1.task.term">Task / Instruction</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);" data-i18n="c2.s1.task.desc">What do you want? Be specific and action-oriented.</div>
+          </div>
+        </li>
+        <li>
+          <span class="step-num" style="background:rgba(167,139,250,.2);color:var(--purple);">4</span>
+          <div>
+            <strong data-i18n="c2.s1.fmt.term">Format & Constraints</strong>
+            <div style="font-size:.72rem;color:var(--ink-mute);" data-i18n="c2.s1.fmt.desc">Output shape (table, list, JSON), length, rules to follow.</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

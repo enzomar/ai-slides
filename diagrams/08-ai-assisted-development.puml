@@ -1,0 +1,46 @@
+@startuml
+skinparam shadowing false
+skinparam roundcorner 14
+skinparam ArrowColor #64748B
+skinparam defaultTextAlignment center
+top to bottom direction
+
+title AI-Assisted Development Workflow
+
+package "Developer Side" {
+  rectangle "Intent / Goal\nWhat you want to build or fix" as intent #D6E8FF
+  rectangle "Prompt\nNatural language instruction\n+ context + constraints" as prompt #D9F7E8
+  rectangle "Review & Edit\nAccept · reject · refine · test" as review #FFF1C9
+  rectangle "Ship\nPR · merge · deploy" as ship #D8F5DD
+}
+
+package "AI Side" {
+  rectangle "Tokenisation\nPrompt → token IDs" as tok #E9E0FF
+  rectangle "LLM Inference\nContext window → logits → tokens" as llm #E4D9FF
+  rectangle "Optional Tools\nWeb search · code runner · docs retrieval" as tools #FFE0D6
+  rectangle "Generated Output\nCode · tests · docs · explanation" as output #D9F7E8
+}
+
+intent --> prompt
+prompt --> tok
+tok --> llm
+llm --> tools : if needed
+tools --> llm : results
+llm --> output
+output --> review
+review --> ship : approved
+review --> prompt : needs changes
+
+note right of review
+  Human-in-the-loop is essential —
+  always read what the AI wrote
+  before running or committing it.
+end note
+
+note right of tools
+  Tools common in AI coding assistants:
+  web search (Copilot, Cursor),
+  terminal execution (Codex, Devin),
+  file reads (Cline, Aider).
+end note
+@enduml

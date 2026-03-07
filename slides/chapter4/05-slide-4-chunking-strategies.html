@@ -1,0 +1,91 @@
+<!-- ══════════════════════ SLIDE 4: CHUNKING STRATEGIES ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.05-slide-4-chunking-strategies.1">Chunking Strategies</h2>
+
+  <div class="three-col" style="gap:10px;">
+
+    <!-- FIXED SIZE -->
+    <div class="model-card" style="padding:14px 14px;gap:0;">
+      <div class="badge badge-det" style="margin-bottom:6px;" data-i18n="auto.05-slide-4-chunking-strategies.2">Fixed Size</div>
+      <p style="font-size:.68rem;margin:4px 0 6px;" data-i18n="auto.05-slide-4-chunking-strategies.3">Split every N tokens with a sliding overlap window.</p>
+      <!-- example -->
+      <div style="background:rgba(27,94,255,.06);border-radius:6px;padding:7px 9px;margin-bottom:7px;font-family:var(--mono);font-size:.56rem;line-height:1.55;color:var(--ink-mid);">
+        <span style="color:var(--ink-mute);"># 512 tok, 10% overlap</span><br>
+        <span style="color:var(--accent);">"The transformer architecture…"</span><br>
+        <span style="color:var(--ink-mute);">chunk 1 [0–512]</span><br>
+        <span style="color:var(--ink-mute);">chunk 2 [460–972] ← overlap</span>
+      </div>
+      <p style="font-size:.63rem;color:var(--green);margin:2px 0;">✓ Simple, fast, predictable</p>
+      <p style="font-size:.63rem;color:var(--accent2);margin:2px 0;" data-i18n="auto.05-slide-4-chunking-strategies.4">✗ May cut sentences mid-thought</p>
+      <!-- tools -->
+      <div style="margin-top:8px;border-top:1px solid rgba(27,94,255,.1);padding-top:7px;">
+        <div style="font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Tools</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(27,94,255,.1);color:var(--accent);padding:2px 7px;border-radius:4px;">LangChain RecursiveCharacterTextSplitter</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(27,94,255,.1);color:var(--accent);padding:2px 7px;border-radius:4px;">LlamaIndex TokenTextSplitter</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(27,94,255,.1);color:var(--accent);padding:2px 7px;border-radius:4px;">tiktoken</span>
+        </div>
+      </div>
+      <div style="margin-top:6px;font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);" data-i18n="auto.05-slide-4-chunking-strategies.5">Best for: plain text, logs, homogeneous corpora</div>
+    </div>
+
+    <!-- SEMANTIC -->
+    <div class="model-card" style="padding:14px 14px;gap:0;">
+      <div class="badge badge-green" style="margin-bottom:6px;" data-i18n="auto.05-slide-4-chunking-strategies.6">Semantic</div>
+      <p style="font-size:.68rem;margin:4px 0 6px;" data-i18n="auto.05-slide-4-chunking-strategies.7">Split on sentence / paragraph / heading boundaries.</p>
+      <!-- example -->
+      <div style="background:rgba(52,211,153,.06);border-radius:6px;padding:7px 9px;margin-bottom:7px;font-family:var(--mono);font-size:.56rem;line-height:1.55;color:var(--ink-mid);">
+        <span style="color:var(--ink-mute);"># Markdown-aware split</span><br>
+        <span style="color:var(--green);">## Section: Pricing</span><br>
+        <span style="color:var(--ink-mute);">→ chunk boundary ↑</span><br>
+        <span style="color:var(--green);">## Section: Returns</span><br>
+        <span style="color:var(--ink-mute);">→ chunk boundary ↑</span>
+      </div>
+      <p style="font-size:.63rem;color:var(--green);margin:2px 0;" data-i18n="auto.05-slide-4-chunking-strategies.8">✓ Preserves meaning, respects structure</p>
+      <p style="font-size:.63rem;color:var(--accent2);margin:2px 0;" data-i18n="auto.05-slide-4-chunking-strategies.9">✗ Variable sizes, needs structure in source</p>
+      <!-- tools -->
+      <div style="margin-top:8px;border-top:1px solid rgba(52,211,153,.15);padding-top:7px;">
+        <div style="font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Tools</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(52,211,153,.1);color:var(--green);padding:2px 7px;border-radius:4px;">LangChain SemanticChunker</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(52,211,153,.1);color:var(--green);padding:2px 7px;border-radius:4px;">LlamaIndex SemanticSplitterNodeParser</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(52,211,153,.1);color:var(--green);padding:2px 7px;border-radius:4px;">spaCy sentencizer</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(52,211,153,.1);color:var(--green);padding:2px 7px;border-radius:4px;">Unstructured.io</span>
+        </div>
+      </div>
+      <div style="margin-top:6px;font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);" data-i18n="auto.05-slide-4-chunking-strategies.10">Best for: docs, manuals, markdown, HTML</div>
+    </div>
+
+    <!-- HIERARCHICAL -->
+    <div class="model-card" style="padding:14px 14px;gap:0;">
+      <div class="badge badge-purple" style="margin-bottom:6px;" data-i18n="auto.05-slide-4-chunking-strategies.11">Hierarchical</div>
+      <p style="font-size:.68rem;margin:4px 0 6px;" data-i18n="auto.05-slide-4-chunking-strategies.12">Large parent chunks for context + small child chunks for precision.</p>
+      <!-- example -->
+      <div style="background:rgba(167,139,250,.07);border-radius:6px;padding:7px 9px;margin-bottom:7px;font-family:var(--mono);font-size:.56rem;line-height:1.55;color:var(--ink-mid);">
+        <span style="color:var(--purple);">Parent [2048 tok]</span> ← sent to LLM<br>
+        <span style="color:var(--ink-mute);">  ├─ Child [128 tok] ← retrieved</span><br>
+        <span style="color:var(--ink-mute);">  ├─ Child [128 tok]</span><br>
+        <span style="color:var(--ink-mute);">  └─ Child [128 tok]</span>
+      </div>
+      <p style="font-size:.63rem;color:var(--green);margin:2px 0;" data-i18n="auto.05-slide-4-chunking-strategies.13">✓ High precision retrieval + rich context</p>
+      <p style="font-size:.63rem;color:var(--accent2);margin:2px 0;" data-i18n="auto.05-slide-4-chunking-strategies.14">✗ More storage, complex pipeline</p>
+      <!-- tools -->
+      <div style="margin-top:8px;border-top:1px solid rgba(167,139,250,.2);padding-top:7px;">
+        <div style="font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Tools</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(167,139,250,.1);color:var(--purple);padding:2px 7px;border-radius:4px;">LlamaIndex HierarchicalNodeParser</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(167,139,250,.1);color:var(--purple);padding:2px 7px;border-radius:4px;">LangChain ParentDocumentRetriever</span>
+          <span style="font-family:var(--mono);font-size:.55rem;background:rgba(167,139,250,.1);color:var(--purple);padding:2px 7px;border-radius:4px;">LlamaIndex AutoMergingRetriever</span>
+        </div>
+      </div>
+      <div style="margin-top:6px;font-family:var(--mono);font-size:.53rem;color:var(--ink-mute);" data-i18n="auto.05-slide-4-chunking-strategies.15">Best for: long reports, legal docs, books</div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:10px;">
+    <strong data-i18n="auto.05-slide-4-chunking-strategies.16">Rule of thumb:</strong>
+    <span data-i18n="auto.05-slide-4-chunking-strategies.17"> Start with <code style="font-family:var(--mono);font-size:.8em;">RecursiveCharacterTextSplitter</code> (chunk 512, overlap 64). Switch to Semantic or Hierarchical when retrieval recall drops below 80%.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

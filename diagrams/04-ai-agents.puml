@@ -1,0 +1,66 @@
+@startuml
+skinparam shadowing false
+skinparam roundcorner 14
+skinparam ArrowColor #64748B
+skinparam defaultTextAlignment center
+top to bottom direction
+
+title AI Agents: ReAct, MCP & Multi-Agent Patterns
+
+package "ReAct Loop (single agent)" {
+  rectangle "Thought\nReason about what to do next" as thought #E9E0FF
+  rectangle "Action\nCall a tool or API" as action #FFF1C9
+  rectangle "Observation\nParse tool result" as obs #D9F7E8
+  rectangle "Final Answer\nSynthesise & respond" as answer #D8F5DD
+
+  thought --> action
+  action --> obs
+  obs --> thought : continue reasoning
+  obs --> answer : task complete
+}
+
+package "MCP Tool Layer (what agents call)" {
+  rectangle "MCP Client\n(built into the AI app)" as client #D6E8FF
+
+  rectangle "GitHub MCP Server\nRepos, issues, PRs" as gh #FFF1C9
+  rectangle "DB / Files MCP Server\nSQL, Drive, local FS" as db #FFF1C9
+  rectangle "Web / Search MCP Server\nBrowsing, news, APIs" as web #FFF1C9
+  rectangle "Custom MCP Server\nDomain-specific tools" as custom #FFF1C9
+
+  client --> gh
+  client --> db
+  client --> web
+  client --> custom
+}
+
+package "Multi-Agent Coordination" {
+  rectangle "Supervisor Agent\norchestrates the pipeline" as supervisor #E9E0FF
+  rectangle "Research Agent" as research #D6E8FF
+  rectangle "Code Agent" as codeagent #D9F7E8
+  rectangle "Critic Agent" as critic #FFE0D6
+  rectangle "Human Approval" as human #FFD6D6
+  rectangle "Final Output" as output #D8F5DD
+
+  supervisor --> research
+  supervisor --> codeagent
+  research --> critic
+  codeagent --> critic
+  critic --> supervisor : revisions
+  supervisor --> human : checkpoint
+  human --> supervisor : approved
+  supervisor --> output
+}
+
+action --> client : tool call via MCP
+
+note right of thought
+  Reasoning + Acting in alternating steps —
+  the foundation of all modern agent frameworks
+  (LangGraph, CrewAI, AutoGen, Agno).
+end note
+
+note right of supervisor
+  Specialist sub-agents each have narrow
+  scope; the supervisor holds the global plan.
+end note
+@enduml

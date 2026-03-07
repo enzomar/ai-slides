@@ -1,0 +1,41 @@
+<!-- ══════════════════════ SLIDE 3e: PRACTICAL LIMITATIONS ══════════════════════ -->
+<section>
+  <h2 data-i18n="auto.09-slide-3e-practical-limitations.1">Workflow<br>Implications</h2>
+
+  <div class="two-col" style="align-items:start;margin-top:8px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <div style="background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);font-weight:600;margin-bottom:6px;" data-i18n="auto.09-slide-3e-practical-limitations.2">💾 No Persistent Memory</div>
+        <p style="font-size:.72rem;margin:0;" data-i18n="auto.09-slide-3e-practical-limitations.3">Each conversation starts fresh. No memory of past sessions unless provided in context.</p>
+        <p style="font-size:.65rem;font-family:var(--mono);color:var(--accent);margin:6px 0 0;" data-i18n="auto.09-slide-3e-practical-limitations.4">Workaround: external memory stores, RAG, or conversation summaries</p>
+      </div>
+
+      <div style="background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);font-weight:600;margin-bottom:6px;" data-i18n="auto.09-slide-3e-practical-limitations.5">📅 Knowledge Cutoff</div>
+        <p style="font-size:.72rem;margin:0;" data-i18n="auto.09-slide-3e-practical-limitations.6">Training data has a cutoff date. Models are unaware of events after that date without RAG or tool use.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <div style="background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);font-weight:600;margin-bottom:6px;" data-i18n="auto.09-slide-3e-practical-limitations.7">🎯 Non-Deterministic Output</div>
+        <p style="font-size:.72rem;margin:0;" data-i18n="auto.09-slide-3e-practical-limitations.8">Probabilistic sampling means same question → different answers. Critical decisions require human oversight.</p>
+        <p style="font-size:.65rem;font-family:var(--mono);color:var(--accent);margin:6px 0 0;" data-i18n="auto.09-slide-3e-practical-limitations.9">Tip: set temperature=0 for reproducible outputs in production pipelines</p>
+      </div>
+
+      <div style="background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:14px 16px;">
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--accent);font-weight:600;margin-bottom:6px;" data-i18n="auto.09-slide-3e-practical-limitations.10">⏱️ Context Window Limits</div>
+        <p style="font-size:.72rem;margin:0;" data-i18n="auto.09-slide-3e-practical-limitations.11">Models can only process a fixed number of tokens per request (4K–128K+). Long docs must be chunked or handled with RAG.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-insight fragment" style="margin-top:12px;">
+    <strong data-i18n="auto.09-slide-3e-practical-limitations.12">Design principle:</strong>
+    <span data-i18n="auto.09-slide-3e-practical-limitations.13"> Build around these constraints, not against them. Use RAG for freshness, external memory for persistence, low temperature for consistency, and chunking for long contexts.</span>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

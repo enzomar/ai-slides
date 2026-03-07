@@ -1,0 +1,54 @@
+<!-- ══════════════════════ COST OF AI ══════════════════════ -->
+<section>
+<h2 data-i18n="auto.06-cost-of-ai.1">The Cost of AI</h2>
+
+  <div class="two-col" style="align-items:start;margin-top:8px;">
+    <div>
+      <div class="badge badge-det" style="margin-bottom:12px;" data-i18n="auto.06-cost-of-ai.2">💰 What Drives Cost</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:rgba(27,94,255,.06);border-left:3px solid var(--accent);padding:10px 14px;border-radius:6px;">
+          <div style="font-family:var(--mono);font-size:.65rem;color:var(--accent);" data-i18n="auto.06-cost-of-ai.3">📦 Model Size</div>
+          <p style="font-size:.7rem;margin:4px 0 0;" data-i18n="auto.06-cost-of-ai.4">Larger models cost 10–100× more per call than smaller ones (GPT-4o mini, Haiku).</p>
+        </div>
+        <div style="background:rgba(27,94,255,.06);border-left:3px solid var(--accent);padding:10px 14px;border-radius:6px;">
+          <div style="font-family:var(--mono);font-size:.65rem;color:var(--accent);" data-i18n="auto.06-cost-of-ai.5">🔤 Tokens In + Out</div>
+          <p style="font-size:.7rem;margin:4px 0 0;" data-i18n="auto.06-cost-of-ai.6">Pricing is per token. Long context, verbose prompts all increase cost. Output tokens cost 3–5× more.</p>
+        </div>
+        <div style="background:rgba(27,94,255,.06);border-left:3px solid var(--accent);padding:10px 14px;border-radius:6px;">
+          <div style="font-family:var(--mono);font-size:.65rem;color:var(--accent);" data-i18n="auto.06-cost-of-ai.7">🔁 Call Frequency</div>
+          <p style="font-size:.7rem;margin:4px 0 0;" data-i18n="auto.06-cost-of-ai.8">1M users × 10 msgs/day × 1k tokens = 10B tokens/day → $10k/day at typical pricing.</p>
+        </div>
+        <div style="background:rgba(27,94,255,.06);border-left:3px solid var(--accent);padding:10px 14px;border-radius:6px;">
+          <div style="font-family:var(--mono);font-size:.65rem;color:var(--accent);" data-i18n="auto.06-cost-of-ai.9">🗃️ Vector Operations</div>
+          <p style="font-size:.7rem;margin:4px 0 0;" data-i18n="auto.06-cost-of-ai.10">Embedding + vector search add cost for every RAG query. Caching reduces repeated costs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="badge badge-green" style="margin-bottom:12px;" data-i18n="auto.06-cost-of-ai.11">🎯 Cost Optimisation Strategies</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:10px 14px;border-radius:6px;">
+          <div style="font-size:.7rem;font-weight:600;" data-i18n="auto.06-cost-of-ai.12">1. Model routing — use small models for simple tasks</div>
+          <p style="font-size:.65rem;color:var(--ink-mute);margin:4px 0 0;" data-i18n="auto.06-cost-of-ai.13">GPT-4o mini for classification, GPT-4o for complex reasoning only.</p>
+        </div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:10px 14px;border-radius:6px;">
+          <div style="font-size:.7rem;font-weight:600;" data-i18n="auto.06-cost-of-ai.14">2. Prompt compression — shorter prompts, same quality</div>
+          <p style="font-size:.65rem;color:var(--ink-mute);margin:4px 0 0;" data-i18n="auto.06-cost-of-ai.15">Remove boilerplate, use structured context, define output schema up front.</p>
+        </div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:10px 14px;border-radius:6px;">
+          <div style="font-size:.7rem;font-weight:600;" data-i18n="auto.06-cost-of-ai.16">3. Caching — cache repeated prompts (semantic caching)</div>
+          <p style="font-size:.65rem;color:var(--ink-mute);margin:4px 0 0;" data-i18n="auto.06-cost-of-ai.17">GPTCache, Langchain cache: FAQs avoid repeated LLM calls entirely.</p>
+        </div>
+        <div style="background:rgba(52,211,153,.06);border-left:3px solid var(--green);padding:10px 14px;border-radius:6px;">
+          <div style="font-size:.7rem;font-weight:600;" data-i18n="auto.06-cost-of-ai.18">4. Fine-tuning — distil GPT-4 behaviour into a 7B model</div>
+          <p style="font-size:.65rem;color:var(--ink-mute);margin:4px 0 0;" data-i18n="auto.06-cost-of-ai.19">One-time fine-tuning cost replaces ongoing inference cost for high-volume use cases.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="notes"></aside>
+</section>

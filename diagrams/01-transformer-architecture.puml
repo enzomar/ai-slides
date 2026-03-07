@@ -1,0 +1,65 @@
+@startuml
+skinparam shadowing false
+skinparam roundcorner 14
+skinparam ArrowColor #64748B
+skinparam defaultTextAlignment center
+top to bottom direction
+
+title Transformer Architecture & Autoregressive Token Generation
+
+package "Transformer Forward Pass (repeated × N layers)" {
+  rectangle "Input Tokens\n[The, cat, sat, on, the]" as input #D6E8FF
+  rectangle "Embedding\nToken IDs → dense vectors\n+ positional encoding" as embedding #D9F7E8
+  rectangle "Layer Norm (Pre-LN)\nApplied before each sub-layer" as prenorm #F5F5F5
+  rectangle "Multi-Head Self-Attention\nEach token attends to all others\nin the context window" as attention #E9E0FF
+  rectangle "Residual Connection\nAdd input to sub-layer output" as res1 #F0F0F0
+  rectangle "Layer Norm (Pre-LN)\nApplied before FFN" as prenorm2 #F5F5F5
+  rectangle "Feed-Forward Network\nExpand → activate (ReLU/GELU)\n→ project back to model dimension" as ffn #FFF1C9
+  rectangle "Residual Connection\nAdd input to sub-layer output" as res2 #F0F0F0
+  rectangle "Final Layer Norm\n+ Linear Projection" as finalnorm #F5F5F5
+  rectangle "Output Logits\nScore for every token in vocabulary" as logits #FFE0D6
+
+  input --> embedding
+  embedding --> prenorm
+  prenorm --> attention
+  attention --> res1
+  res1 --> prenorm2
+  prenorm2 --> ffn
+  ffn --> res2
+  res2 --> finalnorm
+  finalnorm --> logits
+}
+
+package "Sampling Pipeline" {
+  rectangle "Temperature Scaling\nT > 1 → flatten (creative)\nT = 1 → unchanged\nT < 1 → sharpen (deterministic)" as temp #FFF1C9
+  rectangle "Top-K / Top-P (Nucleus) Filtering\nKeep only the most likely candidates" as topk #E9E0FF
+  rectangle "Sample Next Token\nDraw from filtered distribution" as sample #D9F7E8
+  rectangle "Append & Loop\nAppend token to context;\nrepeat until EOS or max length" as loop #D8F5DD
+
+  logits --> temp
+  temp --> topk
+  topk --> sample
+  sample --> loop
+  loop --> input : append token\n& re-feed context
+}
+
+note right of attention
+  Self-attention enables transformers to model
+  long-range dependencies in a single pass,
+  unlike RNNs which process tokens sequentially.
+  Complexity: O(n²) in sequence length.
+end note
+
+note right of ffn
+  The FFN typically expands to 4× the model
+  dimension (e.g. 768 → 3072 in GPT-2), applies
+  a nonlinearity, then projects back down.
+  This is where much "factual knowledge" is stored.
+end note
+
+note right of loop
+  This is autoregressive generation:
+  each token is conditioned on all
+  previously generated tokens.
+end note
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+skinparam shadowing false
+skinparam roundcorner 14
+skinparam ArrowColor #64748B
+skinparam defaultTextAlignment center
+top to bottom direction
+
+title Full AI Ecosystem Map
+
+rectangle "Users & Interfaces\nChat UIs · IDE plugins · mobile apps · API consumers" as users #D6E8FF
+
+package "Application Layer" {
+  rectangle "Orchestration & Routing\nPrompt management, caching, auth, rate limiting" as app #D9F7E8
+  rectangle "Safety & Guardrails\nPII masking · content filters · output audits" as safety #FFD6D6
+}
+
+package "Intelligence Layer" {
+  rectangle "Agent / Reasoning\nPlan · Act · Observe (ReAct, LangGraph, CrewAI)" as agent #E9E0FF
+  rectangle "LLM / Foundation Model\nGPT-4o · Claude · Gemini · Llama · Mistral" as model #E4D9FF
+  rectangle "Memory & Tools\nConversation memory · function calls · MCP servers" as memory #FFF1C9
+}
+
+package "Knowledge Layer" {
+  rectangle "Knowledge Base\nDocs · repos · wikis · structured data" as kb #FFE0D6
+  rectangle "RAG Pipeline\nChunk · embed · retrieve · augment · generate" as rag #FFF9C9
+}
+
+package "Infrastructure Layer" {
+  rectangle "Training & Pretraining\nPretrain · fine-tune · RLHF · GPU clusters" as infra #D8F5DD
+  rectangle "Model Serving\nGPU inference, quantisation, caching, scaling" as serving #D8EFD8
+}
+
+users --> app
+app --> safety
+app --> agent
+app --> model
+agent --> model
+agent --> memory
+memory --> kb
+kb --> rag
+rag --> model
+safety --|> model
+infra --> model
+serving --> model
+
+note right of agent
+  Agents extend LLMs with
+  the ability to use tools,
+  plan multi-step tasks,
+  and call external APIs.
+end note
+@enduml
