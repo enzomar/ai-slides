@@ -78,55 +78,6 @@
   transition: width .15s ease-out;
 }
 
-/* ── Volume slider ──────────────────────────────────────────── */
-.narr-vol-wrap {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-#narr-vol-icon {
-  font-size: .75rem;
-  cursor: pointer;
-  color: rgba(255,255,255,.65);
-  transition: color .15s;
-  line-height: 1;
-}
-#narr-vol-icon:hover { color: #fff; }
-#narr-vol {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 52px;
-  height: 4px;
-  background: rgba(255,255,255,.15);
-  border-radius: 2px;
-  outline: none;
-  cursor: pointer;
-  transition: opacity .2s;
-}
-#narr-vol::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #6ea7ff;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 0 4px rgba(110,167,255,.5);
-}
-#narr-vol::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #6ea7ff;
-  border: none;
-  cursor: pointer;
-}
-#narr-vol::-moz-range-track {
-  height: 4px;
-  background: rgba(255,255,255,.15);
-  border-radius: 2px;
-}
-
 /* ── Unified text panel (teleprompter / notes mode) ────────── */
 #narr-text-panel {
   position: fixed;

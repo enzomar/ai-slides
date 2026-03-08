@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    NARRATION ENGINE v4
-   TTS + notes teleprompter + word highlighting + volume
+   TTS + notes teleprompter + word highlighting
    ═══════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -10,8 +10,6 @@
   var paused      = false;
   var showPanel   = true;
   var rate        = 1.0;
-  var vol         = 1.0;
-  var muted       = false;
   var utt         = null;
   var words       = [];
   var spans       = [];
@@ -41,33 +39,6 @@
   var $speed    = document.getElementById('narr-speed-lbl');
   var $progWrap = document.getElementById('narr-progress-wrap');
   var $progBar  = document.getElementById('narr-progress-bar');
-  var $volRange = document.getElementById('narr-vol');
-  var $volIcon  = document.getElementById('narr-vol-icon');
-
-  /* ═══════════════════════════════════════════════════════════
-     VOLUME
-     ═══════════════════════════════════════════════════════════ */
-  function effVol() { return muted ? 0 : vol; }
-
-  function syncVolIcon() {
-    var v = effVol();
-    $volIcon.textContent = v === 0 ? '\u{1F507}' : v < 0.4 ? '\u{1F508}' : v < 0.75 ? '\u{1F509}' : '\u{1F50A}';
-    $volRange.style.opacity = muted ? '.35' : '1';
-  }
-
-  $volRange.addEventListener('input', function () {
-    vol = parseInt($volRange.value, 10) / 100;
-    muted = vol === 0;
-    syncVolIcon();
-    if (utt) utt.volume = effVol();
-  });
-
-  $volIcon.addEventListener('click', function () {
-    muted = !muted;
-    syncVolIcon();
-    if (utt) utt.volume = effVol();
-  });
-
   /* ═══════════════════════════════════════════════════════════
      VOICE SELECTION
      ═══════════════════════════════════════════════════════════ */
@@ -258,7 +229,7 @@
       $play.disabled   = false;
       $pause.disabled  = true;
       $stop.disabled   = true;
-      $pause.innerHTML = '&#9208; Pause';
+      $pause.innerHTML = '&#9208; ';
       $player.style.opacity = '.45';
       $progWrap.classList.remove('visible');
       $panel.style.display = 'none';
@@ -267,7 +238,7 @@
       $play.disabled   = true;
       $pause.disabled  = false;
       $stop.disabled   = false;
-      $pause.innerHTML = '&#9208; Pause';
+      $pause.innerHTML = '&#9208; ';
       $player.style.opacity = '1';
       $progWrap.classList.add('visible');
       if (showPanel && spans.length) $panel.style.display = 'block';
@@ -317,14 +288,12 @@
 
     renderPanel(text);
 
-    /* Volume must be set on utt BEFORE synth.speak() */
     refreshVoices();
     utt = new SpeechSynthesisUtterance(text);
     if (voice) utt.voice = voice;
-    utt.lang   = LANG_MAP[getLang()] || 'en-GB';
-    utt.rate   = rate;
-    utt.pitch  = 1.0;
-    utt.volume = effVol();
+    utt.lang  = LANG_MAP[getLang()] || 'en-GB';
+    utt.rate  = rate;
+    utt.pitch = 1.0;
 
     utt.onboundary = function (e) {
       if (e.name !== 'word') return;
