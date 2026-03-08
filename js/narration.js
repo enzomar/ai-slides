@@ -5,12 +5,6 @@
 (function () {
   'use strict';
 
-  if (true) {
-    var p = document.getElementById('narr-player');
-    if (p) p.style.display = 'none';
-    return;
-  }
-
   /* ── State ────────────────────────────────────────────────── */
   var playing     = false;
   var paused      = false;
@@ -31,7 +25,7 @@
   var synth    = window.speechSynthesis;
   var RATES    = [0.6, 0.75, 0.85, 1.0, 1.15, 1.3, 1.5, 1.75];
   var rateIdx  = 3;
-  var LANG_MAP = { en: 'en-US', it: 'it-IT', fr: 'fr-FR', es: 'es-ES' };
+  var LANG_MAP = { en: 'en-GB', it: 'it-IT', fr: 'fr-FR', es: 'es-ES' };
 
   /* ── DOM ──────────────────────────────────────────────────── */
   var $player   = document.getElementById('narr-player');
@@ -86,11 +80,16 @@
     'microsoft elsa','microsoft cosimo','microsoft isabella'
   ];
 
-  function scoreV(v) {
+  function scoreV(v, bcp) {
     var n  = v.name.toLowerCase(), s = 0;
     if (v.localService) s += 1;
     QUALITY.forEach(function (h, i) { if (n.indexOf(h) >= 0) s += 10 + i; });
     if (n.indexOf('espeak') >= 0 || n.indexOf('compact') >= 0) s -= 50;
+    /* Prefer voices that exactly match the target locale (e.g. en-GB > en-US) */
+    if (bcp) {
+      if (v.lang === bcp)                              s += 8;
+      else if (v.lang.substring(0, 5) === bcp.substring(0, 5)) s += 3;
+    }
     return s;
   }
 
@@ -99,11 +98,11 @@
   }
 
   function refreshVoices() {
-    var bcp    = LANG_MAP[getLang()] || 'en-US';
+    var bcp    = LANG_MAP[getLang()] || 'en-GB';
     var prefix = bcp.substring(0, 2);
     voicesForLang = synth.getVoices()
       .filter(function (v) { return v.lang.substring(0, 2) === prefix; })
-      .sort(function (a, b) { return scoreV(b) - scoreV(a); });
+      .sort(function (a, b) { return scoreV(b, bcp) - scoreV(a, bcp); });
     if (!voice || voice.lang.substring(0, 2) !== prefix) {
       voice = voicesForLang[0] || null;
     }
@@ -160,11 +159,11 @@
   function getNotesText(slide) {
     if (!slide) return '';
     var a = slide.querySelector('aside.notes');
-    return a ? a.textContent.replace(/s+/g, ' ').trim() : '';
+    return a ? a.textContent.replace(/\s+/g, ' ').trim() : '';
   }
 
   function renderPanel(text) {
-    words = text ? text.split(/s+/).filter(Boolean) : [];
+    words = text ? text.split(/\s+/).filter(Boolean) : [];
     spans = [];
     hlIdx = 0;
     $progBar.style.width = '0%';
@@ -259,7 +258,7 @@
       $play.disabled   = false;
       $pause.disabled  = true;
       $stop.disabled   = true;
-      $pause.textContent = '&#9208;';
+      $pause.innerHTML = '&#9208; Pause';
       $player.style.opacity = '.45';
       $progWrap.classList.remove('visible');
       $panel.style.display = 'none';
@@ -268,7 +267,7 @@
       $play.disabled   = true;
       $pause.disabled  = false;
       $stop.disabled   = false;
-      $pause.textContent = '&#9208;';
+      $pause.innerHTML = '&#9208; Pause';
       $player.style.opacity = '1';
       $progWrap.classList.add('visible');
       if (showPanel && spans.length) $panel.style.display = 'block';
@@ -322,7 +321,7 @@
     refreshVoices();
     utt = new SpeechSynthesisUtterance(text);
     if (voice) utt.voice = voice;
-    utt.lang   = LANG_MAP[getLang()] || 'en-US';
+    utt.lang   = LANG_MAP[getLang()] || 'en-GB';
     utt.rate   = rate;
     utt.pitch  = 1.0;
     utt.volume = effVol();

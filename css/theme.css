@@ -30,7 +30,7 @@
   width: 100%; height: 100%;
   display: flex; flex-direction: column;
   justify-content: flex-start; align-items: flex-start;
-  padding: 56px 72px 52px;
+  padding: 36px 24px 32px;   /* mobile-first: grows via min-width queries */
   box-sizing: border-box;
   text-align: left;
   overflow: hidden;
@@ -45,13 +45,14 @@
 }
 
 /* ── TYPOGRAPHY ──────────────────────────────────────────── */
-h1 { font-family: var(--serif); font-size: clamp(1.9rem,3.8vw,3.2rem);
-     font-weight: 400; line-height: 1.1; margin: 0 0 20px; color: var(--ink); }
-h2 { font-family: var(--serif); font-size: clamp(1.4rem,2.8vw,2.2rem);
-     font-weight: 400; margin: 0 0 18px; }
-h3 { font-family: var(--sans); font-size: .9rem; font-weight: 500;
-     letter-spacing: .04em; margin: 0 0 8px; }
-p, li { font-size: .82rem; line-height: 1.65; color: var(--ink-mid); }
+/* mobile-first base sizes; desktop sizes added via min-width query below */
+h1 { font-family: var(--serif); font-size: clamp(1.4rem,5vw,2.2rem);
+     font-weight: 400; line-height: 1.1; margin: 0 0 14px; color: var(--ink); }
+h2 { font-family: var(--serif); font-size: clamp(1.1rem,4vw,1.7rem);
+     font-weight: 400; margin: 0 0 14px; }
+h3 { font-family: var(--sans); font-size: .85rem; font-weight: 500;
+     letter-spacing: .04em; margin: 0 0 7px; }
+p, li { font-size: .78rem; line-height: 1.6; color: var(--ink-mid); }
 strong { color: var(--ink); font-weight: 500; }
 
 /* ── SLIDE NUMBERING ─────────────────────────────────────── */
@@ -68,7 +69,8 @@ strong { color: var(--ink); font-weight: 500; }
 /* ── GLOBAL TAG BAR (fixed left, same row as lang-bar) ─────── */
 #global-tag-bar {
   position: fixed; top: 20px; left: 200px; z-index: 9999;
-  display: flex; align-items: center; gap: 7px;
+  display: none; /* hidden on mobile; shown via min-width: 601px query */
+  align-items: center; gap: 7px;
   font-family: var(--mono); font-size: 9px; letter-spacing: .12em;
   text-transform: uppercase; color: var(--ink-mute);
   background: rgba(28,28,30,.75); backdrop-filter: blur(8px);
@@ -86,10 +88,11 @@ strong { color: var(--ink); font-weight: 500; }
 
 /* ── SLIDE NUMBER (Reveal.js injected) ───────────────────── */
 .reveal .slide-number {
-  font-family: var(--mono); font-size: 9px; color: var(--ink-mute);
+  font-family: var(--mono); font-size: 8px; color: var(--ink-mute);
   letter-spacing: .08em;
   background: none;
-  left: 24px; bottom: 18px;
+  /* mobile-first: sit above the bottom-docked lang-bar */
+  left: auto; right: 14px; bottom: 60px;
 }
 
 /* ── COVER ───────────────────────────────────────────────── */
@@ -111,8 +114,9 @@ strong { color: var(--ink); font-weight: 500; }
 .chapter-divider .tag-bar { color: rgba(255,255,255,.35); }
 
 /* ── TWO/THREE COL LAYOUT ────────────────────────────────── */
-.two-col { display: grid; gap: 28px; width: 100%; grid-template-columns: 1fr 1fr; align-items: start; }
-.three-col { display: grid; gap: 16px; width: 100%; grid-template-columns: 1fr 1fr 1fr; align-items: start; }
+/* mobile-first: single-column; desktop columns added via min-width: 901px */
+.two-col { display: grid; gap: 20px; width: 100%; grid-template-columns: 1fr; align-items: start; }
+.three-col { display: grid; gap: 16px; width: 100%; grid-template-columns: 1fr; align-items: start; }
 
 /* ── CARDS ────────────────────────────────────────────────── */
 .model-card {
@@ -257,7 +261,7 @@ strong { color: var(--ink); font-weight: 500; }
 .word-chip.predicted { background: var(--accent2); color: white; border-color: var(--accent2); box-shadow: 0 4px 14px rgba(255,75,31,.3); }
 
 /* ── PARAMETER GRID ──────────────────────────────────────── */
-.param-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; }
+.param-grid { display: grid; grid-template-columns: 1fr; gap: 14px; width: 100%; } /* desktop: 1fr 1fr via min-width */
 .param-card {
   background: var(--bg-card); border-radius: 12px; padding: 18px 20px;
   border: 1px solid var(--rule); box-shadow: 0 2px 12px rgba(0,0,0,.2);
@@ -278,7 +282,7 @@ strong { color: var(--ink); font-weight: 500; }
 .temp-labels { display: flex; justify-content: space-between; font-family: var(--mono); font-size: .62rem; color: var(--ink-mute); }
 
 /* ── HARDWARE TABLE ──────────────────────────────────────── */
-.hw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; }
+.hw-grid { display: grid; grid-template-columns: 1fr; gap: 16px; width: 100%; } /* desktop: 1fr 1fr via min-width */
 .hw-card {
   background: var(--bg-card); border-radius: 12px; padding: 18px 22px;
   border: 1px solid var(--rule); box-shadow: 0 2px 12px rgba(0,0,0,.2);
@@ -340,25 +344,34 @@ strong { color: var(--ink); font-weight: 500; }
   justify-content: center; flex-shrink: 0;
 }
 
-/* ── LANG SELECTOR ───────────────────────────────────────── */
+/* ── LANG SELECTOR ─────────────────────────────────────────
+   Mobile-first: bar docked to bottom-centre on small screens.
+   Flipped to top-right via min-width: 601px query below.
+   ──────────────────────────────────────────────────────────── */
 .lang-bar {
-  position: fixed; top: 20px; right: 28px; z-index: 9999;
-  display: flex; gap: 10px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+  /* mobile default: bottom-centre dock */
+  position: fixed; bottom: 10px; top: auto;
+  left: 50%; right: auto;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex; gap: 12px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
 }
 .lang-btn {
   cursor: pointer; color: var(--ink-mute); text-transform: uppercase;
-  padding: 3px 0; border-bottom: 1px solid transparent;
+  /* minimum 44-px touch target on mobile */
+  padding: 6px 4px; min-width: 26px; text-align: center;
+  border-bottom: 1px solid transparent;
   transition: color .2s, border-color .2s; background: none; border: none;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
 }
 .lang-btn:hover, .lang-btn.active {
   color: var(--ink); border-bottom-color: var(--accent);
 }
 
-/* Dark theme: make lang bar visible on dark bg */
-.lang-bar { background: rgba(28,28,30,.75); backdrop-filter: blur(8px); padding: 4px 10px; border-radius: 6px; }
-.lang-divider { width: 1px; height: 14px; background: rgba(255,255,255,.15); align-self: center; }
+/* Dark backdrop — shared mobile + desktop */
+.lang-bar { background: rgba(28,28,30,.75); backdrop-filter: blur(8px); padding: 7px 14px; border-radius: 10px; }
+.lang-divider { width: 1px; height: 16px; background: rgba(255,255,255,.15); align-self: center; }
 
 /* ── FULLSCREEN TOGGLE ────────────────────────────────────── */
 #fullscreen-btn { font-size: 12px; line-height: 1; display: flex; align-items: center; }
@@ -430,7 +443,7 @@ strong { color: var(--ink); font-weight: 500; }
 .reveal .fragment.visible { opacity: 1; }
 
 /* ── AGENDA ──────────────────────────────────────────────── */
-.agenda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; }
+.agenda-grid { display: grid; grid-template-columns: 1fr; gap: 16px; width: 100%; } /* desktop: 1fr 1fr via min-width */
 .agenda-item {
   background: var(--bg-card); border-radius: 12px; padding: 20px 24px;
   border: 1px solid var(--rule); box-shadow: 0 2px 12px rgba(0,0,0,.2);
@@ -706,73 +719,80 @@ strong { color: var(--ink); font-weight: 500; }
   flex-shrink: 0;
 }
 
-/* ── RESPONSIVE — TABLET ─────────────────────────────────── */
-@media (max-width: 900px) {
-  .agenda-grid { grid-template-columns: 1fr; }
-  .three-col   { grid-template-columns: 1fr; }
-  .two-col     { grid-template-columns: 1fr; }
-  .param-grid  { grid-template-columns: 1fr; }
-  .hw-grid     { grid-template-columns: 1fr; }
-}
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE-FIRST
+   Base styles above target the smallest viewport.
+   These min-width queries progressively enhance for larger screens.
+   ══════════════════════════════════════════════════════════ */
 
-/* ── RESPONSIVE — MOBILE ─────────────────────────────────── */
-@media (max-width: 600px) {
+/* ── TABLET & UP (601 px+) ───────────────────────────────── */
+@media (min-width: 601px) {
 
-  /* ── Lang-bar → bottom-center, larger touch targets ─────── */
-  #global-tag-bar { display: none; } /* no room on small screens */
+  /* Global tag bar becomes visible */
+  #global-tag-bar { display: flex; }
+
+  /* Lang-bar flips to top-right corner */
   .lang-bar {
-    top: auto !important; bottom: 10px; left: 50%; right: auto;
-    transform: translateX(-50%);
-    gap: 12px; font-size: 11px;
-    padding: 7px 14px; border-radius: 10px;
+    top: 20px; bottom: auto;
+    left: auto; right: 28px;
+    transform: none;
+    gap: 10px; font-size: 10px;
+    padding: 4px 10px; border-radius: 6px;
   }
-  .lang-btn   { padding: 6px 4px; min-width: 26px; text-align: center; }
-  .lang-divider { height: 16px; }
-  #laser-btn, #fullscreen-btn { font-size: 14px; }
-  .lang-donate-btn { font-size: 10px; padding: 5px 10px; }
+  .lang-btn   { padding: 3px 0; min-width: auto; font-size: 10px; text-align: left; }
+  .lang-divider { height: 14px; }
+  #laser-btn, #fullscreen-btn { font-size: 13px; }
+  .lang-donate-btn { font-size: 9px; padding: 2px 7px; }
 
-  /* Slide-number sits above the relocated lang-bar */
+  /* Slide number returns to bottom-left */
   .reveal .slide-number {
-    bottom: 52px; right: 14px; font-size: 8px;
+    font-size: 9px; left: 24px; right: auto; bottom: 18px;
   }
 
-  /* Slide padding: tighter on small screens */
-  .reveal .slides section {
-    padding: 40px 28px 36px !important;
-  }
+  /* Slide padding: medium at tablet */
+  .reveal .slides section { padding: 44px 48px 40px; }
 
-  /* Typography: bump sizes for readability on small canvases */
-  h1 { font-size: clamp(1.5rem, 5vw, 2.4rem); }
-  h2 { font-size: clamp(1.1rem, 4vw, 1.8rem); }
-  p, li { font-size: .78rem; }
-
-  /* Key insight box: full-width with smaller text */
-  .key-insight { font-size: .72rem; padding: 8px 12px; }
-
-  /* Prompt block: smaller text */
-  .prompt-block { font-size: .65rem; padding: 14px 16px; }
-
-  /* Timeline: enable horizontal scroll and shrink */
-  .timeline { min-width: 600px; padding-top: 40px; }
-  .tl-card h4 { font-size: .6rem; }
-  .tl-card p  { font-size: .52rem; }
-
-  /* Ecosystem map: tighter sizing */
-  .eco-map { max-width: 100%; }
-  .eco-label { font-size: .44rem; }
-  .eco-desc  { font-size: .44rem; }
-
-  /* Cards: tighter padding */
-  .model-card { padding: 14px 12px; }
-  .param-card { padding: 14px 16px; }
-  .hw-card    { padding: 14px 16px; }
-
-  /* Flow diagrams */
-  .flow-row { gap: 8px; }
-  .flow-box { padding: 10px 12px; font-size: .7rem; min-width: 80px; }
+  /* Typography: medium scale */
+  h1 { font-size: clamp(1.7rem, 3.2vw, 2.8rem); margin-bottom: 18px; }
+  h2 { font-size: clamp(1.25rem, 2.4vw, 2rem); margin-bottom: 16px; }
+  p, li { font-size: .80rem; }
 }
 
-/* Portrait hint — auto-fades after 4 s */
+/* ── DESKTOP (901 px+) ───────────────────────────────────── */
+@media (min-width: 901px) {
+
+  /* Restore multi-column grids */
+  .agenda-grid { grid-template-columns: 1fr 1fr; }
+  .three-col   { grid-template-columns: 1fr 1fr 1fr; }
+  .two-col     { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .param-grid  { grid-template-columns: 1fr 1fr; }
+  .hw-grid     { grid-template-columns: 1fr 1fr; }
+
+  /* Full desktop padding */
+  .reveal .slides section { padding: 56px 72px 52px; }
+
+  /* Desktop typography */
+  h1 { font-size: clamp(1.9rem, 3.8vw, 3.2rem); margin-bottom: 20px; }
+  h2 { font-size: clamp(1.4rem, 2.8vw, 2.2rem); margin-bottom: 18px; }
+  h3 { font-size: .9rem; margin-bottom: 8px; }
+  p, li { font-size: .82rem; line-height: 1.65; }
+
+  /* Component sizes: restore full desktop values */
+  .key-insight  { font-size: .75rem; padding: 10px 14px; }
+  .prompt-block { font-size: .72rem; padding: 18px 22px; }
+  .timeline     { min-width: 900px; padding-top: 50px; }
+  .tl-card h4   { font-size: .68rem; }
+  .tl-card p    { font-size: .58rem; }
+  .eco-label    { font-size: .50rem; }
+  .eco-desc     { font-size: .50rem; }
+  .model-card   { padding: 18px 16px; }
+  .param-card   { padding: 18px 20px; }
+  .hw-card      { padding: 18px 22px; }
+  .flow-row     { gap: 12px; }
+  .flow-box     { padding: 14px 18px; font-size: .76rem; min-width: 100px; }
+}
+
+/* Portrait hint — auto-fades after 4 s (small portrait screens only) */
 @media (max-width: 600px) and (orientation: portrait) {
   body::after {
     content: '↻  Rotate for best experience';

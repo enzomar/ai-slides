@@ -379,3 +379,62 @@
 
 /* Hide overview button & filmstrip panel */
 #fs-btn, #fs-panel { display: none !important; }
+
+/* ── RESPONSIVE — MOBILE FIRST ──────────────────────────────
+   Touch-friendly sizing for phones and small tablets.
+   44 px minimum touch targets (Apple HIG / WCAG 2.5.5).
+   ─────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+
+  /* Menu toggle: larger pill with easier tap area */
+  #sm-toggle {
+    top: 10px; left: 10px;
+    padding: 10px 14px;
+    font-size: .82rem;
+    border-radius: 12px;
+    min-height: 44px;
+  }
+
+  /* Close button: bigger tap target */
+  #sm-close {
+    padding: 10px 14px;
+    font-size: 1.3rem;
+    min-width: 44px; min-height: 44px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Slide menu panel: full-width on narrow screens */
+  #slide-menu {
+    width: 100%;
+    left: -100%;
+  }
+
+  /* Chapter headers: taller tap area */
+  .sm-chapter-head {
+    padding: 13px 18px 11px;
+    min-height: 44px;
+  }
+
+  /* Individual slide items: 44px minimum */
+  .sm-slide {
+    min-height: 44px;
+    padding: 10px 18px 10px 40px;
+  }
+
+  /* Search input: comfortable mobile sizing */
+  #sm-search {
+    padding: 10px 14px;
+    font-size: .85rem;
+  }
+
+  /* Toolbar lang buttons: larger touch targets */
+  #sm-toolbar .lang-btn {
+    padding: 8px 6px;
+    font-size: .75rem;
+  }
+
+  .sm-pdf-btn {
+    padding: 8px 12px;
+    font-size: .68rem;
+  }
+}

@@ -215,3 +215,43 @@
   color: rgba(110,167,255,.8);
   margin-left: 8px;
 }
+
+/* ── RESPONSIVE — MOBILE FIRST ──────────────────────────────
+   On small screens the lang-bar docks to bottom-centre (~48px).
+   Lift the narration UI above it so nothing overlaps.
+   ─────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+
+  /* Player bar: lift above the bottom-docked lang-bar */
+  #narr-player {
+    bottom: 62px;
+    max-width: calc(100vw - 24px);
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  /* Hide speed controls to save space; keep play / vol / voice */
+  #narr-slower, #narr-speed-lbl, #narr-faster { display: none; }
+
+  /* Text / notes panel: lift correspondingly */
+  #narr-text-panel,
+  #narr-text-panel[data-mode="notes"],
+  #narr-text-panel[data-mode="transcript"] {
+    bottom: 124px;
+    width: calc(100vw - 20px);
+    max-height: 140px;
+  }
+
+  /* Voice menu: lift above the player */
+  #narr-voice-menu {
+    bottom: 124px;
+    min-width: calc(100vw - 40px);
+    max-width: calc(100vw - 40px);
+  }
+
+  /* Larger touch targets for narration buttons */
+  .narr-btn {
+    min-width: 36px;
+    min-height: 36px;
+  }
+}
