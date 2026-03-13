@@ -107,7 +107,16 @@
 
   /** Update static UI strings (button, title, placeholder) */
   function updateMenuStrings() {
-    if (toggle)   toggle.innerHTML  = t('toggle');
+    if (toggle) {
+      // Preserve the <span class="sm-toggle-label"> wrapper for CSS hiding on mobile
+      var label = toggle.querySelector('.sm-toggle-label');
+      var raw = t('toggle'); // e.g. "☰ Menu"
+      if (label) {
+        label.textContent = raw.replace(/^☰\s*/, ' ');
+      } else {
+        toggle.innerHTML = raw;
+      }
+    }
     if (closeBtn) closeBtn.title    = t('close');
     if (search)   search.placeholder = t('search');
     const titleEl = document.getElementById('sm-title');

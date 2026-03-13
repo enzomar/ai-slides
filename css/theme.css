@@ -69,7 +69,7 @@ strong { color: var(--ink); font-weight: 500; }
 /* ── GLOBAL TAG BAR (fixed left, same row as lang-bar) ─────── */
 #global-tag-bar {
   position: fixed; top: 20px; left: 200px; z-index: 9999;
-  display: none; /* hidden on mobile; shown via min-width: 601px query */
+  display: none; /* hidden on mobile; shown via min-width: 801px query */
   align-items: center; gap: 7px;
   font-family: var(--mono); font-size: 9px; letter-spacing: .12em;
   text-transform: uppercase; color: var(--ink-mute);
@@ -346,7 +346,7 @@ strong { color: var(--ink); font-weight: 500; }
 
 /* ── LANG SELECTOR ─────────────────────────────────────────
    Mobile-first: bar docked to bottom-centre on small screens.
-   Flipped to top-right via min-width: 601px query below.
+   Flipped to top-right via min-width: 801px query below.
    ──────────────────────────────────────────────────────────── */
 .lang-bar {
   /* mobile default: bottom-centre dock */
@@ -726,7 +726,7 @@ strong { color: var(--ink); font-weight: 500; }
    ══════════════════════════════════════════════════════════ */
 
 /* ── TABLET & UP (601 px+) ───────────────────────────────── */
-@media (min-width: 601px) {
+@media (min-width: 801px) {
 
   /* Global tag bar becomes visible */
   #global-tag-bar { display: flex; }
@@ -793,7 +793,7 @@ strong { color: var(--ink); font-weight: 500; }
 }
 
 /* Portrait hint — auto-fades after 4 s (small portrait screens only) */
-@media (max-width: 600px) and (orientation: portrait) {
+@media (max-width: 800px) and (orientation: portrait) {
   body::after {
     content: '↻  Rotate for best experience';
     position: fixed; bottom: 54px; left: 50%;

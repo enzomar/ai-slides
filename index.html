@@ -34,6 +34,7 @@
 <link rel="stylesheet" href="css/animations.css"/>
 <link rel="stylesheet" href="css/narration.css"/>
 <link rel="stylesheet" href="css/slide-menu.css"/>
+<link rel="stylesheet" href="css/mobile.css"/>
 <!-- Reveal.js print / PDF stylesheet -->
 <script>var _rl=document.createElement('link');_rl.rel='stylesheet';_rl.type='text/css';_rl.href=window.location.search.match(/print-pdf/gi)?'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/print/pdf.min.css':'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/print/paper.min.css';document.head.appendChild(_rl);</script>
 </head>
@@ -4942,7 +4943,7 @@ document.addEventListener('DOMContentLoaded', () => setTimeout(updateParamDemo, 
      ═══════════════════════════════════════════════════════════ -->
 
 <!-- Toggle button -->
-<button id="sm-toggle" title="Menu (/)">☰ Menu</button>
+<button id="sm-toggle" title="Menu (/)">☰<span class="sm-toggle-label"> Menu</span></button>
 
 <!-- Overlay -->
 <div id="slide-menu-overlay"></div>
@@ -4953,6 +4954,21 @@ document.addEventListener('DOMContentLoaded', () => setTimeout(updateParamDemo, 
     <div id="sm-header-row">
       <span id="sm-title">MENU</span>
       <button id="sm-close" title="Close">✕</button>
+    </div>
+
+    <!-- Mobile-only toolbar: lang + tools (hidden on desktop via CSS) -->
+    <div id="sm-toolbar">
+      <span class="lang-btn active" onclick="setLang('en')" title="English">EN</span>
+      <span class="lang-btn" onclick="setLang('it')" title="Italiano">IT</span>
+      <span class="lang-btn" onclick="setLang('fr')" title="Français">FR</span>
+      <span class="lang-btn" onclick="setLang('es')" title="Español">ES</span>
+      <span class="sm-toolbar-spacer"></span>
+      <span class="lang-btn" id="sm-laser-btn" onclick="toggleLaser()" title="Laser pointer (L)">⊹</span>
+      <span class="lang-btn" id="sm-fullscreen-btn" onclick="toggleFS()" title="Fullscreen (F)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+      </span>
+      <button class="sm-pdf-btn" onclick="(function(){var url=window.location.href.split('?')[0].split('#')[0];if(window.location.search.indexOf('print-pdf')!==-1){window.print();}else{window.location.href=url+'?print-pdf';}})()">⬇PDF</button>
+      <a href="https://www.paypal.com/ncp/payment/K4KBVYD5QRHMS" target="_blank" rel="noopener" class="sm-donate-btn" title="Support this project">♥</a>
     </div>
 
     <input id="sm-search" type="text" placeholder="Search slides…" autocomplete="off" />

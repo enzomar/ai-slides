@@ -51,7 +51,8 @@
 
 /* ── Language + PDF toolbar ─────────────────────────────────── */
 #sm-toolbar {
-  display: flex; align-items: center; gap: 10px;
+  display: none; /* hidden on desktop; shown on mobile via mobile.css */
+  align-items: center; gap: 10px;
   padding: 0 2px;
 }
 #sm-toolbar .lang-btn {
@@ -384,7 +385,7 @@
    Touch-friendly sizing for phones and small tablets.
    44 px minimum touch targets (Apple HIG / WCAG 2.5.5).
    ─────────────────────────────────────────────────────────── */
-@media (max-width: 600px) {
+@media (max-width: 800px) {
 
   /* Menu toggle: larger pill with easier tap area */
   #sm-toggle {

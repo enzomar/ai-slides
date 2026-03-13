@@ -1,0 +1,446 @@
+/* ═══════════════════════════════════════════════════════════
+   AI SLIDES — Mobile-Friendly Layout
+   Comprehensive responsive rules for phones & small tablets.
+   Does NOT alter desktop — all rules scoped to max-width queries.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────
+   1.  SMALL PHONES  (≤ 480 px)
+   ────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+
+  /* ── Slide container ─────────────────────────────────────── */
+  .reveal .slides section {
+    padding: 44px 16px 24px;
+    overflow-y: auto;            /* allow scroll if content overflows */
+    -webkit-overflow-scrolling: touch;
+    align-items: center;
+    text-align: center;
+  }
+  /* Keep left-align for text-heavy elements inside centered slides */
+  .reveal .slides section .prompt-block,
+  .reveal .slides section .step-list,
+  .reveal .slides section .key-insight,
+  .reveal .slides section .ref-list,
+  .reveal .slides section .example-list {
+    text-align: left;
+  }
+
+  /* ── Typography — tighter on tiny screens ─────────────── */
+  h1 { font-size: clamp(1.15rem, 6vw, 1.6rem); margin-bottom: 10px; }
+  h2 { font-size: clamp(1rem, 5vw, 1.35rem); margin-bottom: 10px; }
+  h3 { font-size: .78rem; }
+  p, li { font-size: .72rem; line-height: 1.55; }
+
+  /* ── Cover / divider slides ──────────────────────────────── */
+  .cover-slide p,
+  .chapter-divider p { font-size: .78rem; max-width: 90vw; }
+  .cover-dot { width: 240px; height: 240px; right: -40px; bottom: -80px; }
+
+  /* ── Tag bars ───────────────────────────────────────────── */
+  .slide-tag, .chapter-tag { font-size: 7px; letter-spacing: .08em; }
+  .slide-tag  { right: 14px; top: 10px; }
+  .chapter-tag { left: 14px; top: 10px; }
+}
+
+/* ──────────────────────────────────────────────────────────
+   2.  ALL MOBILE  (≤ 800 px)
+   ────────────────────────────────────────────────────────── */
+@media (max-width: 800px) {
+
+  /* ── Slide container — center + extra top padding ────────── */
+  .reveal .slides section {
+    overflow-x: hidden;
+    word-break: break-word;
+    padding-top: 40px;
+    align-items: center;
+    text-align: center;
+  }
+  /* Keep left-align for structured / text-heavy blocks */
+  .reveal .slides section .prompt-block,
+  .reveal .slides section .step-list,
+  .reveal .slides section .key-insight,
+  .reveal .slides section .ref-list,
+  .reveal .slides section .example-list,
+  .reveal .slides section .param-card,
+  .reveal .slides section .hw-card,
+  .reveal .slides section .model-card,
+  .reveal .slides section .agenda-item,
+  .reveal .slides section .tl-card,
+  .reveal .slides section table {
+    text-align: left;
+  }
+
+  /* ── Grids → single column ──────────────────────────────── */
+  .two-col,
+  .three-col,
+  .param-grid,
+  .hw-grid,
+  .agenda-grid { grid-template-columns: 1fr !important; gap: 12px; }
+
+  /* ── Cards — compact for mobile ─────────────────────────── */
+  .model-card   { padding: 14px 12px; border-radius: 10px; }
+  .param-card   { padding: 14px 14px; }
+  .hw-card      { padding: 14px 16px; }
+  .agenda-item  { padding: 16px 18px; }
+
+  /* ── Key insight — full-width ───────────────────────────── */
+  .key-insight { font-size: .72rem; padding: 8px 12px; }
+
+  /* ── Prompt block — smaller ─────────────────────────────── */
+  .prompt-block { font-size: .65rem; padding: 14px 14px; border-radius: 10px; }
+
+  /* ── Flow diagrams — wrap + smaller ─────────────────────── */
+  .flow-row { flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .flow-box { padding: 10px 14px; font-size: .68rem; min-width: 80px; }
+  .flow-arrow { font-size: 1rem; }
+
+  /* ── Architecture diagram — wrap ────────────────────────── */
+  .arch-diagram { flex-wrap: wrap; gap: 8px; }
+  .arch-box { font-size: .58rem; padding: 6px 8px; }
+  .arch-box.input, .arch-box.embed, .arch-box.norm { width: 75px; }
+  .arch-box.attn, .arch-box.ffn { width: 100px; height: auto; }
+  .arch-box.output { width: 90px; }
+  .arch-arrow { font-size: 1rem; }
+
+  /* ── Sentence demo — wrap nicely ────────────────────────── */
+  .sentence-demo { gap: 5px; }
+  .word-chip { font-size: .7rem; padding: 4px 8px; }
+
+  /* ── Step list — compact ────────────────────────────────── */
+  .step-list li { gap: 10px; padding: 8px 0; font-size: .75rem; }
+  .step-num { min-width: 24px; height: 24px; font-size: .62rem; }
+
+  /* ── Timeline — hint scrollability ──────────────────────── */
+  .timeline-wrap { position: relative; }
+  .timeline-wrap::after {
+    content: '⟶';
+    position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+    font-size: 1.2rem; color: var(--ink-mute); opacity: .5;
+    pointer-events: none;
+    animation: scrollHint 2s ease-in-out 3 forwards;
+  }
+  @keyframes scrollHint {
+    0%, 100% { opacity: .5; transform: translateY(-50%) translateX(0); }
+    50%      { opacity: 1; transform: translateY(-50%) translateX(6px); }
+  }
+
+  /* ── Tables — scrollable with shadow hints ─────────────── */
+  .reveal .slides section [style*="overflow-x"] ,
+  .reveal .slides section table {
+    display: block; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+
+  /* ── Word cloud — smaller height ────────────────────────── */
+  .cloud-wrap { height: 200px; }
+  .cloud-word { font-size: .7em !important; }
+
+  /* ── Badges — slightly smaller ──────────────────────────── */
+  .badge { font-size: 8px; padding: 2px 6px; }
+
+  /* ── Bit display — smaller ──────────────────────────────── */
+  .bit-display { font-size: 2rem; }
+
+  /* ── Prob tokens — smaller ──────────────────────────────── */
+  .prob-token { font-size: .68rem; padding: 3px 7px; }
+
+  /* ── Reference list — denser ────────────────────────────── */
+  .ref-list li { font-size: .58rem; line-height: 1.45; }
+
+  /* ── Eco-map (AI Ecosystem) — fully mobile ──────────────── */
+  .eco-map { gap: 0; }
+  .eco-row { flex-direction: column; gap: 6px; }
+  .eco-row-3col { grid-template-columns: 1fr !important; gap: 6px; }
+
+  .eco-card { padding: 7px 9px; gap: 5px; border-radius: 8px; }
+  .eco-label { font-size: .48rem; }
+  .eco-desc  { font-size: .48rem; }
+  .eco-tech  { font-size: .40rem; }
+  .eco-icon  { font-size: .65rem; }
+
+  .eco-model-grid { grid-template-columns: 1fr 1fr; gap: 3px; }
+  .eco-rag-flow { flex-wrap: wrap; gap: 3px; }
+  .eco-train-flow { flex-wrap: wrap; gap: 3px; }
+
+  .eco-step { padding: 3px 6px; }
+  .eco-step-title { font-size: .40rem; }
+  .eco-step-body  { font-size: .42rem; }
+
+  /* ── Laser dot — larger on mobile for visibility ────────── */
+  .laser-dot { width: 18px; height: 18px; }
+
+  /* ══════════════════════════════════════════════════════════
+     MOBILE CONTROLS — lang-bar hidden; controls in slide-menu
+     The entire bottom edge is free for slide content.
+     ══════════════════════════════════════════════════════════ */
+
+  /* ── LANG-BAR → completely hidden (moved into slide-menu) ── */
+  .lang-bar { display: none !important; }
+
+  /* ── SM-TOOLBAR → visible on mobile only ───────────────── */
+  #sm-toolbar { display: flex; }
+
+  /* ── Donate button inside menu ──────────────────────────── */
+  .sm-donate-btn {
+    font-family: var(--mono); font-size: .62rem; letter-spacing: .04em;
+    padding: 3px 8px; border-radius: 5px;
+    border: 1px solid rgba(255, 180, 0, .35);
+    background: rgba(255, 180, 0, .10);
+    color: #f5b800; cursor: pointer; text-decoration: none;
+    line-height: 1.2; display: flex; align-items: center;
+    transition: background .2s, color .2s;
+  }
+  .sm-donate-btn:hover { background: rgba(255, 180, 0, .22); color: #fff; }
+
+  /* ── MENU TOGGLE → icon-only compact chip ──────────────── */
+  #sm-toggle {
+    top: 8px; left: 8px;
+    padding: 6px 8px;
+    font-size: .72rem;
+    border-radius: 8px;
+    min-height: 32px;
+    gap: 0;
+  }
+  /* Hide the "Menu" text on mobile — keep ☰ */
+  #sm-toggle .sm-toggle-label { display: none; }
+
+  /* ── SLIDE MENU → tighter header & items ───────────────── */
+  #sm-header { padding: 12px 14px 10px; gap: 8px; }
+  #sm-title  { font-size: .78rem; }
+  #sm-close  {
+    padding: 6px 10px;
+    font-size: 1.1rem;
+    min-width: 36px; min-height: 36px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #sm-search {
+    padding: 8px 10px;
+    font-size: .78rem;
+  }
+  .sm-chapter-head {
+    padding: 9px 14px 7px;
+    min-height: 36px;
+  }
+  .sm-slide {
+    min-height: 36px;
+    padding: 6px 14px 6px 30px;
+    font-size: .70rem;
+  }
+  .sm-slide-num { font-size: .55rem; min-width: 18px; }
+  #sm-toolbar .lang-btn {
+    padding: 4px 4px;
+    font-size: .65rem;
+    min-height: 28px;
+  }
+  .sm-pdf-btn { padding: 4px 8px; font-size: .58rem; }
+
+  /* ── NARRATION PLAYER → ultra-compact bottom-left ──────── */
+  #narr-player {
+    bottom: 8px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    max-width: calc(100vw - 24px);
+    padding: 4px 8px;
+    gap: 4px;
+    border-radius: 8px;
+    font-size: .65rem;
+  }
+  /* Hide text labels on play button — keep icon only */
+  #narr-play { font-size: .72rem; padding: 4px 6px; }
+  #narr-pause, #narr-stop { font-size: .68rem; padding: 4px 6px; }
+  /* Hide speed controls, dividers */
+  #narr-slower, #narr-speed-lbl, #narr-faster { display: none; }
+  #narr-player .narr-divider { display: none; }
+  /* Narration buttons: smaller touch targets */
+  .narr-btn { min-width: 30px; min-height: 30px; padding: 3px 5px; font-size: .72rem; }
+  #narr-notes-btn, #narr-voice-btn { font-size: .68rem; }
+
+  /* Text panel */
+  #narr-text-panel,
+  #narr-text-panel[data-mode="notes"],
+  #narr-text-panel[data-mode="transcript"] {
+    bottom: 48px;
+    width: calc(100vw - 16px);
+    max-height: 120px;
+    border-radius: 10px;
+    font-size: .76rem;
+    padding: 10px 14px;
+  }
+  /* Voice menu */
+  #narr-voice-menu {
+    bottom: 48px;
+    min-width: calc(100vw - 40px);
+    max-width: calc(100vw - 16px);
+  }
+  /* Narration progress bar */
+  #narr-progress-wrap {
+    bottom: 4px;
+    width: min(320px, 65vw);
+  }
+
+  /* ── REVEAL CONTROLS → bottom-centre, no offset needed ── */
+  .reveal .controls {
+    bottom: 6px;
+  }
+  .reveal .controls button { width: 36px; height: 36px; }
+
+  /* ── SLIDE NUMBER → bottom-right ─────────────────────────── */
+  .reveal .slide-number {
+    bottom: 8px;
+    right: 8px;
+    left: auto;
+    font-size: 7px;
+  }
+
+  /* ── PROGRESS BAR → at very bottom ─────────────────────── */
+  .reveal .progress { bottom: 0; height: 2px; }
+
+  /* ── PORTRAIT HINT → lower ─────────────────────────────── */
+  body::after {
+    bottom: 28px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────
+   3.  ANIMATION COMPONENTS — MOBILE (≤ 800 px)
+   ────────────────────────────────────────────────────────── */
+@media (max-width: 800px) {
+
+  /* ── Token prediction ───────────────────────────────────── */
+  .anim-token-prediction { gap: 16px; }
+  .anim-sentence { gap: 6px; }
+  .anim-word { font-size: .82rem; padding: 6px 12px; border-radius: 8px; }
+
+  .anim-prob-chart { height: 110px; gap: 8px; padding: 0 10px; }
+  .anim-prob-bar { width: 55px; }
+  .anim-prob-bar-label { font-size: .58rem; }
+  .anim-prob-bar-fill .bar-pct { font-size: .58rem; }
+
+  .anim-connector { height: 20px; }
+
+  /* ── Attention heatmap — scrollable + smaller cells ─────── */
+  .anim-attention { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .anim-attn-cell { width: 38px; height: 38px; font-size: .52rem; }
+  .anim-attn-header { font-size: .58rem; min-width: 38px; padding: 5px 3px; }
+  .anim-attn-header.row-header { height: 38px; padding-right: 8px; }
+  .anim-attn-desc { font-size: .72rem; max-width: 90vw; }
+  .anim-attn-scanline { height: 38px; }
+
+  /* ── RAG flow — stack vertically ────────────────────────── */
+  .anim-rag-flow { gap: 0; }
+  .anim-rag-row { flex-direction: column; gap: 0; align-items: center; }
+  .anim-rag-box { font-size: .68rem; padding: 12px 16px; min-width: 90px; border-radius: 10px; }
+  .anim-rag-icon { font-size: 1.2rem; }
+  .anim-rag-label { font-size: .52rem; }
+
+  /* Arrows → vertical on mobile */
+  .anim-rag-arrow {
+    width: 2px; height: 24px; margin: -2px auto;
+  }
+  .anim-rag-arrow::before {
+    width: 100%; height: 0;
+    transition: height .6s var(--ease-out-expo);
+  }
+  .anim-rag-arrow.visible::before { width: 100%; height: 100%; }
+  .anim-rag-arrow::after {
+    top: auto; bottom: -2px; left: -4px; right: auto;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid var(--accent);
+    border-bottom: none;
+  }
+
+  /* ── Agent loop — scale down orbit ──────────────────────── */
+  .anim-agent-loop { min-height: 300px; }
+  .anim-agent-brain { width: 90px; height: 90px; font-size: .72rem; }
+  .anim-agent-brain .brain-icon { font-size: 1.5rem; }
+  .anim-agent-brain .brain-label { font-size: .55rem; }
+  .anim-orbit-ring { width: 220px; height: 220px; }
+  .anim-loop-box { padding: 10px 14px; font-size: .68rem; min-width: 75px; border-radius: 10px; }
+  .anim-loop-icon { font-size: 1.1rem; }
+  .anim-tool-pill { padding: 5px 10px; font-size: .55rem; }
+
+  @keyframes orbit-dot {
+    0%   { transform: rotate(0deg) translateX(110px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateX(110px) rotate(-360deg); }
+  }
+
+  /* ── Shared animation utilities ─────────────────────────── */
+  .anim-bg-dot { width: 3px; height: 3px; }
+}
+
+/* ──────────────────────────────────────────────────────────
+   4.  LANDSCAPE-PHONE  (short + wide)
+   ────────────────────────────────────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .reveal .slides section {
+    padding: 20px 32px 16px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  h1 { font-size: clamp(1rem, 4vw, 1.6rem); margin-bottom: 8px; }
+  h2 { font-size: clamp(.9rem, 3.5vw, 1.3rem); margin-bottom: 8px; }
+  p, li { font-size: .72rem; }
+
+  .cover-dot { width: 180px; height: 180px; }
+
+  /* Agent loop — fit in short viewport */
+  .anim-agent-loop { min-height: 250px; }
+  .anim-agent-brain { width: 80px; height: 80px; }
+  .anim-orbit-ring { width: 190px; height: 190px; }
+
+  /* Narration player — slim */
+  #narr-player { bottom: 6px; padding: 3px 8px; }
+}
+
+/* ──────────────────────────────────────────────────────────
+   5.  TOUCH AFFORDANCE  (coarse pointer = finger)
+   ────────────────────────────────────────────────────────── */
+@media (pointer: coarse) {
+
+  /* Cards need no hover lift on touch — suppress jitter */
+  .model-card:hover,
+  .agenda-item:hover { transform: none; }
+
+  /* Larger Reveal navigation arrows on touch screens */
+  .reveal .controls .navigate-left,
+  .reveal .controls .navigate-right {
+    width: 2.4em; height: 2.4em;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────
+   6.  SAFE-AREA INSETS  (notched phones)
+   ────────────────────────────────────────────────────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  @media (max-width: 800px) {
+    #narr-player {
+      bottom: calc(8px + env(safe-area-inset-bottom));
+    }
+    .reveal .controls {
+      bottom: calc(6px + env(safe-area-inset-bottom));
+    }
+    .reveal .slide-number {
+      bottom: calc(8px + env(safe-area-inset-bottom));
+    }
+    .reveal .slides section {
+      padding-left: calc(16px + env(safe-area-inset-left));
+      padding-right: calc(16px + env(safe-area-inset-right));
+    }
+  }
+}
+
+/* ──────────────────────────────────────────────────────────
+   7.  REDUCED MOTION  (accessibility)
+   ────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .anim-orbit-dot { animation: none; }
+  .breathe { animation: none; }
+}
